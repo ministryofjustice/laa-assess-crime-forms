@@ -14,7 +14,7 @@ RSpec.describe Event do
         'public' => nil,
         'secondary_user_id' => nil,
         'updated_at' => an_instance_of(String),
-        :event_type => 'Event::NewVersion',
+        :event_type => 'new_version',
         :public => false,
       )
     end
@@ -33,7 +33,7 @@ RSpec.describe Event do
           'public' => nil,
           'secondary_user_id' => nil,
           'updated_at' => an_instance_of(String),
-          :event_type => 'Event::Decision',
+          :event_type => 'decision',
           :public => true,
         )
       end
