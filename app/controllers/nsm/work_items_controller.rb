@@ -58,6 +58,7 @@ module Nsm
         current_user: current_user,
         id: params[:id],
         work_type: work_item.work_type,
+        attendance_with_counsel_pricing: work_item.attendance_with_counsel_pricing,
       )
     end
   end
