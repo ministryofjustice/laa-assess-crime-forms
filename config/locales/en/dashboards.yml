@@ -7,5 +7,7 @@ en:
         nsm: Non-standard magistrates
       nav:
         overview: Overview
-        caseworkers: Caseworkers
+        allocation: Allocation
         autogrant: Auto grant
+    allocation:
+      prototype: Link to prototype (Dashboard)
