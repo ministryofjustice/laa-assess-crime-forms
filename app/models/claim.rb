@@ -55,6 +55,7 @@ class Claim < Submission
 
   def youth_court_fee_elligible?
     data['claim_type'] == 'non_standard_magistrate' &&
+      (data['rep_order_date']&.to_date&.>= Date.new(2024, 12, 6)) &&
       data['youth_court'] == 'yes' &&
       data['plea_category'].match?(/category_(?:2|[12]a)$/)
   end
@@ -92,11 +93,11 @@ class Claim < Submission
       letters_and_calls: letters_and_calls_for_calculation,
       youth_court: data['youth_court'] == 'yes',
       # TODO: CRM457-2306: Amend these as the fields will exist
-      claimed_youth_court_fee_included: data['include_youth_court_fee'],
+      claimed_youth_court_fee_included:  data.fetch('include_youth_court_fee_original', data['include_youth_court_fee']),
       plea_category: data['plea_category'],
       # TODO: CRM457-2306: Remove these as the fields will exist
       # :nocov:
-      assessed_youth_court_fee_included: data['youth_court_fee_adjustment_comment']&.present?,
+      assessed_youth_court_fee_included: data['include_youth_court_fee'],
       # :nocov:
     }
   end
