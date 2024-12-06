@@ -4,13 +4,13 @@ module Nsm
 
     def edit
       authorize claim
-      form = YouthCourtFeeAdjustmentForm.new(claim:, item:, **item.form_attributes)
+      form = YouthCourtFeeForm.new(claim:, item:, **item.form_attributes)
       render locals: { claim:, item:, form: }
     end
 
     def update
       authorize claim
-      form = YouthCourtFeeAdjustmentForm.new(claim:, item:, **form_params)
+      form = YouthCourtFeeForm.new(claim:, item:, **form_params)
       if form.save!
         redirect_to nsm_claim_work_items_path(claim)
       else

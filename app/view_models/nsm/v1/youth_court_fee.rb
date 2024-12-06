@@ -12,17 +12,17 @@ module Nsm
       end
 
       def title
-        I18n.t(".nsm.additional_fees.#{key}.title")
+        I18n.t(".nsm.youth_court_fee_adjustments.#{key}.title")
       end
 
       def data
         [
           {
-            title: I18n.t(".nsm.additional_fees.#{key}.additional_fee"),
-            value: I18n.t(".nsm.additional_fees.#{key}.youth_court_fee")
+            title: I18n.t(".nsm.youth_court_fee_adjustments.#{key}.additional_fee"),
+            value: I18n.t(".nsm.youth_court_fee_adjustments.#{key}.youth_court_fee")
           },
           {
-            title: I18n.t(".nsm.additional_fees.#{key}.net_cost_claimed"),
+            title: I18n.t(".nsm.youth_court_fee_adjustments.#{key}.net_cost_claimed"),
             value: calculated_youth_court_fee
           }
         ].compact
@@ -44,6 +44,17 @@ module Nsm
           'remove_youth_court_fee' => remove_youth_court_fee,
           'explanation' => youth_court_fee_adjustment_comment
         }
+      end
+
+      def backlink_path(claim)
+        # :nocov:
+        # TODO: CRM457-2306: Remove these as the fields will exist
+        if any_adjustments?
+          Rails.application.routes.url_helpers.adjusted_nsm_claim_additional_fees_path(claim)
+        # :nocov:
+        else
+          Rails.application.routes.url_helpers.nsm_claim_additional_fees_path(claim)
+        end
       end
 
       private

@@ -23,22 +23,22 @@ en:
 
   helpers:
     legend:
-      nsm_youth_court_fee_adjustments_form:
+      nsm_youth_court_fee_form:
         remove_youth_court_fee: Remove the youth court fee?
     label:
-      nsm_youth_court_fee_adjustments_form:
+      nsm_youth_court_fee_form:
         remove_youth_court_fee_options:
           'true': Yes, remove fee
           'false': No, do not remove fee
         explanation: Explain your decision
     hint:
-      nsm_youth_court_fee_adjustments_form:
+      nsm_youth_court_fee_form:
         explanation: Explain why you are removing the additional fee. We'll share this explanation with the provider.
 
   activemodel:
     errors:
       models:
-        nsm/youth_court_fee_adjustments_form:
+        nsm/youth_court_fee_form:
           attributes:
             base:
               no_change: 'No change'

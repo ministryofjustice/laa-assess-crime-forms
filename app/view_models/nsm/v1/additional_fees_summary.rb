@@ -5,7 +5,7 @@ module Nsm
 
       def rows
         @rows ||= submission.additional_fees.map do |type, details|
-          AdditionalFee.new({ type: }.merge(details))
+          AdditionalFee.new({ submission:, type: }.merge(details))
         end
       end
     end
