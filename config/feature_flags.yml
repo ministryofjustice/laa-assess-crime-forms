@@ -1,7 +1,7 @@
 feature_flags:
   dev_auth:
     local: <%= ENV.fetch("DEV_AUTH_ENABLED", false) %>
-    development: true
+    development: false # TODO CRM457-2300: enable again before merging
     uat: false
     production: false # must never be enabled in the live service
   postal_evidence:
