@@ -20,6 +20,7 @@ module Nsm
     end
 
     def adjustments
+      Rails.logger.info "resource_klass: #{resource_klass}, nesting: #{nesting}"
       @adjustments ||= BaseViewModel
                        .build(resource_klass, claim, nesting)
                        .filter(&:any_adjustments?)

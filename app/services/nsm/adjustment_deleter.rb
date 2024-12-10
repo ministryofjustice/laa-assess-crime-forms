@@ -39,10 +39,10 @@ module Nsm
     end
 
     def delete_additional_fee_adjustment
-      if params[:id] == 'youth_court_fee'
-        revert(claim, 'include_youth_court_fee', 'additional_fees')
-        claim.delete('youth_court_fee_adjustment_comment')
-      end
+      return unless params[:id] == 'youth_court_fee'
+
+      revert(claim, 'include_youth_court_fee', 'additional_fees')
+      claim.delete('youth_court_fee_adjustment_comment')
     end
 
     def letters_and_calls
