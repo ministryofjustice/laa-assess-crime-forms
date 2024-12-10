@@ -20,14 +20,13 @@ module Nsm
     end
 
     def adjustments
-      Rails.logger.info "resource_klass: #{resource_klass}, nesting: #{nesting}"
-      @adjustments ||= BaseViewModel
-                       .build(resource_klass, claim, nesting)
-                       .filter(&:any_adjustments?)
-    end
-
-    def nesting
-      json_search_field == 'additional_fees' ? nil : json_search_field
+      @adjustments ||= if additional_fee?
+                         check_additional_fee_adjustments
+                       else
+                         BaseViewModel
+                           .build(resource_klass, claim, nesting)
+                           .filter(&:any_adjustments?)
+                       end
     end
 
     def resource_klass
@@ -39,6 +38,20 @@ module Nsm
 
     def json_search_field
       @json_search_field ||= controller_name
+    end
+
+    def nesting
+      additional_fee? ? nil : json_search_field
+    end
+
+    def additional_fee?
+      json_search_field == 'additional_fees'
+    end
+
+    def check_additional_fee_adjustments
+      return unless params[:id] == 'youth_court_fee'
+
+      claim['include_youth_court_fee_original'] && (claim['include_youth_court_fee'] != claim['include_youth_court_fee_original'])
     end
   end
 end
