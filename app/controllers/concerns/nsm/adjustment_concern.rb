@@ -3,7 +3,11 @@ module Nsm
     extend ActiveSupport::Concern
     def confirm_deletion
       authorize(claim, :update?)
-      @adjustment = adjustments.find { _1.id == params[:id] }
+      @adjustment = if additional_fee?
+                      ::V1::AdditionalFeeAdjustment.new({ claim: claim, fee_type: params[:id] })
+                    else
+                      adjustments.find { _1.id == params[:id] }
+                    end
       render :confirm_delete_adjustment, locals: { claim_id: params[:claim_id], id: params[:id] }
     end
 
