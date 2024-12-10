@@ -27,7 +27,7 @@ module Nsm
 
     def resource_klass
       return :letter_and_call if json_search_field == 'letters_and_calls'
-      return :additional_fees if json_search_field == 'additional_fees'
+      return :additional_fee if json_search_field == 'additional_fees'
 
       @resource_klass ||= controller_name.singularize.to_sym
     end
