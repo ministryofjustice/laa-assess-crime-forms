@@ -38,6 +38,7 @@ en:
         no_data: This claim has no adjusted additional fees
         table_caption: Claimed additional fees
         action: Action
+        delete: Delete
       confirm_delete_adjustment:
         page_title: Are you sure you want to delete this adjustment?
         item:  Item
