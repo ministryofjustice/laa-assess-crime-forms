@@ -31,7 +31,7 @@ module Nsm
 
     def resource_klass
       return :letter_and_call if json_search_field == 'letters_and_calls'
-      return :additional_fee if json_search_field == 'additional_fees'
+      return :additional_fee if additional_fee?
 
       @resource_klass ||= controller_name.singularize.to_sym
     end
@@ -49,9 +49,7 @@ module Nsm
     end
 
     def check_additional_fee_adjustments
-      return unless params[:id] == 'youth_court_fee'
-
-      claim['include_youth_court_fee_original'] && (claim['include_youth_court_fee'] != claim['include_youth_court_fee_original'])
+      claim.youth_court_fee_adjusted? if params[:id] == 'youth_court_fee'
     end
   end
 end
