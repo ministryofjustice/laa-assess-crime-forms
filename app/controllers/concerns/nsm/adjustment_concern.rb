@@ -21,8 +21,12 @@ module Nsm
 
     def adjustments
       @adjustments ||= BaseViewModel
-                       .build(resource_klass, claim, json_search_field)
+                       .build(resource_klass, claim, nesting)
                        .filter(&:any_adjustments?)
+    end
+
+    def nesting
+      json_search_field == 'additional_fees' ? nil : json_search_field
     end
 
     def resource_klass
