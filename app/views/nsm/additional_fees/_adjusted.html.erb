@@ -19,7 +19,7 @@
                       else
                         nsm_claim_additional_fee_path(claim_id: claim.id, id: additional_fee.type)
                       end
-        deleteable = confirm_deletion_nsm_claim_additional_fees_path(claim_id: claim.id, id: additional_fee.type) if editable
+        deleteable = confirm_deletion_nsm_claim_additional_fee_path(claim_id: claim.id, id: additional_fee.type) if editable
         fields[0] = link_to(fields[0], destination, data: { turbo: 'false' })
         fields << link_to(t('.delete'), deleteable, data: { turbo: 'false' }) if deleteable
         fields
