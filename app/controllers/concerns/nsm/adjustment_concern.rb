@@ -4,7 +4,7 @@ module Nsm
     def confirm_deletion
       authorize(claim, :update?)
       @adjustment = if additional_fee?
-                      ::V1::AdditionalFeeAdjustment.new({ claim: claim, fee_type: params[:id] })
+                      BaseViewModel.build(:additional_fee_adjustment, claim)
                     else
                       adjustments.find { _1.id == params[:id] }
                     end

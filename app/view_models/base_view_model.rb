@@ -16,8 +16,6 @@ class BaseViewModel
         @rows = [submission.data]
         @return_array = false
       end
-      Rails.logger.info @klass
-      Rails.logger.info @rows
     end
 
     def build
