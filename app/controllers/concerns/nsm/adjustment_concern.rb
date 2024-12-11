@@ -26,9 +26,17 @@ module Nsm
                        .filter(&:any_adjustments?)
     end
 
+    def nesting
+      additional_fee? ? nil : json_search_field
+    end
+
+    def additional_fee?
+      json_search_field == 'additional_fees'
+    end
+
     def resource_klass
       return :letter_and_call if json_search_field == 'letters_and_calls'
-      return params[:id].to_sym if json_search_field == 'additional_fees'
+      return params[:id].to_sym if additional_fee?
 
       @resource_klass ||= controller_name.singularize.to_sym
     end
