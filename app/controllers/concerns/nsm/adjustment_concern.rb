@@ -1,12 +1,21 @@
 module Nsm
   module AdjustmentConcern
     extend ActiveSupport::Concern
+    # rubocop:disable Style/NumberedParameters
     def confirm_deletion
       authorize(claim, :update?)
-      @adjustment = adjustments.find { _1.id == params[:id] }
+      raise 'Attempting to delete non-existent adjusment' if additional_fee? && !view_model.any_adjustments?
+      @adjustment = if additional_fee?
+                      view_model
+                    else
+                      view_model.filter(&:any_adjustments).find do
+                        _1.id == params[:id]
+                      end
+                    end
 
       render :confirm_delete_adjustment, locals: { claim_id: params[:claim_id], id: params[:id] }
     end
+    # rubocop:enable Style/NumberedParameters
 
     def destroy
       authorize(claim, :update?)
@@ -20,10 +29,8 @@ module Nsm
       claim.any_adjustments? ? { action: :adjusted } : nsm_claim_work_items_path
     end
 
-    def adjustments
-      @adjustments ||= BaseViewModel
-                       .build(resource_klass, claim, nesting)
-                       .filter(&:any_adjustments?)
+    def view_model
+      @view_model ||= BaseViewModel.build(resource_klass, claim, nesting)
     end
 
     def nesting
