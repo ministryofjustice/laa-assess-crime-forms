@@ -20,7 +20,7 @@ module Nsm
           },
           {
             title: I18n.t(".nsm.youth_court_fee_adjustments.#{key}.net_cost_claimed"),
-            value: NumberTo.pounds(claimed_total_exc_vat)
+            value: claimed_net
           }
         ].compact
       end
@@ -51,6 +51,18 @@ module Nsm
 
       def type
         :youth_court_fee
+      end
+
+      def type_name
+        I18n.t(".nsm.youth_court_fee_adjustments.#{key}.youth_court_fee")
+      end
+
+      def allowed_net
+        NumberTo.pounds(allowed_total_exc_vat)
+      end
+
+      def claimed_net
+        NumberTo.pounds(claimed_total_exc_vat)
       end
     end
   end
