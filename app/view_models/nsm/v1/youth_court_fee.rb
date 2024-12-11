@@ -82,7 +82,7 @@ module Nsm
       end
 
       def allowed_net
-        NumberTo.pounds(allowed_total_exc_vat)
+        NumberTo.pounds(assessed_total_exc_vat)
       end
 
       def claimed_net
