@@ -40,7 +40,7 @@ module Nsm
 
     def delete_youth_court_fee_adjustment
       revert(submission, 'include_youth_court_fee', 'additional_fees')
-      submission.delete('youth_court_fee_adjustment_comment')
+      submission.data.delete('youth_court_fee_adjustment_comment')
     end
 
     def letters_and_calls
