@@ -48,7 +48,7 @@ module Nsm
 
       def caseworker_fields
         {
-          '.net_cost_allowed' => NumberTo.pounds(assessed_total_exc_vat),
+          '.net_cost_allowed' => format(caseworker_amount),
           '.reason_for_adjustments' => youth_court_fee_adjustment_comment
         }
       end
@@ -57,7 +57,7 @@ module Nsm
         [
           I18n.t("nsm.additional_fees.index.#{type}"),
           youth_court_fee_adjustment_comment,
-          format(assessed_total_exc_vat)
+          format(caseworker_amount)
         ]
       end
 
@@ -82,11 +82,11 @@ module Nsm
       end
 
       def allowed_net
-        NumberTo.pounds(assessed_total_exc_vat)
+        format(caseworker_amount)
       end
 
       def claimed_net
-        NumberTo.pounds(claimed_total_exc_vat)
+        format(provider_requested_amount)
       end
 
       def reason
