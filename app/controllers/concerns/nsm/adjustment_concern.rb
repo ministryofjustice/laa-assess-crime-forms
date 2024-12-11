@@ -9,7 +9,7 @@ module Nsm
       @adjustment = if additional_fee?
                       view_model
                     else
-                      view_model.filter(&:any_adjustments).find do
+                      view_model.filter(&:any_adjustments?).find do
                         _1.id == params[:id]
                       end
                     end
