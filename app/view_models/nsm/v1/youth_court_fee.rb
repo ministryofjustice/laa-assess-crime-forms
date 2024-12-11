@@ -48,7 +48,7 @@ module Nsm
 
       def caseworker_fields
         {
-          '.net_cost_allowed' => format(caseworker_amount),
+          '.net_cost_allowed' => NumberTo.pounds(caseworker_amount),
           '.reason_for_adjustments' => youth_court_fee_adjustment_comment
         }
       end
@@ -82,11 +82,11 @@ module Nsm
       end
 
       def allowed_net
-        format(caseworker_amount)
+        NumberTo.pounds(caseworker_amount)
       end
 
       def claimed_net
-        format(provider_requested_amount)
+        NumberTo.pounds(provider_requested_amount)
       end
 
       def reason
