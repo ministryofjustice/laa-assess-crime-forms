@@ -88,6 +88,10 @@ module Nsm
       def claimed_net
         NumberTo.pounds(claimed_total_exc_vat)
       end
+
+      def reason
+        youth_court_fee_adjustment_comment
+      end
     end
   end
 end
