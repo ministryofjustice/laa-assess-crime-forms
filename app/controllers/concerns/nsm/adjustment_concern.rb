@@ -1,21 +1,19 @@
 module Nsm
   module AdjustmentConcern
     extend ActiveSupport::Concern
-    # rubocop:disable Style/NumberedParameters
     def confirm_deletion
       authorize(claim, :update?)
 
       @adjustment = if additional_fee?
                       view_model
                     else
-                      view_model.filter(&:any_adjustments?).find do
-                        _1.id == params[:id]
+                      view_model.filter(&:any_adjustments?).find do |item|
+                        item.id == params[:id]
                       end
                     end
 
       render :confirm_delete_adjustment, locals: { claim_id: params[:claim_id], id: params[:id] }
     end
-    # rubocop:enable Style/NumberedParameters
 
     def destroy
       authorize(claim, :update?)

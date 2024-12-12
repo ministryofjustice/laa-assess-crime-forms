@@ -49,7 +49,7 @@ module Nsm
       def caseworker_fields
         {
           '.net_cost_allowed' => allowed_net,
-          '.reason_for_adjustments' => youth_court_fee_adjustment_comment
+          '.reason_for_adjustments' => reason
         }
       end
 
