@@ -38,20 +38,46 @@ RSpec.describe Nsm::V1::CaseDisposal do
     end
 
     context 'handles new youth court changes' do
-      it 'to include the youth court fee' do
-        subject = described_class.new(
-          {
-            'plea' => 'guilty',
-            'plea_category' => 'category_1a',
-            'include_youth_court_fee' => true
-          }
-        )
-        expect(subject.data).to eq(
-          [
-            { title: 'Category 1A', value: 'Guilty plea' },
-            { title: 'Additional fee', value: 'Youth court fee claimed' }
-          ]
-        )
+      let(:include_youth_court_fee) { nil }
+      let(:include_youth_court_fee_original) { nil }
+
+      subject = described_class.new(
+        {
+          'plea' => 'guilty',
+          'plea_category' => 'category_1a',
+          'include_youth_court_fee' => include_youth_court_fee,
+          'include_youth_court_fee_original' => include_youth_court_fee_original
+        }
+      )
+      context 'include the youth court fee' do
+        let(:include_youth_court_fee) { true }
+
+        context 'no adjustment has been made' do
+          let(:include_youth_court_fee_original) { nil }
+
+          it 'shows the correct details' do
+            expect(subject.data).to eq(
+              [
+                { title: 'Category 1A', value: 'Guilty plea' },
+                { title: 'Additional fee', value: 'Youth court fee claimed' }
+              ]
+            )
+          end
+        end
+
+        context 'am adjustment has been made' do
+          let(:include_youth_court_fee_original) { true }
+          let(:include_youth_court_fee) { false }
+
+          it 'shows the correct details' do
+            expect(subject.data).to eq(
+              [
+                { title: 'Category 1A', value: 'Guilty plea' },
+                { title: 'Additional fee', value: 'Youth court fee claimed' }
+              ]
+            )
+          end
+        end
       end
 
       it 'to not include the youth court fee' do
