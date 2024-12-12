@@ -97,10 +97,6 @@ class Claim < Submission
     }
   end
 
-  def youth_court_fee_adjusted?
-    data['include_youth_court_fee_original'] && (data['include_youth_court_fee'] != data['include_youth_court_fee_original'])
-  end
-
   private
 
   def youth_court_fee_claimed
