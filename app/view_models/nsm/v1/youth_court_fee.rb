@@ -57,7 +57,6 @@ module Nsm
         [
           I18n.t("nsm.additional_fees.index.#{type}"),
           youth_court_fee_adjustment_comment,
-
           format(caseworker_amount)
         ]
       end
@@ -72,10 +71,6 @@ module Nsm
 
       def calculation
         @calculation ||= LaaCrimeFormsCommon::Pricing::Nsm.calculate_youth_court_fee(submission.data_for_calculation,)
-      end
-
-      def type
-        :youth_court_fee
       end
 
       def type_name
@@ -96,6 +91,10 @@ module Nsm
 
       def adjustable?
         include_youth_court_fee || (!include_youth_court_fee && submission.data['include_youth_court_fee_original'].present?)
+      end
+
+      def type
+        :youth_court_fee
       end
     end
   end
