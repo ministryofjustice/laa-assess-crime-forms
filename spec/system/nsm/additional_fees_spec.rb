@@ -228,7 +228,7 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
       end
 
       it 'can remove youth court fee adjustment through the adjustments tab' do
-        adjusted_nsm_claim_additional_fees_path(claim)
+        visit adjusted_nsm_claim_additional_fees_path(claim)
 
         click_on 'Additional fees'
 
