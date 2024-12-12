@@ -153,6 +153,12 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
         expect(subject).not_to receive(:delete_disbursement_adjustments)
         subject.call
       end
+
+      it 'wont try to youth court fee adjustment if none' do
+        allow(subject).to receive(:youth_court_fee).and_return nil
+        expect(subject).not_to receive(:delete_youth_court_fee_adjustment)
+        subject.call
+      end
     end
   end
 end
