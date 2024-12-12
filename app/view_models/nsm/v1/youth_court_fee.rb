@@ -81,10 +81,6 @@ module Nsm
         NumberTo.pounds(caseworker_amount)
       end
 
-      def claimed_net
-        NumberTo.pounds(provider_requested_amount)
-      end
-
       def reason
         youth_court_fee_adjustment_comment
       end
