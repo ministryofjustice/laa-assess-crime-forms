@@ -27,7 +27,7 @@ module Nsm
           [
             t('.fee_type', width: 'govuk-!-width-one-fifth', numeric: false),
             t('.reason_for_adjustments', numeric: false),
-            t('.net_cost_allowed')
+            t('.net_cost_allowed'),
           ]
         end
 
