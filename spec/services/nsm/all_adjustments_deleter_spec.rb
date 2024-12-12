@@ -155,7 +155,7 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
       end
 
       it 'wont try to remove youth court fee adjustment if none' do
-        allow(subject).to receive(:youth_court_fee).and_return nil
+        allow(subject).to receive(:youth_court_fee_adjustment_comment).and_return nil
         expect(subject).not_to receive(:delete_youth_court_fee_adjustment)
         subject.call
       end

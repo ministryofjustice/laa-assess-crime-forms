@@ -11,7 +11,7 @@ module Nsm
       delete_work_item_adjustments if work_items
       delete_letters_and_calls_adjustments if letters_and_calls
       delete_disbursement_adjustments if disbursements
-      delete_youth_court_fee_adjustment if youth_court_fee
+      delete_youth_court_fee_adjustment if youth_court_fee_adjustment_comment
       ::Event::DeleteAdjustments.build(submission:, comment:, current_user:)
     end
 
@@ -50,8 +50,8 @@ module Nsm
       submission.data.delete('youth_court_fee_adjustment_comment')
     end
 
-    def youth_court_fee
-      @youth_court_fee ||= submission.data['youth_court_fee_adjustment_comment']
+    def youth_court_fee_adjustment_comment
+      submission.data['youth_court_fee_adjustment_comment']
     end
 
     def letters_and_calls
