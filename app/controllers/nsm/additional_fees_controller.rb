@@ -90,12 +90,6 @@ module Nsm
             .merge(current_user:)
     end
 
-    def form_params
-      params.require(:nsm_youth_court_fee_form)
-            .permit(:remove_youth_court_fee, :explanation)
-            .merge(current_user:)
-    end
-
     def fail_if_no_additional_fees
       raise ActionController::RoutingError, 'Not Found' unless claim.additional_fees?
     end
