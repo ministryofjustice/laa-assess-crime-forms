@@ -4,7 +4,6 @@ module Nsm
     # rubocop:disable Style/NumberedParameters, Metrics/AbcSize
     def confirm_deletion
       authorize(claim, :update?)
-      raise 'Attempting to delete non-existent adjusment' if additional_fee? && !view_model.any_adjustments?
 
       @adjustment = if additional_fee?
                       view_model
