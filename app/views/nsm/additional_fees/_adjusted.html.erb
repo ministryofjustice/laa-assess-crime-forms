@@ -8,6 +8,9 @@
       head = Nsm::V1::AdditionalFee.adjusted_headers
       editable = policy(claim).update?
 
+      if editable
+        head << {:text=>t('.action'), :numeric=>false, :width=>nil}
+      end
       rows = records.rows.reject{ _1.type == :total }.map do |additional_fee|
         next unless additional_fee.any_adjustments?
 
