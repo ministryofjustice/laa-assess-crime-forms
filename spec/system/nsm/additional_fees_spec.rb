@@ -42,7 +42,13 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
       click_on 'Youth court fee'
 
       expect(page).to have_content(
-        'Youth court fee Net cost claimed £0.00'
+        'Youth court feeNet cost claimed£0.00'
+      )
+      expect(page).not_to have_content(
+        'LAA adjustments'
+      )
+      expect(page).not_to have_content(
+        'Save changes'
       )
     end
   end

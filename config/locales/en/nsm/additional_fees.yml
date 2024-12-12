@@ -49,3 +49,4 @@ en:
         no_delete: No, do not delete it
       destroy:
         success: You deleted the adjustment
+

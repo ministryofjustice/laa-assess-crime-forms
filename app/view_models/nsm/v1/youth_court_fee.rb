@@ -20,7 +20,7 @@ module Nsm
           },
           {
             title: I18n.t(".nsm.youth_court_fee_adjustments.#{key}.net_cost_claimed"),
-            value: claimed_net
+            value: NumberTo.pounds(claimed_total_exc_vat)
           }
         ].compact
       end
@@ -48,7 +48,7 @@ module Nsm
 
       def caseworker_fields
         {
-          '.net_cost_allowed' => NumberTo.pounds(caseworker_amount),
+          '.net_cost_allowed' => allowed_net,
           '.reason_for_adjustments' => youth_court_fee_adjustment_comment
         }
       end
@@ -57,6 +57,7 @@ module Nsm
         [
           I18n.t("nsm.additional_fees.index.#{type}"),
           youth_court_fee_adjustment_comment,
+
           format(caseworker_amount)
         ]
       end
@@ -91,6 +92,10 @@ module Nsm
 
       def reason
         youth_court_fee_adjustment_comment
+      end
+
+      def adjustable?
+        include_youth_court_fee || (!include_youth_court_fee && submission.data['include_youth_court_fee_original'].present?)
       end
     end
   end
