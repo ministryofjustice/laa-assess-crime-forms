@@ -1,7 +1,7 @@
 module Nsm
   module AdjustmentConcern
     extend ActiveSupport::Concern
-    # rubocop:disable Style/NumberedParameters, Metrics/AbcSize
+    # rubocop:disable Style/NumberedParameters
     def confirm_deletion
       authorize(claim, :update?)
 
@@ -15,7 +15,7 @@ module Nsm
 
       render :confirm_delete_adjustment, locals: { claim_id: params[:claim_id], id: params[:id] }
     end
-    # rubocop:enable Style/NumberedParameters, Metrics/AbcSize
+    # rubocop:enable Style/NumberedParameters
 
     def destroy
       authorize(claim, :update?)
