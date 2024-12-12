@@ -2,8 +2,9 @@ module Nsm
   module AdjustmentConcern
     extend ActiveSupport::Concern
     def confirm_deletion
-      authorize(claim, :update?)
+      raise 'Cannot delete non-existent adjustment' unless any_adjustments?
 
+      authorize(claim, :update?)
       @adjustment = if additional_fee?
                       view_model
                     else
@@ -48,6 +49,10 @@ module Nsm
 
     def json_search_field
       @json_search_field ||= controller_name
+    end
+
+    def any_adjustments?
+      additional_fee? ? !view_model.any_adjustments? : view_model.filter(&:any_adjustments?).blank?
     end
   end
 end

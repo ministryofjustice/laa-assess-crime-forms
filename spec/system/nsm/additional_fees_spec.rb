@@ -233,7 +233,7 @@ RSpec.describe 'Additional Fees', :stub_oauth_token do
         click_on 'Additional fees'
 
         within('.govuk-table__row', text: 'Youth court fee') do
-          click_on "Delete"
+          click_on 'Delete'
         end
         expect(page).to have_content('Are you sure you want to delete this adjustment?')
         expect(page).to have_content('Youth court fee')
