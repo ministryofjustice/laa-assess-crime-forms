@@ -56,7 +56,7 @@ Devise.setup do |config|
       client_options: {
         identifier: ENV.fetch('OMNIAUTH_AZURE_CLIENT_ID', nil),
         secret: ENV.fetch('OMNIAUTH_AZURE_CLIENT_SECRET', nil),
-        redirect_uri: 'https://crm457-2300-delete-nscc-caseworker-dev.cloud-platform.service.justice.gov.uk/users/auth/azure_ad/callback'
+        redirect_uri: ENV.fetch('OMNIAUTH_AZURE_REDIRECT_URI', nil)
       },
       discovery: true,
       pkce: true,
