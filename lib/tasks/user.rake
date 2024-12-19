@@ -10,4 +10,22 @@ namespace :user do
     )
     user.roles.create! role_type: args[:role]
   end
+
+  task :deactivate, [:email] => [:environment] do |t, args|
+    abort("Usage: Run task with email as argument ie 'rake user:deactivate[test@test.com]'") unless args[:email]
+
+    user = User.find_by(email: args[:email]) || abort('User not found')
+    user.update(deactivated_at: Time.now)
+
+    puts "User email: #{user.email} deactivated at #{user.deactivated_at}"
+  end
+
+  task :reactivate, [:email] => [:environment] do |t, args|
+    abort("Usage: Run task with email as argument ie 'rake user:reactivate[test@test.com]'") unless args[:email]
+
+    user = User.find_by(email: args[:email]) || abort('User not found')
+    user.update(deactivated_at: nil)
+
+    puts "User email: #{user.email} reactivated"
+  end
 end
