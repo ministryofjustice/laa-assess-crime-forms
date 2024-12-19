@@ -10,4 +10,10 @@ namespace :user do
     )
     user.roles.create! role_type: args[:role]
   end
+
+  task :deactivate, [:email] => [:environment] do |t, args|
+    user = User.find_by(email: args[:email])
+    user.update(deactivated_at: Time.now)
+    puts "User email: #{user.email} deactivated at #{user.deactivated_at}"
+  end
 end
