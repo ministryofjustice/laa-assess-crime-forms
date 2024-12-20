@@ -8,29 +8,49 @@ describe 'user:', type: :task do
   end
 
   describe 'deactivate' do
-    subject { Rake::Task['user:deactivate'].invoke(user.email) }
+    subject(:run) do
+      Rake::Task['user:deactivate'].execute(arguments)
+    end
+
+    let(:arguments) { Rake::TaskArguments.new [:email], [user.email] }
+    let(:expected_output) { "User email: #{user.email} deactivated at 2024-12-19 12:00:00 UTC\n" }
 
     after { Rake::Task['user:deactivate'].reenable }
 
-    let(:expected_output) { "User email: #{user.email} deactivated at 2024-12-19 12:00:00 UTC\n" }
-
     it 'calls the service' do
       travel_to Time.zone.local(2024, 12, 19, 12) do
-        expect { subject }.to output(expected_output).to_stdout
+        expect { run }.to output(expected_output).to_stdout
+      end
+    end
+
+    it 'sets activated_at to time' do
+      travel_to Time.zone.local(2024, 12, 19, 12) do
+        expect { run }.to change { user.reload.deactivated_at }
+          .from(nil).to(Time.zone.local(2024, 12, 19, 12))
       end
     end
   end
 
   describe 'reactivate' do
-    subject { Rake::Task['user:reactivate'].invoke(user.email) }
+    subject(:run) do
+      Rake::Task['user:reactivate'].execute(arguments)
+    end
+
+    let(:user) { create(:caseworker, :deactivated) }
+    let(:arguments) { Rake::TaskArguments.new [:email], [user.email] }
+    let(:expected_output) { "User email: #{user.email} reactivated\n" }
 
     after { Rake::Task['user:reactivate'].reenable }
 
-    let(:user) { create(:caseworker, :deactivated) }
-    let(:expected_output) { "User email: #{user.email} reactivated\n" }
-
     it 'calls the service' do
-      expect { subject }.to output(expected_output).to_stdout
+      expect { run }.to output(expected_output).to_stdout
+    end
+
+    it 'sets activated_at to nil' do
+      travel_to Time.zone.local(2024, 12, 19, 12) do
+        expect { run }.to change { user.reload.deactivated_at }
+          .from(Time.zone.local(2024, 12, 19, 12)).to(nil)
+      end
     end
   end
 end
