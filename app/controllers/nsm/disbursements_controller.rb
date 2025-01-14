@@ -39,7 +39,7 @@ module Nsm
     def show
       authorize claim
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
-        model.id == params[:id]
+        model.id == controller_params[:id]
       end
 
       render locals: { claim:, item: }
@@ -48,7 +48,7 @@ module Nsm
     def edit
       authorize claim
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
-        model.id == params[:id]
+        model.id == controller_params[:id]
       end
 
       form = DisbursementsForm.new(claim:, item:, **item.form_attributes)
@@ -58,7 +58,7 @@ module Nsm
     def update
       authorize claim
       item = BaseViewModel.build(:disbursement, claim, 'disbursements').detect do |model|
-        model.id == params[:id]
+        model.id == controller_params[:id]
       end
       form = DisbursementsForm.new(claim:, item:, **form_params)
       if form.save!
@@ -69,6 +69,20 @@ module Nsm
     end
 
     private
+
+    def controller_params
+      params.permit(
+        :id,
+        :sort_by,
+        :sort_direction,
+        :page
+      )
+    end
+
+    def check_controller_params
+      param_model = Nsm::DisbursementsParams.new(controller_params)
+      raise param_model.error_summary.to_s unless param_model.valid?
+    end
 
     def claim
       @claim ||= Claim.load_from_app_store(params[:claim_id])
@@ -87,8 +101,8 @@ module Nsm
 
     def set_default_table_sort_options
       default = 'item'
-      @sort_by = params.fetch(:sort_by, default)
-      @sort_direction = params.fetch(:sort_direction, 'ascending')
+      @sort_by = controller_params.fetch(:sort_by, default)
+      @sort_direction = controller_params.fetch(:sort_direction, 'ascending')
     end
   end
 end

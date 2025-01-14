@@ -10,6 +10,15 @@ module Nsm
 
     private
 
+    def controller_params
+      params.permit(:claim_id)
+    end
+
+    def check_controller_params
+      param_model = Nsm::BasicClaimParams.new(controller_params)
+      raise param_model.error_summary.to_s unless param_model.valid?
+    end
+
     def provider_updates
       return nil if claim.data['further_information'].blank?
 
@@ -17,7 +26,7 @@ module Nsm
     end
 
     def claim
-      @claim ||= Claim.load_from_app_store(params[:claim_id])
+      @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
     end
   end
 end
