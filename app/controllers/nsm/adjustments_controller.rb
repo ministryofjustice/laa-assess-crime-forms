@@ -11,8 +11,8 @@ module Nsm
 
     def delete_all
       authorize claim, :update?
-      form = DeleteAdjustmentsForm.new(**safe_params)
-      deleter = Nsm::AllAdjustmentsDeleter.new(safe_params, nil, current_user, claim)
+      form = DeleteAdjustmentsForm.new(**form_params)
+      deleter = Nsm::AllAdjustmentsDeleter.new(form_params, nil, current_user, claim)
 
       if form.valid?
         deleter.call!
@@ -37,7 +37,7 @@ module Nsm
     end
 
     def controller_params
-      params.require(:claim_id)
+      params.permit(:claim_id)
     end
 
     def check_controller_params

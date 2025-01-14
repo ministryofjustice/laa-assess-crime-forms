@@ -35,7 +35,7 @@ module Nsm
     end
 
     def controller_params
-      params.require(:claim_id)
+      params.permit(:claim_id)
     end
 
     def check_controller_params
