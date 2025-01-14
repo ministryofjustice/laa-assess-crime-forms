@@ -8,10 +8,10 @@ module Nsm
 
     def update
       authorize(claim)
-      risk = ChangeRiskForm.new(risk_params)
+      risk = ChangeRiskForm.new(form_params)
 
       if risk.save
-        redirect_to nsm_claim_claim_details_path(params[:claim_id]),
+        redirect_to nsm_claim_claim_details_path(controller_params[:claim_id]),
                     flash: { success: t('.success', level: risk.risk_level) }
       else
         render :edit, locals: { claim:, risk: }
@@ -20,11 +20,19 @@ module Nsm
 
     private
 
-    def claim
-      @claim ||= Claim.load_from_app_store(params[:claim_id])
+    def controller_params
+      params.permit(:claim_id)
     end
 
-    def risk_params
+    def check_controller_params
+      param_model = Nsm::BasicClaimParams.new(controller_params)
+      raise param_model.error_summary.to_s unless param_model.valid?
+    end
+    def claim
+      @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
+    end
+
+    def form_params
       params.require(:nsm_change_risk_form).permit(
         :risk_level, :explanation
       ).merge(current_user:, claim:)
