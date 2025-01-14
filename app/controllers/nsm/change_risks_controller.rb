@@ -28,6 +28,7 @@ module Nsm
       param_model = Nsm::BasicClaimParams.new(controller_params)
       raise param_model.error_summary.to_s unless param_model.valid?
     end
+
     def claim
       @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
     end
