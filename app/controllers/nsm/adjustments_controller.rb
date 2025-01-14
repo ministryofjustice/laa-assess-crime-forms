@@ -32,7 +32,7 @@ module Nsm
       delete_all_nsm_claim_adjustments_path(controller_params[:claim_id])
     end
 
-    def safe_params
+    def form_params
       params.require(:nsm_delete_adjustments_form).permit(:comment)
     end
 

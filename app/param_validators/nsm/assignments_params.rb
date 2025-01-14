@@ -1,5 +1,5 @@
 module Nsm
-  class AssignmentsParams < BaseParamValidator
+  class AdjustmentsParams < BaseParamValidator
     attribute :claim_id, :string
 
     validates :claim_id, presence: true
