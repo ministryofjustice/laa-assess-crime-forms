@@ -1,6 +1,7 @@
 module Nsm
   class AdditionalFeesController < Nsm::BaseController
     before_action :fail_if_no_additional_fees
+    before_action :check_controller_params
 
     layout nil
 
@@ -92,6 +93,15 @@ module Nsm
 
     def fail_if_no_additional_fees
       raise ActionController::RoutingError, 'Not Found' unless claim.additional_fees?
+    end
+
+    def controller_params
+      params.permit(:id, :claim_id)
+    end
+
+    def check_controller_params
+      param_model = Nsm::AdditionalFeesParams.new(controller_params)
+      raise param_model.error_summary.to_s unless param_model.valid?
     end
   end
 end
