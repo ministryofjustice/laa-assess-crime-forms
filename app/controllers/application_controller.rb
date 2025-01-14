@@ -66,6 +66,7 @@ class ApplicationController < ActionController::Base
     params[:id]
   end
 
+  # :nocov:
   def controller_params
     # when we actually use this, the line below would be uncommented and the "true" removed
     # so any class that inherits ApplicationController would raise an error
@@ -74,4 +75,5 @@ class ApplicationController < ActionController::Base
     # raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
     true
   end
+  # :nocov:
 end
