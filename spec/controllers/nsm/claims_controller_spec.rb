@@ -23,10 +23,16 @@ RSpec.describe Nsm::ClaimsController, :stub_oauth_token do
       expect { get :open, params: { page: 1, sort_by: 'client_name', sort_direction: 'ascending' } }.not_to raise_error
     end
 
-    it 'raises an error if params are invalid' do
-      expect { get :open, params: { page: -1 } }.to raise_error
-      expect { get :open, params: { sort_by: 'garbage' } }.to raise_error
-      expect { get :open, params: { sort_direction: 'garbage' } }.to raise_error
+    it 'raises an error if page param is invalid' do
+      expect { get :open, params: { page: -1 } }.to raise_error RuntimeError
+    end
+
+    it 'raises an error if sort_by param is invalid' do
+      expect { get :open, params: { sort_by: 'garbage' } }.to raise_error RuntimeError
+    end
+
+    it 'raises an error if sort_direction is invalid' do
+      expect { get :open, params: { sort_direction: 'garbage' } }.to raise_error RuntimeError
     end
   end
 

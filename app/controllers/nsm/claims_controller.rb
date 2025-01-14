@@ -3,6 +3,7 @@ module Nsm
     include AssignmentConcern
     before_action :set_default_table_sort_options, only: %i[your open closed]
     before_action :authorize_list, only: %i[your open closed]
+    before_action :check_controller_params
 
     def your
       return redirect_to open_nsm_claims_path unless policy(Claim).assign?
@@ -45,16 +46,17 @@ module Nsm
     private
 
     def controller_params
-      safe_params = params.permit(
+      params.permit(
         :id,
         :sort_by,
         :sort_direction,
         :page
       )
-      param_model = Nsm::ControllerParams::Claims.new(safe_params)
-      raise param_model.error_summary.to_s unless param_model.valid?
+    end
 
-      safe_params
+    def check_controller_params
+      param_model = Nsm::ClaimsParams.new(controller_params)
+      raise param_model.error_summary.to_s unless param_model.valid?
     end
 
     def set_default_table_sort_options
