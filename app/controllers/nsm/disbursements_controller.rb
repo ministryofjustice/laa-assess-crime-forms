@@ -74,6 +74,7 @@ module Nsm
     def controller_params
       params.permit(
         :id,
+        :claim_id,
         :sort_by,
         :sort_direction,
         :page
