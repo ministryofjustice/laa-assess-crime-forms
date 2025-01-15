@@ -1,5 +1,5 @@
 module Nsm
-  class MakeDecisionsParams < BaseParamValidator
+  class BasicDecisionParams < BaseParamValidator
     attribute :claim_id, :string
     attribute :save_and_exit, :boolean
 

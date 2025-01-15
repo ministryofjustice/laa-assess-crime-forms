@@ -44,7 +44,7 @@ module Nsm
     end
 
     def check_controller_params
-      param_model = Nsm::MakeDecisionsParams.new(controller_params)
+      param_model = Nsm::BasicDecisionParams.new(controller_params)
       raise param_model.error_summary.to_s unless param_model.valid?
     end
   end
