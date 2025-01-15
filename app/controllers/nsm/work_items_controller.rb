@@ -1,5 +1,7 @@
 module Nsm
   class WorkItemsController < Nsm::BaseController
+    before_action :check_controller_params
+
     ITEM_COUNT_OVERRIDE = 100
     layout nil
 
@@ -50,7 +52,7 @@ module Nsm
     def edit
       authorize(claim)
       item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
-        model.id == params[:id]
+        model.id == controller_params[:id]
       end
 
       form = WorkItemForm.new(**common_form_attributes(claim, item),
@@ -62,7 +64,7 @@ module Nsm
     def update
       authorize(claim)
       item = BaseViewModel.build(:work_item, claim, 'work_items').detect do |model|
-        model.id == params[:id]
+        model.id == controller_params[:id]
       end
 
       form = WorkItemForm.new(**common_form_attributes(claim, item), **form_params)
@@ -76,8 +78,23 @@ module Nsm
 
     private
 
+    def controller_params
+      params.permit(
+        :id,
+        :claim_id,
+        :sort_by,
+        :sort_direction,
+        :page
+      )
+    end
+
+    def check_controller_params
+      param_model = Nsm::DisbursementsParams.new(controller_params)
+      raise param_model.error_summary.to_s unless param_model.valid?
+    end
+
     def claim
-      @claim ||= Claim.load_from_app_store(params[:claim_id])
+      @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
     end
 
     def common_form_attributes(claim, item)
@@ -102,8 +119,8 @@ module Nsm
 
     def set_default_table_sort_options
       default = 'item'
-      @sort_by = params.fetch(:sort_by, default)
-      @sort_direction = params.fetch(:sort_direction, 'ascending')
+      @sort_by = controller_params.fetch(:sort_by, default)
+      @sort_direction = controller_params.fetch(:sort_direction, 'ascending')
     end
   end
 end
