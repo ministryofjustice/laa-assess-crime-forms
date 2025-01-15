@@ -1,5 +1,5 @@
 module Nsm
-  class FurtherInformationDownloadsParam < BaseParamValidator
+  class FurtherInformationDownloadsParams < BaseParamValidator
     attribute :id, :string
     attribute :file_name, :string
 
