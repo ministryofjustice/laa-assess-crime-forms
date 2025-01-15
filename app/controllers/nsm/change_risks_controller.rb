@@ -1,5 +1,7 @@
 module Nsm
   class ChangeRisksController < Nsm::BaseController
+    before_action :check_controller_params
+
     def edit
       authorize(claim)
       risk = ChangeRiskForm.new(claim: claim, risk_level: claim.risk)

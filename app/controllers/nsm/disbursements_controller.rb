@@ -3,6 +3,7 @@ module Nsm
     ITEM_COUNT_OVERRIDE = 100
     layout nil
 
+    before_action :check_controller_params
     before_action :set_default_table_sort_options, only: %i[index adjusted]
 
     include Nsm::AdjustmentConcern
