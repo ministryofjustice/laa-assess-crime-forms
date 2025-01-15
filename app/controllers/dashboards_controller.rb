@@ -19,8 +19,7 @@ class DashboardsController < ApplicationController
   end
 
   def nav_select
-    param = params.fetch(:nav_select, 'prior_authority')
-    @nav_select ||= !FeatureFlags.nsm_insights.enabled? && param == 'nsm' ? 'prior_authority' : param
+    @nav_select ||= params.fetch(:nav_select, 'prior_authority')
   end
 
   def authorize_supervisor
@@ -52,16 +51,9 @@ class DashboardsController < ApplicationController
   end
 
   def default_params
-    if FeatureFlags.nsm_insights.enabled?
-      {
-        page: params.fetch(:page, '1'),
-      }
-    else
-      {
-        application_type: Submission::APPLICATION_TYPES[:prior_authority],
-        page: params.fetch(:page, '1')
-      }
-    end
+    {
+      page: params.fetch(:page, '1'),
+    }
   end
 
   def get_dashboard_ids(nav_select)

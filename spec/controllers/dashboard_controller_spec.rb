@@ -12,7 +12,7 @@ RSpec.describe DashboardsController do
                                      .and_return(nil)
         allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                      .and_return(nil)
-        allow(FeatureFlags).to receive_messages(nsm_insights: double(enabled?: true), insights: double(enabled?: true))
+        allow(FeatureFlags).to receive_messages(insights: double(enabled?: true))
         allow(subject).to receive(:current_user).and_return(double(supervisor?: true))
         allow(SearchForm).to receive(:new).and_return(search_form_instance)
         get :show, params: { nav_select:, search_form: }

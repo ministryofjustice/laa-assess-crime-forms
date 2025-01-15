@@ -8,7 +8,7 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
                                    .and_return('14,6')
       allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                    .and_return('14')
-      allow(FeatureFlags).to receive_messages(insights: double(enabled?: true), nsm_insights: double(enabled?: true))
+      allow(FeatureFlags).to receive_messages(insights: double(enabled?: true))
     end
 
     context 'when I am not a supervisor' do
@@ -35,79 +35,19 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
         expect(page).to have_css('.moj-primary-navigation__link', text: 'Prior authority')
       end
 
-      context 'when nsm feature flag is enabled' do
-        before do
-          allow(FeatureFlags).to receive(:nsm_insights).and_return(double(enabled?: true))
-          visit dashboard_path
-        end
-
-        it 'shows both service navigation tabs and search tab' do
-          expect(page).to have_css('.moj-primary-navigation__link', text: 'Prior authority')
-          expect(page).to have_css('.moj-primary-navigation__link', text: 'Non-standard magistrates')
-          expect(page).to have_css('.moj-primary-navigation__link', text: 'Search')
-        end
-
-        it 'can navigate to nsm analytics' do
-          click_on 'Non-standard magistrates'
-          expect(page).to have_current_path(new_dashboard_path(nav_select: 'nsm'))
-
-          expect(page).to have_css('.govuk-heading-xl', text: 'Non-standard magistrates')
-        end
+      it 'shows both service navigation tabs and search tab' do
+        visit dashboard_path
+        expect(page).to have_css('.moj-primary-navigation__link', text: 'Prior authority')
+        expect(page).to have_css('.moj-primary-navigation__link', text: 'Non-standard magistrates')
+        expect(page).to have_css('.moj-primary-navigation__link', text: 'Search')
       end
 
-      context 'when nsm feature flag is disabled' do
-        before do
-          allow(FeatureFlags).to receive(:nsm_insights).and_return(double(enabled?: false))
-          visit dashboard_path
-        end
+      it 'can navigate to nsm analytics' do
+        visit dashboard_path
+        click_on 'Non-standard magistrates'
+        expect(page).to have_current_path(new_dashboard_path(nav_select: 'nsm'))
 
-        it 'does not have tab to navigate to nsm analytics' do
-          expect(page).not_to have_text('Non-standard magistrates')
-        end
-
-        it 'cannot navigate to nsm page' do
-          visit new_dashboard_path(nav_select: 'nsm')
-
-          expect(page).to have_css('.govuk-heading-xl', text: 'Prior authority')
-        end
-
-        context 'using search' do
-          let(:endpoint) { 'https://appstore.example.com/v1/submissions/searches' }
-          let(:payload) do
-            {
-              application_type: 'crm4',
-              page: 1,
-              query: 'LAA-ABCDEF',
-              per_page: 20,
-              sort_by: 'last_updated',
-              sort_direction: 'descending',
-            }
-          end
-
-          let(:stub) do
-            stub_request(:post, endpoint).with(body: payload).to_return(
-              status: 200,
-              body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
-            )
-          end
-
-          before do
-            stub
-            visit dashboard_path
-            click_on 'Search'
-          end
-
-          it 'automatically defaults to CRM4 search' do
-            within('.search-panel') do
-              fill_in 'Enter any combination', with: 'LAA-ABCDEF'
-              click_on 'Search'
-            end
-          end
-
-          it 'does not show options for application type' do
-            expect(page).not_to have_text('Which service do you want to search?')
-          end
-        end
+        expect(page).to have_css('.govuk-heading-xl', text: 'Non-standard magistrates')
       end
 
       context 'when dashboard ids are not provided' do
@@ -116,7 +56,6 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
                                        .and_return(nil)
           allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                        .and_return(nil)
-          allow(FeatureFlags).to receive(:nsm_insights).and_return(double(enabled?: true))
         end
 
         it 'does not show any prior authority dashboards' do
