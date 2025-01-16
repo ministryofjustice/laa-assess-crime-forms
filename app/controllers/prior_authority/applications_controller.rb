@@ -1,5 +1,6 @@
 module PriorAuthority
   class ApplicationsController < PriorAuthority::BaseController
+    before_action :check_controller_params
     before_action :set_default_table_sort_options, only: %i[your open closed]
     before_action :authorize_list, only: %i[your open closed]
 
@@ -27,7 +28,7 @@ module PriorAuthority
     end
 
     def show
-      application = PriorAuthorityApplication.load_from_app_store(params[:id])
+      application = PriorAuthorityApplication.load_from_app_store(controller_params[:id])
       authorize(application)
       @summary = BaseViewModel.build(:application_summary, application)
       @details = BaseViewModel.build(:application_details, application)
@@ -35,14 +36,28 @@ module PriorAuthority
 
     private
 
+    def controller_params
+      params.permit(
+        :id,
+        :sort_by,
+        :sort_direction,
+        :page
+      )
+    end
+
+    def check_controller_params
+      param_model = PriorAuthority::ApplicationsParams.new(controller_params)
+      raise param_model.error_summary.to_s unless param_model.valid?
+    end
+
     def set_default_table_sort_options
       default = 'date_updated'
-      @sort_by = params.fetch(:sort_by, default)
-      @sort_direction = params.fetch(:sort_direction, 'descending')
+      @sort_by = controller_params.fetch(:sort_by, default)
+      @sort_direction = controller_params.fetch(:sort_direction, 'descending')
     end
 
     def submission_id
-      params[:id]
+      controller_params[:id]
     end
 
     def secondary_id
