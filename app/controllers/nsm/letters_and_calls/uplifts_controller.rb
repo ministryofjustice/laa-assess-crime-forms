@@ -1,6 +1,7 @@
 module Nsm
   module LettersAndCalls
     class UpliftsController < Nsm::BaseController
+      before_action :check_controller_params
       def edit
         authorize(claim)
         form = Uplift::LettersAndCallsForm.new(claim:)
@@ -23,13 +24,22 @@ module Nsm
       private
 
       def claim
-        @claim ||= Claim.load_from_app_store(params[:claim_id])
+        @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
       end
 
       def form_params
         params.require(:nsm_uplift_letters_and_calls_form)
               .permit(:explanation)
               .merge(current_user:)
+      end
+
+      def controller_params
+        params.permit(:claim_id)
+      end
+
+      def check_controller_params
+        param_model = Nsm::BasicClaimParams.new(controller_params)
+        raise param_model.error_summary.to_s unless param_model.valid?
       end
     end
   end
