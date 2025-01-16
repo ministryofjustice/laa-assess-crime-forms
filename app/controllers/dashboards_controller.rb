@@ -1,4 +1,5 @@
 class DashboardsController < ApplicationController
+  before_action :check_controller_params
   before_action :authorize_supervisor
 
   layout 'dashboard'
@@ -19,7 +20,7 @@ class DashboardsController < ApplicationController
   end
 
   def nav_select
-    @nav_select ||= params.fetch(:nav_select, 'prior_authority')
+    @nav_select ||= controller_params.fetch(:nav_select, 'prior_authority')
   end
 
   def authorize_supervisor
@@ -32,6 +33,15 @@ class DashboardsController < ApplicationController
   def load_overview
     dashboard_ids = get_dashboard_ids(nav_select)
     @iframe_urls = generate_metabase_urls(dashboard_ids)
+  end
+
+  def controller_params
+    params.permit(:nav_select)
+  end
+
+  def check_controller_params
+    param_model = Nsm::DashboardsParams.new(controller_params)
+    raise param_model.error_summary.to_s unless param_model.valid?
   end
 
   def search_params
