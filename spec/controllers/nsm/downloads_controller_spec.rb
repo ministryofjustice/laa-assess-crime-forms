@@ -22,7 +22,9 @@ RSpec.describe Nsm::DownloadsController, type: :controller do
     end
 
     it 'raises error with invalid params' do
-      expect { get :show, params: { claim_id: 'garbage', id: claim.data['supporting_evidences'].first['id'] } }.to raise_error RuntimeError
+      expect do
+        get :show, params: { claim_id: 'garbage', id: claim.data['supporting_evidences'].first['id'] }
+      end.to raise_error RuntimeError
     end
   end
 end
