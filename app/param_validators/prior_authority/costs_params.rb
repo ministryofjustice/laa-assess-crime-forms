@@ -1,5 +1,5 @@
 module PriorAuthority
-  class AdditionalCostsParams < BaseParamValidator
+  class CostsParams < BaseParamValidator
     attribute :id, :string
     attribute :application_id, :string
 

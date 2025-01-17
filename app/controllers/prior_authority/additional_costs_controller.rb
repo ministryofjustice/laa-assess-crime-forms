@@ -75,7 +75,7 @@ module PriorAuthority
     end
 
     def check_controller_params
-      param_model = PriorAuthority::AdditionalCostsParams.new(controller_params)
+      param_model = PriorAuthority::CostsParams.new(controller_params)
       raise param_model.error_summary.to_s unless param_model.valid?
     end
   end
