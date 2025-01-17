@@ -37,7 +37,7 @@ module PriorAuthority
       render 'prior_authority/shared/confirm_delete_adjustment',
              locals: { item_name: t('.travel_cost'),
                        deletion_path: prior_authority_application_travel_cost_path(controller_params[:application_id],
-                       controller_params[:id]) }
+                                                                                   controller_params[:id]) }
     end
 
     def destroy
