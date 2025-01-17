@@ -3,7 +3,7 @@ module Nsm
     attribute :claim_id, :string
     attribute :id, :string
 
-    validates :claim_id, presence: true
-    validates :id, presence: true
+    validates :claim_id, presence: true, is_a_uuid: true
+    validates :id, presence: true, is_a_uuid: true
   end
 end
