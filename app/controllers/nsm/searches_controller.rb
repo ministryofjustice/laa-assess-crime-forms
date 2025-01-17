@@ -41,5 +41,9 @@ module Nsm
     def set_current_section
       @current_section = :search
     end
+
+    def controller_params
+      false
+    end
   end
 end
