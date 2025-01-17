@@ -51,7 +51,5 @@ class ErrorsController < ApplicationController
     status_from_path
   end
 
-  def controller_params
-    false
-  end
+  def controller_params; end
 end

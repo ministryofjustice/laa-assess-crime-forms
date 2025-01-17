@@ -35,8 +35,6 @@ module PriorAuthority
       }
     end
 
-    def controller_params
-      false
-    end
+    def controller_params; end
   end
 end
