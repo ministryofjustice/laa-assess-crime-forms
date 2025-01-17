@@ -16,8 +16,8 @@ module Nsm
     end
 
     # In normal circumstances this code would never be triggered because ActionController
-    # would error if either of the params weren't present, hence no coverage
-    # but keeping this in here in case threat actors found an exploit
+    #  would error if either of the params weren't present, hence no coverage
+    #  but keeping this in here in case threat actors found an exploit
     # :nocov:
     def check_controller_params
       param_model = Nsm::FurtherInformationDownloadsParams.new(controller_params)
