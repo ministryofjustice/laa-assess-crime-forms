@@ -1,11 +1,13 @@
 module PriorAuthority
   class ServiceCostsController < PriorAuthority::BaseController
+    before_action :check_controller_params
+
     def edit
       authorize(submission, :edit?)
       all_service_costs = BaseViewModel.build(:service_cost, submission, 'quotes')
 
       item = all_service_costs.find do |model|
-        model.id == params[:id]
+        model.id == controller_params[:id]
       end
 
       form = ServiceCostForm.new(submission:, item:, **item.form_attributes)
@@ -18,7 +20,7 @@ module PriorAuthority
       all_service_costs = BaseViewModel.build(:service_cost, submission, 'quotes')
 
       item = all_service_costs.find do |model|
-        model.id == params[:id]
+        model.id == controller_params[:id]
       end
 
       form = ServiceCostForm.new(submission:, item:, **form_params(item))
@@ -35,20 +37,20 @@ module PriorAuthority
       service_type = t(submission.data['service_type'], scope: 'prior_authority.service_types')
       render 'prior_authority/shared/confirm_delete_adjustment',
              locals: { item_name: t('.service_type_cost', service_type:),
-                       deletion_path: prior_authority_application_service_cost_path(submission, params[:id]) }
+                       deletion_path: prior_authority_application_service_cost_path(submission, controller_params[:id]) }
     end
 
     def destroy
       authorize(submission, :update?)
       deleter = PriorAuthority::AdjustmentDeleter.new(params, :service_cost, current_user, submission)
       deleter.call!
-      redirect_to prior_authority_application_adjustments_path(params[:application_id])
+      redirect_to prior_authority_application_adjustments_path(controller_params[:application_id])
     end
 
     private
 
     def submission
-      @submission ||= PriorAuthorityApplication.load_from_app_store(params[:application_id])
+      @submission ||= PriorAuthorityApplication.load_from_app_store(controller_params[:application_id])
     end
 
     def form_params(item)
@@ -65,6 +67,15 @@ module PriorAuthority
         cost_item_type: item.cost_item_type,
         id: params[:id]
       )
+    end
+
+    def controller_params
+      params.permit(:id, :application_id, :save_and_exit)
+    end
+
+    def check_controller_params
+      param_model = PriorAuthority::ServiceCostParams.new(controller_params)
+      raise param_model.error_summary.to_s unless param_model.valid?
     end
   end
 end
