@@ -89,7 +89,7 @@ module Nsm
     end
 
     def check_controller_params
-      param_model = Nsm::DisbursementsParams.new(controller_params)
+      param_model = Nsm::WorkItemsParams.new(controller_params)
       raise param_model.error_summary.to_s unless param_model.valid?
     end
 
