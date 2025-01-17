@@ -6,7 +6,7 @@ module Nsm
     attribute :sort_direction, :string
     attribute :page, :integer
 
-    validates :claim_id, presence: true
+    validates :claim_id, presence: true, is_a_uuid: true
     validates :sort_by, inclusion: {
                           in: %w[item cost date fee_earner claimed_time claimed_uplift
                                  claimed_net_cost allowed_net_cost]

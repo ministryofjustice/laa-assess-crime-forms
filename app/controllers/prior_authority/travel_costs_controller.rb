@@ -42,7 +42,7 @@ module PriorAuthority
 
     def destroy
       authorize(submission, :update?)
-      deleter = PriorAuthority::AdjustmentDeleter.new(params, :travel_cost, current_user, submission)
+      deleter = PriorAuthority::AdjustmentDeleter.new(controller_params, :travel_cost, current_user, submission)
       deleter.call!
       redirect_to prior_authority_application_adjustments_path(controller_params[:application_id])
     end
