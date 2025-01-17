@@ -3,7 +3,5 @@ class HomeController < ApplicationController
 
   private
 
-  def controller_params
-    false
-  end
+  def controller_params; end
 end
