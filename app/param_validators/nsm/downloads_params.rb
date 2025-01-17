@@ -4,6 +4,6 @@ module Nsm
     attribute :id, :string
 
     validates :claim_id, presence: true, is_a_uuid: true
-    validates :id, presence: true, is_a_uuid: true
+    validates :id, presence: true
   end
 end
