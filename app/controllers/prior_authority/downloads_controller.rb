@@ -6,7 +6,7 @@ module PriorAuthority
 
     def show
       authorize(PriorAuthorityApplication, :show?)
-      redirect_to_file_download(params[:id], params[:file_name])
+      redirect_to_file_download(controller_params[:id], controller_params[:file_name])
     end
 
     private
