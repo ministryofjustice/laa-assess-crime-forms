@@ -31,7 +31,6 @@ module PriorAuthority
       @application ||= PriorAuthorityApplication.load_from_app_store(controller_params[:application_id])
     end
 
-
     def controller_params
       params.permit(:application_id)
     end
