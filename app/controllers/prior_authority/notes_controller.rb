@@ -29,7 +29,7 @@ module PriorAuthority
     end
 
     def submission
-      @submission ||= PriorAuthorityApplication.load_from_app_store(ontroller_params[:application_id])
+      @submission ||= PriorAuthorityApplication.load_from_app_store(controller_params[:application_id])
     end
 
     def controller_params
