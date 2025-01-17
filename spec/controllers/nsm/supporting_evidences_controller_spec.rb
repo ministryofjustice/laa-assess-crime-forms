@@ -30,5 +30,9 @@ RSpec.describe Nsm::SupportingEvidencesController do
       expect(controller).to have_received(:render).with(locals: { claim:, claim_summary: })
       expect(response).to be_successful
     end
+
+    it 'errors if params are invalid' do
+      expect{get :show, params: { claim_id: 'garbage' }}.to raise_error RuntimeError
+    end
   end
 end
