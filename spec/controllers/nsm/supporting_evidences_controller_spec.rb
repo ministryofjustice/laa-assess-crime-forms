@@ -32,7 +32,7 @@ RSpec.describe Nsm::SupportingEvidencesController do
     end
 
     it 'errors if params are invalid' do
-      expect{get :show, params: { claim_id: 'garbage' }}.to raise_error RuntimeError
+      expect { get :show, params: { claim_id: 'garbage' } }.to raise_error RuntimeError
     end
   end
 end
