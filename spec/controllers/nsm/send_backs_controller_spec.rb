@@ -14,6 +14,10 @@ RSpec.describe Nsm::SendBacksController do
       get :edit, params: { claim_id: claim.id }
       expect(response).to be_successful
     end
+
+    it 'raises an error when the claim_id is not a uuid' do
+      expect{ get :edit, params: { claim_id:'garbage' } }.to raise_error RuntimeError
+    end
   end
 
   describe 'show' do
