@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe PriorAuthority::DownloadsController, type: :controller do
-  let(:user) { create :caseworker }
-  let(:document) { double(:document, id:, file_name:) }
   let(:id) { '123456789' }
 
   before do
