@@ -67,16 +67,16 @@ class DashboardsController < ApplicationController
   end
 
   def get_dashboard_ids(nav_select)
+    # the else condition can never be reached because of param validation
     if nav_select == 'prior_authority'
       ids = ENV.fetch('METABASE_PA_DASHBOARD_IDS')&.split(',')
     elsif nav_select == 'nsm'
       ids = ENV.fetch('METABASE_NSM_DASHBOARD_IDS')&.split(',')
-    # this code can never be reached because of param validation
-    #  :nocov:
     else
+      # :nocov:
       false
+      # :nocov:
     end
-    #  :nocov:
     ids || []
   end
 
