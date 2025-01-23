@@ -71,7 +71,12 @@ class DashboardsController < ApplicationController
       ids = ENV.fetch('METABASE_PA_DASHBOARD_IDS')&.split(',')
     elsif nav_select == 'nsm'
       ids = ENV.fetch('METABASE_NSM_DASHBOARD_IDS')&.split(',')
+    # this code can never be reached because of param validation
+    #  :nocov:
+    else
+      false
     end
+    #  :nocov:
     ids || []
   end
 
