@@ -113,6 +113,10 @@ class Claim < Submission
     section_adjusted?(totals[:additional_fees][:total])
   end
 
+  def gdpr_documents_deleted?
+    data.key?('gdpr_documents_deleted') ? data['gdpr_documents_deleted'] : false
+  end
+
   private
 
   def youth_court_fee_claimed

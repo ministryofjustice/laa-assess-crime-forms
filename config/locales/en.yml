@@ -1,4 +1,3 @@
-
 en:
   service:
     name: Assess a crime form
@@ -36,16 +35,16 @@ en:
 
   shared:
     application_type:
-      crm4: 'Prior authority'
-      crm7: 'Non-standard magistrates'
+      crm4: "Prior authority"
+      crm7: "Non-standard magistrates"
     submission_noun:
-      crm4: 'application'
-      crm7: 'claim'
-      generic: 'claim or application'
+      crm4: "application"
+      crm7: "claim"
+      generic: "claim or application"
     save_changes: Save changes
     cancel: Cancel
-    true: 'Yes'
-    false: 'No'
+    true: "Yes"
+    false: "No"
     claim_button_group:
       make_decision: Make a decision
       send_back: Send back to provider
@@ -88,7 +87,8 @@ en:
           caseworker: Caseworker
           last_updated: Last updated
           status_with_assignment: Status
-
+    gdpr_documents_deleted:
+      message: Uploaded files deleted. Your uploads are deleted after 6 months to keep your data safe.
   generic:
     cost: cost
 

@@ -150,5 +150,24 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
         %r{/421727bc53d347ea81edd6a00833671d\?response-content-disposition=attachment%3B%20filename%3D%22Some_Info.pdf}
       )
     end
+
+    context 'when GDPR documents have been deleted' do
+      before do
+        claim.data['gdpr_documents_deleted'] = true
+        visit nsm_claim_claim_details_path(claim)
+      end
+
+      it 'shows GDPR documents deleted message' do
+        expect(page).to have_content('Uploaded files deleted. Your uploads are deleted after 6 months to keep your data safe.')
+      end
+
+      it 'does not show supporting evidence table' do
+        expect(page).to have_no_css('.govuk-table__row')
+      end
+
+      it 'does not show send by post info' do
+        expect(page).to have_no_content('The provider has chosen to post the evidence to:')
+      end
+    end
   end
 end

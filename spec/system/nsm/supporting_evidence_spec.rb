@@ -90,5 +90,21 @@ RSpec.describe 'Supporting Evidence', :stub_oauth_token do
         expect(page).to have_no_content('The provider has chosen to post the evidence to:')
       end
     end
+
+    context 'GDPR documents deleted' do
+      let(:claim) { build(:claim, data: build(:nsm_data, gdpr_documents_deleted: true)) }
+
+      it 'shows GDPR documents deleted message' do
+        expect(page).to have_content('Uploaded files deleted. Your uploads are deleted after 6 months to keep your data safe.')
+      end
+
+      it 'does not show supporting evidence table' do
+        expect(page).to have_no_css('.govuk-table__row')
+      end
+
+      it 'does not show send by post info' do
+        expect(page).to have_no_content('The provider has chosen to post the evidence to:')
+      end
+    end
   end
 end
