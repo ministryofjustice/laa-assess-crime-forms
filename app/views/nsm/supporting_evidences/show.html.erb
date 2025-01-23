@@ -9,8 +9,11 @@
     <h2 class="govuk-heading-m">
       <%= t('.heading') %>
     </h2>
-    <% unless @supporting_evidence.empty? %>
+    <% unless @supporting_evidence.empty? || claim.gdpr_documents_deleted? %>
       <%= render 'supporting_evidence_table', { claim: claim, supporting_evidence: @supporting_evidence } %>
+    <% end %>
+    <% if claim.gdpr_documents_deleted? %>
+      <%= render 'shared/gdpr_documents_deleted' %>
     <% end %>
     <% if FeatureFlags.postal_evidence.enabled? && claim_summary.send_by_post %>
       <%= render 'send_by_post' %>
