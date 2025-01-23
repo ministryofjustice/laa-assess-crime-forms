@@ -49,10 +49,6 @@ module Nsm
         safe_join(response_content)
       end
 
-      def gdpr_documents_deleted?
-        submission.data['gdpr_documents_deleted'].nil? ? false : submission.data['gdpr_documents_deleted']
-      end
-
       def document_link(document)
         link_to(
           document.file_name,
@@ -81,6 +77,10 @@ module Nsm
 
       def url_helpers
         Rails.application.routes.url_helpers
+      end
+
+      def gdpr_documents_deleted?
+        submission.data.key?('gdpr_documents_deleted') ? submission.data['gdpr_documents_deleted'] : false
       end
     end
   end

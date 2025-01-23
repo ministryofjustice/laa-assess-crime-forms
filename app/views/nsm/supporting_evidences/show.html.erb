@@ -9,16 +9,15 @@
     <h2 class="govuk-heading-m">
       <%= t('.heading') %>
     </h2>
-    <% unless @supporting_evidence.empty? || claim.gdpr_documents_deleted? %>
-      <%= render 'supporting_evidence_table', { claim: claim, supporting_evidence: @supporting_evidence } %>
-    <% end %>
     <% if claim.gdpr_documents_deleted? %>
       <%= render 'shared/gdpr_documents_deleted' %>
+    <% elsif @supporting_evidence.present? %>
+      <%= render 'supporting_evidence_table', { claim: claim, supporting_evidence: @supporting_evidence } %>
     <% end %>
     <% if FeatureFlags.postal_evidence.enabled? && claim_summary.send_by_post %>
       <%= render 'send_by_post' %>
     <% end %>
-    <% unless @supporting_evidence.empty? %>
+    <% unless @supporting_evidence.empty? || claim.gdpr_documents_deleted? %>
       <%= render "shared/pagination", { pagy: @pagy, item: t('.heading') } %>
     <% end %>
     <%= render partial: 'shared/claim_button_group', locals: { claim: claim } %>

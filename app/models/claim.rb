@@ -114,7 +114,7 @@ class Claim < Submission
   end
 
   def gdpr_documents_deleted?
-    data['gdpr_documents_deleted'].nil? ? false : data['gdpr_documents_deleted']
+    data.key?('gdpr_documents_deleted') ? data['gdpr_documents_deleted'] : false
   end
 
   private
