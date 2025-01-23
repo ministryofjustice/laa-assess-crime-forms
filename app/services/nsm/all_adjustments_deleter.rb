@@ -4,7 +4,7 @@ module Nsm
 
     def initialize(params, adjustment_type, current_user, submission)
       super
-      @comment = params[:nsm_delete_adjustments_form][:comment]
+      @comment = params[:comment]
     end
 
     def call

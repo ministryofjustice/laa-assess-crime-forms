@@ -34,5 +34,7 @@ module PriorAuthority
         page: params.fetch(:page, '1')
       }
     end
+
+    def controller_params; end
   end
 end

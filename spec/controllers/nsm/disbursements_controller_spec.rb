@@ -29,6 +29,22 @@ RSpec.describe Nsm::DisbursementsController do
       get :show, params: { claim_id: claim.id, id: disbursement[:id] }
       expect(response).to be_successful
     end
+
+    it 'raises an error if the id param is not a uuid' do
+      expect { get :show, params: { claim_id: claim.id, id: '1234' } }.to raise_error RuntimeError
+    end
+
+    it 'raises error of pagy params are invalid' do
+      expect do
+        get :show, params: {
+          claim_id: claim.id,
+          id: disbursement[:id],
+          sort_by: 'garbage',
+          sort_direction: 'garbage',
+          page: 'garbage'
+        }
+      end.to raise_error RuntimeError
+    end
   end
 
   describe 'edit' do

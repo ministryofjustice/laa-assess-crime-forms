@@ -4,5 +4,9 @@ module About
     before_action :skip_authorization
 
     def index; end
+
+    private
+
+    def controller_params; end
   end
 end

@@ -12,15 +12,26 @@ RSpec.describe DashboardsController do
                                      .and_return(nil)
         allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                      .and_return(nil)
-        allow(FeatureFlags).to receive_messages(nsm_insights: double(enabled?: true), insights: double(enabled?: true))
+        allow(FeatureFlags).to receive_messages(insights: double(enabled?: true))
         allow(subject).to receive(:current_user).and_return(double(supervisor?: true))
         allow(SearchForm).to receive(:new).and_return(search_form_instance)
-        get :show, params: { nav_select:, search_form: }
+      end
+
+      context 'selected tab is invalid' do
+        let(:nav_select) { 'garbage' }
+
+        it 'raises a validation error' do
+          expect { get :show, params: { nav_select:, search_form: } }.to raise_error RuntimeError
+        end
       end
 
       context 'selected tab is search' do
         let(:nav_select) { 'search' }
         let(:search_form) { { query: 'query' } }
+
+        before do
+          get :show, params: { nav_select:, search_form: }
+        end
 
         context 'user has executed a valid search' do
           it 'generates a SearchForm' do
@@ -48,6 +59,10 @@ RSpec.describe DashboardsController do
       context 'selected tab is prior authority' do
         let(:nav_select) { 'prior_authority' }
 
+        before do
+          get :show, params: { nav_select:, search_form: }
+        end
+
         it 'returns no urls' do
           expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
         end
@@ -56,15 +71,11 @@ RSpec.describe DashboardsController do
       context 'selected tab is nsm' do
         let(:nav_select) { 'nsm' }
 
-        it 'returns no urls' do
-          expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
+        before do
+          get :show, params: { nav_select:, search_form: }
         end
-      end
 
-      context 'invalid service provided' do
-        let(:nav_select) { 'random' }
-
-        it 'returns no ids' do
+        it 'returns no urls' do
           expect(subject.instance_variable_get(:@iframe_urls)).to eq([])
         end
       end

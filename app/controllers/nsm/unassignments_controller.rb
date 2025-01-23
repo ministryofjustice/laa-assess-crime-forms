@@ -1,5 +1,6 @@
 module Nsm
   class UnassignmentsController < Nsm::BaseController
+    before_action :check_controller_params
     before_action :check_claim_assigned
 
     def edit
@@ -27,7 +28,7 @@ module Nsm
     end
 
     def claim
-      @claim ||= Claim.load_from_app_store(params[:claim_id])
+      @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
     end
 
     def send_back_params
@@ -35,5 +36,19 @@ module Nsm
         :comment
       ).merge(current_user:)
     end
+
+    def controller_params
+      params.permit(:claim_id)
+    end
+
+    # In normal circumstances this code would never be triggered because ActionController
+    #  would error if either of the params weren't present, hence no coverage
+    #  but keeping this in here in case threat actors found an exploit
+    # :nocov:
+    def check_controller_params
+      param_model = Nsm::BasicClaimParams.new(controller_params)
+      raise param_model.error_summary.to_s unless param_model.valid?
+    end
+    # :nocov:
   end
 end

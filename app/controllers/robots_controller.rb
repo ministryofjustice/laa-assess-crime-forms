@@ -9,4 +9,8 @@ class RobotsController < ApplicationController
       render :disallow
     end
   end
+
+  private
+
+  def controller_params; end
 end

@@ -15,6 +15,17 @@ RSpec.describe Nsm::WorkItemsController do
       get :index, params: { claim_id: claim.id }
       expect(response).to be_successful
     end
+
+    it 'raises an error when pagy params are invalid' do
+      expect do
+        get :index, params: {
+          claim_id: claim.id,
+          sort_by: 'garbage',
+          sort_direction: 'garbage',
+          page: 'garbage'
+        }
+      end.to raise_error RuntimeError
+    end
   end
 
   describe 'adjusted' do

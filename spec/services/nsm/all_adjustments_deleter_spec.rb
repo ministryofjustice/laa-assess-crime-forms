@@ -5,7 +5,7 @@ RSpec.describe Nsm::AllAdjustmentsDeleter do
     subject(:service) { described_class.new(params, nil, user, claim) }
 
     let(:params) { { claim_id: claim.id, id: item_id, nsm_delete_adjustments_form: { comment: 'test' } } }
-    let(:item_id) { '1234-adj' }
+    let(:item_id) { 'd8fde347-ce4c-4f85-a3f8-54dca7c0dfc4' }
     let(:user) { create(:caseworker) }
     let(:claim) { build(:claim, data:) }
     let(:data) { build(:nsm_data, :with_adjustments) }

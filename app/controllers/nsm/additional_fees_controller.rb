@@ -1,6 +1,7 @@
 module Nsm
   class AdditionalFeesController < Nsm::BaseController
     before_action :fail_if_no_additional_fees
+    before_action :check_controller_params
 
     layout nil
 
@@ -30,7 +31,7 @@ module Nsm
       authorize(claim, :show?)
       rows = BaseViewModel.build(:additional_fees_summary, claim).rows
       item = rows.detect do |model|
-        model.type == params[:id].to_sym
+        model.type == controller_params[:id].to_sym
       end
 
       render locals: { claim:, item:, }
@@ -40,7 +41,7 @@ module Nsm
       authorize(claim, :edit?)
       rows = BaseViewModel.build(:additional_fees_summary, claim).rows
       item = rows.detect do |model|
-        model.type == params[:id].to_sym
+        model.type == controller_params[:id].to_sym
       end
 
       form = form_class.new(claim:, item:, **item.form_attributes)
@@ -52,7 +53,7 @@ module Nsm
       authorize(claim, :edit?)
       rows = BaseViewModel.build(:additional_fees_summary, claim).rows
       item = rows.detect do |model|
-        model.type == params[:id].to_sym
+        model.type == controller_params[:id].to_sym
       end
       form = form_class.new(claim:, item:, **form_params)
       if form.save!
@@ -77,11 +78,11 @@ module Nsm
     private
 
     def claim
-      @claim ||= Claim.load_from_app_store(params[:claim_id])
+      @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
     end
 
     def form_class
-      FORMS[params[:id]]
+      FORMS[controller_params[:id]]
     end
 
     def form_params
@@ -92,6 +93,15 @@ module Nsm
 
     def fail_if_no_additional_fees
       raise ActionController::RoutingError, 'Not Found' unless claim.additional_fees?
+    end
+
+    def controller_params
+      params.permit(:id, :claim_id)
+    end
+
+    def check_controller_params
+      param_model = Nsm::AdditionalFeesParams.new(controller_params)
+      raise param_model.error_summary.to_s unless param_model.valid?
     end
   end
 end

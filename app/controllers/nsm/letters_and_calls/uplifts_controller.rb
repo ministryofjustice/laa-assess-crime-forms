@@ -1,6 +1,8 @@
 module Nsm
   module LettersAndCalls
     class UpliftsController < Nsm::BaseController
+      before_action :check_controller_params
+
       def edit
         authorize(claim)
         form = Uplift::LettersAndCallsForm.new(claim:)
@@ -23,7 +25,7 @@ module Nsm
       private
 
       def claim
-        @claim ||= Claim.load_from_app_store(params[:claim_id])
+        @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
       end
 
       def form_params
@@ -31,6 +33,20 @@ module Nsm
               .permit(:explanation)
               .merge(current_user:)
       end
+
+      def controller_params
+        params.permit(:claim_id)
+      end
+
+      # In normal circumstances this code would never be triggered because ActionController
+      #  would error if either of the params weren't present, hence no coverage
+      #  but keeping this in here in case threat actors found an exploit
+      # :nocov:
+      def check_controller_params
+        param_model = Nsm::BasicClaimParams.new(controller_params)
+        raise param_model.error_summary.to_s unless param_model.valid?
+      end
+      # :nocov:
     end
   end
 end

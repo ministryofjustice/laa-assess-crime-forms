@@ -65,4 +65,10 @@ class ApplicationController < ActionController::Base
   def secondary_id
     params[:id]
   end
+
+  # :nocov:
+  def controller_params
+    raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
+  end
+  # :nocov:
 end

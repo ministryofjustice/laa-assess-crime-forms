@@ -75,3 +75,5 @@ group :test do
   gem 'super_diff'
   gem 'webmock', '~> 3.24'
 end
+
+gem "uuid", "~> 2.3"

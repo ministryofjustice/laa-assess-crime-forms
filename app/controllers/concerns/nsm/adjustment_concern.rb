@@ -18,7 +18,7 @@ module Nsm
 
     def destroy
       authorize(claim, :update?)
-      Nsm::AdjustmentDeleter.new(params, resource_klass, current_user, claim).call!
+      Nsm::AdjustmentDeleter.new(controller_params, resource_klass, current_user, claim).call!
       redirect_to destroy_redirect, flash: { success: t('.success') }
     end
 

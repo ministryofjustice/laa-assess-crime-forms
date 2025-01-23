@@ -14,6 +14,10 @@ RSpec.describe Nsm::MakeDecisionsController do
       get :edit, params: { claim_id: claim.id }
       expect(response).to be_successful
     end
+
+    it 'raises error when the claim_id param is not a uuid' do
+      expect { get :edit, params: { claim_id: 'garbage' } }.to raise_error RuntimeError
+    end
   end
 
   describe 'update' do
