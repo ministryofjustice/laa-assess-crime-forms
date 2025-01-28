@@ -67,7 +67,6 @@ class ApplicationController < ActionController::Base
     params[:id]
   end
 
-
   # :nocov:
   def check_controller_params; end
   # :nocov:
