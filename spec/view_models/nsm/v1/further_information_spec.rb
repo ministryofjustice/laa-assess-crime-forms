@@ -22,6 +22,10 @@ RSpec.describe Nsm::V1::FurtherInformation do
     }
   end
 
+  before do
+    allow(submission).to receive_messages(data: params, namespace: 'Nsm', json_schema_version: 1, gdpr_documents_deleted: false)
+  end
+
   describe '#data' do
     it 'shows correct table data' do
       allow(subject).to receive(:submission).and_return(submission)
@@ -63,6 +67,39 @@ RSpec.describe Nsm::V1::FurtherInformation do
 
     it 'returns nil if no documents' do
       expect(subject.uploaded_documents).to be_empty
+    end
+  end
+
+  describe '#provider_response' do
+    before do
+      allow(subject).to receive(:submission).and_return(submission)
+    end
+
+    context 'when gdpr_documents_deleted is true' do
+      before do
+        allow(subject).to receive(:gdpr_documents_deleted?).and_return(true)
+        allow(ApplicationController.renderer)
+          .to receive(:render).with(partial: 'shared/gdpr_documents_deleted')
+          .and_return('<p>GDPR documents deleted</p>')
+      end
+
+      it 'returns the information supplied and GDPR notice' do
+        expect(subject.provider_response)
+          .to eq('<p>Please find...</p>&lt;p&gt;GDPR documents deleted&lt;/p&gt;')
+      end
+    end
+
+    context 'when gdpr_documents_deleted is false' do
+      before do
+        allow(subject).to receive(:gdpr_documents_deleted?).and_return(false)
+      end
+
+      it 'returns the information supplied and document links' do
+        response_with_doc = '<p>Please find...</p><br>' \
+                            '<a href="/nsm/further_information_downloads/421727bc53d347ea81edd6a00833671d' \
+                            '?file_name=Some_Info.pdf">Some_Info.pdf</a>'
+        expect(subject.provider_response).to eq(response_with_doc)
+      end
     end
   end
 end
