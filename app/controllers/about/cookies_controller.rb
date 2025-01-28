@@ -41,7 +41,5 @@ module About
     def cookie_params
       params.permit(cookie: :analytics)
     end
-
-    def controller_params; end
   end
 end

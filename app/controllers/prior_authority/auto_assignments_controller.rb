@@ -10,9 +10,5 @@ module PriorAuthority
         redirect_to your_prior_authority_applications_path, flash: { notice: t('.no_unassigned_applications') }
       end
     end
-
-    private
-
-    def controller_params; end
   end
 end

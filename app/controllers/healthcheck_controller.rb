@@ -19,6 +19,4 @@ class HealthcheckController < ApplicationController
       commit_id: ENV.fetch('APP_GIT_COMMIT', nil)
     }
   end
-
-  def controller_params; end
 end

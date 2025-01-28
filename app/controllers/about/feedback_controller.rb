@@ -34,7 +34,5 @@ module About
     def application_environment
       ENV.fetch('ENV', Rails.env).to_s
     end
-
-    def controller_params; end
   end
 end
