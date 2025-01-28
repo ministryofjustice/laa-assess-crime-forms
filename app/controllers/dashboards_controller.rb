@@ -1,5 +1,4 @@
 class DashboardsController < ApplicationController
-  before_action :check_controller_params
   before_action :authorize_supervisor
 
   layout 'dashboard'

@@ -1,7 +1,5 @@
 module PriorAuthority
   class SendBacksController < PriorAuthority::BaseController
-    before_action :check_controller_params
-
     def show
       authorize(submission, :show?)
       @summary = BaseViewModel.build(:application_summary, submission)

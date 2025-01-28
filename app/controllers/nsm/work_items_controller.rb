@@ -1,7 +1,5 @@
 module Nsm
   class WorkItemsController < Nsm::BaseController
-    before_action :check_controller_params
-
     ITEM_COUNT_OVERRIDE = 100
     layout nil
 

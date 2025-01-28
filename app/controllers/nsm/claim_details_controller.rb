@@ -1,7 +1,5 @@
 module Nsm
   class ClaimDetailsController < Nsm::BaseController
-    before_action :check_controller_params
-
     def show
       authorize(claim)
       claim_summary = BaseViewModel.build(:claim_summary, claim)

@@ -1,7 +1,5 @@
 module PriorAuthority
   class DownloadsController < BaseController
-    before_action :check_controller_params
-
     include FileRedirectable
 
     def show

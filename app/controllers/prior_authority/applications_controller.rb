@@ -1,6 +1,5 @@
 module PriorAuthority
   class ApplicationsController < PriorAuthority::BaseController
-    before_action :check_controller_params
     before_action :set_default_table_sort_options, only: %i[your open closed]
     before_action :authorize_list, only: %i[your open closed]
 

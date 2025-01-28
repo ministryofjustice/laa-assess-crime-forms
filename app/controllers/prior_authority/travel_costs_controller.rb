@@ -1,7 +1,5 @@
 module PriorAuthority
   class TravelCostsController < PriorAuthority::BaseController
-    before_action :check_controller_params
-
     def edit
       authorize(submission, :edit?)
       all_travel_costs = BaseViewModel.build(:travel_cost, submission, 'quotes')

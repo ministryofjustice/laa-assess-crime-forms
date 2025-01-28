@@ -1,8 +1,6 @@
 module Nsm
   module LettersAndCalls
     class UpliftsController < Nsm::BaseController
-      before_action :check_controller_params
-
       def edit
         authorize(claim)
         form = Uplift::LettersAndCallsForm.new(claim:)

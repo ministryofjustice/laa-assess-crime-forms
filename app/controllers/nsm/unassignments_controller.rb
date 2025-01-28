@@ -1,6 +1,5 @@
 module Nsm
   class UnassignmentsController < Nsm::BaseController
-    before_action :check_controller_params
     before_action :check_claim_assigned
 
     def edit

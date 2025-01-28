@@ -1,7 +1,5 @@
 module PriorAuthority
   class EventsController < PriorAuthority::BaseController
-    before_action :check_controller_params
-
     def index
       application = PriorAuthorityApplication.load_from_app_store(controller_params[:application_id])
       authorize(application, :show?)

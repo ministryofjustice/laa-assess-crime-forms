@@ -1,7 +1,5 @@
 module Nsm
   class FurtherInformationDownloadsController < Nsm::BaseController
-    before_action :check_controller_params
-
     include FileRedirectable
 
     def show

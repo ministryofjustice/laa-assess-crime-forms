@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
   before_action :check_maintenance_mode
+  before_action :check_controller_params
   before_action :authenticate_user!
   before_action :set_security_headers
   before_action :set_default_cookies
@@ -66,9 +67,8 @@ class ApplicationController < ActionController::Base
     params[:id]
   end
 
+
   # :nocov:
-  def controller_params
-    raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
-  end
+  def check_controller_params; end
   # :nocov:
 end

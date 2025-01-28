@@ -1,7 +1,5 @@
 module PriorAuthority
   class DecisionsController < PriorAuthority::BaseController
-    before_action :check_controller_params
-
     def show
       authorize(submission)
       @summary = BaseViewModel.build(:application_summary, submission)

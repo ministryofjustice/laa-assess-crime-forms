@@ -1,7 +1,5 @@
 module PriorAuthority
   class AdditionalCostsController < PriorAuthority::BaseController
-    before_action :check_controller_params
-
     def edit
       authorize(submission)
       all_costs = BaseViewModel.build(:additional_cost, submission, 'additional_costs')

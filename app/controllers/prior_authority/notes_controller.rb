@@ -1,7 +1,5 @@
 module PriorAuthority
   class NotesController < PriorAuthority::BaseController
-    before_action :check_controller_params
-
     def new
       authorize(submission, :edit?)
       @form_object = NoteForm.new(submission:)

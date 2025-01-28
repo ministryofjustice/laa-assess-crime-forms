@@ -1,7 +1,5 @@
 module PriorAuthority
   class ServiceCostsController < PriorAuthority::BaseController
-    before_action :check_controller_params
-
     def edit
       authorize(submission, :edit?)
       all_service_costs = BaseViewModel.build(:service_cost, submission, 'quotes')

@@ -1,7 +1,5 @@
 module Nsm
   class MakeDecisionsController < Nsm::BaseController
-    before_action :check_controller_params
-
     def edit
       authorize(claim)
       decision = MakeDecisionForm.new(claim:, **claim.data.slice(*MakeDecisionForm.attribute_names))

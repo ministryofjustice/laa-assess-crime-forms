@@ -1,7 +1,5 @@
 module PriorAuthority
   class UnassignmentsController < PriorAuthority::BaseController
-    before_action :check_controller_params
-
     def new
       authorize(application, :unassign?)
       @form = UnassignmentForm.new(application:)

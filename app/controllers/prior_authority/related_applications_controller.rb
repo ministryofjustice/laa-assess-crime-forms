@@ -1,6 +1,5 @@
 module PriorAuthority
   class RelatedApplicationsController < PriorAuthority::BaseController
-    before_action :check_controller_params
     before_action :set_default_table_sort_options, only: %i[index]
 
     def index

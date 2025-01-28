@@ -1,6 +1,5 @@
 module Nsm
   class LettersAndCallsController < Nsm::BaseController
-    before_action :check_controller_params
     layout nil
 
     include Nsm::AdjustmentConcern

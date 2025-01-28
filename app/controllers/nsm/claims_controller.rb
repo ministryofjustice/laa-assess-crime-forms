@@ -3,7 +3,6 @@ module Nsm
     include AssignmentConcern
     before_action :set_default_table_sort_options, only: %i[your open closed]
     before_action :authorize_list, only: %i[your open closed]
-    before_action :check_controller_params
 
     def your
       return redirect_to open_nsm_claims_path unless policy(Claim).assign?

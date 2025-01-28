@@ -1,7 +1,5 @@
 module PriorAuthority
   class ManualAssignmentsController < PriorAuthority::AssignmentsController
-    before_action :check_controller_params
-
     def new
       authorize(application, :assign?)
       @form = ManualAssignmentForm.new

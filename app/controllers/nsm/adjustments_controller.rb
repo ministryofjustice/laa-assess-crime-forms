@@ -1,7 +1,5 @@
 module Nsm
   class AdjustmentsController < Nsm::BaseController
-    before_action :check_controller_params
-
     def confirm_deletion
       authorize claim, :update?
       form = DeleteAdjustmentsForm.new

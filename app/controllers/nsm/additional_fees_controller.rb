@@ -1,7 +1,6 @@
 module Nsm
   class AdditionalFeesController < Nsm::BaseController
     before_action :fail_if_no_additional_fees
-    before_action :check_controller_params
 
     layout nil
 
@@ -82,7 +81,7 @@ module Nsm
     end
 
     def form_class
-      FORMS[controller_params[:id]]
+      FORMS[params[:id]]
     end
 
     def form_params
