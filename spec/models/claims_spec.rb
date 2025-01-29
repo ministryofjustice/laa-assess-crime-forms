@@ -43,4 +43,30 @@ RSpec.describe Claim do
       end
     end
   end
+
+  describe '#gdpr_documents_deleted?' do
+    context 'when gdpr_documents_deleted is true' do
+      let(:data) { build(:nsm_data, gdpr_documents_deleted: true) }
+
+      it 'returns true' do
+        expect(claim.gdpr_documents_deleted?).to be true
+      end
+    end
+
+    context 'when gdpr_documents_deleted is false' do
+      let(:data) { build(:nsm_data, gdpr_documents_deleted: false) }
+
+      it 'returns false' do
+        expect(claim.gdpr_documents_deleted?).to be false
+      end
+    end
+
+    context 'when gdpr_documents_deleted is not present' do
+      let(:data) { build(:nsm_data) }
+
+      it 'returns false' do
+        expect(claim.gdpr_documents_deleted?).to be false
+      end
+    end
+  end
 end
