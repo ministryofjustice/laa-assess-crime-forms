@@ -98,7 +98,6 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
     %i[your_nsm_claims
        open_nsm_claims
        closed_nsm_claims
-       about_feedback_index
        about_cookies
        your_prior_authority_applications].each do |path|
       describe "#{path} screen" do
