@@ -92,25 +92,4 @@ module ApplicationHelper
       :open
     end
   end
-
-  def current_namespace
-    if controller.controller_path.start_with?('nsm')
-      'nsm'
-    elsif controller.controller_path.start_with?('prior_authority')
-      'prior_authority'
-    else
-      'default'
-    end
-  end
-
-  def feedback_url
-    case current_namespace
-    when 'nsm'
-      'https://www.smartsurvey.co.uk/s/62ZC6B/'
-    when 'prior_authority'
-      'https://www.smartsurvey.co.uk/s/UPNBDF/'
-    else
-      '_blank'
-    end
-  end
 end

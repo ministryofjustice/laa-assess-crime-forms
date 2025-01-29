@@ -8,7 +8,7 @@
       <% end %>
     </strong>
     <span class="govuk-phase-banner__text">
-        <%= t('.phase_description_html', feedback: feedback_url) %>
+        <%= t('.phase_description_html', feedback: yield(:feedback_link)) %>
     </span>
   </p>
 </div>
