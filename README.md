@@ -11,13 +11,13 @@ rails 7.0.42.0
 Clone the repository, and follow these steps in order.
 The instructions assume you have [Homebrew](https://brew.sh) installed in your machine, as well as use some ruby version manager, usually [rbenv](https://github.com/rbenv/rbenv). If not, please install all this first.
 
-**1. Pre-requirements**
+### 1. Pre-requirements
 
 * `brew bundle`
 * `gem install bundler`
 * `bundle install`
 
-**2. Configuration**
+### 2. Configuration
 
 * Copy `.env.development` to `.env.development.local` and modify with suitable values for your local machine
 * Copy `.env.test` to `.env.test.local` and modify with suitable values for your local machine
@@ -34,12 +34,12 @@ After you've defined your DB configuration in the above files, run the following
 * `bin/rails db:prepare` (for the development database)
 * `RAILS_ENV=test bin/rails db:prepare` (for the test database)
 
-**3. GOV.UK Frontend (styles, javascript and other assets)**
+### 3. GOV.UK Frontend (styles, javascript and other assets)
 
 * `yarn install --frozen-lockfile`
 * `rails assets:precompile` [require on first occassion at least]
 
-**4. Database preparation**
+### 4. Database preparation
 
 #### Seed data
 
@@ -81,7 +81,7 @@ To add a user into the database that can be authenticated into the app, use the 
 On UAT the email must be an MoJ AzureAD email address (i.e. ending @justice.gov.uk) as
 omniauthentication is handed off to AzureAD.
 
-**5. Run app locally**
+### 5. Run app locally
 
 Once all the above is done, you should be able to run the application as follows:
 
@@ -91,7 +91,7 @@ You can also compile assets manually with `rails assets:precompile` at any time,
 
 If you ever feel something is not right with the CSS or JS, run `rails assets:clobber` to purge the local cache.
 
-**6. Sidekiq Auth**
+### 6. Sidekiq Auth
 
 We currently protect the sidekiq UI on production servers (Dev, UAT, Prod, Dev-CRM4) with basic auth.
 
@@ -108,7 +108,7 @@ kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | j
 kubectl get secret sidekiq-auth -o jsonpath='{.data}' --namespace=$NAMESPACE | jq -r '.password' | base64 --decode && echo " "
 ```
 
-**7. Tests**
+### 7. Tests
 
 To run the test suite, run `bundle exec rspec`.
 This will run everything except for the accessibility tests, which are slow, and by default only run on CI.
@@ -117,11 +117,11 @@ Our test suite will report as failing if line and branch coverage is not at 100%
 We expect every feature's happy path to have a system test, and every screen to have an accessibility test.
 
 
-**8. Development end-to-end setup**
+### 8. Development end-to-end setup
 
 see [Development e2e setup](https://github.com/ministryofjustice/laa-submit-crime-forms/blob/main/docs/development-e2e-setup.md)
 
-**9. Developing**
+### 9. Developing
 
 #### Overcommit
 
@@ -138,8 +138,7 @@ Add it to your.env.development.local under GOVUK_NOTIFY_API_KEY
 
 To use the location service you will need an Ordnance Survey API key. You can generate a test key at https://osdatahub.os.uk/projects. Create and account, create a test project, add the OS Names API to that project, then move its key to OS_API_KEY in .env.development.local
 
-**10. Helm Template**
-
+### 10. Helm Template
 
 #### Security Context
 We have a default [k8s security context ](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#securitycontext-v1-core) defined in our _helpers.tpl template file. It sets the following:
@@ -149,7 +148,7 @@ We have a default [k8s security context ](https://kubernetes.io/docs/reference/g
 - seccompProfile.type - The Secure Computing Mode (Linux kernel feature that limits syscalls that processes can run) options to use by this container. Currenly defaults to RuntimeDefault which is the [widely accepted default profile](https://docs.docker.com/engine/security/seccomp/#significant-syscalls-blocked-by-the-default-profile)
 - capabilities - The POSIX capabilities to add/drop when running containers. Currently defaults to drop["ALL"] which means all of these capabilities will be dropped - since this doesn't cause any issues, it's best to keep as is for security reasons until there's a need for change
 
-**11. Controller Param Validation**
+### 11. Controller Param Validation
 
 We have an additional layer of security in our controllers to validate url parameters via "Param Validators" which exist in the [param_validator directory](app/param_validators). These use [ActiveModel](https://api.rubyonrails.org/classes/ActiveModel/Model.html) to define expectations of parameters used within the controller. We then have the ability to use the valid? method or check individual validation errors to handle actions accordingly for invalid params. This is not a replacement for constraints and we should still use those when we want to definitely block certain request configurations (e.g. blocking a list of ip addresses).
 
