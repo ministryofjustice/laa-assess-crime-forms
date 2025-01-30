@@ -38,9 +38,8 @@ class DashboardsController < ApplicationController
     params.permit(:nav_select)
   end
 
-  def check_controller_params
-    param_model = Nsm::DashboardsParams.new(controller_params)
-    raise param_model.error_summary.to_s unless param_model.valid?
+  def param_validator
+    Nsm::DashboardsParams.new(controller_params)
   end
 
   def search_params

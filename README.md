@@ -152,6 +152,8 @@ We have a default [k8s security context ](https://kubernetes.io/docs/reference/g
 
 We have an additional layer of security in our controllers to validate url parameters via "Param Validators" which exist in the [param_validator directory](app/param_validators). These use [ActiveModel](https://api.rubyonrails.org/classes/ActiveModel/Model.html) to define expectations of parameters used within the controller. We then have the ability to use the valid? method or check individual validation errors to handle actions accordingly for invalid params. This is not a replacement for constraints and we should still use those when we want to definitely block certain request configurations (e.g. blocking a list of ip addresses).
 
+By default, if you include an instantiation of a param validator in the param_validator method in a controller, an error will be raised on the controller if the params supplied are invalid. This behavior can be overriden by overriding the check_controller_params method.
+
 ## Maintenance Mode
 This service has a maintenance mode which can be used to prevent users taking actions on the system.
 

@@ -41,9 +41,8 @@ module Nsm
       params.permit(:claim_id, :save_and_exit)
     end
 
-    def check_controller_params
-      param_model = Nsm::BasicDecisionParams.new(controller_params)
-      raise param_model.error_summary.to_s unless param_model.valid?
+    def param_validator
+      Nsm::BasicDecisionParams.new(controller_params)
     end
   end
 end

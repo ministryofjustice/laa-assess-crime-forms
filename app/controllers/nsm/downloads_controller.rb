@@ -16,9 +16,8 @@ module Nsm
       params.permit(:claim_id, :id)
     end
 
-    def check_controller_params
-      param_model = Nsm::DownloadsParams.new(controller_params)
-      raise param_model.error_summary.to_s unless param_model.valid?
+    def param_validator
+      Nsm::DownloadsParams.new(controller_params)
     end
   end
 end

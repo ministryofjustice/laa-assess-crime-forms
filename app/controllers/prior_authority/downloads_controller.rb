@@ -13,9 +13,8 @@ module PriorAuthority
       params.permit(:id, :file_name)
     end
 
-    def check_controller_params
-      param_model = PriorAuthority::DownloadsParams.new(controller_params)
-      raise param_model.error_summary.to_s unless param_model.valid?
+    def param_validator
+      PriorAuthority::DownloadsParams.new(controller_params)
     end
   end
 end

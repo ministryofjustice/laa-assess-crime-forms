@@ -98,9 +98,8 @@ module Nsm
       params.permit(:id, :claim_id)
     end
 
-    def check_controller_params
-      param_model = Nsm::AdditionalFeesParams.new(controller_params)
-      raise param_model.error_summary.to_s unless param_model.valid?
+    def param_validator
+      Nsm::AdditionalFeesParams.new(controller_params)
     end
   end
 end

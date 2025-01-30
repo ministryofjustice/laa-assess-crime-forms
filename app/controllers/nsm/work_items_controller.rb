@@ -86,9 +86,8 @@ module Nsm
       )
     end
 
-    def check_controller_params
-      param_model = Nsm::WorkItemsParams.new(controller_params)
-      raise param_model.error_summary.to_s unless param_model.valid?
+    def param_validator
+      Nsm::WorkItemsParams.new(controller_params)
     end
 
     def claim

@@ -67,7 +67,14 @@ class ApplicationController < ActionController::Base
     params[:id]
   end
 
-  # :nocov:
-  def check_controller_params; end
-  # :nocov:
+  # by default, if a param validator is instantiated, raise an error if it's valid or not
+  # this can be overriden if you want to use different behaviour depending on the validation error
+  def check_controller_params
+    return unless param_validator
+    raise param_validator.error_summary.to_s unless param_model.valid?
+  end
+
+  def param_validator
+    nil
+  end
 end
