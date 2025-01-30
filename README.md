@@ -150,6 +150,7 @@ We have a default [k8s security context ](https://kubernetes.io/docs/reference/g
 - capabilities - The POSIX capabilities to add/drop when running containers. Currently defaults to drop["ALL"] which means all of these capabilities will be dropped - since this doesn't cause any issues, it's best to keep as is for security reasons until there's a need for change
 
 **11. Controller Param Validation**
+
 We have an additional layer of security in our controllers to validate url parameters via "Param Validators" which exist in the [param_validator directory](app/param_validators). These use [ActiveModel](https://api.rubyonrails.org/classes/ActiveModel/Model.html) to define expectations of parameters used within the controller. We then have the ability to use the valid? method or check individual validation errors to handle actions accordingly for invalid params. This is not a replacement for constraints and we should still use those when we want to definitely block certain request configurations (e.g. blocking a list of ip addresses).
 
 ## Maintenance Mode
