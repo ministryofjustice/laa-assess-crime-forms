@@ -41,13 +41,13 @@ After you've defined your DB configuration in the above files, run the following
 
 **4. Database preparation**
 
-## Seed data
+#### Seed data
 
 To reduce the overhead and complexity of creating and updating seed data to rake
 task have been added which can be used to either load the existing see data into
 the system, or export data that has been generated via the Provide/App Store route.
 
-### Loading data
+#### Loading data
 
 ```
 rails custom_seeds:load
@@ -59,7 +59,7 @@ process.
 
 By default all folders are processed during the load.
 
-### Storing data
+#### Storing data
 
 ```
 rake custom_seeds:store[<claim_id>]
@@ -70,7 +70,7 @@ It is expected that records will be generated in the Provider app and sent acros
 as opposed to being manually generated to avoid creating invalid data records.
 
 
-### Adding users
+#### Adding users
 
 ```
 rake user:add["first_name.last_name@wherever.com","first_name","last_name","my_role"]
@@ -123,7 +123,7 @@ see [Development e2e setup](https://github.com/ministryofjustice/laa-submit-crim
 
 **9. Developing**
 
-### Overcommit
+#### Overcommit
 
 [Overcommit](https://github.com/sds/overcommit) is a gem which adds git pre-commit hooks to your project. Pre-commit hooks run various
 lint checks before making a commit. Checks are configured on a project-wide basis in .overcommit.yml.
@@ -132,7 +132,7 @@ To install the git hooks locally, run `overcommit --install`. If you don't want 
 
 Once the hooks are installed, if you need to you can skip them with the `-n` flag: `git commit -n`
 
-### API keys
+#### API keys
 To send emails, you will need to generate a notifications API key. You can generate a test key at https://www.notifications.service.gov.uk/
 Add it to your.env.development.local under GOVUK_NOTIFY_API_KEY
 
@@ -141,7 +141,7 @@ To use the location service you will need an Ordnance Survey API key. You can ge
 **10. Helm Template**
 
 
-### Security Context
+#### Security Context
 We have a default [k8s security context ](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#securitycontext-v1-core) defined in our _helpers.tpl template file. It sets the following:
 
 - runAsNonRoot - Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. Currently defaults to true, this reduces attack surface
