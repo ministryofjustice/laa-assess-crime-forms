@@ -1,5 +1,5 @@
 <% content_for?(:page_title) ? yield(:page_title) : fallback_title %>
-
+<% content_for(:feedback_link) { Rails.configuration.x.prior_authority.feedback_url } %>
 <% content_for(:head) do %>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
