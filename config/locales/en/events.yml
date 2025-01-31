@@ -31,3 +31,5 @@ en:
     title: Caseworker deleted all adjustments
   event/expiry:
     title: Claim expired
+  event/gdpr_documents_deleted:
+    title: Documents deleted for GDPR
