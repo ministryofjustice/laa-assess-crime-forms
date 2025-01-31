@@ -13,68 +13,92 @@ RSpec.describe 'History events', :stub_oauth_token do
     click_on 'Accept analytics cookies'
   end
 
-  it 'shows all (visible) events in the history' do
-    supervisor = create(:supervisor)
+  context 'paginated events' do
+    before do
+      supervisor = create(:supervisor)
 
-    now = DateTime.current
+      now = DateTime.current
 
-    travel_to(now - 10.hours)
-    Event::NewVersion.build(submission: claim)
+      travel_to(now - 10.hours)
+      Event::NewVersion.build(submission: claim)
 
-    travel_to(now - 9.hours)
-    Event::Assignment.build(submission: claim, current_user: caseworker)
+      travel_to(now - 9.hours)
+      Event::Assignment.build(submission: claim, current_user: caseworker)
 
-    travel_to(now - 8.hours)
-    Event::Unassignment.build(submission: claim, user: caseworker, current_user: caseworker,
-                              comment: 'unassignment 1')
+      travel_to(now - 8.hours)
+      Event::Unassignment.build(submission: claim, user: caseworker, current_user: caseworker,
+                                comment: 'unassignment 1')
 
-    travel_to(now - 7.hours)
-    Event::Assignment.build(submission: claim, current_user: caseworker, comment: 'Manual assignment note')
+      travel_to(now - 7.hours)
+      Event::Assignment.build(submission: claim, current_user: caseworker, comment: 'Manual assignment note')
 
-    travel_to(now - 6.hours)
-    Event::ChangeRisk.build(submission: claim, explanation: 'Risk change test', previous_risk_level: 'high',
-                            current_user: caseworker)
+      travel_to(now - 6.hours)
+      Event::ChangeRisk.build(submission: claim, explanation: 'Risk change test', previous_risk_level: 'high',
+                              current_user: caseworker)
 
-    travel_to(now - 5.hours)
-    Event::Note.build(submission: claim, current_user: caseworker, note: 'User test note')
-    claim.state = 'sent_back'
-    travel_to(now - 4.hours)
-    Nsm::Event::SendBack.build(submission: claim, current_user: caseworker, previous_state: 'submitted',
-                               comment: 'Send Back test')
-    claim.current_version = 2
-    travel_to(now - 3.hours)
-    Event::NewVersion.build(submission: claim)
-    claim.state = 'granted'
-    travel_to(now - 2.hours)
-    Event::Decision.build(submission: claim, current_user: caseworker, previous_state: 'sent_back',
-                          comment: 'Decision test')
-    travel_to(now - 1.hour)
-    Event::Unassignment.build(submission: claim, user: caseworker, current_user: supervisor,
-                              comment: 'unassignment 2')
-    travel_to(now)
-    visit nsm_claim_history_path(claim)
+      travel_to(now - 5.hours)
+      Event::Note.build(submission: claim, current_user: caseworker, note: 'User test note')
+      claim.state = 'sent_back'
+      travel_to(now - 4.hours)
+      Nsm::Event::SendBack.build(submission: claim, current_user: caseworker, previous_state: 'submitted',
+                                 comment: 'Send Back test')
+      claim.current_version = 2
+      travel_to(now - 3.hours)
+      Event::NewVersion.build(submission: claim)
+      claim.state = 'granted'
+      travel_to(now - 2.hours)
+      Event::Decision.build(submission: claim, current_user: caseworker, previous_state: 'sent_back',
+                            comment: 'Decision test')
+      travel_to(now - 1.hour)
+      Event::Unassignment.build(submission: claim, user: caseworker, current_user: supervisor,
+                                comment: 'unassignment 2')
+      travel_to(now - 50.minutes)
+      Event::GdprDocumentsDeleted.build(submission: claim)
 
-    doc = Nokogiri::HTML(page.html)
-    history = doc.css(
-      '.govuk-table__body .govuk-table__cell:nth-child(2),' \
-      '.govuk-table__body .govuk-table__cell:nth-child(3) p'
-    ).map(&:text)
+      travel_to(now)
+    end
 
-    expect(history).to eq(
-      # User, Title, comment
-      [
-        'case worker', 'Caseworker removed from claim by super visor', 'unassignment 2',
-        'case worker', 'Decision made to grant claim', 'Decision test',
-        '', 'Received', 'Received from Provider with further information',
-        'case worker', 'Sent back', 'Sent back to Provider for further information',
-        'case worker', 'Caseworker note', 'User test note',
-        'case worker', 'Claim risk changed to low risk', 'Risk change test',
-        'case worker', 'Self-assigned by case worker', 'Manual assignment note',
-        'case worker', 'Caseworker removed self from claim', 'unassignment 1',
-        'case worker', 'Claim allocated to caseworker', '',
-        '', 'Received', ''
-      ]
-    )
+    it 'shows all (visible) events in the history page 1' do
+      visit nsm_claim_history_path(claim)
+
+      doc = Nokogiri::HTML(page.html)
+      history = doc.css(
+        '.govuk-table__body .govuk-table__cell:nth-child(2),' \
+        '.govuk-table__body .govuk-table__cell:nth-child(3) p'
+      ).map(&:text)
+
+      expect(history).to eq(
+        # User, Title, comment
+        [
+          '', 'Uploads deleted', 'Uploads are deleted after 6 months to keep provider data safe',
+          'case worker', 'Caseworker removed from claim by super visor', 'unassignment 2',
+          'case worker', 'Decision made to grant claim', 'Decision test',
+          '', 'Received', 'Received from Provider with further information',
+          'case worker', 'Sent back', 'Sent back to Provider for further information',
+          'case worker', 'Caseworker note', 'User test note',
+          'case worker', 'Claim risk changed to low risk', 'Risk change test',
+          'case worker', 'Self-assigned by case worker', 'Manual assignment note',
+          'case worker', 'Caseworker removed self from claim', 'unassignment 1',
+          'case worker', 'Claim allocated to caseworker', ''
+        ]
+      )
+    end
+
+    it 'shows all (visible) events in the history page 2' do
+      visit nsm_claim_history_path(claim)
+      click_on 'Next'
+
+      doc = Nokogiri::HTML(page.html)
+      history = doc.css(
+        '.govuk-table__body .govuk-table__cell:nth-child(2),' \
+        '.govuk-table__body .govuk-table__cell:nth-child(3) p'
+      ).map(&:text)
+
+      expect(history).to eq(
+        # User, Title, comment
+        ['', 'Received', '']
+      )
+    end
   end
 
   context 'when I am assigned to the claim' do
