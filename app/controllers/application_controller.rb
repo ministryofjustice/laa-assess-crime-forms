@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
     exception = param_validator.error_summary.to_s
     report_error(exception)
 
-    redirect_to errors_path, status: :unprocessable_content unless param_validator.valid?
+    redirect_to 'errors#show', status: :unprocessable_content unless param_validator.valid?
   end
 
   def param_validator
