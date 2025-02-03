@@ -92,4 +92,9 @@ module ApplicationHelper
       :open
     end
   end
+
+  def report_error(exception)
+    Sentry.capture_exception(exception) if ENV.fetch('SENTRY_DSN', nil).present?
+    Rails.logger.error(exception)
+  end
 end

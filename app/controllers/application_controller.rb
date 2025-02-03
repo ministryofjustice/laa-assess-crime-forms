@@ -71,7 +71,11 @@ class ApplicationController < ActionController::Base
   # this can be overriden if you want to use different behaviour depending on the validation error
   def check_controller_params
     return unless param_validator
-    raise param_validator.error_summary.to_s unless param_validator.valid?
+
+    exception = param_validator.error_summary.to_s
+    report_error(exception)
+
+    redirect_to errors_path, status: :unprocessable_content unless param_validator.valid?
   end
 
   def param_validator
