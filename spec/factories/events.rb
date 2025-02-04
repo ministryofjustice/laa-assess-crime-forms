@@ -98,5 +98,14 @@ FactoryBot.define do
         }
       end
     end
+
+    trait :gdpr_documents_deleted do
+      initialize_with { Event::GdprDocumentsDeleted.new(attributes) }
+      details do
+        {
+          comment: 'Docs deleted',
+        }
+      end
+    end
   end
 end
