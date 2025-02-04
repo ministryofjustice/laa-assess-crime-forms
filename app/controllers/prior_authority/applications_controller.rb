@@ -45,7 +45,7 @@ module PriorAuthority
     end
 
     def param_validator
-      PriorAuthority::ApplicationsParams.new(controller_params)
+      @param_validator ||= PriorAuthority::ApplicationsParams.new(controller_params)
     end
 
     def set_default_table_sort_options

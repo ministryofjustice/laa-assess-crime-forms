@@ -30,7 +30,7 @@ module PriorAuthority
     end
 
     def param_validator
-      PriorAuthority::RelatedApplicationsParams.new(controller_params)
+      @param_validator ||= PriorAuthority::RelatedApplicationsParams.new(controller_params)
     end
   end
 end

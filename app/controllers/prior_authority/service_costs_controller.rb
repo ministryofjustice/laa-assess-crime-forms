@@ -72,7 +72,7 @@ module PriorAuthority
     end
 
     def param_validator
-      PriorAuthority::ServiceCostParams.new(controller_params)
+      @param_validator ||= PriorAuthority::ServiceCostParams.new(controller_params)
     end
   end
 end

@@ -54,7 +54,7 @@ module Nsm
     end
 
     def param_validator
-      Nsm::ClaimsParams.new(controller_params)
+      @param_validator ||= Nsm::ClaimsParams.new(controller_params)
     end
 
     def set_default_table_sort_options

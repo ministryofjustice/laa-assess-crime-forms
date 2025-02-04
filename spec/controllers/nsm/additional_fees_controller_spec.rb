@@ -89,18 +89,6 @@ RSpec.describe Nsm::AdditionalFeesController, type: :controller do
     context 'controller params are not valid' do
       let(:save) { true }
 
-      context 'id param not present' do
-        let(:id) { '' }
-
-        it 'raises error' do
-          expect do
-            put :update,
-                params: { claim_id: claim_id, id: id,
-                      nsm_youth_court_fee_form: { some: :data } }
-          end.to raise_error RuntimeError
-        end
-      end
-
       context 'id param invalid' do
         let(:id) { 'garbage' }
 

@@ -70,12 +70,9 @@ class ApplicationController < ActionController::Base
   # by default, if a param validator is instantiated, raise an error if it's valid or not
   # this can be overriden if you want to use different behaviour depending on the validation error
   def check_controller_params
-    return unless param_validator
+    return if param_validator.blank? || param_validator&.valid?
 
-    exception = param_validator.error_summary.to_s
-    report_error(exception)
-
-    redirect_to 'errors#show', status: :unprocessable_content unless param_validator.valid?
+    raise param_validator.error_summary.to_s
   end
 
   def param_validator

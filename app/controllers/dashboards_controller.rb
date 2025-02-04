@@ -39,7 +39,7 @@ class DashboardsController < ApplicationController
   end
 
   def param_validator
-    Nsm::DashboardsParams.new(controller_params)
+    @param_validator ||= Nsm::DashboardsParams.new(controller_params)
   end
 
   def search_params

@@ -87,7 +87,7 @@ module Nsm
     end
 
     def param_validator
-      Nsm::WorkItemsParams.new(controller_params)
+      @param_validator ||= Nsm::WorkItemsParams.new(controller_params)
     end
 
     def claim
