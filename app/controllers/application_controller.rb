@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
   # this can be overriden if you want to use different behaviour depending on the validation error
   def check_controller_params
     return unless param_validator
-    raise param_validator.error_summary.to_s if param_validator.invalid?
+    raise param_validator.error_summary.to_s unless param_validator.valid?
   end
 
   def param_validator
