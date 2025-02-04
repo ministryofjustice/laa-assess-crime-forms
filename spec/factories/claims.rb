@@ -241,7 +241,7 @@ FactoryBot.define do
       disbursements do
         [
           {
-            'id' => '1234-adj',
+            'id' => 'd8fde347-ce4c-4f85-a3f8-54dca7c0dfc4',
             'details' => 'Details',
             'pricing' => 1.0,
             'vat_rate' => 0.2,
@@ -303,7 +303,7 @@ FactoryBot.define do
       work_items do
         [
           {
-            'id' => '1234-adj',
+            'id' => 'd8fde347-ce4c-4f85-a3f8-54dca7c0dfc4',
             'uplift' => 95,
             'uplift_original' => 50,
             'pricing' => 24.0,

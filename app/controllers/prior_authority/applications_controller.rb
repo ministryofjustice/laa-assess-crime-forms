@@ -27,7 +27,7 @@ module PriorAuthority
     end
 
     def show
-      application = PriorAuthorityApplication.load_from_app_store(params[:id])
+      application = PriorAuthorityApplication.load_from_app_store(controller_params[:id])
       authorize(application)
       @summary = BaseViewModel.build(:application_summary, application)
       @details = BaseViewModel.build(:application_details, application)
@@ -35,14 +35,27 @@ module PriorAuthority
 
     private
 
+    def controller_params
+      params.permit(
+        :id,
+        :sort_by,
+        :sort_direction,
+        :page
+      )
+    end
+
+    def param_validator
+      @param_validator ||= PriorAuthority::ApplicationsParams.new(controller_params)
+    end
+
     def set_default_table_sort_options
       default = 'date_updated'
-      @sort_by = params.fetch(:sort_by, default)
-      @sort_direction = params.fetch(:sort_direction, 'descending')
+      @sort_by = controller_params.fetch(:sort_by, default)
+      @sort_direction = controller_params.fetch(:sort_direction, 'descending')
     end
 
     def submission_id
-      params[:id]
+      controller_params[:id]
     end
 
     def secondary_id

@@ -14,11 +14,6 @@ feature_flags:
     development: true
     uat: true
     production: true
-  nsm_insights:
-    local: <%= ENV.fetch("NSM_INSIGHTS_ENABLED", false) %>
-    development: true
-    uat: true
-    production: true
   search:
     local: <%= ENV.fetch("SEARCH", true) %>
     development: true

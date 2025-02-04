@@ -15,7 +15,7 @@ module PriorAuthority
     def create
       authorize(submission, :update?)
       @form_object = SendBackForm.new(form_params)
-      if params['save_and_exit']
+      if controller_params[:save_and_exit]
         @form_object.stash
         redirect_to your_prior_authority_applications_path
       elsif @form_object.save
@@ -39,7 +39,15 @@ module PriorAuthority
     end
 
     def submission
-      @submission ||= PriorAuthorityApplication.load_from_app_store(params[:application_id])
+      @submission ||= PriorAuthorityApplication.load_from_app_store(controller_params[:application_id])
+    end
+
+    def controller_params
+      params.permit(:application_id, :save_and_exit)
+    end
+
+    def param_validator
+      @param_validator ||= PriorAuthority::DecisionsParams.new(controller_params)
     end
   end
 end

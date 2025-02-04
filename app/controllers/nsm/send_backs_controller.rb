@@ -15,7 +15,7 @@ module Nsm
     def update
       authorize(claim)
       send_back = SendBackForm.new(claim:, **send_back_params)
-      if params['save_and_exit']
+      if controller_params[:save_and_exit]
         send_back.stash
         redirect_to your_nsm_claims_path
       elsif send_back.save
@@ -28,13 +28,21 @@ module Nsm
     private
 
     def claim
-      @claim ||= Claim.load_from_app_store(params[:claim_id])
+      @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
     end
 
     def send_back_params
       params.require(:nsm_send_back_form).permit(
         :send_back_comment,
       ).merge(current_user:)
+    end
+
+    def controller_params
+      params.permit(:claim_id, :save_and_exit)
+    end
+
+    def param_validator
+      @param_validator ||= Nsm::BasicDecisionParams.new(controller_params)
     end
   end
 end

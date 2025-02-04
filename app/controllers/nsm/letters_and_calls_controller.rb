@@ -39,7 +39,7 @@ module Nsm
     def show
       authorize(claim)
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
-        model.type.value == params[:id]
+        model.type.value == controller_params[:id]
       end
 
       render locals: { claim:, item: }
@@ -48,7 +48,7 @@ module Nsm
     def edit
       authorize(claim)
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
-        model.type.value == params[:id]
+        model.type.value == controller_params[:id]
       end
       form = form_class.new(claim:, item:, **item.form_attributes)
 
@@ -58,7 +58,7 @@ module Nsm
     def update
       authorize(claim)
       item = BaseViewModel.build(:letter_and_call, claim, 'letters_and_calls').detect do |model|
-        model.type.value == params[:id]
+        model.type.value == controller_params[:id]
       end
       form = form_class.new(claim:, item:, **form_params)
 
@@ -72,11 +72,11 @@ module Nsm
     private
 
     def claim
-      @claim ||= Claim.load_from_app_store(params[:claim_id])
+      @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
     end
 
     def form_class
-      FORMS[params[:id]]
+      FORMS[controller_params[:id]]
     end
 
     def form_params
@@ -88,6 +88,14 @@ module Nsm
         current_user: current_user,
         type: params[:id]
       )
+    end
+
+    def controller_params
+      params.permit(:claim_id, :id)
+    end
+
+    def param_validator
+      @param_validator ||= Nsm::LettersAndCallsParams.new(controller_params)
     end
   end
 end

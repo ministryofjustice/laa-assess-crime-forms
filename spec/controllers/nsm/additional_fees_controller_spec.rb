@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Nsm::AdditionalFeesController do
+RSpec.describe Nsm::AdditionalFeesController, type: :controller do
   let(:rep_order_date) { '2024-12-06' }
   let(:claim) do
     build(:claim, data: data, assigned_user_id: user.id)
@@ -63,16 +63,21 @@ RSpec.describe Nsm::AdditionalFeesController do
 
   describe 'update' do
     let(:form) { instance_double(Nsm::YouthCourtFeeForm, save!: save) }
+    let(:id) { 'youth_court_fee' }
+    let(:claim_id) { claim.id }
 
     before do
       allow(Nsm::YouthCourtFeeForm).to receive(:new).and_return(form)
-      put :update,
-          params: { claim_id: claim.id, id: 'youth_court_fee',
-                    nsm_youth_court_fee_form: { some: :data } }
     end
 
     context 'when form save is successful' do
       let(:save) { true }
+
+      before do
+        put :update,
+            params: { claim_id: claim_id, id: id,
+                      nsm_youth_court_fee_form: { some: :data } }
+      end
 
       it 'redirects' do
         expect(controller).to redirect_to(
@@ -81,8 +86,30 @@ RSpec.describe Nsm::AdditionalFeesController do
       end
     end
 
+    context 'controller params are not valid' do
+      let(:save) { true }
+
+      context 'id param invalid' do
+        let(:id) { 'garbage' }
+
+        it 'raises error' do
+          expect do
+            put :update,
+                params: { claim_id: claim_id, id: id,
+                      nsm_youth_court_fee_form: { some: :data } }
+          end.to raise_error RuntimeError
+        end
+      end
+    end
+
     context 'when form save is unsuccessful' do
       let(:save) { false }
+
+      before do
+        put :update,
+            params: { claim_id: claim_id, id: id,
+                      nsm_youth_court_fee_form: { some: :data } }
+      end
 
       it 'renders rather than redirects' do
         expect(response).to be_successful

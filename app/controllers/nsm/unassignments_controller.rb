@@ -27,13 +27,21 @@ module Nsm
     end
 
     def claim
-      @claim ||= Claim.load_from_app_store(params[:claim_id])
+      @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
     end
 
     def send_back_params
       params.require(:nsm_unassignment_form).permit(
         :comment
       ).merge(current_user:)
+    end
+
+    def controller_params
+      params.permit(:claim_id)
+    end
+
+    def param_validator
+      @param_validator ||= Nsm::BasicClaimParams.new(controller_params)
     end
   end
 end

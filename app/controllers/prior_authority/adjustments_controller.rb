@@ -11,5 +11,15 @@ module PriorAuthority
       @key_information = BaseViewModel.build(:key_information, application)
       render locals: { application:, application_summary:, service_cost:, core_cost_summary:, editable: }
     end
+
+    private
+
+    def controller_params
+      params.permit(:application_id)
+    end
+
+    def param_validator
+      @param_validator ||= PriorAuthority::BasicApplicationParams.new(controller_params)
+    end
   end
 end

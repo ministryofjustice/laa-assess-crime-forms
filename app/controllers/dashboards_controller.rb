@@ -19,8 +19,7 @@ class DashboardsController < ApplicationController
   end
 
   def nav_select
-    param = params.fetch(:nav_select, 'prior_authority')
-    @nav_select ||= !FeatureFlags.nsm_insights.enabled? && param == 'nsm' ? 'prior_authority' : param
+    @nav_select ||= controller_params.fetch(:nav_select, 'prior_authority')
   end
 
   def authorize_supervisor
@@ -33,6 +32,14 @@ class DashboardsController < ApplicationController
   def load_overview
     dashboard_ids = get_dashboard_ids(nav_select)
     @iframe_urls = generate_metabase_urls(dashboard_ids)
+  end
+
+  def controller_params
+    params.permit(:nav_select)
+  end
+
+  def param_validator
+    @param_validator ||= Nsm::DashboardsParams.new(controller_params)
   end
 
   def search_params
@@ -52,23 +59,21 @@ class DashboardsController < ApplicationController
   end
 
   def default_params
-    if FeatureFlags.nsm_insights.enabled?
-      {
-        page: params.fetch(:page, '1'),
-      }
-    else
-      {
-        application_type: Submission::APPLICATION_TYPES[:prior_authority],
-        page: params.fetch(:page, '1')
-      }
-    end
+    {
+      page: params.fetch(:page, '1'),
+    }
   end
 
   def get_dashboard_ids(nav_select)
+    # the else condition can never be reached because of param validation
     if nav_select == 'prior_authority'
       ids = ENV.fetch('METABASE_PA_DASHBOARD_IDS')&.split(',')
     elsif nav_select == 'nsm'
       ids = ENV.fetch('METABASE_NSM_DASHBOARD_IDS')&.split(',')
+    else
+      # :nocov:
+      false
+      # :nocov:
     end
     ids || []
   end

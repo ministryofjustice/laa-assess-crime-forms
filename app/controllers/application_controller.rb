@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
   before_action :check_maintenance_mode
+  before_action :check_controller_params
   before_action :authenticate_user!
   before_action :set_security_headers
   before_action :set_default_cookies
@@ -64,5 +65,16 @@ class ApplicationController < ActionController::Base
 
   def secondary_id
     params[:id]
+  end
+
+  # by default, if a param validator is instantiated, raise an error if it's valid or not
+  # this can be overriden if you want to use different behaviour depending on the validation error
+  def check_controller_params
+    return unless param_validator
+    raise param_validator.error_summary.to_s unless param_validator.valid?
+  end
+
+  def param_validator
+    nil
   end
 end

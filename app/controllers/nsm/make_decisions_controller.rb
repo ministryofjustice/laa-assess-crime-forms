@@ -8,8 +8,8 @@ module Nsm
 
     def update
       authorize(claim)
-      decision = MakeDecisionForm.new(claim:, **decision_params)
-      if params['save_and_exit']
+      decision = MakeDecisionForm.new(claim:, **form_params)
+      if controller_params[:save_and_exit]
         decision.stash
         redirect_to your_nsm_claims_path
       elsif decision.save
@@ -28,13 +28,21 @@ module Nsm
     end
 
     def claim
-      @claim ||= Claim.load_from_app_store(params[:claim_id])
+      @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
     end
 
-    def decision_params
+    def form_params
       params.require(:nsm_make_decision_form).permit(
         :state, :grant_comment, :partial_comment, :reject_comment
       ).merge(current_user:)
+    end
+
+    def controller_params
+      params.permit(:claim_id, :save_and_exit)
+    end
+
+    def param_validator
+      @param_validator ||= Nsm::BasicDecisionParams.new(controller_params)
     end
   end
 end

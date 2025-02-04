@@ -23,13 +23,21 @@ module Nsm
       private
 
       def claim
-        @claim ||= Claim.load_from_app_store(params[:claim_id])
+        @claim ||= Claim.load_from_app_store(controller_params[:claim_id])
       end
 
       def form_params
         params.require(:nsm_uplift_work_items_form)
               .permit(:explanation)
               .merge(current_user:)
+      end
+
+      def controller_params
+        params.permit(:claim_id)
+      end
+
+      def param_validator
+        @param_validator ||= Nsm::BasicClaimParams.new(controller_params)
       end
     end
   end

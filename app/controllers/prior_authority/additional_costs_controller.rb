@@ -4,7 +4,7 @@ module PriorAuthority
       authorize(submission)
       all_costs = BaseViewModel.build(:additional_cost, submission, 'additional_costs')
       index = all_costs.index do |model|
-        model.id == params[:id]
+        model.id == controller_params[:id]
       end
 
       item = all_costs[index]
@@ -17,7 +17,7 @@ module PriorAuthority
       authorize(submission)
       all_costs = BaseViewModel.build(:additional_cost, submission, 'additional_costs')
       index = all_costs.index do |model|
-        model.id == params[:id]
+        model.id == controller_params[:id]
       end
 
       item = all_costs[index]
@@ -33,18 +33,19 @@ module PriorAuthority
 
     def confirm_deletion
       authorize(submission, :edit?)
-      index = submission.data['additional_costs'].index { _1['id'] == params[:id] }
+      index = submission.data['additional_costs'].index { _1['id'] == controller_params[:id] }
       render 'prior_authority/shared/confirm_delete_adjustment',
              locals: {
                item_name: t('.additional_cost', n: index + 1),
-               deletion_path: prior_authority_application_additional_cost_path(params[:application_id], params[:id])
+               deletion_path: prior_authority_application_additional_cost_path(controller_params[:application_id],
+                                                                               controller_params[:id])
              }
     end
 
     def destroy
       authorize(submission, :edit?)
-      PriorAuthority::AdjustmentDeleter.new(params, :additional_cost, current_user, submission).call!
-      redirect_to prior_authority_application_adjustments_path(params[:application_id])
+      PriorAuthority::AdjustmentDeleter.new(controller_params, :additional_cost, current_user, submission).call!
+      redirect_to prior_authority_application_adjustments_path(controller_params[:application_id])
     end
 
     private
@@ -64,7 +65,15 @@ module PriorAuthority
     end
 
     def submission
-      @submission ||= PriorAuthorityApplication.load_from_app_store(params[:application_id])
+      @submission ||= PriorAuthorityApplication.load_from_app_store(controller_params[:application_id])
+    end
+
+    def controller_params
+      params.permit(:id, :application_id)
+    end
+
+    def param_validator
+      @param_validator ||= PriorAuthority::CostsParams.new(controller_params)
     end
   end
 end
