@@ -70,9 +70,7 @@ class ApplicationController < ActionController::Base
   # by default, if a param validator is instantiated, raise an error if it's valid or not
   # this can be overriden if you want to use different behaviour depending on the validation error
   def check_controller_params
-    return if param_validator.blank? || param_validator&.valid?
-
-    raise param_validator.error_summary.to_s
+    raise param_validator.error_summary.to_s if param_validator.invalid?
   end
 
   def param_validator
