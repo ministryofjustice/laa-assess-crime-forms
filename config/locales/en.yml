@@ -88,7 +88,7 @@ en:
           last_updated: Last updated
           status_with_assignment: Status
     gdpr_documents_deleted:
-      message: Uploaded files deleted. Your uploads are deleted after 6 months to keep your data safe.
+      message: Uploaded files deleted. Uploads are deleted after 6 months to keep the provider’s data safe.
   generic:
     cost: cost
 
