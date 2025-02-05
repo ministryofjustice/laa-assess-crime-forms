@@ -158,7 +158,7 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
       end
 
       it 'shows GDPR documents deleted message' do
-        expect(page).to have_content('Uploaded files deleted. Your uploads are deleted after 6 months to keep your data safe.')
+        expect(page).to have_content I18n.t('shared.gdpr_documents_deleted.message')
       end
 
       it 'does not show supporting evidence table' do
