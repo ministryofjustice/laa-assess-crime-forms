@@ -31,8 +31,8 @@ module Nsm
     end
 
     def send_back_params
-      params.require(:nsm_unassignment_form).permit(
-        :comment
+      params.expect(
+        nsm_unassignment_form: [:comment]
       ).merge(current_user:)
     end
 

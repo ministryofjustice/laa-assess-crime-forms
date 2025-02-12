@@ -7,8 +7,8 @@ module PriorAuthority
 
     def create
       authorize(application, :unassign?)
-      @form = UnassignmentForm.new(params.require(:prior_authority_unassignment_form)
-                                         .permit(:comment)
+      @form = UnassignmentForm.new(params
+                                         .expect(prior_authority_unassignment_form: [:comment])
                                          .merge(application:))
       if @form.valid?
         process_unassignment(@form.comment)

@@ -28,10 +28,10 @@ module PriorAuthority
     private
 
     def form_params
-      params.require(:prior_authority_send_back_form).permit(
-        :further_information_explanation,
-        :incorrect_information_explanation,
-        updates_needed: []
+      params.expect(
+        prior_authority_send_back_form: [:further_information_explanation,
+                                         :incorrect_information_explanation,
+                                         { updates_needed: [] }]
       ).merge(
         current_user:,
         submission:,

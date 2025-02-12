@@ -52,14 +52,14 @@ module PriorAuthority
     end
 
     def form_params(item)
-      params.require(:prior_authority_service_cost_form).permit(
-        :cost_type,
-        :period,
-        :cost_per_hour,
-        :items,
-        :item_type,
-        :cost_per_item,
-        :explanation,
+      params.expect(
+        prior_authority_service_cost_form: [:cost_type,
+                                            :period,
+                                            :cost_per_hour,
+                                            :items,
+                                            :item_type,
+                                            :cost_per_item,
+                                            :explanation],
       ).merge(
         current_user: current_user,
         cost_item_type: item.cost_item_type,

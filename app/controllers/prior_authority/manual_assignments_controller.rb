@@ -7,7 +7,7 @@ module PriorAuthority
 
     def create
       authorize(application, :assign?)
-      @form = ManualAssignmentForm.new(params.require(:prior_authority_manual_assignment_form).permit(:comment))
+      @form = ManualAssignmentForm.new(params.expect(prior_authority_manual_assignment_form: [:comment]))
       if @form.valid?
         process_assignment(@form.comment)
       else

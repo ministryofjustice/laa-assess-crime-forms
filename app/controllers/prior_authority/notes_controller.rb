@@ -18,8 +18,8 @@ module PriorAuthority
     private
 
     def form_params
-      params.require(:prior_authority_note_form).permit(
-        *NoteForm.attribute_names
+      params.expect(
+        prior_authority_note_form: [*NoteForm.attribute_names]
       ).merge(
         current_user:,
         submission:,

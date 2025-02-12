@@ -28,8 +28,8 @@ module PriorAuthority
     private
 
     def form_params
-      params.require(:prior_authority_decision_form).permit(
-        *DecisionForm.attribute_names
+      params.expect(
+        prior_authority_decision_form: [*DecisionForm.attribute_names]
       ).merge(
         current_user:,
         submission:,
