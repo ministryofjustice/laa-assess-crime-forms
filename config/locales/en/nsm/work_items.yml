@@ -48,25 +48,25 @@ en:
         action: Action
         delete: Delete
       edit:
-        page_title: "Your claims"
-        heading: "Adjust a work item"
-        provider_submission: Provider submission
-        work_type: Work item
+        page_title: "Adjust work item %{position}"
+        heading: "Adjust work item %{position}"
+        provider_submission: Claimed
+        work_type: Cost Type
         date: Date
-        time_spent: Time claimed
-        fee_earner: Fee earner
-        uplift_claimed: Uplift claimed
+        time_spent: Time
+        fee_earner: Fee earner initials
+        uplift_claimed: Uplift
         item_rate: Item rate
-        total_claimed: Net cost claimed
+        total_claimed: Net cost
         vat: VAT
-        laa_adjustments: LAA adjustments
+        laa_adjustments: Allowed
         calculate_button_text: Calculate my changes
         work_type_hint: '%{value} per hour'
         claim_cost_table:
           title: "Allowed cost"
-          header_one: Cost claimed
+          header_one: Net cost claimed
           header_two: "Uplift allowed"
-          header_three: Cost allowed
+          header_three: Net cost allowed
       show:
         page_title: "Work Item %{position}"
         heading: 'Work Item %{position}'
@@ -115,7 +115,7 @@ en:
   helpers:
     legend:
       nsm_work_item_form:
-        work_type_value: Change work item (optional)
+        work_type_value: Change cost type (optional)
         uplift: Remove the uplift for this item
         time_spent: Change time claimed (optional)
     label:

@@ -213,13 +213,14 @@ Rails.describe 'Assessment', :stub_oauth_token do
       visit nsm_claim_work_items_path(claim)
 
       clicked_id = claim.data['work_items'][53]['id']
+      position = claim.data['work_items'][53]['position']
       expect(evaluate_script('window.scrollY')).to eq 0
       find("tbody tr[id=\"#{clicked_id}\"] a", text: 'Waiting').click
-      expect(page).to have_content('Adjust a work item')
+      expect(page).to have_content("Adjust work item #{position}")
 
       click_on 'Back'
 
-      expect(page).not_to have_content('Adjust a work item')
+      expect(page).not_to have_content('Adjust work item')
       expect(current_url).to end_with("##{clicked_id}")
       expect(evaluate_script('window.scrollY')).to be > 0
     end
