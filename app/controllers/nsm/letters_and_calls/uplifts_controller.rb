@@ -27,9 +27,9 @@ module Nsm
       end
 
       def form_params
-        params.require(:nsm_uplift_letters_and_calls_form)
-              .permit(:explanation)
-              .merge(current_user:)
+        params
+          .expect(nsm_uplift_letters_and_calls_form: [:explanation])
+          .merge(current_user:)
       end
 
       def controller_params

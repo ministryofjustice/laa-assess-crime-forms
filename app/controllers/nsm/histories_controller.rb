@@ -29,8 +29,8 @@ module Nsm
     end
 
     def form_params
-      params.require(:nsm_claim_note_form).permit(
-        :note
+      params.expect(
+        nsm_claim_note_form: [:note]
       ).merge(current_user:, claim:)
     end
 

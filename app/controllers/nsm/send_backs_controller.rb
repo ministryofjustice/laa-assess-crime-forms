@@ -32,8 +32,8 @@ module Nsm
     end
 
     def send_back_params
-      params.require(:nsm_send_back_form).permit(
-        :send_back_comment,
+      params.expect(
+        nsm_send_back_form: [:send_back_comment],
       ).merge(current_user:)
     end
 
