@@ -1,4 +1,4 @@
-<% title t('.page_title') %>
+<% title t('.page_title', position: item.position) %>
 
 <% content_for(:back_link) do %>
   <%=# Did we come from a page in the app?
@@ -22,7 +22,7 @@
 <div class="govuk-grid-row" id="work-items-adjustment-container">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl">
-        <%= t('.heading') %>
+        <%= t(item.any_adjustments? ? '.adjusted.heading' : '.heading', position: item.position) %>
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
@@ -39,8 +39,8 @@
       <%=
         rows = [
           [{ text: t('.work_type'), width: 'govuk-!-width-one-half' }, item.work_type.to_s],
-          [t('.time_spent_changed'), format_period(item.time_spent)],
           [t('.item_rate_allowed'), NumberTo.pounds(item.pricing)],
+          [t('.time_spent_changed'), format_period(item.time_spent)],
           [{ text: t('.uplift_allowed'), width: 'govuk-!-width-one-half' }, "#{item.uplift.to_i}%"],
           [t('.caseworker_allowed'), NumberTo.pounds(item.caseworker_amount)],
           [t('.explanation'), item.adjustment_comment],

@@ -97,15 +97,14 @@ RSpec.describe 'Work items', :stub_oauth_token do
         click_on 'Waiting'
       end
 
-      expect(page).to have_content(
-        'Waiting' \
-        'Date12 December 2022' \
-        'Fee earner initialsaaa' \
-        'Time claimed2 hours 41 minutes' \
-        'Item rate£27.60' \
-        'Uplift claimed95%' \
-        'Net cost claimed£144.42'
-      )
+      expect(page)
+        .to have_content('Waiting')
+        .and have_content('Date12 December 2022')
+        .and have_content('Fee earner initialsaaa')
+        .and have_content('Time2 hours 41 minutes')
+        .and have_content('Item rate£27.60')
+        .and have_content('Uplift95%')
+        .and have_content('Net cost£144.42')
     end
   end
 
