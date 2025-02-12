@@ -1,4 +1,4 @@
-<% title t('.page_title') %>
+<% title t('.page_title', position: item.position) %>
 
 <% content_for(:back_link) do %>
   <%=# Did we come from a page in the app?
@@ -22,7 +22,7 @@
 <div class="govuk-grid-row" id="work-items-adjustment-container">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl">
-        <%= t('.heading') %>
+        <%= t('.heading', position: item.position) %>
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">

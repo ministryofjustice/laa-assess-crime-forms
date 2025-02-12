@@ -104,8 +104,8 @@ module Nsm
           '.work_type' => original_work_type.translated,
           '.date' => format_in_zone(completed_on),
           '.fee_earner' => fee_earner.to_s,
-          '.time_spent' => format_period(original_time_spent),
           '.item_rate' => NumberTo.pounds(submission.rates.work_items[original_work_type.value.to_sym]),
+          '.time_spent' => format_period(original_time_spent),
           '.uplift_claimed' => "#{original_uplift.to_i}%",
           '.total_claimed' => NumberTo.pounds(provider_requested_amount),
         }

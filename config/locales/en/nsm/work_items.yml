@@ -68,17 +68,17 @@ en:
           header_two: "Uplift allowed"
           header_three: Cost allowed
       show:
-        page_title: "Your claims"
-        heading: 'Work item'
-        provider_submission: Provider submission
+        page_title: "Work Item %{position}"
+        heading: 'Work Item %{position}'
+        provider_submission: Claimed
         date: Date
-        time_spent: Time claimed
+        time_spent: Time
         fee_earner: Fee earner initials
-        uplift_claimed: Uplift claimed
-        total_claimed: Net cost claimed
+        uplift_claimed: Uplift
+        total_claimed: Net cost
         laa_adjustments: LAA adjustments
         uplift_allowed: Uplift allowed
-        work_type: Work item
+        work_type: Cost type
         item_rate: Item rate
         item_rate_allowed: Item rate allowed
         time_spent_changed: Time allowed
