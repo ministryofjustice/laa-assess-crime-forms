@@ -10,7 +10,7 @@
     "esbuild": "^0.25.0",
     "govuk-frontend": "^5.8.0",
     "jquery": "^3.6.0",
-    "sass": "^1.83.4"
+    "sass": "^1.84.0"
   },
   "resolutions": {
     "braces": "^3.0.3",
@@ -22,7 +22,7 @@
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css --no-source-map --load-path=node_modules  --quiet-deps"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.26.7",
+    "@babel/preset-env": "^7.26.8",
     "jest-environment-jsdom": "^29.7.0"
   }
 }
