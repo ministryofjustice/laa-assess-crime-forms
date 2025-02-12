@@ -76,14 +76,17 @@ en:
         fee_earner: Fee earner initials
         uplift_claimed: Uplift
         total_claimed: Net cost
-        laa_adjustments: LAA adjustments
-        uplift_allowed: Uplift allowed
+        laa_adjustments: Allowed
+        uplift_allowed: Uplift
         work_type: Cost type
         item_rate: Item rate
-        item_rate_allowed: Item rate allowed
-        time_spent_changed: Time allowed
-        caseworker_allowed: Net cost allowed
+        item_rate_allowed: Item rate
+        time_spent_changed: Time
+        caseworker_allowed: Net cost
         explanation: Reason for adjustment
+        adjusted:
+          page_title: "Adjusted work Item %{position}"
+          heading: 'Adjusted work Item %{position}'
       uplifts:
         update:
           uplift_removed: All uplifts have been removed
