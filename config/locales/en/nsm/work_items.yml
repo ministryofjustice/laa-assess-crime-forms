@@ -51,7 +51,7 @@ en:
         page_title: "Adjust work item %{position}"
         heading: "Adjust work item %{position}"
         provider_submission: Claimed
-        work_type: Cost Type
+        work_type: Cost type
         date: Date
         time_spent: Time
         fee_earner: Fee earner initials
@@ -68,8 +68,8 @@ en:
           header_two: "Uplift allowed"
           header_three: Net cost allowed
       show:
-        page_title: "Work Item %{position}"
-        heading: 'Work Item %{position}'
+        page_title: "Work item %{position}"
+        heading: 'Work item %{position}'
         provider_submission: Claimed
         date: Date
         time_spent: Time
@@ -85,8 +85,8 @@ en:
         caseworker_allowed: Net cost
         explanation: Reason for adjustment
         adjusted:
-          page_title: "Adjusted work Item %{position}"
-          heading: 'Adjusted work Item %{position}'
+          page_title: "Adjusted work item %{position}"
+          heading: 'Adjusted work item %{position}'
       uplifts:
         update:
           uplift_removed: All uplifts have been removed
