@@ -48,18 +48,18 @@ en:
         page_title: "Your claims"
         heading:
           zero: "%{type}"
-          one: "Adjusted %{type} total"
-          other: "Adjusted %{type} total"
+          one: "Adjusted %{type}"
+          other: "Adjusted %{type}"
         provider_submission: "Claimed"
         number: "Number of %{type}"
         rate: Item rate
         uplift_requested: "Uplift"
         total_claimed: Net cost
-        laa_adjustments: LAA adjustments
-        uplift_allowed: Uplift allowed
+        laa_adjustments: Allowed
+        uplift_allowed: Uplift
         number_allowed: "Number of %{type}"
-        caseworker_allowed: Caseworker allowed
-        explanation: Adjustment reason
+        caseworker_allowed: Net cost
+        explanation: Reason for adjustment
 
 
         calculate_button_text: Calculate my changes
