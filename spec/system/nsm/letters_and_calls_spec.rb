@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'Letters and Calls', :stub_oauth_token do
+RSpec.describe 'Letters and Calls', :stub_oauth_token, type: :system do
+  include ActionView::Helpers::TranslationHelper
+
   let(:user) { create(:caseworker) }
   let(:claim) { build(:claim) }
 
@@ -123,12 +125,10 @@ RSpec.describe 'Letters and Calls', :stub_oauth_token do
       visit nsm_claim_letters_and_calls_path(claim)
       click_on 'Letters'
 
-      expect(page).to have_content(
-        'Number of letters12' \
-        'Item rate£4.09' \
-        'Uplift claimed95%' \
-        'Net cost claimed£95.71'
-      )
+      expect(page).to have_content("#{t('nsm.letters_and_calls.show.number', type: 'letters')}12")
+        .and have_content("#{t('nsm.letters_and_calls.show.rate')}£4.09")
+        .and have_content("#{t('nsm.letters_and_calls.show.uplift_requested')}95%")
+        .and have_content("#{t('nsm.letters_and_calls.show.total_claimed')}£95.71")
     end
   end
 end

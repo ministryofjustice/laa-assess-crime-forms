@@ -28,8 +28,8 @@
   <div class="govuk-grid-column-two-thirds">
     <%=
       rows = [
-        [{ text: t('.number', type: item.type_name), width: 'govuk-!-width-one-half' }, item.original_count.to_s],
         [t('.rate'), NumberTo.pounds(item.pricing)],
+        [{ text: t('.number', type: item.type_name), width: 'govuk-!-width-one-half' }, item.original_count.to_s],
         [t('.uplift_requested'), "#{item.original_uplift.to_i}%"],
         [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]
       ]
@@ -51,6 +51,5 @@
         end
       %>
     <% end %>
-    <%= link_to t('shared.cancel'), :back, class: 'govuk-link', data: { turbo: 'false' } %>
   </div>
 </div>

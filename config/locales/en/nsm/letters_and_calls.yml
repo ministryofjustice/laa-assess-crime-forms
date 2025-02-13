@@ -50,11 +50,11 @@ en:
           zero: "%{type}"
           one: "Adjusted %{type} total"
           other: "Adjusted %{type} total"
-        provider_submission: "Provider submission"
+        provider_submission: "Claimed"
         number: "Number of %{type}"
         rate: Item rate
-        uplift_requested: "Uplift claimed"
-        total_claimed: Net cost claimed
+        uplift_requested: "Uplift"
+        total_claimed: Net cost
         laa_adjustments: LAA adjustments
         uplift_allowed: Uplift allowed
         number_allowed: "Number of %{type}"
