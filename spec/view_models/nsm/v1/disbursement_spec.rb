@@ -84,8 +84,10 @@ RSpec.describe Nsm::V1::Disbursement do
         date: '1 January 2022',
         type: 'Accountants',
         details: 'Details',
+        net_cost: '£83.30',
         prior_authority: 'Yes',
         vat: '20%',
+        vat_amount: '£16.66',
         total: '£99.96'
       }
 
@@ -101,8 +103,11 @@ RSpec.describe Nsm::V1::Disbursement do
           date: '1 January 2022',
           type: 'Accountants',
           details: 'Details',
+          item_rate: '£0.45',
+          net_cost: '£4.50',
           prior_authority: 'Yes',
           vat: '20%',
+          vat_amount: '£0.90',
           miles: '10.0',
           total: '£5.40'
         }
@@ -119,8 +124,10 @@ RSpec.describe Nsm::V1::Disbursement do
           date: '1 January 2022',
           type: 'Accountants',
           details: 'Details',
+          net_cost: '£83.30',
           prior_authority: 'Yes',
           vat: '20%',
+          vat_amount: '£0.00',
           total: '£83.30'
         }
 
@@ -136,7 +143,9 @@ RSpec.describe Nsm::V1::Disbursement do
           date: '1 January 2022',
           type: 'Accountants',
           details: 'Details',
+          net_cost: '£83.30',
           vat: '20%',
+          vat_amount: '£16.66',
           total: '£99.96'
         }
 

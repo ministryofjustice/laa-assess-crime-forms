@@ -67,7 +67,7 @@ module Nsm
         table_fields[:miles] = miles.to_s if miles.present?
         table_fields[:prior_authority] = prior_authority.capitalize if prior_authority
         table_fields[:vat] = format_vat_rate
-        table_fields[:net_cost] = NumberTo.pounds(original_total_cost_without_vat)
+        table_fields[:net_cost] = NumberTo.pounds(calculation[:claimed_total_exc_vat])
         table_fields[:vat_amount] = NumberTo.pounds(original_vat_amount)
         table_fields[:total] = NumberTo.pounds(provider_requested_total_cost)
 

@@ -85,12 +85,12 @@ RSpec.describe 'Disbursements', :stub_oauth_token, type: :system do
       within('main') { expect(page).to have_no_content 'Change' }
       click_on 'Accountants'
       expect(page)
-        .to have_content(t('nsm.disbursements.show.summary_table.type') + 'Accountants')
-        .and have_content(t('nsm.disbursements.show.summary_table.date') + '12 December 2022')
-        .and have_content(t('nsm.disbursements.show.summary_table.details') + 'Details')
-        .and have_content(t('nsm.disbursements.show.summary_table.prior_authority') + 'Yes')
-        .and have_content(t('nsm.disbursements.show.summary_table.vat') + '20%')
-        .and have_content(t('nsm.disbursements.show.summary_table.total') + '£100.00')
+        .to have_content("#{t('nsm.disbursements.show.summary_table.type')}Accountants")
+        .and have_content("#{t('nsm.disbursements.show.summary_table.date')}12 December 2022")
+        .and have_content("#{t('nsm.disbursements.show.summary_table.details')}Details")
+        .and have_content("#{t('nsm.disbursements.show.summary_table.prior_authority')}Yes")
+        .and have_content("#{t('nsm.disbursements.show.summary_table.vat')}20%")
+        .and have_content("#{t('nsm.disbursements.show.summary_table.total')}£100.00")
     end
   end
 end
