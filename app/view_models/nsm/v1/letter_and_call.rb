@@ -98,8 +98,8 @@ module Nsm
 
       def provider_fields
         {
-          '.number' => original_count.to_s,
           '.rate' => NumberTo.pounds(pricing),
+          '.number' => original_count.to_s,
           '.uplift_requested' => "#{original_uplift.to_i}%",
           '.total_claimed' =>  NumberTo.pounds(provider_requested_amount)
         }
