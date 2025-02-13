@@ -21,15 +21,15 @@
 
 <div class="govuk-grid-row" id="letters-and-calls-adjustment-container">
   <div class="govuk-grid-column-three-quarters">
-    <h1 class="govuk-heading-xl govuk-heading-capitalize">
+    <h1 class="govuk-heading-xl  <%= 'govuk-heading-capitalize' unless item.any_adjustments? %>">
         <%= t('.heading', type: item.type_name, count: item.any_adjustments? ? 1 : 0) %>
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
     <%=
       rows = [
-        [{ text: t('.number', type: item.type_name), width: 'govuk-!-width-one-half' }, item.original_count.to_s],
         [t('.rate'), NumberTo.pounds(item.pricing)],
+        [{ text: t('.number', type: item.type_name), width: 'govuk-!-width-one-half' }, item.original_count.to_s],
         [t('.uplift_requested'), "#{item.original_uplift.to_i}%"],
         [t('.total_claimed'), NumberTo.pounds(item.provider_requested_amount)]
       ]
@@ -41,9 +41,9 @@
     <% if item.any_adjustments? %>
       <%=
         rows = [
-          [{ text: t('.uplift_allowed'), width: 'govuk-!-width-one-half' }, "#{item.uplift}%"],
           [t('.number_allowed', type: item.type_name), item.count.to_s],
-          [t('.casewoker_allowed'), NumberTo.pounds(item.caseworker_amount)],
+          [{ text: t('.uplift_allowed'), width: 'govuk-!-width-one-half' }, "#{item.uplift || 0}%"],
+          [t('.caseworker_allowed'), NumberTo.pounds(item.caseworker_amount)],
           [t('.explanation'), item.adjustment_comment],
         ]
         govuk_table(head: '', first_cell_is_header: true, rows:) do |table|
@@ -51,6 +51,5 @@
         end
       %>
     <% end %>
-    <%= link_to t('shared.cancel'), :back, class: 'govuk-link', data: { turbo: 'false' } %>
   </div>
 </div>
