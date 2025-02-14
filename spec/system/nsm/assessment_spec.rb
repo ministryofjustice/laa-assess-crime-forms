@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-Rails.describe 'Assessment', :stub_oauth_token do
+Rails.describe 'Assessment', :stub_oauth_token, type: :system do
+  include ActionView::Helpers::TranslationHelper
+
   let(:fixed_arbitrary_date) { DateTime.new(2024, 7, 4, 12, 3, 12) }
   let(:user) { create(:caseworker) }
   let(:claim) { build(:claim) }
@@ -197,14 +199,15 @@ Rails.describe 'Assessment', :stub_oauth_token do
       visit nsm_claim_disbursements_path(claim)
 
       clicked_id = claim.data['disbursements'][57]['id']
+      position = claim.data['disbursements'][57]['position']
       expect(evaluate_script('window.scrollY')).to eq 0
 
       find("tbody tr[id=\"#{clicked_id}\"] a").click
-      expect(page).to have_content('Adjust a disbursement')
+      expect(page).to have_content(t('nsm.disbursements.edit.heading.main', position:))
 
       click_on 'Back'
 
-      expect(page).not_to have_content('Adjust a disbursement')
+      expect(page).not_to have_content(t('nsm.disbursements.edit.heading.main', position:))
       expect(current_url).to end_with("##{clicked_id}")
       expect(evaluate_script('window.scrollY')).to be > 0
     end

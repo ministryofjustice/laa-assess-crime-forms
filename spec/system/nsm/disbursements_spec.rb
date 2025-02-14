@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'Disbursements', :stub_oauth_token do
+RSpec.describe 'Disbursements', :stub_oauth_token, type: :system do
+  include ActionView::Helpers::TranslationHelper
+
   let(:user) { create(:caseworker) }
   let(:claim) { build(:claim) }
   let(:disbursement_form_error_message) do
@@ -82,14 +84,13 @@ RSpec.describe 'Disbursements', :stub_oauth_token do
       visit nsm_claim_disbursements_path(claim)
       within('main') { expect(page).to have_no_content 'Change' }
       click_on 'Accountants'
-      expect(page).to have_content(
-        'Date12 December 2022' \
-        'Disbursement typeAccountants' \
-        'Details of disbursementDetails' \
-        'Prior authority grantedYes' \
-        'VAT claimed20%' \
-        'Total cost claimed£100.00'
-      )
+      expect(page)
+        .to have_content("#{t('nsm.disbursements.show.summary_table.type')}Accountants")
+        .and have_content("#{t('nsm.disbursements.show.summary_table.date')}12 December 2022")
+        .and have_content("#{t('nsm.disbursements.show.summary_table.details')}Details")
+        .and have_content("#{t('nsm.disbursements.show.summary_table.prior_authority')}Yes")
+        .and have_content("#{t('nsm.disbursements.show.summary_table.vat')}20%")
+        .and have_content("#{t('nsm.disbursements.show.summary_table.total')}£100.00")
     end
   end
 end

@@ -1,4 +1,4 @@
-<% title t('.page_title') %>
+<% title t('.page_title', position: item.position) %>
 
 <% content_for(:back_link) do %>
   <%=# Did we come from a page in the app?
@@ -23,7 +23,7 @@
   <div class="govuk-grid-column-three-quarters">
     <%= govuk_error_summary(form) %>
     <h1 class="govuk-heading-xl">
-        <%= t('.heading') %>
+        <%= t('.heading.main', position: item.position) %>
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
@@ -40,7 +40,7 @@
       end
       %>
     </div>
-
+    <h2 class="govuk-heading-l"><%= t('.heading.allowed') %></h2>
     <div id='disbursement-adjustment-form'>
       <%= form_with model: form, url: nsm_claim_disbursement_path(claim.id, item.id), method: :put do |f| %>
           <% if form.mileage_based? %>
