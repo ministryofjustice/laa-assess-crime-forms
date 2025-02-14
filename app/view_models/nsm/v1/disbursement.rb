@@ -60,13 +60,30 @@ module Nsm
       # rubocop:disable Metrics/AbcSize
       def disbursement_fields
         table_fields = {}
-        table_fields[:date] = disbursement_date.to_fs(:stamp)
         table_fields[:type] = type_name.capitalize
-        table_fields[:miles] = miles.to_s if miles.present?
+        table_fields[:date] = disbursement_date.to_fs(:stamp)
         table_fields[:details] = details.capitalize
+        table_fields[:item_rate] = NumberTo.pounds(pricing) if miles.present?
+        table_fields[:miles] = (miles_original || miles).to_s if miles_original.present? || miles.present?
         table_fields[:prior_authority] = prior_authority.capitalize if prior_authority
         table_fields[:vat] = format_vat_rate
+        table_fields[:net_cost] = NumberTo.pounds(calculation[:claimed_total_exc_vat])
+        table_fields[:vat_amount] = NumberTo.pounds(original_vat_amount)
         table_fields[:total] = NumberTo.pounds(provider_requested_total_cost)
+
+        table_fields
+      end
+      # rubocop:enable Metrics/AbcSize
+
+      # rubocop:disable Metrics/AbcSize
+      def disbursement_allowed_fields
+        table_fields = {}
+        table_fields[:miles] = miles.to_s if miles.present?
+        table_fields[:vat] = format_vat_rate
+        table_fields[:net_cost] = NumberTo.pounds(calculation[:assessed_total_exc_vat])
+        table_fields[:vat_amount] = NumberTo.pounds(calculation[:assessed_vat])
+        table_fields[:total] = NumberTo.pounds(calculation[:assessed_total_inc_vat])
+        table_fields[:reason] = adjustment_comment if adjustment_comment.present?
 
         table_fields
       end
