@@ -70,8 +70,8 @@ en:
         provider_submission: Claimed
         heading:
           zero: Disbursement %{position}
-          one: Adjusted disbursement
-          other: Adjusted disbursement
+          one: Adjusted disbursement %{position}
+          other: Adjusted disbursement %{position}
         summary_table:
           caption: Claimed
           date: Date
@@ -82,12 +82,13 @@ en:
           prior_authority: Prior authority granted
           vat: VAT rate
           total: Total cost
-          miles: Number of miles
-          vat_amount: Vat amount
+          miles: Mileage
+          vat_amount: VAT amount
           net_cost: Net cost
+          reason: Reason for adjustment
         refuse: Refuse disbursement
-        explanation: Adjustment reason
-        laa_adjustments: LAA Adjustments
+        explanation: Reason for adjustment
+        laa_adjustments: Allowed
         refuse_status:
           'true': 'Yes'
           'false': 'No'

@@ -42,10 +42,12 @@
 
     <% if item.any_adjustments? %>
       <%=
-      rows = [
-        [{ text: t('.refuse'), width: 'govuk-!-width-one-half' }, t(".refuse_status.#{item.total_cost_without_vat.zero?}")],
-        [t('.explanation'), item.adjustment_comment]
-      ]
+      rows = item.disbursement_allowed_fields.map do |key, value|
+        [
+          { text: t(".summary_table.#{key}"), width: 'govuk-!-width-one-half' },
+          value,
+        ]
+      end
       govuk_table(head: '', first_cell_is_header: true, rows:) do |table|
         table.with_caption(text: t('.laa_adjustments') , size: 'l')
       end
