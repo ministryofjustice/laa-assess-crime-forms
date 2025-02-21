@@ -32,18 +32,23 @@ en:
         no_adjustments: This claim has no adjusted disbursements
         table_caption: Adjusted disbursements
       edit:
-        page_title: Adjust a disbursement
-        heading: Adjust a disbursement
+        page_title: Adjust disbursement %{position}
+        heading:
+          main: Adjust disbursement %{position}
+          allowed: Allowed
         summary_table:
-          caption: Provider submission
+          caption: Claimed
           date: Date
-          type: Disbursement type
+          type: Cost type
           cost: Disbursement cost
-          details: Details of disbursement
+          details: Disbursement description
+          item_rate: Item rate
           prior_authority: Prior authority granted
-          vat: VAT claimed
-          total: Total cost claimed
+          vat: VAT rate
+          total: Total cost
           miles: Number of miles
+          vat_amount: Vat amount
+          net_cost: Net cost
         miles: Miles
         mileage: Change number of miles
         mileage_hint: For example, 2.5 miles
@@ -55,31 +60,35 @@ en:
         explain: Explain your decision
         explain_hint: For example, why you made adjustments to this disbursement. We'll share this explanation with the provider.
         claim_cost_table:
-          title: Claim cost
-          provider_requested: Provider requested
-          caseworker_allowed: Net allowed
-          vat_allowed: VAT allowed
+          title: Allowed cost
+          provider_requested: Net cost claimed
+          caseworker_allowed: Net cost allowed
+          vat_allowed: VAT on allowed
           total_allowed: Total allowed
       show:
         page_title: Adjust a disbursement
-        provider_submission: Provider submission
+        provider_submission: Claimed
         heading:
-          zero: Disbursement
-          one: Adjusted disbursement
-          other: Adjusted disbursement
+          zero: Disbursement %{position}
+          one: Adjusted disbursement %{position}
+          other: Adjusted disbursement %{position}
         summary_table:
-          caption: Provider submission
+          caption: Claimed
           date: Date
-          type: Disbursement type
+          type: Cost type
           cost: Disbursement cost
-          details: Details of disbursement
+          details: Disbursement description
+          item_rate: Item rate
           prior_authority: Prior authority granted
-          vat: VAT claimed
-          total: Total cost claimed
-          miles: Number of miles
+          vat: VAT rate
+          total: Total cost
+          miles: Mileage
+          vat_amount: VAT amount
+          net_cost: Net cost
+          reason: Reason for adjustment
         refuse: Refuse disbursement
-        explanation: Adjustment reason
-        laa_adjustments: LAA Adjustments
+        explanation: Reason for adjustment
+        laa_adjustments: Allowed
         refuse_status:
           'true': 'Yes'
           'false': 'No'

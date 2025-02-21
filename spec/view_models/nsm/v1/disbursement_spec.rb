@@ -84,8 +84,10 @@ RSpec.describe Nsm::V1::Disbursement do
         date: '1 January 2022',
         type: 'Accountants',
         details: 'Details',
+        net_cost: '£83.30',
         prior_authority: 'Yes',
         vat: '20%',
+        vat_amount: '£16.66',
         total: '£99.96'
       }
 
@@ -101,8 +103,11 @@ RSpec.describe Nsm::V1::Disbursement do
           date: '1 January 2022',
           type: 'Accountants',
           details: 'Details',
+          item_rate: '£0.45',
+          net_cost: '£4.50',
           prior_authority: 'Yes',
           vat: '20%',
+          vat_amount: '£0.90',
           miles: '10.0',
           total: '£5.40'
         }
@@ -119,8 +124,10 @@ RSpec.describe Nsm::V1::Disbursement do
           date: '1 January 2022',
           type: 'Accountants',
           details: 'Details',
+          net_cost: '£83.30',
           prior_authority: 'Yes',
           vat: '20%',
+          vat_amount: '£0.00',
           total: '£83.30'
         }
 
@@ -136,7 +143,9 @@ RSpec.describe Nsm::V1::Disbursement do
           date: '1 January 2022',
           type: 'Accountants',
           details: 'Details',
+          net_cost: '£83.30',
           vat: '20%',
+          vat_amount: '£16.66',
           total: '£99.96'
         }
 
@@ -182,6 +191,82 @@ RSpec.describe Nsm::V1::Disbursement do
         expected_path = Rails.application.routes.url_helpers.nsm_claim_disbursements_path(claim,
                                                                                           anchor: disbursement.id)
         expect(disbursement.backlink_path(claim)).to eq(expected_path)
+      end
+    end
+  end
+
+  describe '#disbursement_allowed_fields' do
+    let(:args) do
+      {
+        'total_cost_without_vat' => 83.3,
+        'apply_vat' => apply_vat,
+        'miles' => miles,
+        'adjustment_comment' => adjustment_comment,
+        :submission => build(:claim),
+        'disbursement_type' => 'other'
+      }
+    end
+
+    let(:miles) { nil }
+    let(:apply_vat) { 'true' }
+    let(:adjustment_comment) { nil }
+
+    it 'returns a hash with the correct fields if no miles or comment' do
+      expected_fields = {
+        vat: '20%',
+        vat_amount: '£16.66',
+        net_cost: '£83.30',
+        total: '£99.96'
+      }
+
+      expect(disbursement.disbursement_allowed_fields).to eq(expected_fields)
+    end
+
+    context 'when miles is set' do
+      let(:miles) { 10 }
+      let(:disbursement_type) { 'car' }
+
+      it 'returns a hash with miles included' do
+        expected_fields = {
+          miles: '10.0',
+          vat: '20%',
+          vat_amount: '£16.66',
+          net_cost: '£83.30',
+          total: '£99.96'
+        }
+
+        expect(disbursement.disbursement_allowed_fields).to eq(expected_fields)
+      end
+    end
+
+    context 'when apply_vat is false' do
+      let(:apply_vat) { 'false' }
+
+      it 'returns a hash with zero VAT amount' do
+        expected_fields = {
+          vat: '20%',
+          vat_amount: '£0.00',
+          net_cost: '£83.30',
+          total: '£83.30'
+        }
+
+        expect(disbursement.disbursement_allowed_fields).to eq(expected_fields)
+      end
+    end
+
+    context 'when adjustment_comment is present' do
+      let(:adjustment_comment) { 'Test comment' }
+
+      it 'returns a hash including the reason' do
+        expected_fields = {
+          vat: '20%',
+          vat_amount: '£16.66',
+          net_cost: '£83.30',
+          total: '£99.96',
+          reason: 'Test comment'
+        }
+
+        expect(disbursement.disbursement_allowed_fields).to eq(expected_fields)
       end
     end
   end
