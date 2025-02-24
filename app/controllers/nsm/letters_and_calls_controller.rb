@@ -80,10 +80,10 @@ module Nsm
     end
 
     def form_params
-      params.require(:"nsm_letters_calls_form_#{params[:id]}").permit(
-        :uplift,
-        :count,
-        :explanation,
+      params.expect(
+        "nsm_letters_calls_form_#{params[:id]}": [:uplift,
+                                                  :count,
+                                                  :explanation],
       ).merge(
         current_user: current_user,
         type: params[:id]

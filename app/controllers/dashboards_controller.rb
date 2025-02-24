@@ -43,18 +43,18 @@ class DashboardsController < ApplicationController
   end
 
   def search_params
-    params.require(:search_form).permit(
-      :query,
-      :submitted_from,
-      :submitted_to,
-      :updated_from,
-      :updated_to,
-      :status_with_assignment,
-      :caseworker_id,
-      :sort_by,
-      :sort_direction,
-      :application_type,
-      :high_value
+    params.expect(
+      search_form: [:query,
+                    :submitted_from,
+                    :submitted_to,
+                    :updated_from,
+                    :updated_to,
+                    :status_with_assignment,
+                    :caseworker_id,
+                    :sort_by,
+                    :sort_direction,
+                    :application_type,
+                    :high_value]
     ).merge(default_params)
   end
 

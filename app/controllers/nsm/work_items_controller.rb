@@ -103,11 +103,11 @@ module Nsm
     end
 
     def form_params
-      params.require(:nsm_work_item_form).permit(
-        :uplift,
-        :time_spent,
-        :explanation,
-        :work_type_value,
+      params.expect(
+        nsm_work_item_form: [:uplift,
+                             :time_spent,
+                             :explanation,
+                             :work_type_value],
       ).merge(
         current_user: current_user,
         id: params[:id]
