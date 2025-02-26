@@ -409,83 +409,83 @@ RSpec.describe Nsm::V1::Disbursement do
   end
 
   describe '#format_vat_rate' do
-  let(:args) do
-    {
-      'apply_vat' => apply_vat,
-      'apply_vat_original' => apply_vat_original,
-      :submission => build(:claim)
-    }
-  end
-
-  context 'with current VAT settings' do
-    let(:apply_vat) { 'true' }
-    let(:apply_vat_original) { nil }
-
-    it 'returns formatted VAT rate when VAT is applicable' do
-      expect(disbursement.format_vat_rate).to eq('20%')
+    let(:args) do
+      {
+        'apply_vat' => apply_vat,
+        'apply_vat_original' => apply_vat_original,
+        :submission => build(:claim)
+      }
     end
 
-    context 'when VAT is not applicable' do
-      let(:apply_vat) { 'false' }
-
-      it 'returns 0% when VAT is not applicable' do
-        expect(disbursement.format_vat_rate).to eq('0%')
-      end
-    end
-  end
-
-  context 'with original VAT settings' do
-    let(:apply_vat) { 'false' }
-    let(:apply_vat_original) { 'true' }
-
-    it 'returns original VAT rate when original VAT was applicable' do
-      expect(disbursement.format_vat_rate(original: true)).to eq('20%')
-    end
-
-    context 'when original VAT is not applicable' do
-      let(:apply_vat_original) { 'false' }
-
-      it 'returns 0% when original VAT was not applicable' do
-        expect(disbursement.format_vat_rate(original: true)).to eq('0%')
-      end
-    end
-
-    context 'when original VAT setting is missing' do
+    context 'with current VAT settings' do
       let(:apply_vat) { 'true' }
       let(:apply_vat_original) { nil }
 
-      it 'falls back to current VAT setting' do
+      it 'returns formatted VAT rate when VAT is applicable' do
+        expect(disbursement.format_vat_rate).to eq('20%')
+      end
+
+      context 'when VAT is not applicable' do
+        let(:apply_vat) { 'false' }
+
+        it 'returns 0% when VAT is not applicable' do
+          expect(disbursement.format_vat_rate).to eq('0%')
+        end
+      end
+    end
+
+    context 'with original VAT settings' do
+      let(:apply_vat) { 'false' }
+      let(:apply_vat_original) { 'true' }
+
+      it 'returns original VAT rate when original VAT was applicable' do
         expect(disbursement.format_vat_rate(original: true)).to eq('20%')
+      end
+
+      context 'when original VAT is not applicable' do
+        let(:apply_vat_original) { 'false' }
+
+        it 'returns 0% when original VAT was not applicable' do
+          expect(disbursement.format_vat_rate(original: true)).to eq('0%')
+        end
+      end
+
+      context 'when original VAT setting is missing' do
+        let(:apply_vat) { 'true' }
+        let(:apply_vat_original) { nil }
+
+        it 'falls back to current VAT setting' do
+          expect(disbursement.format_vat_rate(original: true)).to eq('20%')
+        end
       end
     end
   end
-end
 
-describe '#applicable_vat' do
-  let(:args) do
-    {
-      'apply_vat' => apply_vat,
-      'apply_vat_original' => apply_vat_original
-    }
-  end
+  describe '#applicable_vat' do
+    let(:args) do
+      {
+        'apply_vat' => apply_vat,
+        'apply_vat_original' => apply_vat_original
+      }
+    end
 
-  let(:apply_vat) { 'true' }
-  let(:apply_vat_original) { 'false' }
+    let(:apply_vat) { 'true' }
+    let(:apply_vat_original) { 'false' }
 
-  it 'returns current VAT setting when original flag is false' do
-    expect(disbursement.applicable_vat).to eq('true')
-  end
+    it 'returns current VAT setting when original flag is false' do
+      expect(disbursement.applicable_vat).to eq('true')
+    end
 
-  it 'returns original VAT setting when original flag is true' do
-    expect(disbursement.applicable_vat(original: true)).to eq('false')
-  end
+    it 'returns original VAT setting when original flag is true' do
+      expect(disbursement.applicable_vat(original: true)).to eq('false')
+    end
 
-  context 'when original VAT setting is missing' do
-    let(:apply_vat_original) { nil }
+    context 'when original VAT setting is missing' do
+      let(:apply_vat_original) { nil }
 
-    it 'falls back to current VAT setting' do
-      expect(disbursement.applicable_vat(original: true)).to eq('true')
+      it 'falls back to current VAT setting' do
+        expect(disbursement.applicable_vat(original: true)).to eq('true')
+      end
     end
   end
-end
 end
