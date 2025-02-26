@@ -1,13 +1,7 @@
-
-import MOJFrontend from '@ministryofjustice/frontend'
-import $ from 'jquery'
-window.$ = $
+import { DatePicker } from "@ministryofjustice/frontend";
 
 function init() {
-  const $datepickers = document.querySelectorAll('[data-module="moj-date-picker"]')
-  MOJFrontend.nodeListForEach($datepickers, function ($datepicker) {
-    new MOJFrontend.DatePicker($datepicker, {}).init();
-  })
+  [...document.querySelectorAll('[data-module="moj-date-picker"]')].forEach((picker) => new DatePicker(picker, {}).init());
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener("DOMContentLoaded", init);
