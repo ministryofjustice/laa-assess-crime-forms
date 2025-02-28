@@ -66,7 +66,7 @@ module Nsm
         table_fields[:item_rate] = NumberTo.pounds(pricing) if miles.present?
         table_fields[:miles] = (miles_original || miles).to_s if miles_original.present? || miles.present?
         table_fields[:prior_authority] = prior_authority.capitalize if prior_authority
-        table_fields[:vat] = format_vat_rate
+        table_fields[:vat] = format_vat_rate(original: true)
         table_fields[:net_cost] = NumberTo.pounds(calculation[:claimed_total_exc_vat])
         table_fields[:vat_amount] = NumberTo.pounds(original_vat_amount)
         table_fields[:total] = NumberTo.pounds(provider_requested_total_cost)
@@ -93,8 +93,14 @@ module Nsm
         submission.rates.disbursements[disbursement_type.value.to_sym]
       end
 
-      def format_vat_rate
+      def format_vat_rate(original: false)
+        return '0%' unless applicable_vat(original:) == 'true'
+
         "#{(vat_rate * 100).to_i}%"
+      end
+
+      def applicable_vat(original: false)
+        original ? (apply_vat_original.presence || apply_vat) : apply_vat
       end
 
       def vat_rate
