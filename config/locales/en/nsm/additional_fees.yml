@@ -12,8 +12,8 @@ en:
       show:
         page_title: Additional fee
         heading:
-          zero: Additional fee
-          one: Adjusted additional fee
+          'true': Adjusted additional fee
+          'false': Additional fee
         additional_fee: Additional fee
         net_cost_claimed: Net cost
         net_cost_allowed: Net cost
