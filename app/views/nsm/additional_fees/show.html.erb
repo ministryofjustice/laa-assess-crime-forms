@@ -23,7 +23,7 @@
   <div class="govuk-grid-column-three-quarters">
 
     <h1 class="govuk-heading-xl">
-        <%= t('.heading', type: item.type) %>
+      <%= t('.heading', count: item.any_adjustments? ? 1 : 0 ,type: item.type)  %>
     </h1>
   </div>
   <div class="govuk-grid-column-two-thirds">
