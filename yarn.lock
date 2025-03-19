@@ -1118,10 +1118,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@ministryofjustice/frontend@^3.6.2":
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-3.6.2.tgz#3bda8180d7268818c29545395ba388b380e1e8b5"
-  integrity sha512-x3vmqT4c3V1nQXOojIZIUKenmgVe5YITobU/TOdPK80Eeb4h9XLvutKHNfTYRcvQgStfP49aZl8pRbxJRQoXHA==
+"@ministryofjustice/frontend@^3.6.3":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-3.7.0.tgz#fd694f79d06f1c5a2ba581c1f5c89506810aa4a6"
+  integrity sha512-o84Sqy+1jqc1vaxIZfyG4VwJzdpDUK88O9COJFVLcFmW+Np80onlFlGAVjDUxNHYvtBdJx40w1dayq53wmtxgQ==
 
 "@parcel/watcher-android-arm64@2.4.1":
   version "2.4.1"
