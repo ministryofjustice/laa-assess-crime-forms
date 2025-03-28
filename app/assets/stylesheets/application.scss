@@ -1,11 +1,11 @@
-@import "local/govuk";
-@import "local/moj";
+@use "_imports.scss";
+@forward "local/moj";
 
-@import "custom/govuk-heading";
-@import "custom/govuk-period.scss";
-@import "custom/govuk-width";
-@import "custom/govuk-table";
-@import "custom/history-background";
-@import "custom/govuk-button-group.scss";
-@import "custom/moj-primary-navigation";
-@import "custom/search";
+@forward "custom/govuk-heading";
+@forward "custom/govuk-period.scss";
+@forward "custom/govuk-width";
+@forward "custom/govuk-table";
+@forward "custom/history-background";
+@forward "custom/govuk-button-group.scss";
+@forward "custom/moj-primary-navigation";
+@forward "custom/search";

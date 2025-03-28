@@ -6,16 +6,16 @@
 
 // Sub navigation
 // https://design-patterns.service.justice.gov.uk/components/sub-navigation/
-@import "@ministryofjustice/frontend/moj/settings/measurements";
-@import "@ministryofjustice/frontend/moj/objects/width-container";
-@import "@ministryofjustice/frontend/moj/utilities/width-container";
-@import "@ministryofjustice/frontend/moj/components/primary-navigation/primary-navigation";
-@import "@ministryofjustice/frontend/moj/components/sub-navigation/sub-navigation";
+@forward "@ministryofjustice/frontend/moj/settings/measurements";
+@forward "@ministryofjustice/frontend/moj/objects/width-container";
+@forward "@ministryofjustice/frontend/moj/utilities/width-container";
+@forward "@ministryofjustice/frontend/moj/components/primary-navigation/primary-navigation";
+@forward "@ministryofjustice/frontend/moj/components/sub-navigation/sub-navigation";
 
 // Sortable table
 // https://design-patterns.service.justice.gov.uk/components/sortable-table/
-@import "@ministryofjustice/frontend/moj/components/sortable-table/sortable-table";
+@forward "@ministryofjustice/frontend/moj/components/sortable-table/sortable-table";
 
 // date-picker
 // https://design-patterns.service.justice.gov.uk/components/date-picker/
-@import "@ministryofjustice/frontend/moj/components/date-picker/date-picker";
+@forward "@ministryofjustice/frontend/moj/components/date-picker/date-picker";

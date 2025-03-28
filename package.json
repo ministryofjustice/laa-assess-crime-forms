@@ -5,12 +5,12 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "8.0.13",
-    "@ministryofjustice/frontend": "^3.6.2",
+    "@ministryofjustice/frontend": "^4.0.1",
     "decimal.js": "^10.5.0",
-    "esbuild": "^0.25.0",
-    "govuk-frontend": "^5.8.0",
+    "esbuild": "^0.25.1",
+    "govuk-frontend": "^5.9.0",
     "jquery": "^3.6.0",
-    "sass": "^1.85.1"
+    "sass": "^1.86.0"
   },
   "resolutions": {
     "braces": "^3.0.3",
@@ -19,7 +19,7 @@
   "scripts": {
     "unit-test": "jest",
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css --no-source-map --load-path=node_modules  --quiet-deps"
+    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css --no-source-map --load-path=. --load-path=node_modules  --quiet-deps"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.9",
