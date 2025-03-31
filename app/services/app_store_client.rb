@@ -8,7 +8,7 @@ class AppStoreClient
 
     process_response(
       response,
-      "Unexpected response from AppStore - status #{response.code} for '#{url}'",
+      "Unexpected response from AppStore - status #{response.code} for '#{url}'\n#{response.inspect}",
       200 => ->(body) { JSON.parse(body) },
     )
   end
