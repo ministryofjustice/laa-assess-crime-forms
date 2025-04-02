@@ -7,10 +7,10 @@
     "@hotwired/turbo-rails": "8.0.13",
     "@ministryofjustice/frontend": "^4.0.1",
     "decimal.js": "^10.5.0",
-    "esbuild": "^0.25.1",
+    "esbuild": "^0.25.2",
     "govuk-frontend": "^5.9.0",
     "jquery": "^3.6.0",
-    "sass": "^1.86.0"
+    "sass": "^1.86.1"
   },
   "resolutions": {
     "braces": "^3.0.3",
