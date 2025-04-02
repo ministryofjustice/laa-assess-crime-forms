@@ -56,7 +56,12 @@ RSpec.describe Nsm::WorkItemsController do
       allow(Nsm::WorkItemForm).to receive(:new).and_return(form)
       put :update,
           params: { claim_id: claim.id, id: work_item[:id],
-                    nsm_work_item_form: { some: :data } }
+                    nsm_work_item_form: {
+                      uplift: 2,
+                      time_spent: 2,
+                      explanation: 'Something',
+                      work_type_value: 1
+                    } }
     end
 
     context 'when form save is successful' do

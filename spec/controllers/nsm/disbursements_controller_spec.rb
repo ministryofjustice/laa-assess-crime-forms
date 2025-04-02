@@ -61,7 +61,12 @@ RSpec.describe Nsm::DisbursementsController do
       allow(Nsm::DisbursementsForm).to receive(:new).and_return(form)
       put :update,
           params: { claim_id: claim.id, id: disbursement[:id],
-                    nsm_disbursements_form: { some: :data } }
+                    nsm_disbursements_form: {
+                      total_cost_without_vat: 5,
+                      explanation: 'Something',
+                      miles: 2,
+                      apply_vat: true
+                    } }
     end
 
     context 'when form save is successful' do

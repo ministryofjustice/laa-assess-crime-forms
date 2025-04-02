@@ -51,13 +51,13 @@ module PriorAuthority
     private
 
     def form_params
-      params.require(:prior_authority_additional_cost_form).permit(
-        :unit_type,
-        :items,
-        :cost_per_item,
-        :period,
-        :cost_per_hour,
-        :explanation,
+      params.expect(
+        prior_authority_additional_cost_form: [:unit_type,
+                                               :items,
+                                               :cost_per_item,
+                                               :period,
+                                               :cost_per_hour,
+                                               :explanation],
       ).merge(
         current_user: current_user,
         id: params[:id]

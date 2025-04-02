@@ -31,7 +31,7 @@ module Nsm
     end
 
     def form_params
-      params.require(:nsm_delete_adjustments_form).permit(:comment)
+      params.expect(nsm_delete_adjustments_form: [:comment])
     end
 
     def controller_params

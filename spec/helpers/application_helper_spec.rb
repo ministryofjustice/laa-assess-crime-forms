@@ -38,7 +38,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       context 'when current_layout is nsm' do
         before do
-          allow(helper).to receive_message_chain(:controller, :send).with(:_layout, lookup_context, [])
+          allow(helper).to receive_message_chain(:controller, :send).with(:_layout, lookup_context, [], [])
                                                                     .and_return('nsm')
           helper.title(value)
         end
@@ -48,7 +48,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       context 'when current_layout is oa' do
         before do
-          allow(helper).to receive_message_chain(:controller, :send).with(:_layout, lookup_context, [])
+          allow(helper).to receive_message_chain(:controller, :send).with(:_layout, lookup_context, [], [])
                                                                     .and_return('prior_authority')
           helper.title(value)
         end

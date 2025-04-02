@@ -34,7 +34,7 @@ RSpec.describe Nsm::SendBacksController do
       allow(Nsm::SendBackForm).to receive(:new).and_return(form)
       put :update,
           params: { claim_id: claim.id,
-                    nsm_send_back_form: { some: :data } }
+                    nsm_send_back_form: { send_back_comment: 'Something' } }
     end
 
     context 'when form save is successful' do

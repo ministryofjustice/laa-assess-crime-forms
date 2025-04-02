@@ -17,9 +17,9 @@ module PriorAuthority
       true
     end
 
-    private
-
     COMMENT_FIELD = 'travel_adjustment_comment'.freeze
+
+    private
 
     def process_fields
       process_field(value: travel_time.to_i, field: 'travel_time')

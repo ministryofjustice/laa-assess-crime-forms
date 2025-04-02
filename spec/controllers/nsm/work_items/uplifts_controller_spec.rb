@@ -23,7 +23,7 @@ RSpec.describe Nsm::WorkItems::UpliftsController do
       allow(Nsm::Uplift::WorkItemsForm).to receive(:new).and_return(form)
       put :update,
           params: { claim_id: claim.id,
-                    nsm_uplift_work_items_form: { some: :data } }
+                    nsm_uplift_work_items_form: { explanation: 'Something' } }
     end
 
     context 'when form save is successful' do

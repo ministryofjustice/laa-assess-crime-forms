@@ -23,7 +23,7 @@ RSpec.describe Nsm::ChangeRisksController, type: :controller do
       allow(Nsm::ChangeRiskForm).to receive(:new).and_return(form)
       put :update,
           params: { claim_id: claim.id,
-                    nsm_change_risk_form: { some: :data } }
+                    nsm_change_risk_form: { risk_level: 'high', explanation: 'Something' } }
     end
 
     context 'when form save is successful' do

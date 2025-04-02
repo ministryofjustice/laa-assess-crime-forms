@@ -48,10 +48,10 @@ module PriorAuthority
     private
 
     def form_params
-      params.require(:prior_authority_travel_cost_form).permit(
-        :travel_time,
-        :travel_cost_per_hour,
-        :explanation,
+      params.expect(
+        prior_authority_travel_cost_form: [:travel_time,
+                                           :travel_cost_per_hour,
+                                           :explanation],
       ).merge(
         current_user: current_user,
         id: params[:id]

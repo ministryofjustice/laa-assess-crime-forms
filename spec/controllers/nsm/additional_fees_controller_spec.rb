@@ -75,8 +75,14 @@ RSpec.describe Nsm::AdditionalFeesController, type: :controller do
 
       before do
         put :update,
-            params: { claim_id: claim_id, id: id,
-                      nsm_youth_court_fee_form: { some: :data } }
+            params: {
+              claim_id: claim_id,
+              id: id,
+              nsm_youth_court_fee_form: {
+                remove_youth_court_fee: true,
+                explanation: 'Some explanation text'
+              }
+            }
       end
 
       it 'redirects' do
@@ -95,8 +101,14 @@ RSpec.describe Nsm::AdditionalFeesController, type: :controller do
         it 'raises error' do
           expect do
             put :update,
-                params: { claim_id: claim_id, id: id,
-                      nsm_youth_court_fee_form: { some: :data } }
+                params: {
+                  claim_id: claim_id,
+                  id: id,
+                  nsm_youth_court_fee_form: {
+                    remove_youth_court_fee: true,
+                    explanation: 'Some explanation text'
+                  }
+                }
           end.to raise_error RuntimeError
         end
       end
@@ -107,8 +119,14 @@ RSpec.describe Nsm::AdditionalFeesController, type: :controller do
 
       before do
         put :update,
-            params: { claim_id: claim_id, id: id,
-                      nsm_youth_court_fee_form: { some: :data } }
+            params: {
+              claim_id: claim_id,
+              id: id,
+              nsm_youth_court_fee_form: {
+                remove_youth_court_fee: true,
+                explanation: 'Some explanation text'
+              }
+            }
       end
 
       it 'renders rather than redirects' do

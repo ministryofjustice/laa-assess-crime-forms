@@ -27,7 +27,7 @@ RSpec.describe Nsm::MakeDecisionsController do
       allow(Nsm::MakeDecisionForm).to receive(:new).and_return(form)
       put :update,
           params: { claim_id: claim.id,
-                    nsm_make_decision_form: { some: :data } }
+                    nsm_make_decision_form: { state: 'granted', grant_comment: 'Something' } }
     end
 
     context 'when form save is successful' do
