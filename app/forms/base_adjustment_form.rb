@@ -13,9 +13,9 @@ class BaseAdjustmentForm
     AppStoreClient.new.adjust(submission) if save
   end
 
-  private
-
   COMMENT_FIELD = 'adjustment_comment'.freeze
+
+  private
 
   def process_field(value:, field:)
     selected_record[self.class::COMMENT_FIELD] = explanation

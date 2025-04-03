@@ -33,8 +33,8 @@ module Nsm
     end
 
     def form_params
-      params.require(:nsm_change_risk_form).permit(
-        :risk_level, :explanation
+      params.expect(
+        nsm_change_risk_form: [:risk_level, :explanation]
       ).merge(current_user:, claim:)
     end
   end

@@ -23,7 +23,7 @@ RSpec.describe Nsm::LettersAndCalls::UpliftsController do
       allow(Nsm::Uplift::LettersAndCallsForm).to receive(:new).and_return(form)
       put :update,
           params: { claim_id: claim.id,
-                    nsm_uplift_letters_and_calls_form: { some: :data } }
+                    nsm_uplift_letters_and_calls_form: { explanation: 'Something' } }
     end
 
     context 'when form save is successful' do

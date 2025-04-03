@@ -15,16 +15,16 @@ module PriorAuthority
     private
 
     def search_params
-      params.require(:prior_authority_search_form).permit(
-        :query,
-        :submitted_from,
-        :submitted_to,
-        :updated_from,
-        :updated_to,
-        :status_with_assignment,
-        :caseworker_id,
-        :sort_by,
-        :sort_direction
+      params.expect(
+        prior_authority_search_form: [:query,
+                                      :submitted_from,
+                                      :submitted_to,
+                                      :updated_from,
+                                      :updated_to,
+                                      :status_with_assignment,
+                                      :caseworker_id,
+                                      :sort_by,
+                                      :sort_direction]
       ).merge(default_params)
     end
 

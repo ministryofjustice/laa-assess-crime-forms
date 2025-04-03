@@ -20,7 +20,7 @@ module Nsm
     private
 
     def form_params
-      params.require(:nsm_assignment_form).permit(:comment)
+      params.expect(nsm_assignment_form: [:comment])
     end
 
     def claim

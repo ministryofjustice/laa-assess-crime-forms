@@ -32,8 +32,8 @@ module Nsm
     end
 
     def form_params
-      params.require(:nsm_make_decision_form).permit(
-        :state, :grant_comment, :partial_comment, :reject_comment
+      params.expect(
+        nsm_make_decision_form: [:state, :grant_comment, :partial_comment, :reject_comment]
       ).merge(current_user:)
     end
 

@@ -48,7 +48,7 @@ RSpec.describe Nsm::LettersAndCallsController do
       allow(Nsm::LettersCallsForm::Letters).to receive(:new).and_return(form)
       put :update,
           params: { claim_id: claim.id, id: 'letters',
-                    nsm_letters_calls_form_letters: { some: :data } }
+                    nsm_letters_calls_form_letters: { uplift: 0, count: 0, explanation: 'Something' } }
     end
 
     context 'when form save is successful' do

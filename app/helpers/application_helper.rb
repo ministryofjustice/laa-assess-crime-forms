@@ -33,7 +33,7 @@ module ApplicationHelper
   end
 
   def current_layout
-    controller.send :_layout, lookup_context, []
+    controller.send :_layout, lookup_context, [], []
   end
 
   def app_environment
