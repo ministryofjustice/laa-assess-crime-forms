@@ -71,8 +71,10 @@ module Nsm
       controller_params[:id]
     end
 
+    # :nocov:
     def secondary_id
       nil
     end
+    # :nocov:
   end
 end
