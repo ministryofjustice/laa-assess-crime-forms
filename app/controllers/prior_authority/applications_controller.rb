@@ -58,9 +58,11 @@ module PriorAuthority
       controller_params[:id]
     end
 
+    # :nocov:
     def secondary_id
       nil
     end
+    # :nocov:
 
     def authorize_list
       authorize PriorAuthorityApplication, :index?
