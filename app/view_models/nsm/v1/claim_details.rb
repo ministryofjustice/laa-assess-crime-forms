@@ -4,7 +4,6 @@ module Nsm
       attribute :prosecution_evidence
       attribute :defence_statement
       attribute :number_of_witnesses
-      attribute :supplemental_claim
       attribute :work_before
       attribute :work_after
       attribute :wasted_costs
@@ -36,10 +35,6 @@ module Nsm
           {
             title: I18n.t(".nsm.claim_details.#{key}.number_of_witnesses"),
             value:  number_of_witnesses
-          },
-          {
-            title: I18n.t(".nsm.claim_details.#{key}.supplemental_claim"),
-            value:  supplemental_claim.capitalize
           },
           {
             title: I18n.t(".nsm.claim_details.#{key}.preparation_time"),
