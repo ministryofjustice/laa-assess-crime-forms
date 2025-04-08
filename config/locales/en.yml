@@ -96,6 +96,15 @@ en:
     sign_in: Sign in
 
   users:
+    index:
+      page_title: User management
+      add_new_user: Add new user
+      users: users
+      table:
+        name: Name
+        email: Email
+        role: Role
+        service: Service
     dev_auth:
       new:
         page_title: Dev Auth for testing
