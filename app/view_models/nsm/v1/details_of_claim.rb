@@ -8,6 +8,7 @@ module Nsm
       attribute :cntp_date
       attribute :stage_reached
       attribute :firm_office
+      attribute :supplemental_claim
 
       def key
         'details_of_claim'
@@ -33,7 +34,7 @@ module Nsm
           },
           {
             title: I18n.t(".nsm.claim_details.#{key}.claim_type"),
-            value:  claim_type.to_s
+            value:  "#{claim_type}#{' - Supplemental' if supplemental_claim == 'yes'}"
           },
         ]
       end
