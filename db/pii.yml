@@ -68,6 +68,7 @@ autogrant_limits:
 roles:
   id: false
   user_id: false
+  service: false
   role_type: false
   created_at: false
   updated_at: false

@@ -4,6 +4,7 @@ RSpec.describe 'History events', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
   let(:claim) { build(:claim) }
   let(:fixed_arbitrary_date) { Time.zone.local(2023, 2, 1, 9, 0) }
+  let(:supervisor) { create(:supervisor) }
 
   before do
     stub_app_store_interactions(claim)
@@ -15,8 +16,6 @@ RSpec.describe 'History events', :stub_oauth_token do
 
   context 'paginated events' do
     before do
-      supervisor = create(:supervisor)
-
       now = DateTime.current
 
       travel_to(now - 10.hours)
@@ -71,15 +70,15 @@ RSpec.describe 'History events', :stub_oauth_token do
         # User, Title, comment
         [
           '', 'Uploads deleted', 'Uploads are deleted after 6 months to keep provider data safe',
-          'case worker', 'Caseworker removed from claim by super visor', 'unassignment 2',
-          'case worker', 'Decision made to grant claim', 'Decision test',
+          caseworker.display_name, "Caseworker removed from claim by #{supervisor.display_name}", 'unassignment 2',
+          caseworker.display_name, 'Decision made to grant claim', 'Decision test',
           '', 'Received', 'Received from Provider with further information',
-          'case worker', 'Sent back', 'Sent back to Provider for further information',
-          'case worker', 'Caseworker note', 'User test note',
-          'case worker', 'Claim risk changed to low risk', 'Risk change test',
-          'case worker', 'Self-assigned by case worker', 'Manual assignment note',
-          'case worker', 'Caseworker removed self from claim', 'unassignment 1',
-          'case worker', 'Claim allocated to caseworker', ''
+          caseworker.display_name, 'Sent back', 'Sent back to Provider for further information',
+          caseworker.display_name, 'Caseworker note', 'User test note',
+          caseworker.display_name, 'Claim risk changed to low risk', 'Risk change test',
+          caseworker.display_name, "Self-assigned by #{caseworker.display_name}", 'Manual assignment note',
+          caseworker.display_name, 'Caseworker removed self from claim', 'unassignment 1',
+          caseworker.display_name, 'Claim allocated to caseworker', ''
         ]
       )
     end
@@ -109,7 +108,7 @@ RSpec.describe 'History events', :stub_oauth_token do
       visit nsm_claim_history_path(claim)
       fill_in 'Add a note to the claim history (optional)', with: 'Here is a note'
       click_on 'Add to claim history'
-      expect(page).to have_content "01 Feb 202309:00amcase worker\nCaseworker note\nHere is a note"
+      expect(page).to have_content "01 Feb 202309:00am#{caseworker.display_name}\nCaseworker note\nHere is a note"
     end
 
     it 'rejects blank content' do

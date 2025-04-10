@@ -1,18 +1,20 @@
 <% title t('.page_title') %>
 <div class="moj-page-header-actions">
-  <div class="moj-page-header-actions__title">
-      <h1 class="govuk-heading-xl">
-          <%= t('.page_title') %>
-      </h1>
-  </div>
-
-  <div class="moj-page-header-actions__actions">
-    <div class="moj-button-group moj-button-group--inline">
-        <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-            <%= t('.add_new_user') %>
-        </button>
+    <div class="moj-page-header-actions__title">
+        <h1 class="govuk-heading-xl">
+            <%= t('.page_title') %>
+        </h1>
     </div>
-  </div>
+
+    <div class="moj-page-header-actions__actions">
+        <div class="moj-button-group moj-button-group--inline">
+            <%= govuk_button_link_to(
+                t(".add_new_user"),
+                new_user_path,
+                secondary: true
+            ) %>
+        </div>
+    </div>
 </div>
 
 <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
@@ -40,6 +42,13 @@
                                        users_path,
                                        @sort_by,
                                        @sort_direction) %>
+
+            <%= table_header_with_form("service",
+                                       "users.index.table",
+                                       3,
+                                       users_path,
+                                       @sort_by,
+                                       @sort_direction) %>
         </tr>
     </thead>
 
@@ -47,13 +56,21 @@
         <% users.each do |user| %>
             <tr class="govuk-table__row app-task-list__item">
                 <td class="govuk-table__cell">
-                    <%= user.first_name %> <%= user.last_name %>
+                    <%= govuk_link_to(user.display_name, edit_user_path(user.id)) %>
                 </td>
                 <td class="govuk-table__cell">
                     <%= user.email %>
                 </td>
                 <td class="govuk-table__cell">
-                    <%= user.roles.pluck(:role_type).join(',') %>
+                    <%= user.roles.first.role_type.capitalize %>
+                </td>
+                <td class="govuk-table__cell">
+                    <% service = user.roles.first.service %>
+                    <% if service == "all" %>
+                        <%= service.capitalize %>
+                    <% else %>
+                        <%= service.upcase %>
+                    <% end %>
                 </td>
             </tr>
         <% end %>

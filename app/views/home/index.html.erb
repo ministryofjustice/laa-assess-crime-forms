@@ -19,7 +19,7 @@
         <%= link_to t('.analytics'), new_dashboard_path, class: 'govuk-link--no-visited-state' %>
       </p>
     <% end %>
-    <% if policy(:dashboard).show?  %>
+    <% if policy(:user_management).show?  %>
         <p>
             <%= link_to t('.user_management'), users_path, class: 'govuk-link--no-visited-state' %>
         </p>

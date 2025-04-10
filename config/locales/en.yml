@@ -96,6 +96,31 @@ en:
     sign_in: Sign in
 
   users:
+    service:
+      title: Which services can they access?
+      all: All
+      pa: PA (Prior Authority)
+      nsm: NSM (Non-Standard Magistrates' court payment)
+    form:
+      page_title: User details
+      field:
+        first_name: First name
+        last_name: Last name
+        email: Email address
+        permissions: Which permissions should they have?
+        supervisor:
+          title: Supervisor
+          hint: Gives access to user management, analytics and all services
+        caseworker:
+          title: Caseworker
+          hint: Allows the user to view and assess claims or applications
+        viewer:
+          title: Viewer
+          hint: Allows the user to view claims or applications
+        none:
+          title: None
+          hint: Removes all user permissions and disable the account
+      save: Save and continue
     index:
       page_title: User management
       add_new_user: Add new user
@@ -105,6 +130,10 @@ en:
         email: Email
         role: Role
         service: Service
+    edit:
+      page_title: User details
+    new:
+      page_title: User details
     dev_auth:
       new:
         page_title: Dev Auth for testing

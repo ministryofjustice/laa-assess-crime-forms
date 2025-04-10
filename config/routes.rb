@@ -145,6 +145,6 @@ Rails.application.routes.draw do
   get 'robots.txt', to: 'robots#index'
 
   resource :dashboard, only: %i[new show]
-  resource :users
+  resources :users
 end
 # rubocop:enable Metrics/BlockLength
