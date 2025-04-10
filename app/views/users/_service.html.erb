@@ -1,0 +1,29 @@
+<div class="govuk-radios__conditional" id="conditional-role-<%= role %>">
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend">
+                <%= t(".title") %>
+            </legend>
+            <div class="govuk-radios" data-module="govuk-radios" data-govuk-radios-init="">
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="service" name="service" type="radio" value="All">
+                    <label class="govuk-label govuk-radios__label" for="service">
+                        <%= t(".all") %>
+                    </label>
+                </div>
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="service-2" name="service" type="radio" value="PA">
+                    <label class="govuk-label govuk-radios__label" for="service-2">
+                        <%= t(".pa") %>
+                    </label>
+                </div>
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="service-3" name="service" type="radio" value="NSM">
+                    <label class="govuk-label govuk-radios__label" for="service-3">
+                        <%= t(".nsm") %>
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

@@ -59,7 +59,7 @@ RSpec.describe Event::Unassignment do
     end
 
     it 'has a valid title' do
-      expect(subject.title).to eq('Caseworker removed from claim by super visor')
+      expect(subject.title).to eq("Caseworker removed from claim by #{current_user.display_name}")
     end
   end
 

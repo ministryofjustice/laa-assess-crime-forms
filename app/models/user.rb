@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   DummyUser = Struct.new(:display_name)
-
+  validates :email, uniqueness: true
   has_many :access_logs, dependent: :destroy
   has_many :roles, dependent: :destroy
 
@@ -13,7 +13,7 @@ class User < ApplicationRecord
   scope :pending_activation, -> { where(auth_subject_id: nil, deactivated_at: nil) }
 
   def display_name
-    "#{first_name} #{last_name}"
+    "#{first_name.capitalize} #{last_name.capitalize}"
   end
 
   def supervisor?
