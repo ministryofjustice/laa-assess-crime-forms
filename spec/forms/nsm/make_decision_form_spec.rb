@@ -228,8 +228,9 @@ RSpec.describe Nsm::MakeDecisionForm do
   describe '#save' do
     let(:user) { instance_double(User) }
     let(:claim) { build(:claim, data:) }
-    let(:data) { build(:nsm_data) }
+    let(:data) { build(:nsm_data, send_back_comment:) }
     let(:params) { { claim: claim, state: 'part_grant', partial_comment: 'part comment', current_user: user } }
+    let(:send_back_comment) { nil }
 
     before do
       claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
@@ -265,6 +266,16 @@ RSpec.describe Nsm::MakeDecisionForm do
       let(:params) { { claim: } }
 
       it { expect(form.save).to be_falsey }
+    end
+
+    context 'when send back form has previously been started' do
+      let(:send_back_comment) { 'garbage' }
+
+      it 'resets the send_back_comment field to nil' do
+        expect { form.save }.to change { claim.data['send_back_comment'] }.from(send_back_comment).to(nil)
+      end
+
+      it { expect(form.save).to be_truthy }
     end
   end
 
