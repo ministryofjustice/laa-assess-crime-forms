@@ -14,4 +14,7 @@ class Role < ApplicationRecord
   scope :viewer, -> { where(role_type: VIEWER) }
 
   enum :service, { pa: 'pa', nsm: 'nsm', all: 'all' }, prefix: true
+
+  scope :pa_access, -> { where(service: %w[pa all]) }
+  scope :nsm_access, -> { where(service: %w[nsm all]) }
 end

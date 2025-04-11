@@ -1,25 +1,31 @@
 class ClaimPolicy < ApplicationPolicy
   def update?
-    !record.closed? && record.assigned_user_id == user.id
+    service_access? && !record.closed? && record.assigned_user_id == user.id
   end
 
   def unassign?
-    !record.closed? && record.assigned_user_id.present? && !user.viewer?
+    service_access? && !record.closed? && record.assigned_user_id.present? && !user.viewer?
   end
 
   def self_assign?
-    assign? && !record.closed? && record.assigned_user_id.nil?
+    service_access? && assign? && !record.closed? && record.assigned_user_id.nil?
   end
 
   def assign?
-    !user.viewer?
+    service_access? && !user.viewer?
   end
 
   def index?
-    true
+    service_access?
   end
 
   def show?
-    true
+    service_access?
+  end
+
+  private
+
+  def service_access?
+    user.roles.nsm_access.any?
   end
 end
