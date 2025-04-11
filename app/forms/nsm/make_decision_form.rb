@@ -43,7 +43,12 @@ module Nsm
       persist_form_values
       previous_state = claim.state
 
-      claim.data.merge!('status' => state, 'updated_at' => Time.current, 'assessment_comment' => comment)
+      claim.data.merge!(
+        'status' => state,
+        'updated_at' => Time.current,
+        'assessment_comment' => comment,
+        'send_back_comment' => nil
+      )
       claim.state = state
       ::Event::Decision.build(submission: claim,
                               comment: comment,
