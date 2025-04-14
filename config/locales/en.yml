@@ -125,6 +125,7 @@ en:
       page_title: User management
       add_new_user: Add new user
       users: users
+      no_role: None
       table:
         name: Name
         email: Email

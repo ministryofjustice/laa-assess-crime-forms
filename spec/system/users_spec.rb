@@ -130,4 +130,47 @@ RSpec.describe 'Users', :stub_oauth_token do
       expect(page).to have_content(I18n.t('activemodel.errors.models.user_form.attributes.last_name.blank'))
     end
   end
+
+  describe 'Permissions' do
+    it 'correctly blocks user access' do
+      # Caseworker can see PA
+      sign_in caseworker
+      visit users_path
+
+      expect(page).to have_content(I18n.t('home.index.prior_authority'))
+
+      # Supervisor revokes caseworker access
+      sign_in supervisor
+      visit users_path
+      click_on caseworker.display_name
+      expect(page).to have_content(I18n.t('users.edit.page_title'))
+      choose I18n.t('users.form.field.none.title')
+
+      click_on I18n.t('users.form.save')
+
+      # Caseworker can't access anything
+      sign_in caseworker
+      visit users_path
+
+      expect(page).to have_content(I18n.t('errors.unauthorised'))
+      expect(caseworker.reload.deactivated_at).not_to be_nil
+
+      # Supervisor reinstates caseworker access
+      sign_in supervisor
+      visit users_path
+      click_on caseworker.display_name
+      expect(page).to have_content(I18n.t('users.edit.page_title'))
+      choose I18n.t('users.form.field.caseworker.title')
+      choose I18n.t('users.service.pa'), match: :first
+
+      click_on I18n.t('users.form.save')
+
+      # Caseworker can see PA
+      sign_in caseworker
+      visit users_path
+
+      expect(page).to have_content(I18n.t('home.index.prior_authority'))
+      expect(caseworker.reload.deactivated_at).to be_nil
+    end
+  end
 end

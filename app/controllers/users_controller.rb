@@ -18,9 +18,9 @@ class UsersController < ApplicationController
     @user = User.find(controller_params['id'])
     user = @user.attributes.slice('first_name', 'last_name', 'email')
     role = @user.roles.first
-    @form_object = UserForm.new(user.merge({ role_type: role.role_type,
-                                             caseworker_service: role.service,
-                                             viewer_service: role.service }))
+    @form_object = UserForm.new(user.merge({ role_type: role&.role_type || 'none',
+                                             caseworker_service: role&.service,
+                                             viewer_service: role&.service }))
   end
 
   def create
