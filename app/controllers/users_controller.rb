@@ -53,6 +53,8 @@ class UsersController < ApplicationController
       User.order(first_name: direction, last_name: direction)
     when 'role'
       User.includes(:roles).order(roles: { role_type: direction })
+    when 'service'
+      User.includes(:roles).order(roles: { service: direction })
     else
       User.order(params[:sort_by] => direction)
     end
@@ -72,13 +74,16 @@ class UsersController < ApplicationController
   end
 
   def form_params
+    allowed_params = [:first_name,
+                      :last_name,
+                      :role_type,
+                      :caseworker_service,
+                      :viewer_service]
+
+    allowed_params << :email unless action_name == 'update'
+
     params.expect(
-      user_form: [:first_name,
-                  :last_name,
-                  :email,
-                  :role_type,
-                  :caseworker_service,
-                  :viewer_service],
+      user_form: allowed_params,
     )
   end
 
