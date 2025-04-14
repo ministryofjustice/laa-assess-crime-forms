@@ -10,7 +10,7 @@
     link_to t("helpers.back_link"),
      (
          if has_referrer || came_from_current_path
-         @form_object.backlink_path(claim)
+         users_path
          else
          "#{@referrer}##{@form_object.id}"
          end
@@ -32,7 +32,7 @@
                 <p>
                     <strong><%= t(".field.email") %></strong>
                     <br/>
-                    <%= @user.email %>
+                    <%= @form_object.email %>
                 </p>
             <% else %>
                 <%= f.govuk_text_field :email, label: { size: 's', text: t(".field.email") }, class: "govuk-input--width-20" %>

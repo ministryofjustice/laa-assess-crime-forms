@@ -31,13 +31,19 @@ class UserForm
   private
 
   def create_user
-    User.create!(
+    user = User.create(
       first_name: first_name,
       last_name: last_name,
       email: email,
       auth_oid: SecureRandom.uuid,
       roles: [Role.new(role_type:, service:)]
     )
+
+    return true if user.errors.empty?
+
+    user.errors.map { |error| errors.add(error.attribute.to_sym, error.type.to_sym) }
+
+    false
   end
 
   def update_user
