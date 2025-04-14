@@ -14,7 +14,7 @@ class UserForm
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :role_type, presence: true, inclusion: { in: Role::ROLE_TYPES }
+  validates :role_type, presence: true, inclusion: { in: (Role::ROLE_TYPES + ['none']) }
   validates :caseworker_service, inclusion: { in: Role.services, allow_nil: true }
   validates :viewer_service, inclusion: { in: Role.services, allow_nil: true }
 
@@ -47,10 +47,13 @@ class UserForm
   end
 
   def update_user
-    User.find(id).update!(first_name: first_name,
-                          last_name: last_name,
-                          email: email,
-                          roles: [Role.new(role_type:, service:)])
+    User.find(id).update!(
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      roles: role_type == 'none' ? [] : [Role.new(role_type:, service:)],
+      deactivated_at: (DateTime.now if role_type == 'none')
+    )
   end
 
   def service

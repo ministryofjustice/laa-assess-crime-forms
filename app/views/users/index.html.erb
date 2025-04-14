@@ -62,14 +62,22 @@
                     <%= user.email %>
                 </td>
                 <td class="govuk-table__cell">
-                    <%= user.roles.first.role_type.capitalize %>
+                    <% if user.roles.any? %>
+                        <%= user.roles.first.role_type.capitalize %>
+                    <% else %>
+                        <%= t('.no_role') %>
+                    <% end %>
                 </td>
                 <td class="govuk-table__cell">
-                    <% service = user.roles.first.service %>
-                    <% if service == "all" %>
-                        <%= service.capitalize %>
+                    <% if user.roles.any? %>
+                        <% service = user.roles.first.service %>
+                        <% if service == "all" %>
+                            <%= service.capitalize %>
+                        <% else %>
+                            <%= service.upcase %>
+                        <% end %>
                     <% else %>
-                        <%= service.upcase %>
+                        -
                     <% end %>
                 </td>
             </tr>
