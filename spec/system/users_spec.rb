@@ -32,13 +32,13 @@ RSpec.describe 'Users', :stub_oauth_token do
         click_on 'Role'
 
         within 'table' do
-          expect(page).to have_content(/John Everyman.*Ad Minh/)
+          expect(page).to have_content(/#{caseworker.display_name}.*#{supervisor.display_name}/)
         end
 
         click_on 'Role'
 
         within 'table' do
-          expect(page).to have_content(/Ad Minh.*John Everyman/)
+          expect(page).to have_content(/#{supervisor.display_name}.*#{caseworker.display_name}/)
         end
       end
 
@@ -46,7 +46,7 @@ RSpec.describe 'Users', :stub_oauth_token do
         click_on 'Service'
 
         within 'table' do
-          expect(page).to have_content(/Ad Minh.*Super Visor/)
+          expect(page).to have_content(/#{supervisor.display_name}.*#{caseworker.display_name}/)
         end
       end
 
@@ -54,7 +54,7 @@ RSpec.describe 'Users', :stub_oauth_token do
         click_on 'Email'
 
         within 'table' do
-          expect(page).to have_content(/Ad Minh.*John Everyman/)
+          expect(page).to have_content(/#{supervisor.display_name}.*#{caseworker.display_name}/)
         end
       end
     end

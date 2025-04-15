@@ -3,8 +3,8 @@ return unless ENV.fetch('ENV', 'local').in?(%w[development local])
 User
   .find_or_initialize_by(email: 'case.worker@test.com')
   .update(
-    first_name: 'case',
-    last_name: 'worker',
+    first_name: 'Case',
+    last_name: 'Worker',
     auth_oid: SecureRandom.uuid,
     auth_subject_id: SecureRandom.uuid,
     roles: [Role.new(role_type: 'caseworker', service: 'all')]
@@ -13,8 +13,8 @@ User
 User
   .find_or_initialize_by(email: 'super.visor@test.com')
   .update(
-    first_name: 'super',
-    last_name: 'visor',
+    first_name: 'Super',
+    last_name: 'Visor',
     auth_oid: SecureRandom.uuid,
     auth_subject_id: SecureRandom.uuid,
     roles: [Role.new(role_type: 'supervisor', service: 'all')]
