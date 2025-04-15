@@ -13,7 +13,7 @@ class User < ApplicationRecord
   scope :pending_activation, -> { where(auth_subject_id: nil, deactivated_at: nil) }
 
   def display_name
-    "#{first_name.capitalize} #{last_name.capitalize}"
+    "#{first_name} #{last_name}"
   end
 
   def supervisor?
