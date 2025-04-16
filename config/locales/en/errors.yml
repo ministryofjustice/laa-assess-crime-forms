@@ -124,3 +124,17 @@ en:
               search_error: Something went wrong trying to perform this search
             application_type:
               blank: Select a service to search
+        user_form:
+          attributes:
+            email:
+              taken: A user with this email address already exists
+              invalid: Enter a valid email address
+              blank: Enter the user's email address
+            first_name:
+              blank: Enter the first name of the user
+            last_name:
+              blank: Enter the last name of the user
+            role_type:
+              blank: Select the users permissions
+            service:
+              blank: Select the services the user can access

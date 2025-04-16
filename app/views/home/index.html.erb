@@ -1,23 +1,32 @@
 <% title t('assess_a_crime_form.service_name') %>
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      <%= t('assess_a_crime_form.service_name') %>
-    </h1>
-  </div>
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">
+            <%= t('assess_a_crime_form.service_name') %>
+        </h1>
+    </div>
 </div>
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <p>
-      <%= link_to(t('.prior_authority'), prior_authority_root_path, class: 'govuk-link--no-visited-state') %>
-    </p>
-    <p>
-      <%= link_to(t('.nsm'), nsm_root_path, class: 'govuk-link--no-visited-state') %>
-    </p>
-    <% if policy(:dashboard).show? && FeatureFlags.insights.enabled? %>
-      <p>
-        <%= link_to t('.analytics'), new_dashboard_path, class: 'govuk-link--no-visited-state' %>
-      </p>
-    <% end %>
-  </div>
+    <div class="govuk-grid-column-two-thirds">
+        <% if policy(:prior_authority_application).show?  %>
+            <p>
+                <%= link_to(t('.prior_authority'), prior_authority_root_path, class: 'govuk-link--no-visited-state') %>
+            </p>
+        <% end %>
+        <% if policy(:claim).show?  %>
+            <p>
+                <%= link_to(t('.nsm'), nsm_root_path, class: 'govuk-link--no-visited-state') %>
+            </p>
+        <% end %>
+        <% if policy(:dashboard).show? && FeatureFlags.insights.enabled? %>
+            <p>
+                <%= link_to t('.analytics'), new_dashboard_path, class: 'govuk-link--no-visited-state' %>
+            </p>
+        <% end %>
+        <% if policy(:user_management).show?  %>
+            <p>
+                <%= link_to t('.user_management'), users_path, class: 'govuk-link--no-visited-state' %>
+            </p>
+        <% end %>
+    </div>
 </div>
