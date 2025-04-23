@@ -25,7 +25,7 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
         [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:]
       end
 
-      include_examples 'creates a feedback mailer'
+      it_behaves_like 'creates a feedback mailer'
     end
 
     context 'with cntp id' do
@@ -58,7 +58,7 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
         [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:]
       end
 
-      include_examples 'creates a feedback mailer'
+      it_behaves_like 'creates a feedback mailer'
     end
   end
 
@@ -74,7 +74,7 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
        date:]
     end
 
-    include_examples 'creates a feedback mailer'
+    it_behaves_like 'creates a feedback mailer'
   end
 
   describe 'rejected' do
@@ -87,7 +87,7 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
        caseworker_decision_explanation:, date:]
     end
 
-    include_examples 'creates a feedback mailer'
+    it_behaves_like 'creates a feedback mailer'
   end
 
   describe 'further information' do
@@ -102,7 +102,7 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
        caseworker_information_requested:, date:]
     end
 
-    include_examples 'creates a feedback mailer'
+    it_behaves_like 'creates a feedback mailer'
   end
 
   describe 'other status' do
@@ -117,7 +117,7 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
        date:]
     end
 
-    include_examples 'creates a feedback mailer'
+    it_behaves_like 'creates a feedback mailer'
   end
 
   it_behaves_like 'notification client error handler' do
