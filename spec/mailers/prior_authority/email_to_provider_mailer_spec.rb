@@ -35,7 +35,7 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
        application_total:, date:]
     end
 
-    include_examples 'creates a feedback mailer'
+    it_behaves_like 'creates a feedback mailer'
   end
 
   context 'with auto_grant state' do
@@ -48,7 +48,7 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
        application_total:, date:]
     end
 
-    include_examples 'creates a feedback mailer'
+    it_behaves_like 'creates a feedback mailer'
   end
 
   context 'with part granted state' do
@@ -85,7 +85,7 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
        caseworker_decision_explanation:, date:]
     end
 
-    include_examples 'creates a feedback mailer'
+    it_behaves_like 'creates a feedback mailer'
   end
 
   context 'with rejected state' do
@@ -100,7 +100,7 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
       date:]
     end
 
-    include_examples 'creates a feedback mailer'
+    it_behaves_like 'creates a feedback mailer'
   end
 
   context 'with further information state' do
@@ -138,7 +138,7 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
        caseworker_information_requested:, date:]
     end
 
-    include_examples 'creates a feedback mailer'
+    it_behaves_like 'creates a feedback mailer'
   end
 
   context 'with an unhandled state' do
