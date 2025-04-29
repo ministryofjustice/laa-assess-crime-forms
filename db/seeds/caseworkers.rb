@@ -1,4 +1,4 @@
-return unless ENV.fetch('ENV', 'local').in?(%w[development local])
+return unless HostEnv.local? || HostEnv.development?
 
 User
   .find_or_initialize_by(email: 'case.worker@test.com')
