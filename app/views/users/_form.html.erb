@@ -39,7 +39,7 @@
             <% end %>
             <%= f.govuk_radio_buttons_fieldset :role_type, legend: { size: 's', text: t(".field.permissions") } do %>
                 <% (Role::ROLE_TYPES + ["none"]).each_with_index do |role, index| %>
-                    <%= f.govuk_radio_button :role_type, role.to_s, link_errors: index.zero?, label: { text: t(".field.#{role}.title") } do %>
+                    <%= f.govuk_radio_button :role_type, role.to_s, link_errors: index.zero?, label: { text: t(".field.#{role}.title") }, hint: { text: t(".field.#{role}.hint")} do %>
                         <% next if ["supervisor", "none"].include?(role) %>
 
                         <%= f.govuk_radio_buttons_fieldset "#{role.to_s}_service".to_sym, legend: { size: 's', text: t("users.service.title") } do %>

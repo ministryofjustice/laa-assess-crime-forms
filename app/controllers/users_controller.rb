@@ -18,7 +18,13 @@ class UsersController < ApplicationController
     @user = User.find(controller_params['id'])
     user = @user.attributes.slice('first_name', 'last_name', 'email')
     role = @user.roles.first
-    @form_object = UserForm.new(user.merge({ role_type: role&.role_type || 'none',
+    role_type = if role.nil? || @user.deactivated_at.present?
+                  'none'
+                else
+                  role.role_type
+                end
+
+    @form_object = UserForm.new(user.merge({ role_type: role_type,
                                              caseworker_service: role&.service,
                                              viewer_service: role&.service }))
   end

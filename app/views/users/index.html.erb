@@ -62,14 +62,16 @@
                     <%= user.email %>
                 </td>
                 <td class="govuk-table__cell">
-                    <% if user.roles.any? %>
+                    <% if user.deactivated_at.present? %>
+                        <%= t('.user_disabled') %>
+                    <% elsif user.roles.any? %>
                         <%= user.roles.first.role_type.capitalize %>
                     <% else %>
                         <%= t('.no_role') %>
                     <% end %>
                 </td>
                 <td class="govuk-table__cell">
-                    <% if user.roles.any? %>
+                    <% if user.roles.any? && user.deactivated_at.nil? %>
                         <% service = user.roles.first.service || '-' %>
                         <% if service == "all" %>
                             <%= service.capitalize %>

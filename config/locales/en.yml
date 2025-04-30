@@ -118,7 +118,7 @@ en:
           title: Viewer
           hint: Allows the user to view claims or applications
         none:
-          title: None
+          title: None - account disabled
           hint: Removes all user permissions and disable the account
       save: Save and continue
     index:
@@ -126,6 +126,7 @@ en:
       add_new_user: Add new user
       users: users
       no_role: None
+      user_disabled: Account disabled
       table:
         name: Name
         email: Email
