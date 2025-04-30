@@ -73,7 +73,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_10_083914) do
     t.string "role_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "service"
+    t.string "service", default: "all"
     t.index ["user_id"], name: "index_roles_on_user_id"
   end
 
