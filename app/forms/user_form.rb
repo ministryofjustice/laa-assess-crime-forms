@@ -31,13 +31,7 @@ class UserForm
   private
 
   def create_user
-    user = User.create(
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      auth_oid: SecureRandom.uuid,
-      roles: [Role.new(role_type:, service:)]
-    )
+    user = User.create(user_params)
 
     return true if user.errors.empty?
 
@@ -47,13 +41,18 @@ class UserForm
   end
 
   def update_user
-    User.find(id).update!(
+    User.find(id).update!(user_params)
+  end
+
+  def user_params
+    {
       first_name: first_name,
       last_name: last_name,
       email: email,
+      auth_oid: SecureRandom.uuid,
       roles: role_type == 'none' ? [] : [Role.new(role_type:, service:)],
       deactivated_at: (DateTime.now if role_type == 'none')
-    )
+    }
   end
 
   def service
