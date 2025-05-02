@@ -97,36 +97,35 @@ en:
 
   users:
     service:
-      title: Which services can they access?
+      title: Select service
       all: All
-      pa: PA (Prior Authority)
-      nsm: NSM (Non-Standard Magistrates' court payment)
+      pa: PA - Prior Authority
+      nsm: NSM - Non-Standard Magistrates' court payment
     form:
       page_title: User details
       field:
         first_name: First name
         last_name: Last name
         email: Email address
-        permissions: Which permissions should they have?
+        permissions: Select role
         supervisor:
           title: Supervisor
-          hint: Gives access to user management, analytics and all services
+          hint: User management, analytics and all services
         caseworker:
           title: Caseworker
-          hint: Allows the user to view and assess claims or applications
+          hint: View and assess claims or applications
         viewer:
           title: Viewer
-          hint: Allows the user to view claims or applications
+          hint: View but not assess claims or applications
         none:
-          title: None - account disabled
-          hint: Removes all user permissions and disable the account
+          title: Remove access
       save: Save and continue
     index:
       page_title: User management
       add_new_user: Add new user
       users: users
       no_role: None
-      user_disabled: Account disabled
+      user_disabled: No access
       table:
         name: Name
         email: Email
