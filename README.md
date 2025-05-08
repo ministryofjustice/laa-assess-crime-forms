@@ -138,6 +138,17 @@ Add it to your.env.development.local under GOVUK_NOTIFY_API_KEY
 
 To use the location service you will need an Ordnance Survey API key. You can generate a test key at https://osdatahub.os.uk/projects. Create and account, create a test project, add the OS Names API to that project, then move its key to OS_API_KEY in .env.development.local
 
+#### Debugging
+
+By default, debugging isn't enabled. This can be changed by setting
+`WEB_ENABLE_DEBUGGING=true` in your `.env.development.local` file and
+restarting the application.
+
+After doing so, you will be able to connect to the running application
+in your editor of choice. If the default selected port is otherwise
+occupied by some other service, then also set `WEB_DEBUG_PORT` to some
+other value.
+
 ### 10. Helm Template
 
 #### Security Context
