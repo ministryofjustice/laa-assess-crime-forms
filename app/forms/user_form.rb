@@ -15,9 +15,15 @@ class UserForm
   validates :last_name, presence: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :role_type, presence: true, inclusion: { in: (Role::ROLE_TYPES + ['none']) }
-  validates :caseworker_service, inclusion: { in: Role.services, allow_nil: true }
-  validates :viewer_service, inclusion: { in: Role.services, allow_nil: true }
+  validates :caseworker_service,
+            inclusion: { in: Role.services },
+            presence: true,
+            if: -> { role_type == 'caseworker' }
 
+  validates :viewer_service,
+            inclusion: { in: Role.services },
+            presence: true,
+            if: -> { role_type == 'viewer' }
   def save
     return false unless valid?
 

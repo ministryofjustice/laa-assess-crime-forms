@@ -126,6 +126,10 @@ en:
               blank: Select a service to search
         user_form:
           attributes:
+            caseworker_service:
+              inclusion: Select the services the user can access
+            viewer_service:
+              inclusion: Select the services the user can access
             email:
               taken: A user with this email address already exists
               invalid: Enter a valid email address
