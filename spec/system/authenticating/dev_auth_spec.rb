@@ -55,6 +55,25 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
       end
     end
 
+    context 'when a disabled user is in the system' do
+      let(:user) do
+        create(:caseworker, first_name: nil, last_name: nil, email: 'Zoe.Doe@example.com', deactivated_at: DateTime.now)
+      end
+
+      it 'signs in the user' do
+        expect(page).to have_content 'Zoe Doe'
+        expect(page).to have_content 'Assess a crime form'
+      end
+
+      it 'guesses the name from the email' do
+        expect(user.reload.display_name).to eq('Zoe Doe')
+      end
+
+      it 'sets the auth subject id' do
+        expect(user.reload.auth_subject_id).not_to be_nil
+      end
+    end
+
     context 'when an authorised, authenticated, user is selected' do
       let(:auth_subject_id) { SecureRandom.uuid }
       let(:user) do
