@@ -1,27 +1,51 @@
-return unless ENV.fetch('ENV', 'local').in?(%w[development local])
+return unless HostEnv.local? || HostEnv.development?
 
-case_worker = User.find_or_initialize_by(email: 'case.worker@test.com')
-case_worker.update(
-  first_name: 'case',
-  last_name: 'worker',
-  auth_oid: SecureRandom.uuid,
-  auth_subject_id: SecureRandom.uuid,
-)
-case_worker.roles.create! role_type: 'caseworker'
+User
+  .find_or_initialize_by(email: 'case.worker@test.com')
+  .update(
+    first_name: 'Case',
+    last_name: 'Worker',
+    auth_oid: SecureRandom.uuid,
+    auth_subject_id: SecureRandom.uuid,
+    roles: [Role.new(role_type: 'caseworker', service: 'all')]
+  )
 
-super_visor = User.find_or_initialize_by(email: 'super.visor@test.com')
-super_visor.update(
-  first_name: 'super',
-  last_name: 'visor',
-  auth_oid: SecureRandom.uuid,
-  auth_subject_id: SecureRandom.uuid,
-)
-super_visor.roles.create! role_type: 'supervisor'
+User
+  .find_or_initialize_by(email: 'super.visor@test.com')
+  .update(
+    first_name: 'Super',
+    last_name: 'Visor',
+    auth_oid: SecureRandom.uuid,
+    auth_subject_id: SecureRandom.uuid,
+    roles: [Role.new(role_type: 'supervisor', service: 'all')]
+  )
 
-viewer = User.find_or_initialize_by(email: 'viewer@test.com')
-viewer.update(
-  first_name: 'Reid',
-  last_name: "O'Nly",
-  auth_subject_id: SecureRandom.uuid,
-)
-viewer.roles.create! role_type: 'viewer'
+User
+  .find_or_initialize_by(email: 'viewer@test.com')
+  .update(
+    first_name: 'Reid',
+    last_name: "O'Nly",
+    auth_oid: SecureRandom.uuid,
+    auth_subject_id: SecureRandom.uuid,
+    roles: [Role.new(role_type: 'viewer', service: 'all')]
+  )
+
+User
+  .find_or_initialize_by(email: 'pa@test.com')
+  .update(
+    first_name: 'Crim',
+    last_name: 'Fours',
+    auth_oid: SecureRandom.uuid,
+    auth_subject_id: SecureRandom.uuid,
+    roles: [Role.new(role_type: 'caseworker', service: 'pa')]
+  )
+
+User
+  .find_or_initialize_by(email: 'nsm@test.com')
+  .update(
+    first_name: 'Crim',
+    last_name: 'Sevens',
+    auth_oid: SecureRandom.uuid,
+    auth_subject_id: SecureRandom.uuid,
+    roles: [Role.new(role_type: 'caseworker', service: 'nsm')]
+  )

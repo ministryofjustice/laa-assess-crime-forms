@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   DummyUser = Struct.new(:display_name)
-
+  validates :email, uniqueness: true
   has_many :access_logs, dependent: :destroy
   has_many :roles, dependent: :destroy
 

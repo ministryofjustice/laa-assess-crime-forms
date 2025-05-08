@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :caseworker, class: 'User' do
-    email { 'case.worker@test.com' }
+    email { Faker::Internet.email }
     first_name { 'case' }
     last_name { 'worker' }
     auth_oid { SecureRandom.uuid }
@@ -13,7 +13,7 @@ FactoryBot.define do
   end
 
   factory :supervisor, class: 'User' do
-    email { 'super.visor@test.com' }
+    email { Faker::Internet.email }
     first_name { 'super' }
     last_name { 'visor' }
     auth_oid { SecureRandom.uuid }
@@ -22,7 +22,7 @@ FactoryBot.define do
   end
 
   factory :viewer, class: 'User' do
-    email { 'readonly.viewer@test.com' }
+    email { Faker::Internet.email }
     first_name { 'cannot' }
     last_name { 'edit' }
     auth_subject_id { SecureRandom.uuid }

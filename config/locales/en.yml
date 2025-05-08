@@ -96,6 +96,45 @@ en:
     sign_in: Sign in
 
   users:
+    service:
+      title: Select service
+      all: All
+      pa: PA - Prior Authority
+      nsm: NSM - Non-Standard Magistrates' court payment
+    form:
+      page_title: User details
+      field:
+        first_name: First name
+        last_name: Last name
+        email: Email address
+        permissions: Select role
+        supervisor:
+          title: Supervisor
+          hint: User management, analytics and all services
+        caseworker:
+          title: Caseworker
+          hint: View and assess claims or applications
+        viewer:
+          title: Viewer
+          hint: View but not assess claims or applications
+        none:
+          title: Remove access
+      save: Save and continue
+    index:
+      page_title: User management
+      add_new_user: Add new user
+      users: users
+      no_role: None
+      user_disabled: No access
+      table:
+        name: Name
+        email: Email
+        role: Role
+        service: Service
+    edit:
+      page_title: User details
+    new:
+      page_title: User details
     dev_auth:
       new:
         page_title: Dev Auth for testing

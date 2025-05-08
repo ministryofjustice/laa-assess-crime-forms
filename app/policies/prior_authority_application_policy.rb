@@ -1,31 +1,35 @@
 class PriorAuthorityApplicationPolicy < ApplicationPolicy
   def unassign?
-    assessable? && record.assigned_user_id.present? && !user.viewer?
+    service_access? && assessable? && record.assigned_user_id.present? && !user.viewer?
   end
 
   def self_assign?
-    assign? && assessable? && record.assigned_user_id.nil?
+    service_access? && assign? && assessable? && record.assigned_user_id.nil?
   end
 
   def update?
-    assessable? && record.assigned_user_id == user.id && !user.viewer?
+    service_access? && assessable? && record.assigned_user_id == user.id && !user.viewer?
   end
 
   def assign?
-    !user.viewer?
+    service_access? && !user.viewer?
   end
 
   def index?
-    true
+    service_access?
   end
 
   def show?
-    true
+    service_access?
   end
 
   private
 
   def assessable?
     record.state.in?(PriorAuthorityApplication::ASSESSABLE_STATES)
+  end
+
+  def service_access?
+    user.roles.pa_access.any?
   end
 end
