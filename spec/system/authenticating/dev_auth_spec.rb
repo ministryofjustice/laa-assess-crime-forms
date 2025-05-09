@@ -31,7 +31,17 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
       end
     end
 
-    context 'when an authorised, but not yet authenticated, user is selected' do
+    context 'when a disabled user is in the system' do
+      let(:user) do
+        create(:caseworker, first_name: nil, last_name: nil, email: 'Zoe.Doe@example.com', deactivated_at: DateTime.now)
+      end
+
+      it 'they cannot sign in' do
+        expect(page).not_to have_select('email_field', with_options: [user.email])
+      end
+    end
+
+    context 'when an unauthenticated user is in the system' do
       let(:user) do
         create(:caseworker, first_name: nil, last_name: nil, email: 'Zoe.Doe@example.com', auth_subject_id: nil)
       end
