@@ -26,6 +26,6 @@ class ClaimPolicy < ApplicationPolicy
   private
 
   def service_access?
-    user.roles.nsm_access.any?
+    user.nsm_access?
   end
 end

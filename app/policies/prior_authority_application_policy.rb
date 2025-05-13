@@ -30,6 +30,6 @@ class PriorAuthorityApplicationPolicy < ApplicationPolicy
   end
 
   def service_access?
-    user.roles.pa_access.any?
+    user.pa_access?
   end
 end

@@ -12,16 +12,24 @@ class User < ApplicationRecord
   scope :active, -> { where(deactivated_at: nil).where.not(auth_subject_id: nil) }
   scope :pending_activation, -> { where(auth_subject_id: nil, deactivated_at: nil) }
 
+  def nsm_access?
+    @nsm_access ||= roles.nsm_access.exists?
+  end
+
+  def pa_access?
+    @pa_access ||= roles.pa_access.exists?
+  end
+
   def display_name
     "#{first_name} #{last_name}"
   end
 
   def supervisor?
-    roles.supervisor.any?
+    @supervisor ||= roles.supervisor.any?
   end
 
   def viewer?
-    roles.viewer.any?
+    @viewer ||= roles.viewer.any?
   end
 
   def pending_activation?
