@@ -9,6 +9,7 @@ en:
         review_and_adjust: Review and adjust
         adjustments: Adjustments
         supporting_evidence: Supporting evidence
+        cis_summary: CIS summary
         claim_history: Claim history
       claim_summary:
         claimed: "Claimed:"
