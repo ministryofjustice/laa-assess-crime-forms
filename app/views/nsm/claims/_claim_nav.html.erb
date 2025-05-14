@@ -15,6 +15,9 @@
       <%= link_to t('.supporting_evidence'), nsm_claim_supporting_evidences_path(claim), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'supporting_evidences' ? "page" : nil) %>
     </li>
     <li class="moj-sub-navigation__item">
+      <%= link_to t('.cis_summary'), nsm_claim_cis_summaries_path(claim), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'cis_summaries' ? "page" : nil) %>
+    </li>
+    <li class="moj-sub-navigation__item">
       <%= link_to t('.claim_history'), nsm_claim_history_path(claim), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'history' ? "page" : nil) %>
     </li>
   </ul>
