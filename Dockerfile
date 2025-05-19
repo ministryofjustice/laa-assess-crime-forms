@@ -1,9 +1,9 @@
-FROM ruby:3.4.3-alpine3.20 AS base
+FROM ruby:3.4.3-alpine3.21 AS base
 LABEL maintainer="Non-standard magistrates' court payment team"
 
 # TODO: is this still needed?
 # temp fix to security issue in base image: ruby:3.2.2-alpine3.18
-RUN apk update && apk upgrade --no-cache libcrypto3 libssl3 openssl
+RUN apk update && apk upgrade --no-cache libcrypto3 libssl3 openssl libxml2
 
 # dependencies required both at runtime and build time
 RUN apk add --update \
