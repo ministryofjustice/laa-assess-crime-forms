@@ -29,6 +29,8 @@ ingress:
   modsec:
     ruleState: "On"
     auditState: "RelevantOnly"
+  whitelist:
+    enabled: true
   annotations:
     external-dns.alpha.kubernetes.io/set-identifier: laa-assess-crime-forms-app-laa-assess-crime-forms-prod-green
   hosts:

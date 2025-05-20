@@ -19,6 +19,7 @@ metadata:
   labels:
     {{- include "laa-assess-crime-forms.labels" . | nindent 4 }}
   annotations:
+    nginx.ingress.kubernetes.io/whitelist-source-range: "{{ include "laa-assess-crime-forms.whitelist" $ }}"
     nginx.ingress.kubernetes.io/default-backend: nginx-errors
     nginx.ingress.kubernetes.io/custom-http-errors: "423"
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
