@@ -13,10 +13,100 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
   context 'when claim has been submitted' do
     before { visit nsm_claim_claim_details_path(claim) }
 
+    let(:headings) do
+      [
+        'Claim summary',
+        'Defendant details',
+        'Case details',
+        'Case disposal',
+        'Claim justification',
+        'Claim details',
+        'Hearing details',
+        'Other relevant information',
+        'Firm details',
+        'Equality monitoring'
+      ]
+    end
+
+    let(:defendant) { claim.data['defendants'].detect { _1[:main] == true } }
+    let(:firm) { claim.data['firm_office'] }
+    let(:solicitor) { claim.data['solicitor'] }
+
     it 'shows me the total claimed but not adjusted' do
       expect(page)
         .to have_content('Claimed: £359.76')
         .and have_no_content('Allowed:')
+    end
+
+    it 'shows the expected summary headings' do
+      headings.each do |heading|
+        expect(page)
+          .to have_content(heading)
+      end
+    end
+
+    it 'shows expected fields within Claim summary section' do
+      expect(page).to have_content("Unique file number#{claim.data[:ufn]}")
+      expect(page).to have_content('Type of claimNon-standard magistrates')
+      expect(page).to have_content('Representation order date13 October 2024')
+    end
+
+    it 'shows expected fields within Defendant details section' do
+      expect(page).to have_content("Defendant 1 (lead)#{defendant[:first_name]} #{defendant[:last_name]}#{defendant[:maat]}")
+    end
+
+    it 'shows expected fields within Case details section' do
+      expect(page).to have_content('Main offence nameassault')
+      expect(page).to have_content('Offence date12 December 2023')
+      expect(page).to have_content('Assigned counselNo')
+      expect(page).to have_content('Unassigned counselYes')
+      expect(page).to have_content('Instructed agentNo')
+      expect(page).to have_content("Case remitted from Crown Court to magistrates' courtNo")
+    end
+
+    it 'shows expected fields within Case disposal section' do
+      expect(page).to have_content('Category 1Guilty plea')
+    end
+
+    it 'shows expected fields within Claim justification section' do
+      expect(page).to have_content("Why are you claiming a non-standard magistrates' payment?Counsel or agent assigned")
+    end
+
+    it 'shows expected fields within Claim details section' do
+      expect(page).to have_content("Number of pages of prosecution evidence#{claim.data[:prosecution_evidence]}")
+      expect(page).to have_content("Number of pages of defence statements#{claim.data[:defence_statement]}")
+      expect(page).to have_content("Number of witnesses#{claim.data[:number_of_witnesses]}")
+      expect(page).to have_content('Recorded evidenceNo')
+      expect(page).to have_content('Work done before order was grantedNo')
+      expect(page).to have_content('Work was done after last hearingNo')
+    end
+
+    it 'shows expected fields within Hearing details section' do
+      expect(page).to have_content('Date of first hearing12 December 2012')
+      expect(page).to have_content("Number of attendances#{claim.data[:number_of_hearing]}")
+      expect(page).to have_content("Magistrates' courtyouth_court")
+      expect(page).to have_content('Youth courtNo')
+      expect(page).to have_content("Hearing outcome#{claim.data[:hearing_outcome]}")
+      expect(page).to have_content("Matter type#{claim.data[:matter_type]}")
+    end
+
+    it 'shows expected fields within Other relevant information section' do
+      expect(page).to have_content('Any other informationNo')
+      expect(page).to have_content('Proceedings concluded over 3 months agoNo')
+    end
+
+    it 'shows expected fields within Firm details section' do
+      expect(page).to have_content("Firm name#{firm[:name]}")
+      expect(page).to have_content("Firm office account number#{firm[:account_number]}")
+      expect(page).to have_content("Firm address#{firm[:address_line_1]}#{firm[:address_line_2]}#{firm[:town]}#{firm[:postcode]}")
+      expect(page).to have_content("Solicitor full name#{solicitor[:first_name]} #{solicitor[:last_name]}")
+      expect(page).to have_content("Solicitor reference number#{solicitor[:reference_number]}")
+      expect(page).to have_content("Contact full name#{solicitor[:contact_first_name]} #{solicitor[:contact_last_name]}")
+      expect(page).to have_content("Contact email address#{solicitor[:contact_email]}")
+    end
+
+    it 'shows expected fields within Equality monitoring section' do
+      expect(page).to have_content('Equality questionsNo, skip the equality questions')
     end
 
     context 'when claim has old translation format' do
