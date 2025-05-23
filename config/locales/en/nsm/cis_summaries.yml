@@ -1,0 +1,36 @@
+---
+en:
+  nsm:
+    cis_summaries:
+      show:
+        page_title: 'CIS summary'
+        heading: 'CIS summary'
+        assessment: Assessment
+        accessible:
+          net_cost: 'net cost'
+          vat: 'vat'
+          gross_cost: 'gross cost'
+      contact_details:
+        title: 'Firm details'
+        firm_name: 'Firm name'
+        firm_account: 'Firm office account number (Supplier number)'
+      defendant_details:
+        title: 'Defendant details'
+        defendant_first_name: 'Defendant %{position} first name'
+        defendant_last_name: 'Defendant %{position} last name'
+        number_of_defendants: 'Number of defendants'
+      details_of_claim:
+        title: 'Claim summary'
+        ufn: 'Unique file number'
+        stage_reached: 'Stage reached (Claim code)'
+        stages:
+          prog: 'PROG'
+          prom: 'PROM'
+      hearing_details:
+        title: 'Hearing details'
+        number_of_hearing: 'Number of attendances'
+        work_completed_date: 'Date work was completed'
+        youth_court: 'Youth court'
+        court: "Magistrates' court (Court ID)"
+        matter_type: 'Matter type'
+        hearing_outcome: 'Hearing outcome (Outcome code)'
