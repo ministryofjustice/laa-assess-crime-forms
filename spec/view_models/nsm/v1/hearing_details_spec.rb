@@ -41,7 +41,7 @@ RSpec.describe Nsm::V1::HearingDetails do
       expect(subject.data).to eq(
         [
           { title: 'Date of first hearing', value: '2 January 2023' },
-          { title: 'Number of hearings', value: 3 },
+          { title: 'Number of attendances', value: 3 },
           { title: "Magistrates' court", value: 'A Mag Court' },
           { title: 'Youth court', value: 'No' },
           { title: 'Hearing outcome', value: 'CP01 - Arrest warrant issued/adjourned indefinitely' },

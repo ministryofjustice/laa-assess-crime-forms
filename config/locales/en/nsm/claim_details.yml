@@ -61,7 +61,7 @@ en:
       hearing_details:
         title: Hearing details
         first_hearing_date: Date of first hearing
-        number_of_hearing: Number of hearings
+        number_of_hearing: Number of attendances
         court: Magistrates' court
         youth_court: Youth court
         hearing_outcome: Hearing outcome
