@@ -95,6 +95,6 @@ Function to return a list of whitelisted IPs allowed to access the service.
 */}}
 {{- define "laa-assess-crime-forms.whitelist" -}}
 {{- if .Values.ingress.whitelist.enabled }}
-    {{- .Values.pingdomIPs }},{{- .Values.sharedIPs }}
+    {{- if .Values.ingress.whitelist.addresses }}{{- join "," .Values.ingress.whitelist.addresses }},{{- end }}{{- .Values.sharedIPs }}
 {{- end -}}
 {{- end -}}
