@@ -1,27 +1,37 @@
 <% current ||= (@current_section || infer_claim_section || :open) %>
-<div class="moj-primary-navigation">
-  <div class="moj-primary-navigation__container">
-    <div class="moj-primary-navigation__nav">
-        <nav class="moj-primary-navigation" aria-label="Primary navigation">
-          <ul class="moj-primary-navigation__list">
-            <% if policy(Claim).assign? %>
-              <li class="moj-primary-navigation__item">
-                <%= link_to t('layouts.primary_navigation.your_claims'), your_nsm_claims_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :your ? 'page' : nil) %>
-              </li>
-            <% end %>
-            <li class="moj-primary-navigation__item">
-              <%= link_to t('layouts.primary_navigation..all_claims'), open_nsm_claims_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :open ? 'page' : nil) %>
+
+<section class="govuk-service-navigation" aria-label="Service information" data-module="govuk-service-navigation" data-govuk-service-navigation-init="">
+  <div class="govuk-width-container">
+    <div class="govuk-service-navigation__container">
+      <span class="govuk-service-navigation__service-name">
+        <%= link_to t('nsm.service_name'), nsm_root_path,
+                      class: 'govuk-service-navigation__link', id: 'header-service-name' %>
+      </span>
+      <nav class="govuk-service-navigation__wrapper" aria-label="Main service navigation">
+        <ul id="navigation" class="govuk-service-navigation__list">
+          <% if policy(Claim).assign? %>
+            <li class="govuk-service-navigation__item <%= 'govuk-service-navigation__item--active' if current == :your %>">
+              <%= link_to t('layouts.primary_navigation.your_claims'), your_nsm_claims_path, class: 'govuk-service-navigation__link', 'aria-current': ('page' if current == :your) %>
             </li>
-            <li class="moj-primary-navigation__item">
-              <%= link_to t('layouts.primary_navigation.assessed_claims'), closed_nsm_claims_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :closed ? 'page' : nil) %>
+          <% end %>
+          <li class="govuk-service-navigation__item <%= 'govuk-service-navigation__item--active' if current == :open %>">
+            <%= link_to t('layouts.primary_navigation.all_claims'), open_nsm_claims_path, class: 'govuk-service-navigation__link', 'aria-current': ('page' if current == :open) %>
+          </li>
+          <li class="govuk-service-navigation__item <%= 'govuk-service-navigation__item--active' if current == :closed %>">
+            <%= link_to t('layouts.primary_navigation.assessed_claims'), closed_nsm_claims_path, class: 'govuk-service-navigation__link', 'aria-current': ('page' if current == :closed) %>
+          </li>
+          <% if FeatureFlags.search.enabled? %>
+            <li class="govuk-service-navigation__item <%= 'govuk-service-navigation__item--active' if current == :search %>">
+              <%= link_to t('layouts.primary_navigation.search'), new_nsm_search_path, class: 'govuk-service-navigation__link', 'aria-current': ('page' if current == :search) %>
             </li>
-            <% if FeatureFlags.search.enabled? %>
-              <li class="moj-primary-navigation__item">
-                <%= link_to t('layouts.primary_navigation.search'), new_nsm_search_path, class: 'moj-primary-navigation__link', 'aria-current': (current == :search ? 'page' : nil) %>
+          <% end %>
+          <% unless request.path == root_path %>
+              <li class="govuk-service-navigation__item service-switch-navigation__item">
+                  <%= link_to t('assess_a_crime_form.switch_service'), root_path, class: 'govuk-link--no-visited-state' %>
               </li>
-            <% end %>
-          </ul>
-        </nav>
+          <% end %>
+        </ul>
+      </nav>
     </div>
   </div>
-</div>
+</section>
