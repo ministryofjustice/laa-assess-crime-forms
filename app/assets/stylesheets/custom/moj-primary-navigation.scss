@@ -9,4 +9,19 @@
   .moj-primary-navigation__container {
     margin: 0 10px;
   }
+
+  /* Service switch navigation */
+  nav.govuk-service-navigation__wrapper {
+    flex-grow: 2;
+
+    li:last-child {
+      margin-left: auto;
+      font-size: 1rem;
+    }
+  }
+}
+
+.moj-header__navigation-list.app-header-menu-hidden-on-load {
+  display: flex;
+  align-items: center;
 }
