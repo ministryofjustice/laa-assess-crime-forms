@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  layout 'user_management'
+
   before_action :authorize_supervisor
   before_action :set_default_table_sort_options, only: %i[index]
 
