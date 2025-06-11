@@ -28,7 +28,7 @@ RSpec.describe 'Error pages' do
       end
 
       it 'uses the simplified errors page layout' do
-        expect(page).to have_no_css('nav.moj-primary-navigation')
+        expect(page).to have_no_css('.govuk-service-navigation')
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe 'Error pages' do
       end
 
       it 'uses the simplified errors page layout' do
-        expect(page).to have_no_css('nav.moj-primary-navigation')
+        expect(page).to have_no_css('.govuk-service-navigation')
       end
     end
   end
