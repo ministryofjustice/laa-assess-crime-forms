@@ -1,5 +1,6 @@
 en:
   dashboards:
+    service_name: Analytic dashboard
     show:
       title: Analytics
       heading:

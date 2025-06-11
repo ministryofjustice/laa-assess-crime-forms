@@ -32,14 +32,14 @@ RSpec.describe 'Dashboards', :stub_oauth_token do
       it 'by default lets me view the prior authority analytics' do
         visit dashboard_path
         expect(page).to have_css('.govuk-heading-xl', text: 'Prior authority')
-        expect(page).to have_css('.moj-primary-navigation__link', text: 'Prior authority')
+        expect(page).to have_css('.govuk-service-navigation__link', text: 'Prior authority')
       end
 
       it 'shows both service navigation tabs and search tab' do
         visit dashboard_path
-        expect(page).to have_css('.moj-primary-navigation__link', text: 'Prior authority')
-        expect(page).to have_css('.moj-primary-navigation__link', text: 'Non-standard magistrates')
-        expect(page).to have_css('.moj-primary-navigation__link', text: 'Search')
+        expect(page).to have_css('.govuk-service-navigation__link', text: 'Prior authority')
+        expect(page).to have_css('.govuk-service-navigation__link', text: 'Non-standard magistrates')
+        expect(page).to have_css('.govuk-service-navigation__link', text: 'Search')
       end
 
       it 'can navigate to nsm analytics' do

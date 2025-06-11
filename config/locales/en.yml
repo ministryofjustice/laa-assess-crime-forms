@@ -96,6 +96,7 @@ en:
     sign_in: Sign in
 
   users:
+    service_name: User management
     service:
       title: Select service
       all: All
