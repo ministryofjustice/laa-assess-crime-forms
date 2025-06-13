@@ -1,16 +1,16 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <% if show_tag_on_details_page?(claim) %>
-        <p>
-          <%= submission_state_tag(claim) %>
-        </p>
-      <% end %>
       <p class="govuk-caption-xl">
         <%= claim_summary.laa_reference %>
       </p>
       <h1 class="govuk-heading-xl">
         <%= claim_summary.main_defendant_name %>
       </h1>
+      <% if show_tag_on_details_page?(claim) %>
+        <p>
+          <%= submission_state_tag(claim) %>
+        </p>
+      <% end %>
       <p>
         <span class="govuk-body-l">
           <strong><%= t('.claimed') %></strong>
