@@ -13,7 +13,7 @@ RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
 
   before do
     unassignment_stub
-    allow(WorkingDayService).to receive(:call).with(10).and_return(deadline)
+    allow(LaaCrimeFormsCommon::WorkingDayService).to receive(:call).with(10).and_return(deadline)
   end
 
   describe '#comments' do
