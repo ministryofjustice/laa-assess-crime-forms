@@ -142,7 +142,7 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
         allow(FeatureFlags).to receive(:nsm_rfi_loop).and_return(
           instance_double(FeatureFlags::EnabledFeature, enabled?: true)
         )
-        allow(WorkingDayService).to receive(:call).with(10).and_return(14.days.from_now)
+        allow(LaaCrimeFormsCommon::WorkingDayService).to receive(:call).with(10).and_return(14.days.from_now)
         click_link_or_button 'Submit'
       end
 

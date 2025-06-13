@@ -62,7 +62,7 @@ RSpec.describe Nsm::SendBackForm do
         allow(FeatureFlags).to receive(:nsm_rfi_loop).and_return(
           instance_double(FeatureFlags::EnabledFeature, enabled?: true)
         )
-        allow(WorkingDayService).to receive(:call).and_return 10.days.from_now
+        allow(LaaCrimeFormsCommon::WorkingDayService).to receive(:call).and_return 10.days.from_now
       end
 
       it 'adds a further_information array element to claim data' do

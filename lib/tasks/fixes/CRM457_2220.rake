@@ -8,7 +8,8 @@ namespace :CRM457_2220 do
     sub_id = '507c6b43-a3c5-4520-b610-b639b88c945c'
     exp_id = '4e1d61b1-52c2-4a72-bc61-e2ed0d4c5f10'
 
-    resubmission_deadline = WorkingDayService.call(Rails.application.config.x.rfi.working_day_window)
+    resubmission_deadline = LaaCrimeFormsCommon::WorkingDayService
+.call(Rails.application.config.x.rfi.working_day_window)
     puts "resubmission_deadline: #{resubmission_deadline}"
     submission = PriorAuthorityApplication.find(sub_id)
     puts "submission_id: #{submission.id}"

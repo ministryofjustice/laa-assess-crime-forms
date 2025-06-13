@@ -75,7 +75,8 @@ module PriorAuthority
     end
 
     def resubmission_deadline
-      WorkingDayService.call(Rails.application.config.x.rfi.working_day_window)
+      LaaCrimeFormsCommon::WorkingDayService
+        .call(Rails.application.config.x.rfi.working_day_window)
     end
 
     def append_explanation(type, explanation)
