@@ -1,10 +1,10 @@
-<% if show_tag_on_details_page?(application_summary.submission) %>
-  <%= submission_state_tag(application_summary.submission) %>
-  <br><br>
-<% end %>
-
 <span class="govuk-caption-xl"><%= application_summary.firm_name %></span>
 <h1 class="govuk-heading-xl"><%= application_summary.laa_reference %></h1>
+<% if show_tag_on_details_page?(application_summary.submission) %>
+  <p>
+    <%= submission_state_tag(application_summary.submission) %>
+  </p>
+<% end %>
 <p>
   <span class="govuk-body-l">
     <strong><%= t('.requested') %></strong>
