@@ -43,7 +43,8 @@ module Nsm
     end
 
     def add_further_information_data
-      claim.data['resubmission_deadline'] = WorkingDayService.call(working_days_allowed)
+      claim.data['resubmission_deadline'] = LaaCrimeFormsCommon::WorkingDayService
+                                            .call(working_days_allowed)
       claim.data['further_information'] ||= []
       claim.data['further_information'] << {
         documents: [],
