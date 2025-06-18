@@ -159,7 +159,21 @@ commands:
           command: |
             RUBYOPT=-W:no-deprecated \
             INCLUDE_ACCESSIBILITY_SPECS=1 \
-            bundle exec flatware rspec
+            bundle exec flatware rspec \
+              --format progress \
+              --format RspecJunitFormatter \
+              --out /tmp/test-results/rspec/rspec.xml
+      - store_test_results:
+          path: /tmp/test-results/rspec
+      - run:
+          name: Stash coverage results
+          command: |
+            mkdir coverage_results
+            cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage_results
       - store_artifacts:
           path: ~/repo/coverage
           destination: coverage
