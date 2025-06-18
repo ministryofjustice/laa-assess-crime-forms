@@ -46,7 +46,7 @@ RSpec.describe 'Users', :stub_oauth_token do
         click_on 'Service'
 
         within 'table' do
-          expect(page).to have_content(/#{supervisor.display_name}.*#{caseworker.display_name}/)
+          expect(page).to have_content(/#{caseworker.display_name}.*#{supervisor.display_name}/)
         end
       end
 
@@ -68,6 +68,7 @@ RSpec.describe 'Users', :stub_oauth_token do
     end
 
     it 'can create a new user' do
+      count = User.count
       fill_in I18n.t('users.form.field.first_name'), with: 'Joe'
       fill_in I18n.t('users.form.field.last_name'), with: 'Bloggs'
       fill_in I18n.t('users.form.field.email'), with: Faker::Internet.email
@@ -75,7 +76,7 @@ RSpec.describe 'Users', :stub_oauth_token do
 
       click_on I18n.t('users.form.save')
 
-      expect(User.count).to eq(8)
+      expect(User.count).to eq(count + 1)
       expect(page).to have_content('Joe Bloggs')
     end
 
