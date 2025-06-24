@@ -24,12 +24,10 @@ executors:
         environment:
           RACK_ENV: test
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:circleci@127.0.0.1:5432/laa_assess_non_standard_magistrate_fee_test
       - image: cimg/postgres:13.12-postgis
         environment:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: laa_assess_non_standard_magistrate_fee_test
 
   cloud-platform-executor:
     resource_class: small
@@ -148,7 +146,7 @@ commands:
       - run:
           name: Database setup
           command: |
-            RUBYOPT=-W:no-deprecated \
+            bundle exec rake db:setup
             bundle exec flatware fan rails db:test:prepare --trace
 
   rspec:
