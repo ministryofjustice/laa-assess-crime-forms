@@ -42,12 +42,14 @@ gem 'pagy'
 # Exception monitoring
 gem 'sentry-rails', '>= 5.17.3'
 gem 'sentry-ruby'
+gem 'uuid', '~> 2.3'
 gem 'with_advisory_lock'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails'
   gem 'erb_lint', '>= 0.6.0', require: false
+  gem 'flatware-rspec', require: false
   gem 'overcommit'
   gem 'pry'
   gem 'rspec-expectations'
@@ -69,11 +71,10 @@ group :test do
   gem 'rubocop-rspec', require: false
   gem 'selenium-webdriver'
   gem 'simplecov'
+  gem 'simplecov-console'
   gem 'simplecov_json_formatter', '~> 0.1.4'
   gem 'simplecov-lcov'
   gem 'simplecov-rcov'
   gem 'super_diff'
   gem 'webmock', '~> 3.25'
 end
-
-gem "uuid", "~> 2.3"

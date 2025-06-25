@@ -11,6 +11,9 @@ require 'active_support/core_ext/integer/time'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Preserve full timezone
+  config.active_support.to_time_preserves_timezone = :zone
+
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'View Adjust quote tab' do
+RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
   before do
     stub_app_store_interactions(application)
     sign_in caseworker
