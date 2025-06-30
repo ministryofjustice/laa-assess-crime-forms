@@ -22,6 +22,8 @@ module PriorAuthority
         model.id == controller_params[:id]
       end
 
+      @all_quotes = BaseViewModel.build(:quote, submission, 'quotes')
+
       form = ServiceCostForm.new(submission:, item:, **form_params(item))
 
       if form.save!
