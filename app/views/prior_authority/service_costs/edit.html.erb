@@ -8,8 +8,25 @@
     <%= govuk_error_summary(form) %>
     <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
     <h2 class="govuk-heading-l"><%= t(submission.data['service_type'], scope: 'prior_authority.service_types') %></h2>
-    <p class="govuk-body"><%= t('.adjustment_blurb', service_type: t(submission.data['service_type'], scope: 'prior_authority.service_types')) %></p>
-
+    <h3 class="govuk-heading-m"><%= t('.quotes') %></h2>
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><%= t('.quote') %></th>
+          <th scope="row" class="govuk-table__header"><%= t('.amount') %></th>
+          <th scope="row" class="govuk-table__header"><%= t('.rate') %></th>
+          <th scope="row" class="govuk-table__header"><%= t('.total') %></th>
+        </tr>
+        <% @all_quotes.each_with_index do |quote, index| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__header"><%= quote.primary ? t('.primary') : t('.alternative', index:)%></td>
+            <td class="govuk-table__cell"><%= quote.requested_humanized_units %></td>
+            <td class="govuk-table__cell"><%= quote.requested_humanized_cost_per_unit %></td>
+            <td class="govuk-table__cell"><%= quote.requested_formatted_service_cost_total %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
     <%= form_with model: form, url: prior_authority_application_service_cost_path(submission.id, item.id), method: :patch do |f| %>
       <%= f.hidden_field(:cost_type, value: item.cost_type) %>
       <%= f.hidden_field(:item_type, value: item.item_type) %>
@@ -20,11 +37,10 @@
                                secondary: true,
                                id:'calculate_change_button') %>
 
-      <h2 class="govuk-heading-l">
+      <p class="govuk-heading-l">
         <span class="govuk-caption-m"><%= t('.adjusted_cost') %></span>
-        £
-        <span id="adjusted-cost">0.00</span>
-      </h2>
+        £ <span id="adjusted-cost">0.00</span>
+      </p>
 
       <%= f.govuk_text_area :explanation,
                             label: { size: 's', text: t('.explanation.label') },

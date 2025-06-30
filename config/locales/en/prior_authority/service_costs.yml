@@ -13,13 +13,19 @@ en:
         period: Time
 
       edit:
-        adjustment_blurb: Adjust the providers' costs by changing the values.
+        quotes: Quotes for service cost
         adjusted_cost: Adjusted cost
-        calculate_button_text: Calculate my changes
+        calculate_button_text: Calculate cost
         explanation:
           hint: For example, why you made adjustments to the cost or time. We'll share this explanation with the provider.
           label: Explain your decision
         hourly_cost: Cost per hour
         page_title: Adjust service costs
+        quote: Quote
+        amount: Amount
+        rate: Rate
+        total: Total
+        primary: Primary
+        alternative: Alternative %{index}
       confirm_deletion:
         service_type_cost: "%{service_type} costs"

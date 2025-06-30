@@ -84,14 +84,14 @@ RSpec.describe 'Adjust service costs', :stub_oauth_token do
       expect(page).to have_css('#adjusted-cost', text: '0.00')
 
       fill_in 'Hours', with: 'a'
-      click_on 'Calculate my changes'
+      click_on 'Calculate cost'
       expect(page).to have_css('#adjusted-cost', text: '--')
 
       fill_in 'Hours', with: 20
       fill_in 'Minutes', with: 0
       fill_in 'Cost per hour', with: '1.50'
 
-      click_on 'Calculate my changes'
+      click_on 'Calculate cost'
       expect(page).to have_css('#adjusted-cost', text: '30.00')
     end
 
@@ -182,12 +182,12 @@ RSpec.describe 'Adjust service costs', :stub_oauth_token do
       expect(page).to have_css('#adjusted-cost', text: '0.00')
 
       fill_in 'Cost per minute', with: 'a'
-      click_on 'Calculate my changes'
+      click_on 'Calculate cost'
       expect(page).to have_css('#adjusted-cost', text: '--')
 
       fill_in 'Number of minutes', with: 60
       fill_in 'Cost per minute', with: 2.50
-      click_on 'Calculate my changes'
+      click_on 'Calculate cost'
       expect(page).to have_css('#adjusted-cost', text: '150.00')
     end
 
@@ -217,6 +217,22 @@ RSpec.describe 'Adjust service costs', :stub_oauth_token do
         .and have_content('The cost per minute must be a number, like 25')
         .and have_field('Number of minutes', with: 'a')
         .and have_field('Cost per minute', with: 'a')
+    end
+
+    it 'displays information about the quotes on the application' do
+      expect(page).to have_text 'Quotes for service cost'
+
+      within('.govuk-table') do
+        expect(page).to have_xpath('.//tr', count: 3)
+      end
+
+      within('.govuk-table__row', text: 'Primary') do
+        expect(page).to have_text '100 minutes £2.00 per minute £200'
+      end
+
+      within('.govuk-table__row', text: 'Alternative') do
+        expect(page).to have_text '3 hours 0 minutes £3.50 per hour £10.50'
+      end
     end
   end
 end

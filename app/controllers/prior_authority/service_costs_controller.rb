@@ -3,16 +3,18 @@ module PriorAuthority
     def edit
       authorize(submission, :edit?)
       all_service_costs = BaseViewModel.build(:service_cost, submission, 'quotes')
-
       item = all_service_costs.find do |model|
         model.id == controller_params[:id]
       end
+
+      @all_quotes = BaseViewModel.build(:quote, submission, 'quotes')
 
       form = ServiceCostForm.new(submission:, item:, **item.form_attributes)
 
       render locals: { submission:, item:, form: }
     end
 
+    # rubocop:disable Metrics/AbcSize
     def update
       authorize(submission, :update?)
       all_service_costs = BaseViewModel.build(:service_cost, submission, 'quotes')
@@ -20,6 +22,8 @@ module PriorAuthority
       item = all_service_costs.find do |model|
         model.id == controller_params[:id]
       end
+
+      @all_quotes = BaseViewModel.build(:quote, submission, 'quotes')
 
       form = ServiceCostForm.new(submission:, item:, **form_params(item))
 
@@ -29,6 +33,7 @@ module PriorAuthority
         render :edit, locals: { submission:, item:, form: }
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def confirm_deletion
       authorize(submission, :edit?)
