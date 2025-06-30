@@ -14,6 +14,7 @@ module PriorAuthority
       render locals: { submission:, item:, form: }
     end
 
+    # rubocop:disable Metrics/AbcSize
     def update
       authorize(submission, :update?)
       all_service_costs = BaseViewModel.build(:service_cost, submission, 'quotes')
@@ -32,6 +33,7 @@ module PriorAuthority
         render :edit, locals: { submission:, item:, form: }
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def confirm_deletion
       authorize(submission, :edit?)
