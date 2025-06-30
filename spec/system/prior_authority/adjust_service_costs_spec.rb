@@ -223,7 +223,7 @@ RSpec.describe 'Adjust service costs', :stub_oauth_token do
       expect(page).to have_text 'Quotes for service cost'
 
       within('.govuk-table') do
-        expect(page).to have_xpath(".//tr", :count => 3)
+        expect(page).to have_xpath('.//tr', count: 3)
       end
 
       within('.govuk-table__row', text: 'Primary') do
