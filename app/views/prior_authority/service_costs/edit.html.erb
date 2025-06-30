@@ -9,6 +9,24 @@
     <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
     <h2 class="govuk-heading-l"><%= t(submission.data['service_type'], scope: 'prior_authority.service_types') %></h2>
     <h3 class="govuk-heading-m"><%= t('.quotes') %></h2>
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><%= t('.quote') %></th>
+          <th scope="row" class="govuk-table__header"><%= t('.amount') %></th>
+          <th scope="row" class="govuk-table__header"><%= t('.rate') %></th>
+          <th scope="row" class="govuk-table__header"><%= t('.total') %></th>
+        </tr>
+        <% @all_quotes.each_with_index do |quote, index| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__header"><%= quote.primary ? t('.primary') : t('.alternative', index:)%></td>
+            <td class="govuk-table__cell"><%= quote.requested_humanized_units %></td>
+            <td class="govuk-table__cell"><%= quote.requested_humanized_cost_per_unit %></td>
+            <td class="govuk-table__cell"><%= quote.requested_formatted_service_cost_total %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
     <%= form_with model: form, url: prior_authority_application_service_cost_path(submission.id, item.id), method: :patch do |f| %>
       <%= f.hidden_field(:cost_type, value: item.cost_type) %>
       <%= f.hidden_field(:item_type, value: item.item_type) %>

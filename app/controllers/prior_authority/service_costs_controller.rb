@@ -3,10 +3,11 @@ module PriorAuthority
     def edit
       authorize(submission, :edit?)
       all_service_costs = BaseViewModel.build(:service_cost, submission, 'quotes')
-
       item = all_service_costs.find do |model|
         model.id == controller_params[:id]
       end
+
+      @all_quotes = BaseViewModel.build(:quote, submission, 'quotes')
 
       form = ServiceCostForm.new(submission:, item:, **item.form_attributes)
 
