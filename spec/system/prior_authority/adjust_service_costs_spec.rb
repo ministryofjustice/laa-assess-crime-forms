@@ -84,14 +84,14 @@ RSpec.describe 'Adjust service costs', :stub_oauth_token do
       expect(page).to have_css('#adjusted-cost', text: '0.00')
 
       fill_in 'Hours', with: 'a'
-      click_on 'Calculate my changes'
+      click_on 'Calculate cost'
       expect(page).to have_css('#adjusted-cost', text: '--')
 
       fill_in 'Hours', with: 20
       fill_in 'Minutes', with: 0
       fill_in 'Cost per hour', with: '1.50'
 
-      click_on 'Calculate my changes'
+      click_on 'Calculate cost'
       expect(page).to have_css('#adjusted-cost', text: '30.00')
     end
 
@@ -182,12 +182,12 @@ RSpec.describe 'Adjust service costs', :stub_oauth_token do
       expect(page).to have_css('#adjusted-cost', text: '0.00')
 
       fill_in 'Cost per minute', with: 'a'
-      click_on 'Calculate my changes'
+      click_on 'Calculate cost'
       expect(page).to have_css('#adjusted-cost', text: '--')
 
       fill_in 'Number of minutes', with: 60
       fill_in 'Cost per minute', with: 2.50
-      click_on 'Calculate my changes'
+      click_on 'Calculate cost'
       expect(page).to have_css('#adjusted-cost', text: '150.00')
     end
 
