@@ -218,5 +218,21 @@ RSpec.describe 'Adjust service costs', :stub_oauth_token do
         .and have_field('Number of minutes', with: 'a')
         .and have_field('Cost per minute', with: 'a')
     end
+
+    it 'displays information about the quotes on the application' do
+      expect(page).to have_text 'Quotes for service cost'
+
+      within('.govuk-table') do
+        expect(page).to have_xpath(".//tr", :count => 3)
+      end
+
+      within('.govuk-table__row', text: 'Primary') do
+        expect(page).to have_text '100 minutes £2.00 per minute £200'
+      end
+
+      within('.govuk-table__row', text: 'Alternative') do
+        expect(page).to have_text '3 hours 0 minutes £3.50 per hour £10.50'
+      end
+    end
   end
 end
