@@ -19,11 +19,10 @@
                                secondary: true,
                                id:'calculate_change_button') %>
 
-      <h2 class="govuk-heading-l">
+      <p class="govuk-heading-l">
         <span class="govuk-caption-m"><%= t('.adjusted_cost') %></span>
-        £
-        <span id="adjusted-cost">0.00</span>
-      </h2>
+        £ <span id="adjusted-cost">0.00</span>
+      </p>
 
       <%= f.govuk_text_area :explanation,
                             label: { size: 's', text: t('.explanation.label') },
