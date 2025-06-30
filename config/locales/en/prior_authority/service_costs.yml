@@ -15,7 +15,7 @@ en:
       edit:
         quotes: Quotes for service cost
         adjusted_cost: Adjusted cost
-        calculate_button_text: Calculate my changes
+        calculate_button_text: Calculate cost
         explanation:
           hint: For example, why you made adjustments to the cost or time. We'll share this explanation with the provider.
           label: Explain your decision
