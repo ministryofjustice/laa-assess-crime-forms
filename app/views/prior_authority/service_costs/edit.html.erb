@@ -31,6 +31,7 @@
       end
     end %>
 
+    <h3 class="govuk-heading-m"><%= t('.allowed') %></h1>
     <%= form_with model: form, url: prior_authority_application_service_cost_path(submission.id, item.id), method: :patch do |f| %>
       <%= f.hidden_field(:cost_type, value: item.cost_type) %>
       <%= f.hidden_field(:item_type, value: item.item_type) %>
