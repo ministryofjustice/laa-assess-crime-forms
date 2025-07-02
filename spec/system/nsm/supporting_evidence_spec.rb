@@ -15,7 +15,7 @@ RSpec.describe 'Supporting Evidence', :stub_oauth_token do
       within('.govuk-table__row', text: 'Advocacy evidence _ Tom_TC.pdf') do
         expect(page).to have_content(
           'Advocacy evidence _ Tom_TC.pdf' \
-          'Monday18 September 2023'
+          '18 September 2023'
         )
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe 'Supporting Evidence', :stub_oauth_token do
       within('.govuk-table__row', text: 'Advocacy evidence _ Tom_TC.pdf') do
         expect(page).to have_content(
           'Advocacy evidence _ Tom_TC.pdf' \
-          'Monday18 September 2023'
+          '18 September 2023'
         )
       end
     end
