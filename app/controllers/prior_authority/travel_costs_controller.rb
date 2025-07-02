@@ -2,7 +2,7 @@ module PriorAuthority
   class TravelCostsController < PriorAuthority::BaseController
     def edit
       authorize(submission, :edit?)
-      all_travel_costs = BaseViewModel.build(:travel_cost, submission, 'quotes')
+      all_travel_costs = BaseViewModel.build(:travel_cost, submission, 'quotes').sort_by { |cost| cost.primary ? 0 : 1 }
 
       item = all_travel_costs.find do |model|
         model.id == controller_params[:id]
@@ -10,12 +10,13 @@ module PriorAuthority
 
       form = TravelCostForm.new(submission:, item:, **item.form_attributes)
 
-      render locals: { submission:, item:, form: }
+      render locals: { submission:, item:, form:, all_travel_costs: }
     end
 
+    # rubocop:disable Metrics/AbcSize
     def update
       authorize(submission, :update?)
-      all_travel_costs = BaseViewModel.build(:travel_cost, submission, 'quotes')
+      all_travel_costs = BaseViewModel.build(:travel_cost, submission, 'quotes').sort_by { |cost| cost.primary ? 0 : 1 }
 
       item = all_travel_costs.find do |model|
         model.id == controller_params[:id]
@@ -26,9 +27,10 @@ module PriorAuthority
       if form.save!
         redirect_to prior_authority_application_adjustments_path(submission)
       else
-        render :edit, locals: { submission:, item:, form: }
+        render :edit, locals: { submission:, item:, form:, all_travel_costs: }
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def confirm_deletion
       authorize(submission, :edit?)

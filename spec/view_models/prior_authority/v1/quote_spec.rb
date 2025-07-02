@@ -620,7 +620,7 @@ RSpec.describe PriorAuthority::V1::Quote do
       end
 
       context 'with adjusted travel cost per hour' do
-        let(:attributes) { { travel_cost_per_hour: '25.00', travel_cost_per_hour_original: '30.00' } }
+        let(:attributes) { { travel_cost_per_hour: '25.00', travel_cost_per_hour_original: '30.00', travel_time_original: 60 } }
 
         it 'returns formatted original travel cost per hour' do
           expect(requested_formatted_travel_cost_per_hour).to eql '£30.00 per hour'
@@ -628,7 +628,7 @@ RSpec.describe PriorAuthority::V1::Quote do
       end
 
       context 'with unadjusted travel cost per hour' do
-        let(:attributes) { { travel_cost_per_hour: '28:00' } }
+        let(:attributes) { { travel_cost_per_hour: '28:00', travel_time_original: 60 } }
 
         it 'returns formatted travel cost per hour' do
           expect(requested_formatted_travel_cost_per_hour).to eql '£28.00 per hour'

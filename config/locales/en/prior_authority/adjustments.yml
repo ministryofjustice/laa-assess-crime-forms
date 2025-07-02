@@ -33,6 +33,7 @@ en:
         cost: Rate
         cost_description: "Reason for travel cost:"
         details: Details
+        no_travel_costs_added: No travel costs added
         requested: Requested
         time: Amount
         total: Total
