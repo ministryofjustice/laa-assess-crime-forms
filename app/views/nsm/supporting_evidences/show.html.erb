@@ -18,7 +18,7 @@
       <%= render 'send_by_post' %>
     <% end %>
     <% unless @supporting_evidence.empty? || claim.gdpr_documents_deleted? %>
-      <%= render "shared/pagination", { pagy: @pagy, item: t('.heading') } %>
+      <%= render "shared/pagination", { pagy: @pagy, item: t('.item') } %>
     <% end %>
     <%= render partial: 'shared/claim_button_group', locals: { claim: claim } %>
   </div>
