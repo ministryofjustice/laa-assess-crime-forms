@@ -6,8 +6,8 @@
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "8.0.16",
     "@ministryofjustice/frontend": "^5.1.4",
-    "decimal.js": "^10.5.0",
-    "esbuild": "^0.25.5",
+    "decimal.js": "^10.6.0",
+    "esbuild": "^0.25.6",
     "govuk-frontend": "^5.10.2",
     "jquery": "^3.6.0",
     "sass": "^1.89.2"
@@ -22,7 +22,7 @@
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css --no-source-map --load-path=. --load-path=node_modules  --quiet-deps"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.27.2",
-    "jest-environment-jsdom": "^30.0.2"
+    "@babel/preset-env": "^7.28.0",
+    "jest-environment-jsdom": "^30.0.4"
   }
 }
