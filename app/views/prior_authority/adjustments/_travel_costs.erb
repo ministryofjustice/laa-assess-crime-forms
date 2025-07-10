@@ -14,35 +14,39 @@
 <% end %>
 
 <%= govuk_table(id: 'travel_costs') do |table|
-      table.with_head do |head|
-        head.with_row do |row|
-          row.with_cell(text: t('.details'))
-          row.with_cell(text: t('.requested'))
-          row.with_cell(text: t('.adjusted'))
-        end
-      end
+  table.with_head do |head|
+    head.with_row do |row|
+      row.with_cell(text: t('.details'))
+      row.with_cell(text: t('.requested'))
+      row.with_cell(text: t('.adjusted'))
+    end
+  end
 
-      table.with_body do |body|
-        body.with_row do |row|
-          row.with_cell(text: t('.time'))
-          row.with_cell(text: quote.requested_travel_units)
-          row.with_cell(text: quote.adjusted_travel_units)
-        end
+  table.with_body do |body|
+    body.with_row do |row|
+      row.with_cell(text: t('.time'))
+      row.with_cell(text: quote.requested_travel_units)
+      row.with_cell(text: quote.adjusted_travel_units)
+    end
 
-        body.with_row do |row|
-          row.with_cell(text: t('.cost'))
-          row.with_cell(text: quote.requested_formatted_travel_cost_per_hour)
-          row.with_cell(text: quote.adjusted_formatted_travel_cost_per_hour)
-        end
+    body.with_row do |row|
+      row.with_cell(text: t('.cost'))
+      row.with_cell(text: quote.requested_formatted_travel_cost_per_hour)
+      row.with_cell(text: quote.adjusted_formatted_travel_cost_per_hour)
+    end
 
-        body.with_row do |row|
-          row.with_cell(text: t('.total'))
-          row.with_cell(text: quote.requested_formatted_travel_cost)
-          row.with_cell(text: quote.adjusted_formatted_travel_cost)
-        end
-      end
-    end %>
+    body.with_row do |row|
+      row.with_cell(text: t('.total'))
+      row.with_cell(text: quote.requested_formatted_travel_cost)
+      row.with_cell(text: quote.adjusted_formatted_travel_cost)
+    end
+  end
+end if quote.travel_costs.positive? %>
 <% if editable %>
+
+  <% unless quote.travel_costs.positive? %>
+    <p><%= t('.no_travel_costs_added') %></p>
+  <% end %>
   <div class="govuk-button-group govuk-button-group-vertically-centred">
     <%= link_to t(".adjust_travel_cost"),
                 edit_prior_authority_application_travel_cost_path(application, quote.id),

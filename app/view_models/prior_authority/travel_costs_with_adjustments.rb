@@ -5,7 +5,7 @@ module PriorAuthority
     end
 
     def requested_formatted_travel_cost_per_hour
-      return if original_travel_cost_per_hour.to_f.zero?
+      return if original_travel_cost_per_hour.to_f.zero? || original_travel_time.nil?
 
       "#{NumberTo.pounds(original_travel_cost_per_hour)} " \
         "#{I18n.t('prior_authority.application_details.items.per_unit_descriptions.per_hour')}"

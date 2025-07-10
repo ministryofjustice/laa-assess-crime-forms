@@ -186,13 +186,12 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
       )
     end
 
-    it 'does not show the travel costs summary' do
-      expect(page).to have_no_content('Travel cost')
-        .and have_no_content('Reason for travel cost')
-        .and have_no_css('.govuk-table#travel_costs')
+    it 'show the travel costs summary' do
+      expect(page).to have_content('Travel cost')
+      expect(page).to have_content('Adjust travel costs')
     end
 
-    it 'does not show any addtional costs summaries' do
+    it 'show any addtional costs summaries' do
       expect(page).to have_no_content('Additional cost')
         .and have_no_content('Cost description"')
         .and have_no_css('.govuk-table#tadditional_cost_1')

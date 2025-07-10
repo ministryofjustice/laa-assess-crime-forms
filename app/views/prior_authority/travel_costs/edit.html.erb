@@ -3,13 +3,37 @@
 <% end %>
 
 <% title t('.page_title') %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds" id="travel-cost-adjustment-container">
     <%= govuk_error_summary(form) %>
     <h1 class="govuk-heading-xl"><%= t('.page_title') %></h1>
-    <p class="govuk-body"><%= t('.adjustment_blurb', service_type: t(submission.data['service_type'], scope: 'prior_authority.service_types')) %></p>
+    <% if submission.data['no_alternative_quote_reason'].present? %>
+      <p class="govuk-body"><%= t('.adjustment_blurb', service_type: t(submission.data['service_type'], scope: 'prior_authority.service_types')) %></p>
+    <% end %>
+    <%= govuk_table do |table|
+      table.with_caption(html_attributes: { class: "govuk-table__caption--m" }, text: t(".quotes_caption"))
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(text: t('.quote'))
+          row.with_cell(text: t('.amount'))
+          row.with_cell(text: t('.rate'))
+          row.with_cell(text: t('.total'))
+        end
+      end
 
+      table.with_body do |body|
+        all_travel_costs.each_with_index do |travel_cost, index|
+          body.with_row do |row|
+            row.with_cell(header: true, text: travel_cost.primary ? t('.primary') : t('.alternative', index:))
+            row.with_cell(text: travel_cost.requested_travel_units )
+            row.with_cell(text: travel_cost.requested_formatted_travel_cost_per_hour)
+            row.with_cell(text: travel_cost.requested_formatted_travel_cost)
+          end
+        end
+      end
+    end if submission.data['no_alternative_quote_reason'].blank? %>
+
+    <h2 class="govuk-heading-m">Amount allowed</h2>
     <%= form_with model: form, url: prior_authority_application_travel_cost_path(submission.id, item.id), method: :patch do |f| %>
       <%= f.govuk_period_field :travel_time, legend: { text: t('.travel_time'), size: 's', class: 'govuk-!-font-weight-bold' }, width: 'one-third' %>
 
