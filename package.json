@@ -8,7 +8,7 @@
     "@ministryofjustice/frontend": "^5.1.4",
     "decimal.js": "^10.6.0",
     "esbuild": "^0.25.6",
-    "govuk-frontend": "^5.10.2",
+    "govuk-frontend": "^5.11.0",
     "jquery": "^3.6.0",
     "sass": "^1.89.2"
   },
