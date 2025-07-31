@@ -3,6 +3,7 @@ module Nsm
     include ActiveModel::Model
     include ActiveModel::Attributes
     include ActiveRecord::AttributeAssignment
+
     RiskLevels = Struct.new(:id, :level)
     AVAILABLE_RISKS = [
       RiskLevels.new('low', 'Low risk'),

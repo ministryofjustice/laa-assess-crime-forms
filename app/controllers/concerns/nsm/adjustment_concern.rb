@@ -1,6 +1,7 @@
 module Nsm
   module AdjustmentConcern
     extend ActiveSupport::Concern
+
     def confirm_deletion
       raise 'Cannot delete non-existent adjustment' unless any_adjustments?
 

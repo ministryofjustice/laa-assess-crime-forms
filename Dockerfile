@@ -3,7 +3,7 @@ LABEL maintainer="Non-standard magistrates' court payment team"
 
 # TODO: is this still needed?
 # temp fix to security issue in base image: ruby:3.2.2-alpine3.18
-RUN apk update && apk upgrade --no-cache libcrypto3 libssl3 openssl libxml2
+RUN apk update && apk upgrade --no-cache libcrypto3 libssl3 openssl libxml2 sqlite
 
 # dependencies required both at runtime and build time
 RUN apk add --update \

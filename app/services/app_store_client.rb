@@ -1,5 +1,6 @@
 class AppStoreClient
   include HTTParty
+
   headers 'Content-Type' => 'application/json'
 
   def get_submission(submission_id)
