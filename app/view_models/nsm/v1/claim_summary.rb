@@ -6,6 +6,7 @@ module Nsm
       attribute :submission
       attribute :send_by_post
       attribute :assessment_comment
+      attribute :firm_office
 
       delegate :app_store_updated_at, :assigned_user, to: :submission
 
