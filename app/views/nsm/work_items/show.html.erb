@@ -39,10 +39,10 @@
       <%=
         rows = [
           [{ text: t('.work_type'), width: 'govuk-!-width-one-half' }, item.work_type.to_s],
-          [t('.item_rate_allowed'), NumberTo.pounds(item.pricing)],
+          [t('.item_rate_allowed'), LaaCrimeFormsCommon::NumberTo.pounds(item.pricing)],
           [t('.time_spent_changed'), format_period(item.time_spent)],
           [{ text: t('.uplift_allowed'), width: 'govuk-!-width-one-half' }, "#{item.uplift.to_i}%"],
-          [t('.caseworker_allowed'), NumberTo.pounds(item.caseworker_amount)],
+          [t('.caseworker_allowed'), LaaCrimeFormsCommon::NumberTo.pounds(item.caseworker_amount)],
           [t('.explanation'), item.adjustment_comment],
         ]
 
