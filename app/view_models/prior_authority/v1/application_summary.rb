@@ -82,7 +82,7 @@ module PriorAuthority
       end
 
       def formatted_total_cost
-        NumberTo.pounds(primary_quote.total_cost)
+        LaaCrimeFormsCommon::NumberTo.pounds(primary_quote.total_cost)
       end
 
       def adjustments_made?
@@ -90,7 +90,7 @@ module PriorAuthority
       end
 
       def formatted_original_total_cost
-        NumberTo.pounds(primary_quote.original_total_cost)
+        LaaCrimeFormsCommon::NumberTo.pounds(primary_quote.original_total_cost)
       end
 
       def current_section(current_user)

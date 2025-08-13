@@ -43,7 +43,7 @@
         <% form.work_item_prices.each do |key, amount| %>
           <%= f.govuk_radio_button :work_type_value, key,
                                    label: { text: t("nsm.work_items.work_types.#{key}") },
-                                   hint: { text: t(".work_type_hint", value: NumberTo.pounds(amount)) },
+                                   hint: { text: t(".work_type_hint", value: LaaCrimeFormsCommon::NumberTo.pounds(amount)) },
                                    'data-value' => amount %>
         <% end %>
       <% end %>
@@ -78,7 +78,7 @@
 
           <%= table.with_body do |body| %>
             <%= body.with_row do |row| %>
-              <%= row.with_cell(text: NumberTo.pounds(item.provider_requested_amount), html_attributes: { id: 'work_item_provider_requested_amount' }) %>
+              <%= row.with_cell(text: LaaCrimeFormsCommon::NumberTo.pounds(item.provider_requested_amount), html_attributes: { id: 'work_item_provider_requested_amount' }) %>
               <%= row.with_cell(text: "#{item.uplift? ? item.uplift : '0' }%",html_attributes: { id: 'work_item_uplift_allowed_amount' }) %>
               <%= row.with_cell(text: '--',html_attributes: { id: 'work_item_caseworker_allowed_amount' }) %>
             <% end %>

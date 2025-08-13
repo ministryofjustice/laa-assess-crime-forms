@@ -104,10 +104,10 @@ module Nsm
           '.work_type' => original_work_type.translated,
           '.date' => format_in_zone(completed_on),
           '.fee_earner' => fee_earner.to_s,
-          '.item_rate' => NumberTo.pounds(submission.rates.work_items[original_work_type.value.to_sym]),
+          '.item_rate' => LaaCrimeFormsCommon::NumberTo.pounds(submission.rates.work_items[original_work_type.value.to_sym]),
           '.time_spent' => format_period(original_time_spent),
           '.uplift_claimed' => "#{original_uplift.to_i}%",
-          '.total_claimed' => NumberTo.pounds(provider_requested_amount),
+          '.total_claimed' => LaaCrimeFormsCommon::NumberTo.pounds(provider_requested_amount),
         }
       end
 
@@ -151,10 +151,10 @@ module Nsm
         return '' if value.nil? || value == false
 
         case as
-        when :percentage then NumberTo.percentage(value, multiplier: 1)
+        when :percentage then LaaCrimeFormsCommon::NumberTo.percentage(value, multiplier: 1)
         when :time then format_period(value, style: :minimal_html)
         when :date then format_in_zone(value, format: '%-d %b %Y')
-        else NumberTo.pounds(value)
+        else LaaCrimeFormsCommon::NumberTo.pounds(value)
         end
       end
     end

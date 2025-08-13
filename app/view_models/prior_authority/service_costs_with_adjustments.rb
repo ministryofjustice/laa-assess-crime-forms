@@ -17,7 +17,7 @@ module PriorAuthority
     end
 
     def requested_formatted_service_cost_total
-      NumberTo.pounds(requested_service_cost_total)
+      LaaCrimeFormsCommon::NumberTo.pounds(requested_service_cost_total)
     end
 
     private
@@ -34,7 +34,7 @@ module PriorAuthority
     end
 
     def requested_formatted_cost_per_unit
-      NumberTo.pounds(requested_cost_per_unit)
+      LaaCrimeFormsCommon::NumberTo.pounds(requested_cost_per_unit)
     end
 
     def requested_cost_per_unit
@@ -66,7 +66,7 @@ module PriorAuthority
     end
 
     def adjusted_formatted_service_cost_total
-      NumberTo.pounds(adjusted_service_cost_total) if any_adjustments?
+      LaaCrimeFormsCommon::NumberTo.pounds(adjusted_service_cost_total) if any_adjustments?
     end
 
     def any_adjustments?
@@ -76,7 +76,7 @@ module PriorAuthority
     private
 
     def adjusted_formatted_cost_per_unit
-      NumberTo.pounds(adjusted_cost_per_unit)
+      LaaCrimeFormsCommon::NumberTo.pounds(adjusted_cost_per_unit)
     end
 
     def adjusted_cost_per_unit

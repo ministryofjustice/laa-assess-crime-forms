@@ -98,10 +98,10 @@ module Nsm
 
       def provider_fields
         {
-          '.rate' => NumberTo.pounds(pricing),
+          '.rate' => LaaCrimeFormsCommon::NumberTo.pounds(pricing),
           '.number' => original_count.to_s,
           '.uplift_requested' => "#{original_uplift.to_i}%",
-          '.total_claimed' =>  NumberTo.pounds(provider_requested_amount)
+          '.total_claimed' =>  LaaCrimeFormsCommon::NumberTo.pounds(provider_requested_amount)
         }
       end
 
@@ -144,9 +144,9 @@ module Nsm
         return '' if value.nil? || value == false
 
         case as
-        when :percentage then { text: NumberTo.percentage(value, multiplier: 1), numeric: true }
+        when :percentage then { text: LaaCrimeFormsCommon::NumberTo.percentage(value, multiplier: 1), numeric: true }
         when :number then { text: value, numeric: true }
-        else { text: NumberTo.pounds(value), numeric: true }
+        else { text: LaaCrimeFormsCommon::NumberTo.pounds(value), numeric: true }
         end
       end
     end

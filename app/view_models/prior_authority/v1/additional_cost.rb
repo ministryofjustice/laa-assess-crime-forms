@@ -31,7 +31,7 @@ module PriorAuthority
       end
 
       def formatted_total_cost
-        NumberTo.pounds(total_cost(original: true))
+        LaaCrimeFormsCommon::NumberTo.pounds(total_cost(original: true))
       end
 
       def form_attributes
@@ -47,7 +47,7 @@ module PriorAuthority
       end
 
       def original_cost_per_unit
-        NumberTo.pounds(unit_type == 'per_item' ? original_cost_per_item : original_cost_per_hour)
+        LaaCrimeFormsCommon::NumberTo.pounds(unit_type == 'per_item' ? original_cost_per_item : original_cost_per_hour)
       end
     end
   end

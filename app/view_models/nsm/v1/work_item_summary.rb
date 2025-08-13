@@ -44,11 +44,11 @@ module Nsm
         result = [
           (work_type.is_a?(String) && any_changed_types ? row_with_changed_type(work_type) : work_type),
           { text: as_period(requested_time), numeric: true },
-          { text: prefix('claimed', accessibility_text:) + NumberTo.pounds(requested_cost), numeric: true },
+          { text: prefix('claimed', accessibility_text:) + LaaCrimeFormsCommon::NumberTo.pounds(requested_cost), numeric: true },
         ]
         if show_allowed?
           result << { text: as_period(allowed_time), numeric: true }
-          result << { text: prefix('allowed', accessibility_text:) + NumberTo.pounds(allowed_cost), numeric: true }
+          result << { text: prefix('allowed', accessibility_text:) + LaaCrimeFormsCommon::NumberTo.pounds(allowed_cost), numeric: true }
         else
           result << '' << ''
         end
