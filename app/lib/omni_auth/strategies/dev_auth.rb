@@ -30,7 +30,11 @@ module OmniAuth
       end
 
       def user
-        @user ||= User.find_by(email:)
+        if instance_variable_defined?(:@user)
+          @user
+        else
+          @user = User.find_by(email:)
+        end
       end
 
       def auth_subject_id
