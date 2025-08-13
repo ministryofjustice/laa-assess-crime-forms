@@ -80,7 +80,7 @@ module Nsm
       end
 
       def format(value)
-        { text: NumberTo.pounds(value), numeric: true }
+        { text: LaaCrimeFormsCommon::NumberTo.pounds(value), numeric: true }
       end
 
       def format_allowed(value)

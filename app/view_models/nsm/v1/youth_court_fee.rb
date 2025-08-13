@@ -20,7 +20,7 @@ module Nsm
           },
           {
             title: I18n.t(".nsm.youth_court_fee_adjustments.#{key}.net_cost_claimed"),
-            value: NumberTo.pounds(claimed_total_exc_vat)
+            value: LaaCrimeFormsCommon::NumberTo.pounds(claimed_total_exc_vat)
           }
         ].compact
       end
@@ -78,7 +78,7 @@ module Nsm
       end
 
       def allowed_net
-        NumberTo.pounds(caseworker_amount)
+        LaaCrimeFormsCommon::NumberTo.pounds(caseworker_amount)
       end
 
       def reason

@@ -75,31 +75,31 @@ module PriorAuthority
       end
 
       def travel_cost_per_unit
-        NumberTo.pounds(original_travel_cost_per_hour)
+        LaaCrimeFormsCommon::NumberTo.pounds(original_travel_cost_per_hour)
       end
 
       def base_cost_per_unit
-        NumberTo.pounds(cost_type == 'per_item' ? original_cost_per_item : original_cost_per_hour)
+        LaaCrimeFormsCommon::NumberTo.pounds(cost_type == 'per_item' ? original_cost_per_item : original_cost_per_hour)
       end
 
       def formatted_base_cost
-        NumberTo.pounds(base_cost(original: true))
+        LaaCrimeFormsCommon::NumberTo.pounds(base_cost(original: true))
       end
 
       def formatted_travel_cost
-        NumberTo.pounds(travel_costs(original: true))
+        LaaCrimeFormsCommon::NumberTo.pounds(travel_costs(original: true))
       end
 
       def formatted_additional_costs
-        NumberTo.pounds(total_additional_costs(original: true))
+        LaaCrimeFormsCommon::NumberTo.pounds(total_additional_costs(original: true))
       end
 
       def formatted_total_cost
-        NumberTo.pounds(total_cost)
+        LaaCrimeFormsCommon::NumberTo.pounds(total_cost)
       end
 
       def formatted_original_total_cost
-        NumberTo.pounds(original_total_cost)
+        LaaCrimeFormsCommon::NumberTo.pounds(original_total_cost)
       end
 
       def travel_costs(original: false)

@@ -59,7 +59,7 @@ module Nsm
       def provider_fields
         {
           '.additional_fee' => I18n.t("nsm.additional_fees.edit.#{type}"),
-          '.net_cost_claimed' => NumberTo.pounds(claimed_total_exc_vat)
+          '.net_cost_claimed' => LaaCrimeFormsCommon::NumberTo.pounds(claimed_total_exc_vat)
         }
       end
 
@@ -68,7 +68,7 @@ module Nsm
       def format(value)
         return '' if value.nil? || value == false
 
-        { text: NumberTo.pounds(value), numeric: true }
+        { text: LaaCrimeFormsCommon::NumberTo.pounds(value), numeric: true }
       end
     end
   end
