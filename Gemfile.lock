@@ -302,7 +302,7 @@ GEM
       bigdecimal (~> 3.1)
     net-http (0.6.0)
       uri
-    net-imap (0.5.7)
+    net-imap (0.5.9)
       date
       net-protocol
     net-pop (0.1.2)
@@ -614,7 +614,7 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
     webrick (1.9.1)
     websocket (1.2.11)
-    websocket-driver (0.7.7)
+    websocket-driver (0.8.0)
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -668,7 +668,7 @@ DEPENDENCIES
   pry
   puma (~> 6.6)
   pundit
-  rails (~> 8.0.2)
+  rails (= 8.0.2.1)
   rails-controller-testing
   redis
   rspec-expectations
