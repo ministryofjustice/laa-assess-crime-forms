@@ -64,6 +64,7 @@ module LaaAssessNonStandardMagistrateFee
 
     config.assets.paths << Rails.root.join('node_modules/govuk-frontend/dist/govuk/assets')
 
+    config.x.research_url = 'https://forms.office.com/Pages/ResponsePage.aspx?id=KEeHxuZx_kGp4S6MNndq2BpeqOUlDIpGmeYA_28YLbNUMjJaNVJIMzdQMkRLRUFEM05VVEFNSlpCQS4u'
     config.x.contact.support_email = 'nscc@justice.gov.uk'
     config.x.application.name = 'Assess a crime form'
     config.x.analytics.cookies_consent_name = 'cookies_preferences_set'
