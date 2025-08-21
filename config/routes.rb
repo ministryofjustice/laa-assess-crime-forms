@@ -89,7 +89,6 @@ Rails.application.routes.draw do
       resource :supporting_evidences, only: [:show] do
         resources :downloads, only: :show
       end
-      resource :cis_summaries, only: [:show]
       resource :history, only: [:show, :create]
       resource :change_risk, only: [:edit, :update], path_names: { edit: '' }
       resource :make_decision, only: [:edit, :update], path_names: { edit: '' }
