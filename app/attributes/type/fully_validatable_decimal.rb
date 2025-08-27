@@ -12,7 +12,7 @@ module Type
 
     def suitable_for_casting?(value)
       return true if value.is_a?(Numeric) || value.blank?
-      return false unless value.strip.gsub(/[0-9,\.-]/, '').empty?
+      return false unless value.strip.gsub(/[0-9,.-]/, '').empty?
 
       uncommad = value.to_s.delete(',').strip
       uncommad =~ /^[0-9]+(\.[0-9]+)?$/
