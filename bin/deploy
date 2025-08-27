@@ -27,8 +27,8 @@ deploy_branch() {
                 --set fullnameOverride="$BRANCH_RELEASE_NAME"\
                 --set customErrorService.enabled=false
 
-  helm upgrade $BRANCH_RELEASE_NAME oci://registry-1.docker.io/bitnamicharts/postgresql \                                     ✔  4924  14:34:47
-    --version 17.6.0 \
+  helm upgrade "$BRANCH_RELEASE_NAME" oci://registry-1.docker.io/bitnamicharts/postgresql \
+    --version 15.0.0
     --set image.repository=bitnamilegacy/postgresql \
     --set volumePermissions.image.repository=bitnamilegacy/os-shell \
     --set metrics.image.repository=bitnamilegacy/postgres-exporter \
