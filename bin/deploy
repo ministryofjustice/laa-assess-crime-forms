@@ -25,23 +25,10 @@ deploy_branch() {
                 --set-string pingdomIPs="$PINGDOM_IPS" \
                 --set-string sharedIPs="$SHARED_IPS" \
                 --set fullnameOverride="$BRANCH_RELEASE_NAME"\
-                --set customErrorService.enabled=false
-
-  # use bitnami legacy images for postgres and redis (see: https://github.com/bitnami/charts/issues/35164)
-  export HELM_EXPERIMENTAL_OCI=1
-  helm upgrade "$BRANCH_RELEASE_NAME" oci://registry-1.docker.io/bitnamicharts/postgresql \
-    --version 17.6.0 \
-    --set image.repository=bitnamilegacy/postgresql \
-    --set volumePermissions.image.repository=bitnamilegacy/os-shell \
-    --set metrics.image.repository=bitnamilegacy/postgres-exporter \
-    --set global.security.allowInsecureImages=true
-
-  helm upgrade "$BRANCH_RELEASE_NAME" oci://registry-1.docker.io/bitnamicharts/redis \
-    --version 8.2.1 \
-    --set image.repository=bitnamilegacy/redis \
-    --set volumePermissions.image.repository=bitnamilegacy/os-shell \
-    --set metrics.image.repository=bitnamilegacy/redis-exporter \
-    --set global.security.allowInsecureImages=true
+                --set customErrorService.enabled=false \
+                --set postgresql.image.repository=bitnamilegacy/postgresql \
+                --set redis.image.repository=bitnamilegacy/redis \
+                --set postgresql.global.security.allowInsecureImages=true \
 }
 
 deploy_main() {
