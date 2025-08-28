@@ -1,8 +1,4 @@
-<% content_for(:primary_navigation) do %>
-  <% render 'layouts/payments/primary_navigation', current: :search %>
-<% end %>
 <% title t('.page_title') %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= govuk_error_summary(@search_form) %>

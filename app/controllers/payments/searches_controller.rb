@@ -1,6 +1,7 @@
 module Payments
   class SearchesController < ApplicationController
-    # layout 'payments'
+    layout 'payments'
+
     def show
       authorize(:payment, :index?)
       @search_form = Payments::SearchForm.new(search_params)
