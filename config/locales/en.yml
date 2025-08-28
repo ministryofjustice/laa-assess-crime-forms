@@ -49,6 +49,14 @@ en:
       make_decision: Make a decision
       send_back: Send back to provider
       save_and_come_back: Save and come back later
+    claim_type:
+      nsm: Non-standard Magistrates'
+      nsm_appeal: Non-standard Magistrates' appeal
+      nsm_supplemental: Non-standard Magistrates' supplemental
+      nsm_amendment: Non-standard Magistrates' amendment
+      acc: Assigned Counsel
+      acc_appeal: Assigned Counsel appeal
+      acc_amendment: Assigned Counsel amendment
     statuses:
       submitted: Not assigned
       auto_grant: Auto granted
@@ -87,6 +95,7 @@ en:
           caseworker: Caseworker
           last_updated: Last updated
           status_with_assignment: Status
+          submitted_at: Submitted at
     gdpr_documents_deleted:
       message: Uploaded files deleted. Uploads are deleted after 6 months to keep the provider’s data safe.
   generic:
