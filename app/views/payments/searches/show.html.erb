@@ -76,7 +76,7 @@
         <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-              <% %i[laa_reference submitted_at].each do |key| %>
+              <% %i[payment_request_id laa_reference claim_type client_last_name submitted_at].each do |key| %>
                 <%= table_header_with_link(key,
                                            'shared.search.table.header',
                                            { 'controller' => controller_path, 'action' => 'show',  'payments_search_form' => @search_form.attributes },

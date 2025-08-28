@@ -96,6 +96,9 @@ en:
           last_updated: Last updated
           status_with_assignment: Status
           submitted_at: Submitted at
+          claim_type: Claim type
+          client_last_name: Client last name
+          payment_request_id: Payment request id
     gdpr_documents_deleted:
       message: Uploaded files deleted. Uploads are deleted after 6 months to keep the provider’s data safe.
   generic:
