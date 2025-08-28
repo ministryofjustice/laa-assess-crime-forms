@@ -6,14 +6,24 @@ module Payments
       @row = row
     end
 
-    delegate :payment_request_id, to: :row
+    def payment_request_id
+      row[:id]
+    end
 
-    delegate :laa_reference, to: :row
+    def laa_reference
+      row[:payment_request_claim][:laa_reference]
+    end
 
-    delegate :payment_type, to: :row
+    def client_last_name
+      row[:payment_request_claim][:client_last_name]
+    end
 
-    delegate :client_last_name, to: :row
+    def payment_type
+      row[:payment_request_claim][:claim_type]
+    end
 
-    delegate :submitted_at, to: :row
+    def submitted_at
+      row[:submitted_at]
+    end
   end
 end

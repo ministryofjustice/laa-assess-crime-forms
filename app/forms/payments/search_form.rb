@@ -2,13 +2,13 @@ module Payments
   class SearchForm < SearchResults
     Option = Struct.new(:value, :label)
     CLAIM_TYPES = [
-      Option.new('nsm', I18n.t('shared.claim_type.nsm')),
-      Option.new('nsm_supplemental', I18n.t('shared.claim_type.nsm_supplemental')),
-      Option.new('nsm_appeal', I18n.t('shared.claim_type.nsm_appeal')),
-      Option.new('nsm_amendment', I18n.t('shared.claim_type.nsm_amendment')),
-      Option.new('acc', I18n.t('shared.claim_type.acc')),
-      Option.new('acc_appeal', I18n.t('shared.claim_type.acc_appeal')),
-      Option.new('acc_amendment', I18n.t('shared.claim_type.acc_amendment')),
+      Option.new('NsmClaim', I18n.t('shared.claim_type.nsm')),
+      # Option.new('nsm_supplemental', I18n.t('shared.claim_type.nsm_supplemental')),
+      # Option.new('nsm_appeal', I18n.t('shared.claim_type.nsm_appeal')),
+      # Option.new('nsm_amendment', I18n.t('shared.claim_type.nsm_amendment')),
+      Option.new('AssignedCounselClaim', I18n.t('shared.claim_type.acc')),
+      # Option.new('acc_appeal', I18n.t('shared.claim_type.acc_appeal')),
+      # Option.new('acc_amendment', I18n.t('shared.claim_type.acc_amendment')),
     ].freeze
 
     attribute :query, :string
