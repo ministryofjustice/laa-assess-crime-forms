@@ -55,8 +55,8 @@
           </fieldset>
           <div class="govuk-date-input__item">
             <div class="govuk-form-group">
-              <%= f.govuk_collection_select :claim_type,
-                @search_form.claim_types,
+              <%= f.govuk_collection_select :request_type,
+                @search_form.request_types,
                 :value,
                 :label,
                 label: { text: t(".claim_type"), size: 's' } %>
@@ -76,7 +76,7 @@
         <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-              <% %i[payment_request_id laa_reference claim_type client_last_name submitted_at].each do |key| %>
+              <% %i[payment_request_id laa_reference request_type client_last_name submitted_at].each do |key| %>
                 <%= table_header_with_link(key,
                                            'shared.search.table.header',
                                            { 'controller' => controller_path, 'action' => 'show',  'payments_search_form' => @search_form.attributes },
@@ -95,7 +95,7 @@
                   <%= link_to search_result.laa_reference %>
                 </td>
                 <td class="govuk-table__cell">
-                  <%= search_result.payment_type %>
+                  <%= search_result.request_type %>
                 </td>
                 <td class="govuk-table__cell">
                   <%= search_result.client_last_name %>

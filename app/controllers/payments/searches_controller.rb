@@ -23,7 +23,7 @@ module Payments
                                :submitted_to,
                                :updated_from,
                                :updated_to,
-                               :claim_type,
+                               :request_type,
                                :sort_by,
                                :sort_direction]
       ).merge(default_params)

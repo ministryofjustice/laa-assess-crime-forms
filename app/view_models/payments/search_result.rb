@@ -18,8 +18,8 @@ module Payments
       row[:payment_request_claim][:client_last_name]
     end
 
-    def payment_type
-      row[:payment_request_claim][:claim_type]
+    def request_type
+      row[:request_type]
     end
 
     def submitted_at
