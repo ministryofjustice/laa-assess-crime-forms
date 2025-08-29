@@ -1,18 +1,18 @@
 module Payments
   class SearchForm < SearchResults
     Option = Struct.new(:value, :label)
-    CLAIM_TYPES = [
-      Option.new('NsmClaim', I18n.t('shared.claim_type.nsm')),
+    REQUEST_TYPES = [
+      Option.new('non_standard_mag', I18n.t('shared.claim_type.nsm')),
       # Option.new('nsm_supplemental', I18n.t('shared.claim_type.nsm_supplemental')),
       # Option.new('nsm_appeal', I18n.t('shared.claim_type.nsm_appeal')),
       # Option.new('nsm_amendment', I18n.t('shared.claim_type.nsm_amendment')),
-      Option.new('AssignedCounselClaim', I18n.t('shared.claim_type.acc')),
+      Option.new('assigned_counsel', I18n.t('shared.claim_type.acc')),
       # Option.new('acc_appeal', I18n.t('shared.claim_type.acc_appeal')),
       # Option.new('acc_amendment', I18n.t('shared.claim_type.acc_amendment')),
     ].freeze
 
     attribute :query, :string
-    attribute :claim_type, :string
+    attribute :request_type, :string
     attribute :submitted_from, :string
     attribute :submitted_to, :string
     attribute :received_from, :string
@@ -32,8 +32,8 @@ module Payments
       nil
     end
 
-    def claim_types
-      self.class::CLAIM_TYPES
+    def request_types
+      self.class::REQUEST_TYPES
     end
 
     def show_all
