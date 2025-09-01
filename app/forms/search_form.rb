@@ -1,4 +1,6 @@
 class SearchForm < SearchResults
+  include LaaCrimeFormsCommon::Validators
+
   Option = Struct.new(:value, :label)
   APPLICATION_TYPES = [
     Option.new('crm4', I18n.t('shared.application_type.crm4')),

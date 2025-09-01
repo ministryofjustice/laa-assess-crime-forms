@@ -3,6 +3,7 @@ module Nsm
     include ActiveModel::Model
     include ActiveModel::Attributes
     include ActiveRecord::AttributeAssignment
+    include LaaCrimeFormsCommon::Validators
 
     attribute :state
     attribute :grant_comment

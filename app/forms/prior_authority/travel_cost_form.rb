@@ -1,5 +1,7 @@
 module PriorAuthority
   class TravelCostForm < BaseAdjustmentForm
+    include LaaCrimeFormsCommon::Validators
+
     attribute :id, :string
     attribute :travel_time, :time_period
     attribute :travel_cost_per_hour, :gbp
