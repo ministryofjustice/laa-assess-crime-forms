@@ -23,7 +23,7 @@ module Payments
     end
 
     def submitted_at
-      row[:submitted_at]
+      Time.zone.local(row[:submitted_at]).to_fs(:stamp)
     end
   end
 end

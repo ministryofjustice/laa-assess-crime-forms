@@ -2,13 +2,13 @@ module Payments
   class SearchForm < SearchResults
     Option = Struct.new(:value, :label)
     REQUEST_TYPES = [
-      Option.new('non_standard_mag', I18n.t('shared.claim_type.nsm')),
-      # Option.new('nsm_supplemental', I18n.t('shared.claim_type.nsm_supplemental')),
-      # Option.new('nsm_appeal', I18n.t('shared.claim_type.nsm_appeal')),
-      # Option.new('nsm_amendment', I18n.t('shared.claim_type.nsm_amendment')),
-      Option.new('assigned_counsel', I18n.t('shared.claim_type.acc')),
-      # Option.new('acc_appeal', I18n.t('shared.claim_type.acc_appeal')),
-      # Option.new('acc_amendment', I18n.t('shared.claim_type.acc_amendment')),
+      Option.new('non_standard_mag', I18n.t('shared.claim_type.non_standard_mag')),
+      Option.new('non_standard_mag_supplemental', I18n.t('shared.claim_type.non_standard_mag_supplemental')),
+      Option.new('non_standard_mag_appeal', I18n.t('shared.claim_type.non_standard_mag_appeal')),
+      Option.new('non_standard_mag_amendment', I18n.t('shared.claim_type.non_standard_mag_amendment')),
+      Option.new('assigned_counsel', I18n.t('shared.claim_type.assigned_counsel')),
+      Option.new('assigned_counsel_appeal', I18n.t('shared.claim_type.assigned_counsel_appeal')),
+      Option.new('assigned_counsel_amendment', I18n.t('shared.claim_type.assigned_counsel_amendment')),
     ].freeze
 
     attribute :query, :string
@@ -24,16 +24,8 @@ module Payments
       @search_response.present?
     end
 
-    def conduct_search
-      AppStoreClient.new.search(search_params, :payments).deep_symbolize_keys
-    rescue StandardError => e
-      Sentry.capture_exception(e)
-      errors.add(:base, :search_error)
-      nil
-    end
-
     def request_types
-      self.class::REQUEST_TYPES
+      [show_all] + self.class::REQUEST_TYPES
     end
 
     def show_all
