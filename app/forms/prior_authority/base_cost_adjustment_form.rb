@@ -1,5 +1,7 @@
 module PriorAuthority
   class BaseCostAdjustmentForm < BaseAdjustmentForm
+    include LaaCrimeFormsCommon::Validators
+
     PER_ITEM = 'per_item'.freeze
     PER_HOUR = 'per_hour'.freeze
 
