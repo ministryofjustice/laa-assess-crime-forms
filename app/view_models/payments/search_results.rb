@@ -7,7 +7,7 @@ module Payments
     end
 
     def conduct_search
-      AppStoreClient.new.search(search_params, :payments).deep_symbolize_keys
+      AppStoreClient.new.search(search_params, :payment_requests).deep_symbolize_keys
     rescue StandardError => e
       Sentry.capture_exception(e)
       errors.add(:base, :search_error)
