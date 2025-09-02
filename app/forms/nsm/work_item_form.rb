@@ -1,5 +1,7 @@
 module Nsm
   class WorkItemForm < BaseAdjustmentForm
+    include LaaCrimeFormsCommon::Validators
+
     UPLIFT_PROVIDED = 'no'.freeze
     UPLIFT_RESET = 'yes'.freeze
 

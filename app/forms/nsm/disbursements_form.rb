@@ -1,5 +1,7 @@
 module Nsm
   class DisbursementsForm < BaseAdjustmentForm
+    include LaaCrimeFormsCommon::Validators
+
     attribute :total_cost_without_vat, :gbp
     attribute :miles, :fully_validatable_decimal, precision: 10, scale: 3
     attribute :apply_vat, :string
