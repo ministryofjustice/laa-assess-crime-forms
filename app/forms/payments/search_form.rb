@@ -18,7 +18,8 @@ module Payments
     attribute :received_from, :string
     attribute :received_to, :string
 
-    validates :submitted_from, :submitted_to, :received_from, :received_to, is_a_date: true
+    validates :submitted_from, :submitted_to, is_a_date: true
+    validates :received_from, :received_to, is_a_date: true
 
     def executed?
       @search_response.present?

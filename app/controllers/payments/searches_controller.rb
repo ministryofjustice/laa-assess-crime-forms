@@ -21,8 +21,8 @@ module Payments
         payments_search_form: [:query,
                                :submitted_from,
                                :submitted_to,
-                               :updated_from,
-                               :updated_to,
+                               :received_from,
+                               :received_to,
                                :request_type,
                                :sort_by,
                                :sort_direction]
@@ -33,10 +33,6 @@ module Payments
       {
         page: params.fetch(:page, '1')
       }
-    end
-
-    def set_current_section
-      @current_section = :payments_search
     end
   end
 end
