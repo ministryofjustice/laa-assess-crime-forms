@@ -124,6 +124,11 @@ en:
               search_error: Something went wrong trying to perform this search
             application_type:
               blank: Select a service to search
+        payments/search_form:
+          attributes:
+            base:
+              nothing_specified: Enter some %{value} details or filter your search criteria
+              search_error: Something went wrong trying to perform this search
         user_form:
           attributes:
             caseworker_service:

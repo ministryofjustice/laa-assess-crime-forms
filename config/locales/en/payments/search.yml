@@ -30,3 +30,17 @@ en:
         result: Result
         query:
           label: Enter a defendant, firm account, UFN or LAA reference
+
+  activemodel:
+    errors:
+      models:
+        payments/search_form:
+          attributes:
+            submitted_from:
+              not_a_date: Enter a valid submission date from
+            submitted_to:
+              not_a_date: Enter a valid submission date to
+            received_from:
+              not_a_date: Enter a valid received from
+            received_to:
+              not_a_date: Enter a valid received to
