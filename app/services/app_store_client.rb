@@ -50,8 +50,8 @@ class AppStoreClient
     )
   end
 
-  def search(payload)
-    response = self.class.post("#{host}/v1/submissions/searches", **options(payload))
+  def search(payload, search_type)
+    response = self.class.post("#{host}/v1/#{search_type}/searches", **options(payload))
 
     process_response(
       response,

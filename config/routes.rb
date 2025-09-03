@@ -142,6 +142,12 @@ Rails.application.routes.draw do
     resource :search, only: %i[new show]
   end
 
+  constraints ->(_req) { FeatureFlags.payments.enabled? } do
+    namespace :payments do
+      resource :search, only: %i[new show]
+    end
+  end
+
   get 'robots.txt', to: 'robots#index'
 
   resource :dashboard, only: %i[new show]

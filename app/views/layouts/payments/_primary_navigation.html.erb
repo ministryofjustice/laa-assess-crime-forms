@@ -1,0 +1,22 @@
+<% current ||= :search %>
+
+<section class="govuk-service-navigation" aria-label="Service information" data-module="govuk-service-navigation" data-govuk-service-navigation-init="">
+  <div class="govuk-width-container">
+    <div class="govuk-service-navigation__container">
+      <nav class="govuk-service-navigation__wrapper" aria-label="Main service navigation">
+        <ul id="navigation" class="govuk-service-navigation__list">
+          <% if FeatureFlags.payments.enabled? %>
+            <li class="govuk-service-navigation__item <%= 'govuk-service-navigation__item--active' if current == :search %>">
+              <%= link_to t('layouts.primary_navigation.search'), new_payments_search_path, class: 'govuk-service-navigation__link', 'aria-current': ('page' if current == :search) %>
+            </li>
+          <% end %>
+          <% unless request.path == root_path %>
+            <li class="govuk-service-navigation__item service-switch-navigation__item">
+              <%= link_to t('assess_a_crime_form.switch_service'), root_path, class: 'govuk-link--no-visited-state' %>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</section>

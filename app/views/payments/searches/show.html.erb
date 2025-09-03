@@ -1,0 +1,116 @@
+<% title t('.page_title') %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= govuk_error_summary(@search_form) %>
+    <h1 class="govuk-heading-xl"><%= t("payments.searches.show.page_title") %></h1>
+
+    <p><%= t("payments.searches.show.filter_hint") %></p>
+    <div class="search-panel govuk-!-margin-bottom-6">
+      <%= form_with(url: payments_search_path(anchor: 'search-results'), method: :get, model: @search_form) do |f| %>
+        <div class="govuk-form-group govuk-!-width-two-thirds" role="search">
+          <%= f.govuk_text_field :query, label: { size: 's', text: t("payments.searches.show.query.label") } %>
+        </div>
+        <div>
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              <%= t('.submission_filter_legend') %>
+            </legend>
+            <p><%= t('.submission_filter_hint') %></p>
+            <div class="govuk-date-input__item">
+              <div class="moj-datepicker" data-module="moj-date-picker">
+                <div class="govuk-form-group">
+                  <%= f.govuk_text_field :submitted_from, label: { text: t('.submitted_from') }, class: 'moj-js-datepicker-input' %>
+                </div>
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="moj-datepicker" data-module="moj-date-picker">
+                <div class="govuk-form-group">
+                  <%= f.govuk_text_field :submitted_to, label: { text: t('.submitted_to') }, class: 'moj-js-datepicker-input' %>
+                </div>
+              </div>
+            </div>
+            </fieldset>
+        </div>
+        <div>
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              <%= t('.received_filter_legend') %>
+            </legend>
+            <p><%= t('.received_filter_hint') %></p>
+            <div class="govuk-date-input__item">
+              <div class="moj-datepicker" data-module="moj-date-picker">
+                <div class="govuk-form-group">
+                  <%= f.govuk_text_field :received_from, label: { text: t('.received_from') }, class: 'moj-js-datepicker-input' %>
+                </div>
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="moj-datepicker" data-module="moj-date-picker">
+                <div class="govuk-form-group">
+                  <%= f.govuk_text_field :received_to, label: { text: t('.received_to') }, class: 'moj-js-datepicker-input' %>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <%= f.govuk_collection_select :request_type,
+                @search_form.request_types,
+                :value,
+                :label,
+                label: { text: t(".claim_type"), size: 's' } %>
+            </div>
+          </div>
+        </div>
+        <%= f.govuk_submit t('shared.search.search'), type: 'submit' do %>
+          <%= govuk_link_to t('shared.search.clear_all'), new_payments_search_path %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% if @search_form.executed? %>
+      <h2 id="search-results" class="govuk-heading-m"><%= t('shared.search.search_results', count: @search_form.pagy.count) %></h2>
+
+      <% if @search_form.results.any? %>
+        <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <% %i[payment_request_id laa_reference request_type client_last_name submitted_at].each do |key| %>
+                <%= table_header_with_link(key,
+                                           'shared.search.table.header',
+                                           { 'controller' => controller_path, 'action' => 'show',  'payments_search_form' => @search_form.attributes },
+                                           @search_form.sort_by, @search_form.sort_direction, 'payments_search_form') %>
+                <% end %>
+            </tr>
+          </thead>
+
+          <tbody class="govuk-table__body app-task-list__items">
+            <% @search_form.results.each do |search_result| %>
+              <tr class="govuk-table__row app-task-list__item">
+                <td class="govuk-table__cell">
+                  <%= search_result.payment_request_id %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= link_to search_result.laa_reference %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= search_result.request_type %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= search_result.client_last_name %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= search_result.submitted_at %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= render 'shared/pagination', pagy: @search_form.pagy, item: t(".result") %>
+      <% else %>
+        <p class="govuk-text"><%= t('shared.search.search_results.none_para') %></p>
+      <% end %>
+    <% end %>
+  </div>
+</div>
