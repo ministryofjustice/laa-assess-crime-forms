@@ -1,5 +1,7 @@
 module Payments
   class SearchForm < SearchResults
+    include LaaCrimeFormsCommon::Validators
+
     Option = Struct.new(:value, :label)
     REQUEST_TYPES = [
       Option.new('non_standard_mag', I18n.t('shared.claim_type.non_standard_mag')),
@@ -18,8 +20,7 @@ module Payments
     attribute :received_from, :string
     attribute :received_to, :string
 
-    validates :submitted_from, :submitted_to, is_a_date: true
-    validates :received_from, :received_to, is_a_date: true
+    validates :submitted_from, :submitted_to, :received_from, :received_to, is_a_date: true
 
     def executed?
       @search_response.present?
