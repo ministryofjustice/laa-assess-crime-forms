@@ -1,17 +1,6 @@
 en:
   search:
     show_all: Show all
-    statuses:
-      not_assigned: Not assigned
-      in_progress: In progress
-      provider_updated: Provider updated
-      sent_back: Sent back
-      granted: Granted
-      auto_grant: Auto-granted
-      part_grant: Part granted
-      rejected: Rejected
-      expired: Expired
-    unassigned: Unassigned
   payments:
     searches:
       show:
