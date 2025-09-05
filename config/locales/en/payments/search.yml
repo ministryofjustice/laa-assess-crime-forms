@@ -1,0 +1,46 @@
+en:
+  search:
+    show_all: Show all
+    statuses:
+      not_assigned: Not assigned
+      in_progress: In progress
+      provider_updated: Provider updated
+      sent_back: Sent back
+      granted: Granted
+      auto_grant: Auto-granted
+      part_grant: Part granted
+      rejected: Rejected
+      expired: Expired
+    unassigned: Unassigned
+  payments:
+    searches:
+      show:
+        submission_filter_legend: Date of payment request submission
+        submission_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
+        received_filter_legend: Date claim received
+        received_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
+        submitted_from: Submission date from
+        submitted_to: Submission date to
+        received_from: Received from
+        received_to: Received to
+        page_title: Search for a payment
+        filter_hint:  Enter details in at least one field to search for a payment request
+        claim_type: Claim type
+        search_results: Search results
+        result: Result
+        query:
+          label: Enter a defendant, firm account, UFN or LAA reference
+
+  activemodel:
+    errors:
+      models:
+        payments/search_form:
+          attributes:
+            submitted_from:
+              not_a_date: Enter a valid submission date from
+            submitted_to:
+              not_a_date: Enter a valid submission date to
+            received_from:
+              not_a_date: Enter a valid received from
+            received_to:
+              not_a_date: Enter a valid received to

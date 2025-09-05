@@ -25,7 +25,7 @@ class SearchResults
   end
 
   def conduct_search
-    AppStoreClient.new.search(search_params).deep_symbolize_keys
+    AppStoreClient.new.search(search_params, :submissions).deep_symbolize_keys
   end
 
   def search_params

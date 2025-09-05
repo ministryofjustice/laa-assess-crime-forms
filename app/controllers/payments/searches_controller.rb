@@ -1,0 +1,38 @@
+module Payments
+  class SearchesController < ApplicationController
+    layout 'payments'
+
+    def show
+      authorize(:payment, :index?)
+      @search_form = Payments::SearchForm.new(search_params)
+      @search_form.execute if @search_form.valid?
+    end
+
+    def new
+      authorize(:payment, :index?)
+      @search_form = Payments::SearchForm.new(default_params)
+      render :show
+    end
+
+    private
+
+    def search_params
+      params.expect(
+        payments_search_form: [:query,
+                               :submitted_from,
+                               :submitted_to,
+                               :received_from,
+                               :received_to,
+                               :request_type,
+                               :sort_by,
+                               :sort_direction]
+      ).merge(default_params)
+    end
+
+    def default_params
+      {
+        page: params.fetch(:page, '1')
+      }
+    end
+  end
+end

@@ -132,4 +132,27 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       end
     end
   end
+
+  describe '#search' do
+    let(:code) { 201 }
+
+    before do
+      allow(ENV).to receive(:fetch).with('APP_STORE_URL', 'http://localhost:8000')
+                                   .and_return('http://some.url')
+      allow(described_class).to receive(:post)
+        .and_return(response)
+    end
+
+    it 'delegates search context to submissions' do
+      expect(described_class).to receive(:post).with('http://some.url/v1/submissions/searches',
+                                                     headers: { authorization: 'Bearer test-bearer-token' })
+      subject.search(nil, :submissions)
+    end
+
+    it 'delegates search context to payments' do
+      expect(described_class).to receive(:post).with('http://some.url/v1/payment_requests/searches',
+                                                     headers: { authorization: 'Bearer test-bearer-token' })
+      subject.search(nil, :payment_requests)
+    end
+  end
 end
