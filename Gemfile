@@ -10,7 +10,7 @@ gem 'bootsnap', require: false
 gem 'cssbundling-rails', '>= 1.4.1'
 gem 'devise', '>= 4.9.4'
 gem 'faker'
-gem 'govuk-components'
+gem 'govuk-components', '5.11.1'
 gem 'govuk_design_system_formbuilder'
 gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'httparty'
