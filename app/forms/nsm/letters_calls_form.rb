@@ -40,7 +40,7 @@ module Nsm
 
     def selected_record
       @selected_record ||= claim.data['letters_and_calls'].detect do |row|
-        Type::TranslatedObject.new.cast(row['type']).value == type
+        LaaCrimeFormsCommon::Type::TranslatedObject.new.cast(row['type']).value == type
       end
     end
 
