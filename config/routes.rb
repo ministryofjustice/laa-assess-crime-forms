@@ -14,6 +14,9 @@ Rails.application.routes.draw do
       ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(password),
                                                   Digest::SHA256.hexdigest(ENV.fetch('SIDEKIQ_WEB_UI_PASSWORD', nil)))
   end
+
+  extend RouteHelpers
+
   mount Sidekiq::Web => '/sidekiq'
 
   root 'home#index'
@@ -145,6 +148,11 @@ Rails.application.routes.draw do
   constraints ->(_req) { FeatureFlags.payments.enabled? } do
     namespace :payments do
       resources :requests
+      namespace :steps do
+        edit_step :claim_type
+        edit_step :claime_detail
+        edit_step :assigned_counsel_nsm
+      end
       resource :search, only: %i[new show]
       resource :claim_reference, only: %i[edit]
     end

@@ -11,6 +11,10 @@ class PaymentPolicy < ApplicationPolicy
     service_access? && !user.viewer?
   end
 
+  def create?
+    service_access?
+  end
+
   private
 
   def service_access?
