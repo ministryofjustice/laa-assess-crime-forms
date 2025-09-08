@@ -45,7 +45,7 @@ module Nsm
 
     def letters_and_calls
       @letters_and_calls ||= submission.data['letters_and_calls'].find do |row|
-        Type::TranslatedObject.new.cast(row['type']).value == params[:id]
+        LaaCrimeFormsCommon::Type::TranslatedObject.new.cast(row['type']).value == params[:id]
       end
     end
 
