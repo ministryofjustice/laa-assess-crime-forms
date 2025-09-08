@@ -3,6 +3,10 @@ class PaymentPolicy < ApplicationPolicy
     service_access?
   end
 
+  def update?
+    service_access? && !user.viewer?
+  end
+
   private
 
   def service_access?

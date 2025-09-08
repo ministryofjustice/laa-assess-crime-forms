@@ -1,0 +1,6 @@
+en:
+  payments:
+    claim_references:
+      edit:
+        page_title: Enter Laa reference
+        heading: LAA reference for the original claim
