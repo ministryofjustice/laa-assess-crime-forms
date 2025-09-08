@@ -23,6 +23,11 @@
                 <%= link_to t('.analytics'), new_dashboard_path, class: 'govuk-link--no-visited-state' %>
             </p>
         <% end %>
+        <% if policy(:payment).show?  %>
+            <p>
+                <%= link_to(t('.payments'), payments_requests_path, class: 'govuk-link--no-visited-state') %>
+            </p>
+        <% end %>
         <% if policy(:user_management).show?  %>
             <p>
                 <%= link_to t('.user_management'), users_path, class: 'govuk-link--no-visited-state' %>

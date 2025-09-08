@@ -28,6 +28,10 @@ class User < ApplicationRecord
     @supervisor ||= roles.supervisor.any?
   end
 
+  def caseworker?
+    @caseworker ||= roles.caseworker.any?
+  end
+
   def viewer?
     @viewer ||= roles.viewer.any?
   end

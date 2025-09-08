@@ -22,6 +22,10 @@ module Payments
       row[:request_type]
     end
 
+    def firm_name
+      row[:payment_request_claim][:firm_name]
+    end
+
     def submitted_at
       Time.zone.parse(row[:submitted_at]).to_fs(:stamp)
     end

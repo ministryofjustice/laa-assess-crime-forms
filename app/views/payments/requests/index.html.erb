@@ -1,0 +1,81 @@
+<% title t('.page_title') %>
+
+<div class="moj-page-header-actions">
+    <div class="moj-page-header-actions__title">
+        <h1 class="govuk-heading-xl">
+            <%= t('.page_title') %>
+        </h1>
+    </div>
+</div>
+
+<%= govuk_button_link_to(
+    t(".create_payment_request"),
+    payments_requests_path
+) %>
+
+<table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
+    <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <%= table_header_with_form("laa_reference",
+                                       "payments.requests.index.table",
+                                       0,
+                                       payments_requests_path,
+                                       @sort_by,
+                                       @sort_direction,
+                                       additional_classes: ["govuk-table__cell--nowrap"]) %>
+
+
+            <%= table_header_with_form("firm_name",
+                                       "payments.requests.index.table",
+                                       1,
+                                       payments_requests_path,
+                                       @sort_by,
+                                       @sort_direction) %>
+
+
+            <%= table_header_with_form("client_last_name",
+                                       "payments.requests.index.table",
+                                       2,
+                                       payments_requests_path,
+                                       @sort_by,
+                                       @sort_direction) %>
+
+            <%= table_header_with_form("request_type",
+                                       "payments.requests.index.table",
+                                       3,
+                                       payments_requests_path,
+                                       @sort_by,
+                                       @sort_direction) %>
+
+            <%= table_header_with_form("submitted_at",
+                                       "payments.requests.index.table",
+                                       4,
+                                       payments_requests_path,
+                                       @sort_by,
+                                       @sort_direction) %>
+        </tr>
+    </thead>
+
+    <tbody class="govuk-table__body app-task-list__items">
+        <% requests.each do |request| %>
+            <tr class="govuk-table__row app-task-list__item">
+                <td class="govuk-table__cell">
+                    <%= govuk_link_to(request.laa_reference, payments_requests_path) %>
+                </td>
+                <td class="govuk-table__cell">
+                    <%= request.firm_name %>
+                </td>
+                <td class="govuk-table__cell">
+                    <%= request.client_last_name %>
+                </td>
+                <td class="govuk-table__cell">
+                    <%= t("payments.requests.type.#{request.request_type}") %>
+                </td>
+                <td class="govuk-table__cell">
+                    <%= request.submitted_at %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<%= render 'shared/pagination', pagy: pagy, item: t(".payment_requests") %>
