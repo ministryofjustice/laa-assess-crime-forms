@@ -4,6 +4,7 @@ module Payments
 
     def edit
       authorize(:payment, :update?)
+      @form_object = ClaimReferenceForm.new
     end
   end
 end

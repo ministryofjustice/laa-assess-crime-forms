@@ -1,8 +1,4 @@
-class UserForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
-  include ActiveRecord::AttributeAssignment
-
+class UserForm < BaseForm
   attribute :id
   attribute :first_name
   attribute :last_name
