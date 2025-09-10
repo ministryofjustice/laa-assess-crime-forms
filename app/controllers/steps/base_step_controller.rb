@@ -1,6 +1,7 @@
 module Steps
   class BaseStepController < ::ApplicationController
     helper StepsHelper
+    helper FormBuilderHelper
 
     # :nocov:
     def show
@@ -24,8 +25,9 @@ module Steps
     private
 
     def current_application
-      id = params[:id].presence || (session[:current_form_session_id] ||= SecureRandom.uuid)
-      @current_application ||= Decisions::FormSession.new(session:, id:)
+      raise 'implement this action, in subclasses'
+      # id = params[:id].presence || (session[:current_form_session_id] ||= SecureRandom.uuid)
+      # @current_application ||= Decisions::FormSession.new(session:, id:)
     end
 
     # :nocov:
@@ -35,7 +37,7 @@ module Steps
     # :nocov:
 
     def update_and_advance(form_class, opts = {})
-      # replace current_applciation with session_form
+      # replace current_application with session_form
 
       hash = permitted_params(form_class).to_h
       record = opts.fetch(:record, current_application)
