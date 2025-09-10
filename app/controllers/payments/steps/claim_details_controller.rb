@@ -1,6 +1,6 @@
 module Payments
   module Steps
-    class ClaimDetailController < BaseController
+    class ClaimDetailsController < BaseController
       def edit
         @form_object = Payments::ClaimDetailForm.new(current_application)
       end

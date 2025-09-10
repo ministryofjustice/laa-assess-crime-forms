@@ -1,6 +1,9 @@
 ---
 en:
   helpers:
+    steps:
+      continue_button: "Continue"
+      cancel_button: "Cancel"
     back_link: Back
     time_period:
       hours:
