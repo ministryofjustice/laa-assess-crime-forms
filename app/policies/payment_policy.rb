@@ -8,7 +8,11 @@ class PaymentPolicy < ApplicationPolicy
   end
 
   def create?
-    service_access?
+    service_access? && user_access?
+  end
+
+  def update?
+    service_access? && user_access?
   end
 
   private

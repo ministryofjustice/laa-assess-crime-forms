@@ -149,8 +149,8 @@ Rails.application.routes.draw do
     namespace :payments do
       resources :requests
       namespace :steps do
-        edit_step :claim_type
-        edit_step :claime_detail
+        edit_step :claim_types
+        edit_step :claime_details
         edit_step :assigned_counsel_nsm
       end
       resource :search, only: %i[new show]
