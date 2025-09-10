@@ -13,7 +13,16 @@ module Payments
       render :index, locals: { pagy: model.pagy, requests: model.results }
     end
 
+    def new
+      redirect_to edit_payments_steps_claim_types_path(id: intialize_session_object.id)
+    end
+
     private
+
+    def intialize_session_object
+      # id = params[:id].presence || (session[:current_form_session_id] ||= SecureRandom.uuid)
+      Decisions::FormSession.new(process: 'Payments', session: session, session_id: SecureRandom.uuid)
+    end
 
     def authorize_caseworker
       authorize :payment, :show?
