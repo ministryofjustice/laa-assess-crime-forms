@@ -15,6 +15,13 @@ module Payments
 
       private
 
+      def multi_step_form_session
+        id = params[:id].presence || session[:multi_step_form_id]
+        @multi_step_form_session ||= Decisions::MultiStepFormSession.new(process: 'payments',
+                                                                         session: session,
+                                                                         session_id: id)
+      end
+
       def authorized
         authorize(:payment, :create?)
       end

@@ -5,4 +5,7 @@ en:
         edit:
           page_title: Claim Type
           heading: Claim Type
+      claim_details:
+        edit:
+          page_title: Claim Details
     service_name: Payments
