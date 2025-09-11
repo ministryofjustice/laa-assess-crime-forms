@@ -1,4 +1,6 @@
 <%= form_with(method: method, url: edit_payments_claim_reference_path, model: @form_object) do |f| %>
-    <%= f.govuk_text_field :claim_reference, hint: { size: 's', text: t(".claim_reference.hint")}, 
-                                            label: { hidden: true, text: t(".claim_reference.label") }  %>
+    <%= suggestion_select f, :claim_reference, @laa_references, :value, :description, width: 20,
+                            label: { text: t(".claim_reference.label"), size: "xl" },
+                            hint: { size: 's', text: t(".claim_reference.hint")},
+                            data: { autoselect: false } %>
 <% end %>
