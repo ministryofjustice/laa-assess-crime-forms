@@ -7,13 +7,13 @@ module Decisions
     PAYMENT_CHECK_ANSWERS = 'payments/steps/check_your_answers'.freeze
 
     CLAIM_TYPE = 'payments/steps/claim_type'.freeze
-    CLAIM_DETAILS = 'payments/steps/claim_detail'.freeze
+    CLAIM_DETAILS = 'payments/steps/claim_details'.freeze
     ASSIGNED_COUNSEL_NSM = 'payments/steps/assigned_counsel_nsm'.freeze
 
     from(:claim_type)
-      .when(-> { application.claim_type == Payments::ClaimType::NON_STANDARD_MAGISTRATE.to_s })
+      .when(-> { multi_step_form_session['claim_type'] == Payments::ClaimType::NON_STANDARD_MAGISTRATE.to_s })
       .goto(edit: CLAIM_DETAILS)
-      .when(-> { application.claim_type == Payments::ClaimType::ASSIGNED_COUNSEL.to_s })
+      .when(-> { multi_step_form_session['claim_type'] == Payments::ClaimType::ASSIGNED_COUNSEL.to_s })
       .goto(edit: ASSIGNED_COUNSEL_NSM)
   end
 end

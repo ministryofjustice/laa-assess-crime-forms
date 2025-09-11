@@ -26,8 +26,6 @@ module Steps
 
     def current_application
       raise 'implement this action, in subclasses'
-      # id = params[:id].presence || (session[:current_form_session_id] ||= SecureRandom.uuid)
-      # @current_application ||= Decisions::FormSession.new(session:, id:)
     end
 
     # :nocov:
@@ -38,12 +36,8 @@ module Steps
 
     def update_and_advance(form_class, opts = {})
       # replace current_application with session_form
-
       hash = permitted_params(form_class).to_h
-      record = opts.fetch(:record, current_application)
-      @form_object = form_class.new(
-        hash.merge(application: current_application, record: record)
-      )
+      @form_object = form_class.build(hash, multi_step_form_session:)
 
       process_form(@form_object, opts)
     end
