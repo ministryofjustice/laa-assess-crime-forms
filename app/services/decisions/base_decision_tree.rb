@@ -23,7 +23,7 @@ module Decisions
       @rule = self.class.rules[as]
     end
 
-    delegate :application, :record, to: :form_object
+    delegate :multi_step_form_session, to: :form_object
 
     def destination
       return to_route(index: '/payments') unless rule

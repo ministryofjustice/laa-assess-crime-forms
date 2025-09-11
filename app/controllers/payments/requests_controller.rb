@@ -14,14 +14,17 @@ module Payments
     end
 
     def new
-      redirect_to edit_payments_steps_claim_types_path(id: intialize_session_object.id)
+      request = intialize_multi_step_form_session_object
+      redirect_to edit_payments_steps_claim_types_path(id: request.id)
     end
 
     private
 
-    def intialize_session_object
-      # id = params[:id].presence || (session[:current_form_session_id] ||= SecureRandom.uuid)
-      Decisions::FormSession.new(process: 'Payments', session: session, session_id: SecureRandom.uuid)
+    def intialize_multi_step_form_session_object
+      session[:multi_step_form_id] ||= SecureRandom.uuid
+      Decisions::MultiStepFormSession.new(process: 'payments',
+                                          session: session,
+                                          session_id: session[:multi_step_form_id])
     end
 
     def authorize_caseworker

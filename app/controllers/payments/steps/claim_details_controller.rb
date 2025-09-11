@@ -2,11 +2,11 @@ module Payments
   module Steps
     class ClaimDetailsController < BaseController
       def edit
-        @form_object = Payments::ClaimDetailForm.new(current_application)
+        @form_object = Payments::Steps::ClaimDetailForm.build({}, multi_step_form_session:)
       end
 
       def update
-        update_and_advance(Payments::ClaimDetailForm, as: :claim_detail)
+        update_and_advance(Payments::Steps::ClaimDetailForm, as: :claim_detail)
       end
     end
   end

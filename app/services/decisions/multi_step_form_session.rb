@@ -1,5 +1,5 @@
 module Decisions
-  class FormSession
+  class MultiStepFormSession
     EXPIRES_IN = 2.hours
 
     attr_reader :session, :id, :process
@@ -13,6 +13,10 @@ module Decisions
 
     def answers
       data['answers']
+    end
+
+    def attribute_names
+      answers.keys
     end
 
     def [](hash_key)

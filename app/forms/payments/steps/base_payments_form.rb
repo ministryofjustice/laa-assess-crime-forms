@@ -7,24 +7,17 @@ module Payments
 
       include LaaCrimeFormsCommon::Validators
 
-      # Initialize a new form object given an AR model, reading and setting
+      attr_accessor :multi_step_form_session, :form_data
+
+      # Initialize a new form object given an session object, reading and setting
       # the attributes declared in the form object.
       # Most of the times, `record` is just the main DB table, but sometimes,
       # for example in has_one or has_many, `record` is a different table.
-      # def self.build(record, application: nil)
-      #   unless record.is_a?(ApplicationRecord) || record.is_a?(AppStore::V1::Base)
-      #     raise ArgumentError, "expected `ApplicationRecord`, got `#{record.class}`"
-      #   end
-      #
-      #   attrs = record.slice(
-      #     attribute_names & record.attribute_names
-      #   ).merge!(
-      #       application: application || record,
-      #       record: record
-      #     )
-      #
-      #   new(attrs)
-      # end
+      def self.build(form_data, multi_step_form_session:)
+        # record is hash from form
+        attrs = form_data.merge!(multi_step_form_session:)
+        new(attrs)
+      end
 
       def save
         valid? && persist!
