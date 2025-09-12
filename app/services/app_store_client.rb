@@ -97,7 +97,40 @@ class AppStoreClient
     )
   end
 
+  def all_laa_references_autocomplete
+    # response_from_submissions = self.class.post("#{host}/v1/submissions/searches")
+    claim_references_payments
+  end
+
   private
+
+  def claim_references_payments
+    page = 1
+    laa_refs = []
+
+    loop do
+      response_from_payments = self.class.post("#{host}/v1/payment_requests/searches?page=#{page}",
+                                               headers: { 'X-Client-Type' => 'provider' })
+      parsed = response_from_payments.parsed_response
+      data     = parsed['data'] || []
+      metadata = parsed['metadata'] || {}
+      laa_refs.concat(
+        data.filter_map do |entry|
+          reference = entry.dig('payment_request_claim', 'laa_reference')
+          surname   = entry.dig('payment_request_claim', 'client_last_name').upcase
+          Payments::LaaReference.new(reference, surname)
+        end
+      )
+      total    = metadata['total_results'].to_i
+      per_page = metadata['per_page'].to_i
+      current  = metadata['page'].to_i
+
+      break if (current * per_page) >= total
+
+      page += 1
+    end
+    laa_refs
+  end
 
   def options(payload = nil)
     options = payload ? { body: payload.to_json } : {}
