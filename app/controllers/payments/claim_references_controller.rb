@@ -4,7 +4,7 @@ module Payments
 
     def edit
       authorize(:payment, :update?)
-      @laa_references = AppStoreClient.new.all_laa_references_autocomplete
+      @laa_references = Payments::LaaReferenceResults.new.call(:payments)
       @form_object = ClaimReferenceForm.new
     end
   end

@@ -1,7 +1,7 @@
 module Payments
   class LaaReference
     def initialize(reference, client_surname)
-      @reference = reference 
+      @reference = reference
       @client_surname = client_surname
     end
 
