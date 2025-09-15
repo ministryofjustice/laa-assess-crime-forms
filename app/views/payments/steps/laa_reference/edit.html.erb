@@ -1,0 +1,13 @@
+<% title t('.page_title') %>
+
+<% step_header(path: payments_requests_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_text_field :laa_reference, label: { size: 'm' }, width: 10 %>
+      <%= f.continue_button(secondary: false) %>
+    <% end %>
+  </div>
+</div>
