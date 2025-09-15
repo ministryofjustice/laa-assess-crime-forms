@@ -13,6 +13,9 @@ en:
       title: Alert
 
   layouts:
+    availability_banner:
+      heading: Availability of this service has changed
+      body: This service can only be used from 7am to 10pm
     header_navigation:
       menu_button: Menu
       nav_aria_label: Menu
