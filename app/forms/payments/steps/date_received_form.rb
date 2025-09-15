@@ -1,13 +1,12 @@
 module Payments
   module Steps
-    class ClaimDetailForm < BasePaymentsForm
-      attribute :ufn, :string
-      attribute :multi_step_form_session
+    class DateReceivedForm < BasePaymentsForm
+      attribute :date_received, :string
 
       def save
         return false unless valid?
 
-        multi_step_form_session[:ufn] = ufn
+        multi_step_form_session[:date_received] = date_received
 
         true
       rescue StandardError

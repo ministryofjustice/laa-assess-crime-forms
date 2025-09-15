@@ -2,9 +2,14 @@ module Payments
   module Steps
     class ClaimTypeForm < BasePaymentsForm
       attribute :claim_type, :string
-      attribute :multi_step_form_session
 
-      validates :claim_type, inclusion: { in: %w[non_standard_mags assigned_counsel] }
+      validates :claim_type, inclusion: { in: %w[non_standard_mags
+                                                 nsm_supplemental
+                                                 nsm_appeal
+                                                 nsm_amendment
+                                                 assigned_counsel
+                                                 ac_appeal
+                                                 ac_amendment] }
 
       def save
         return false unless valid?

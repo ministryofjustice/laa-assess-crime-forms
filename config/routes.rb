@@ -157,9 +157,22 @@ Rails.application.routes.draw do
         get :search, format: :js
       scope ':id' do
         namespace :steps do
+          namespace :ac do
+            edit_step :allowed_costs
+            edit_step :claimed_costs
+            edit_step :claim_details
+            edit_step :nsm_check
+          end
+          namespace :nsm do
+            edit_step :allowed_costs
+            edit_step :claimed_costs
+            edit_step :claim_details
+            edit_step :laa_reference_check
+          end
+          show_step :check_your_answers
+          edit_step :date_received
+          edit_step :laa_reference
           edit_step :claim_types
-          edit_step :claim_details
-          edit_step :assigned_counsel_nsm
         end
       end
     end

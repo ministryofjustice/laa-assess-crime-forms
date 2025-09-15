@@ -1,0 +1,19 @@
+<% title t('.page_title') %>
+
+<% step_header(path: payments_requests_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <div class="govuk-date-input__item">
+        <div class="moj-datepicker" data-module="moj-date-picker">
+          <div class="govuk-form-group">
+            <%= f.govuk_text_field :date_received, label: { text: t('.date_received') }, class: 'moj-js-datepicker-input' %>
+          </div>
+        </div>
+      </div>
+      <%= f.continue_button(secondary: false) %>
+    <% end %>
+  </div>
+</div>

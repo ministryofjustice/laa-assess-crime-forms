@@ -1,11 +1,52 @@
 en:
   payments:
     steps:
+      check_your_answers:
+        show:
+          page_title: Check your answers
+      date_received:
+        edit:
+          page_title: Date received
+          heading: Date received
+          date_received: Date received
       claim_types:
         edit:
-          page_title: Claim Type
-          heading: Claim Type
-      claim_details:
+          page_title: Claim type
+          heading: Claim type
+      laa_reference:
         edit:
-          page_title: Claim Details
+          page_title: LAA Reference
+          heading: LAA Reference
+      ac:
+        nsm_check:
+          edit:
+            page_title: Is this claim linked to a non-standard magistrates' claim?
+        claim_details:
+          edit:
+            page_title: Claim Details
+            heading: Claim details
+        claimed_costs:
+          edit:
+            page_title: Claimed costs
+            heading: Claimed costs
+        allowed_costs:
+          edit:
+            page_title: Allowed costs
+            heading: Allowed costs
+      nsm:
+        claim_details:
+          edit:
+            page_title: Claim details
+            heading: Claim details
+        claimed_costs:
+          edit:
+            page_title: Claimed costs
+            heading: Claimed costs
+        allowed_costs:
+          edit:
+            page_title: Allowed costs
+            heading: Allowed costs
+        laa_reference_check:
+          edit:
+            page_title: Allowed costs
     service_name: Payments
