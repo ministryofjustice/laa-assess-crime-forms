@@ -109,8 +109,7 @@ class AppStoreClient
     laa_refs = []
 
     loop do
-      response_from_payments = self.class.post("#{host}/v1/payment_requests/searches?page=#{page}",
-                                               headers: { 'X-Client-Type' => 'provider' })
+      response_from_payments = self.class.post("#{host}/v1/payment_requests/searches?page=#{page}", **options)
       parsed = response_from_payments.parsed_response
       data     = parsed['data'] || []
       metadata = parsed['metadata'] || {}
