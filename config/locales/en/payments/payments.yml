@@ -57,10 +57,22 @@ en:
           edit:
             page_title: Claimed costs
             heading: Claimed costs
+            profit_costs: Profit costs
+            disbursement_costs: Disbursement costs
+            travel_costs: Travel costs
+            waiting_costs: Waiting costs
+            calculate_cost: Calculate cost
+            total_cost: Total claimed cost
         allowed_costs:
           edit:
             page_title: Allowed costs
             heading: Allowed costs
+            profit_costs: Profit costs
+            disbursement_costs: Disbursement costs
+            travel_costs: Travel costs
+            waiting_costs: Waiting costs
+            calculate_cost: Calculate cost
+            total_cost: Total allowed cost
         laa_reference_check:
           edit:
             page_title: Allowed costs
