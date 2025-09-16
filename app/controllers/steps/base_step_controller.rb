@@ -24,7 +24,7 @@ module Steps
 
     private
 
-    def current_application
+    def multi_step_form_session
       raise 'implement this action, in subclasses'
     end
 

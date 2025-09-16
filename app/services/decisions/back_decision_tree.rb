@@ -4,7 +4,7 @@ module Decisions
     WRAPPER_CLASS = CustomWrapper
 
     # start_page - takes use back to previous page
-    from(DecisionTree::CLAIM_DETAILS).goto(edit: DecisionTree::CLAIM_TYPE)
-    from(DecisionTree::ASSIGNED_COUNSEL_NSM).goto(edit: DecisionTree::CLAIM_TYPE)
+    from(DecisionTree::NSM_CLAIM_DETAILS).goto(edit: DecisionTree::CLAIM_TYPE)
+    from(DecisionTree::AC_NSM_CHECK).goto(edit: DecisionTree::CLAIM_TYPE)
   end
 end
