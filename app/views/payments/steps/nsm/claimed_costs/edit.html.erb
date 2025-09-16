@@ -5,11 +5,56 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :profit_costs, label: { size: 'm' }, width: 10 %>
-      <%= f.govuk_text_field :disbursement_costs, label: { size: 'm' }, width: 10 %>
-      <%= f.govuk_text_field :travel_costs, label: { size: 'm' }, width: 10 %>
-      <%= f.govuk_text_field :waiting_costs, label: { size: 'm' }, width: 10 %>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :profit_costs,
+          prefix_text: "£",
+          inputmode: "decimal",
+          label: { size: 's', text: t('.profit_costs') },
+          width: 10 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :disbursement_costs,
+          prefix_text: "£",
+          inputmode: "decimal",
+          label: { size: 's', text: t('.disbursement_costs') },
+          width: 10 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :travel_costs,
+          prefix_text: "£",
+          inputmode: "decimal",
+          label: { size: 's', text: t('.travel_costs') },
+          width: 10 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :waiting_costs,
+          prefix_text: "£",
+          inputmode: "decimal",
+          label: { size: 's' , text: t('.waiting_costs') },
+          width: 10 %>
+      </div>
+
+      <div class="govuk-form-group">
+      <%= govuk_button_link_to(t('.calculate_cost'), '#',
+        secondary: true ,
+        id: 'payments_calculate_change_button'
+      ) %>
+      </div>
+
+      <p class="govuk-heading-l">
+        <span class="govuk-caption-m"><%= t('.total_cost') %></span>
+        £ <span id="total_cost">0.00</span>
+      </p>
+
       <%= f.continue_button(secondary: false) %>
     <% end %>
   </div>
