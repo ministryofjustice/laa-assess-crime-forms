@@ -2,4 +2,14 @@
 
 <% step_header(path: payments_requests_path) %>
 
-show your answers
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<%= govuk_summary_card(title: t('.claim_details'), html_attributes: { id: 'reason-why' }) do %>
+  <%= govuk_summary_list(rows: @claim_details.card_rows) %>
+<% end %>
