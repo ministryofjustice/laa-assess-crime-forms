@@ -6,7 +6,7 @@ module Decisions
     PAYMENT_START_PAGE = 'steps/claim_type'.freeze
     PAYMENT_CHECK_ANSWERS = 'steps/check_your_answers'.freeze
 
-    CLAIM_TYPE = 'steps/claim_type'.freeze
+    CLAIM_TYPE = '/payments/steps/claim_types'.freeze
 
     AC_CLAIM_DETAILS = 'payments/steps/ac/claim_details'.freeze
     AC_CLAIMED_COSTS = 'payments/steps/ac/claimed_costs'.freeze
