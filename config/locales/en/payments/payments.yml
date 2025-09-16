@@ -36,6 +36,21 @@ en:
       nsm:
         claim_details:
           edit:
+            date_received: Date claim received
+            office_code: Firm office account number
+            ufn: Unique file number
+            stage_reached: Stage reached
+            prog: PROG
+            prom: PROM
+            defendant_last_name: Defendant last name
+            defendant_first_name: Defendant first name
+            number_of_defendants: Number of defendants
+            number_of_attendances: Number of attendances
+            hearing_outcome_code: Hearing outcome code
+            matter_type: Matter type
+            court: Court
+            youth_court: Is this court a youth court
+            date_completed: Date work completed
             page_title: Claim details
             heading: Claim details
         claimed_costs:
@@ -50,3 +65,17 @@ en:
           edit:
             page_title: Allowed costs
     service_name: Payments
+
+  helpers:
+    hint:
+      payments_steps_nsm_claim_detail_form:
+        date_received: For example, 17/5/2025
+        office_code: Enter the office account number or firm name, or select from the suggestions that appear when you start typing.
+        ufn: For example, 120223/001
+        hearing_outcome_code: Start typing the hearing outcome and select one of the suggestions that appear
+        matter_type: Start typing the matter type and select one of the suggestions that appear
+        court: Start typing the court and select one of the suggestions that appear
+        date_completed: For example, 17/5/2025
+
+
+

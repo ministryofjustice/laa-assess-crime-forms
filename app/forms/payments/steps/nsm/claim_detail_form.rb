@@ -5,7 +5,7 @@ module Payments
         attribute :date_received, :string
         attribute :office_code
         attribute :ufn, :string
-        attribute :stage
+        attribute :stage_reached
         attribute :defendant_first_name
         attribute :defendant_last_name
         attribute :number_of_defendants
@@ -14,7 +14,7 @@ module Payments
         attribute :matter_type
         attribute :court
         attribute :youth_court
-        attribute :date_work_completed, :string
+        attribute :date_completed, :string
 
         def save
           return false unless valid?

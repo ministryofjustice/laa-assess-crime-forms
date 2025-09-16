@@ -10,10 +10,65 @@
     </h1>
   </div>
 </div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-date-input__item">
+      </div>
+  </div>
+</div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :ufn, label: { size: 'm' }, width: 10 %>
+      <div class="moj-datepicker" data-module="moj-date-picker">
+        <div class="govuk-form-group">
+          <%= f.govuk_text_field :date_received, label: { size: 's', text: t('.date_received') }, class: 'moj-js-datepicker-input' %>
+        </div>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :office_code, label: { size: 's', text: t('.office_code') }, width: 20 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :ufn, label: { size: 's',  text: t('.ufn') }, width: 10 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_radio_buttons_fieldset :stage_reached, legend: { size: 's', text: t('.stage_reached') } do %>
+          <%= f.govuk_radio_button :stage_reached, true, label: { text: t('.prog' ) } %>
+          <%= f.govuk_radio_button :stage_reached, false, label: { text: t('.prom' ) } %>
+        <% end %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :defendant_first_name, label: { size: 's',  text: t('.defendant_first_name') }, width: 20 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :defendant_last_name, label: { size: 's',  text: t('.defendant_last_name') }, width: 20 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :number_of_defendants, label: { size: 's',  text: t('.number_of_defendants') }, width: 5 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :number_of_attendances, label: { size: 's',  text: t('.number_of_attendances') }, width: 5 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :hearing_outcome_code, label: { size: 's', text: t('.hearing_outcome_code') }, width: 20 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :matter_type, label: { size: 's', text: t('.matter_type') }, width: 20 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :court, label: { size: 's', text: t('.court') }, width: 20 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_radio_buttons_fieldset :youth_court, legend: { size: 's', text: t('.youth_court') } do %>
+          <%= f.govuk_radio_button :youth_court, true, label: { text: t('shared.true' ) } %>
+          <%= f.govuk_radio_button :youth_court, false, label: { text: t('shared.false' ) } %>
+        <% end %>
+      </div>
+      <div class="moj-datepicker" data-module="moj-date-picker">
+        <div class="govuk-form-group">
+          <%= f.govuk_text_field :date_completed, label: { size: 's', text: t('.date_completed') }, class: 'moj-js-datepicker-input' %>
+        </div>
+      </div>
       <%= f.continue_button(secondary: false) %>
     <% end %>
   </div>
