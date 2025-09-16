@@ -3,7 +3,39 @@ en:
     steps:
       check_your_answers:
         show:
+          headers:
+            costs: costs
+            total: totals
           page_title: Check your answers
+          heading: Check your answers
+          claim_details: Claim details
+          original_claim: Original claim
+          claim_type: Claim type
+          date_claim_received: Date claim received
+          firm_office_account_number: Firm office account number
+          firm_name: Firm name
+          unique_file_number: Unique file number
+          stage_reached: Stage reached
+          defendant_name: Defendant name
+          number_of_defendants: Number of defendants
+          number_of_attendances: Number of attendances
+          hearing_outcome_code: Hearing outcome code
+          matter_type: Matter type
+          court: Court
+          youth_court: Youth court matter
+          work_completed: Date work was completed
+          cost_summary: Cost summary
+          claimed_and_allowed_costs: Claimed and allowed costs
+          total_claimed: Total claimed
+          total_allowed: Total allowed
+          profit_costs: Profit costs
+          disbursements: Disbursements
+          travel: Travel
+          waiting: Waiting
+          total: Total
+          submit_payment_request: Submit payment request
+          cancel_payment_request: Cancel payment request
+          change: Change
       date_received:
         edit:
           page_title: Date received
