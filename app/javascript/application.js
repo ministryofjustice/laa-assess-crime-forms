@@ -26,9 +26,4 @@ convertSelectToAutocomplete();
 $(document).on("turbo:render", function () {
   initAll();
   convertSelectToAutocomplete();
-  console.log(`$(document).on("turbo:render", function () {
-  initAll();
-  convertSelectToAutocomplete();
-  console.log()
-});`);
 });

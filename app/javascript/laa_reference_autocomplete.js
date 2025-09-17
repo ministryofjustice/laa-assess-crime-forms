@@ -1,0 +1,61 @@
+import accessibleAutocomplete from 'accessible-autocomplete'
+import $ from 'jquery'
+
+function customInput(result){
+  return result?.reference
+}
+
+function customSuggestion(result){
+  if(result?.reference && result?.client_surname){
+    return `${result.reference} - Defendant ${result.client_surname}`
+  }
+  else{
+    return ""
+  }
+
+}
+
+async function referenceSearch(query){
+  try{
+    const response = await fetch(`/laa_references?query=${query}`)
+    const references = await response.json()
+    return references
+  }
+  catch{
+    return []
+  }
+}
+
+async function customSuggest(query, populateResults){
+  const results = await referenceSearch(query)
+  populateResults(results)
+}
+
+function initAutocomplete(elementId){
+  let elements = $(`#${elementId}`)
+  if(elements.length > 0){
+    let element = elements[0]
+    let name = element.getAttribute("data-name")
+
+    accessibleAutocomplete.enhanceSelectElement({
+      selectElement: element,
+      name: name,
+      source: customSuggest,
+      templates: {
+        inputValue: customInput,
+        suggestion: customSuggestion
+      },
+      autoselect: element.getAttribute('data-autoselect') === "true",
+    })
+  }
+}
+
+$("document").ready(() => {
+  let selectElements = $("*[data-module='laa-reference-autocomplete']")
+
+  selectElements.each((index, element) => {
+    let elementId = element.id
+    //enhance laa-reference-autocomplete tag
+    initAutocomplete(elementId)
+  })
+})

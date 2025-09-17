@@ -1,9 +1,9 @@
 module Payments
   class LaaReferenceResults
-    def call(source)
+    def call(source, query, total_results)
       case source
       when :payments
-        get_payments
+        get_payments(query, total_results)
       when :submissions
         # get_submissions
       when :all
@@ -15,21 +15,10 @@ module Payments
 
     private
 
-    def get_payments
-      page = 1
-      results = []
-      loop do
-        payload = AppStoreClient.new.search(search_params(page), :payment_requests)
-
-        # there are potentially multiple results per laa ref for payments - may need to use uniq
-        results.concat(payload['data'].map { format_payment(_1) })
-        metadata = payload['metadata']
-
-        break if check_last_page(metadata)
-
-        page += 1
-      end
-      results
+    def get_payments(query, total_results)
+      payload = AppStoreClient.new.search(search_params(query, total_results), :payment_requests)
+      # there are potentially multiple results per laa ref for payments - may need to use uniq
+      payload['data'].map { format_payment(_1) }
     end
 
     # def get_submissions
@@ -44,19 +33,14 @@ module Payments
       Payments::LaaReference.new(reference, surname)
     end
 
-    def check_last_page(metadata)
-      total    = metadata['total_results'].to_i
-      per_page = metadata['per_page'].to_i
-      current_page  = metadata['page'].to_i
-
-      (current_page * per_page) >= total
-    end
-
-    def search_params(page)
-      {
-        page: page,
-        sort_direction: 'descending'
+    def search_params(query, total_results)
+      params = {
+        sort_direction: 'descending',
+        query: query
       }
+
+      params[:per_page] = total_results if total_results
+      params
     end
   end
 end
