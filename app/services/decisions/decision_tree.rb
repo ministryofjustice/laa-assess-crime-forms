@@ -35,7 +35,10 @@ module Decisions
       .goto(edit: LAA_REFERENCE)
 
     from(:laa_reference_check)
+      .when(-> { multi_step_form_session['laa_reference_check'] == true })
       .goto(edit: LAA_REFERENCE)
+      .when(-> { multi_step_form_session['laa_reference_check'] == false })
+      .goto(edit: NSM_CLAIM_DETAILS)
     from(:laa_reference)
       .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment || ac_appeal || ac_amendment })
       .goto(edit: DATE_RECEIVED)
@@ -50,14 +53,15 @@ module Decisions
 
     from(:ac_claim_details)
       .goto(edit: AC_CLAIMED_COSTS)
-
     from(:ac_claimed_costs)
       .goto(edit: AC_ALLOWED_COSTS)
-
     from(:ac_allowed_costs)
       .goto(show: CHECK_YOUR_ANSWERS)
 
     from(:nsm_claim_details)
+      .when(-> { nsm_appeal || nsm_amendment })
+      .goto(edit: NSM_ALLOWED_COSTS)
+      .when(-> { nsm || nsm_supplemental })
       .goto(edit: NSM_CLAIMED_COSTS)
     from(:nsm_claimed_costs)
       .goto(edit: NSM_ALLOWED_COSTS)

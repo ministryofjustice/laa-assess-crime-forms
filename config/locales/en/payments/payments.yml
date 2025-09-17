@@ -40,15 +40,19 @@ en:
         edit:
           page_title: Date received
           heading: Date received
-          date_received: Date received
+          date_received: Date claim received
       claim_types:
         edit:
           page_title: Claim type
           heading: Claim type
+      laa_reference_check:
+        edit:
+          page_title: Laa refernce check
+          laa_reference_check: Is there an LAA reference for the original claim?
       laa_reference:
         edit:
           page_title: LAA Reference
-          heading: LAA Reference
+          laa_reference: LAA reference for the original claim
       ac:
         nsm_check:
           edit:
@@ -107,7 +111,8 @@ en:
             total_cost: Total allowed cost
         laa_reference_check:
           edit:
-            page_title: Allowed costs
+            page_title: LAA reference check
+            laa_reference_check: Is there an LAA reference for the original claim?
     service_name: Payments
 
   helpers:
@@ -120,6 +125,9 @@ en:
         matter_type: Start typing the matter type and select one of the suggestions that appear
         court: Start typing the court and select one of the suggestions that appear
         date_completed: For example, 17/5/2025
-
+      payments_steps_laa_reference_form:
+        laa_reference: Start typing the LAA reference or the defendant last name and select one of the suggestions that appear
+      payments_steps_date_received_form:
+        date_received: For example, 17/5/2025.
 
 
