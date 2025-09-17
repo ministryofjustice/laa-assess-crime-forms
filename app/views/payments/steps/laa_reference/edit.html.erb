@@ -6,7 +6,9 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :laa_reference, label: { size: 'm' }, width: 10 %>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :laa_reference, label: { size: 'xl', text: t('.laa_reference') }, width: 20 %>
+      </div>
       <%= f.continue_button(secondary: false) %>
     <% end %>
   </div>
