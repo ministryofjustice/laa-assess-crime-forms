@@ -1,5 +1,7 @@
 class LaaReferencesController < ActionController::Base
-  def index
+  protect_from_forgery with: :exception
+
+  def create
     @results = Payments::LaaReferenceResults.new.call(:payments, params[:query], params[:total_results])
     respond_to do |format|
       format.json { render json: @results }
