@@ -10,17 +10,6 @@ module Payments
                                                  assigned_counsel
                                                  ac_appeal
                                                  ac_amendment] }
-
-      def save
-        return false unless valid?
-
-        multi_step_form_session[:claim_type] = claim_type
-
-        true
-      rescue StandardError
-        errors.add(:base, :sync_error)
-        false
-      end
     end
   end
 end
