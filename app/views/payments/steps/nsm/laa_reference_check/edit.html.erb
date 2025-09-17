@@ -6,7 +6,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset :laa_reference_check, legend: { size: 'xl' } do %>
+      <%= f.govuk_radio_buttons_fieldset :laa_reference_check, legend: { size: 'xl', text: t('.laa_reference_check') } do %>
         <%= f.govuk_radio_button :laa_reference_check, true, label: { text: t('shared.true' ) } %>
         <%= f.govuk_radio_button :laa_reference_check, false, label: { text: t('shared.false' ) } %>
       <% end %>
