@@ -2,23 +2,13 @@ module Payments
   module Steps
     module Nsm
       class ClaimedCostsForm < BasePaymentsForm
-        attribute :profit_costs, :string
-        attribute :disbursement_costs, :string
-        attribute :travel_costs, :string
-        attribute :waiting_costs, :string
+        attribute :profit_costs, :gbp
+        attribute :disbursement_costs, :gbp
+        attribute :travel_costs, :gbp
+        attribute :waiting_costs, :gbp
 
-        def save
-          return false unless valid?
-
-          attributes.each do |k, v|
-            multi_step_form_session[k.to_sym] = v
-          end
-
-          true
-        rescue StandardError
-          errors.add(:base, :sync_error)
-          false
-        end
+        validates :profit_costs, :disbursement_costs,
+                  :travel_costs, :waiting_costs, presence: true, numericality: { greater_than: 0 }, is_a_number: true
       end
     end
   end

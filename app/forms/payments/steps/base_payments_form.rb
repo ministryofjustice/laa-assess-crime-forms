@@ -19,7 +19,16 @@ module Payments
       end
 
       def save
-        valid? && persist!
+        return false unless valid?
+
+        attributes.each do |k, v|
+          multi_step_form_session[k.to_sym] = v
+        end
+
+        true
+      rescue StandardError
+        errors.add(:base)
+        false
       end
 
       # This is a `save if you can, but it's fine if not` method, bypassing validations
