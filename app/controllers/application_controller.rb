@@ -43,7 +43,8 @@ class ApplicationController < ActionController::Base
   end
 
   def business_hours?
-    (7..22).cover?(Time.current.hour)
+    uk_time = Time.current.in_time_zone('Europe/London')
+    (7..21).cover?(uk_time.hour)
   end
 
   def set_referrer
