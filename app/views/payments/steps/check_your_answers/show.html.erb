@@ -13,3 +13,22 @@
 <%= govuk_summary_card(title: t('.claim_details'), html_attributes: { id: 'reason-why' }) do %>
   <%= govuk_summary_list(rows: @claim_details.card_rows) %>
 <% end %>
+
+<%= govuk_summary_card(title: t('.cost_summary'), html_attributes: { id: 'reason-why' }) do %>
+      <%=
+        caption = t('.claimed_and_allowed_costs')
+        head = @cost_summary.headers
+        rows = @cost_summary.table_fields.map(&:values)
+        foot = @cost_summary.formatted_summed_fields.map do |key, value|
+          value[:text] = (tag.span(t(".accessible.#{key}"), class: 'govuk-visually-hidden') + value[:text]) if key != :name && value.present?
+          value
+        end
+        govuk_table(
+          first_cell_is_header: true,
+          caption:,
+          head:,
+          rows:,
+          foot:
+        )
+      %>
+<% end %>

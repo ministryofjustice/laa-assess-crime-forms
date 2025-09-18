@@ -15,28 +15,28 @@
   <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>
       <div class="govuk-form-group">
-        <%= f.govuk_text_field :profit_costs,
+        <%= f.govuk_text_field :allowed_profit_costs,
           prefix_text: "£",
           inputmode: "decimal",
           label: { size: 's', text: t('.profit_costs') },
           width: 10 %>
       </div>
       <div class="govuk-form-group">
-        <%= f.govuk_text_field :disbursement_costs,
+        <%= f.govuk_text_field :allowed_disbursement_costs,
           prefix_text: "£",
           inputmode: "decimal",
           label: { size: 's', text: t('.disbursement_costs') },
           width: 10 %>
       </div>
       <div class="govuk-form-group">
-        <%= f.govuk_text_field :travel_costs,
+        <%= f.govuk_text_field :allowed_travel_costs,
           prefix_text: "£",
           inputmode: "decimal",
           label: { size: 's', text: t('.travel_costs') },
           width: 10 %>
       </div>
       <div class="govuk-form-group">
-        <%= f.govuk_text_field :waiting_costs,
+        <%= f.govuk_text_field :allowed_waiting_costs,
           prefix_text: "£",
           inputmode: "decimal",
           label: { size: 's' , text: t('.waiting_costs') },
@@ -55,7 +55,7 @@
         £ <span id="total_cost">0.00</span>
       </p>
 
-      <%= f.continue_button(secondary: false) %>
+      <%= f.continue_button(primary: :save_and_continue, secondary: false) %>
     <% end %>
   </div>
 </div>
