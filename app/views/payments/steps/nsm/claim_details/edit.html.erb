@@ -27,8 +27,8 @@
       </div>
       <div class="govuk-form-group">
         <%= f.govuk_radio_buttons_fieldset :stage_reached, legend: { size: 's', text: t('.stage_reached') } do %>
-          <%= f.govuk_radio_button :stage_reached, true, label: { text: t('.prog' ) } %>
-          <%= f.govuk_radio_button :stage_reached, false, label: { text: t('.prom' ) } %>
+          <%= f.govuk_radio_button :stage_reached, "PROG", label: { text: t('.prog' ) } %>
+          <%= f.govuk_radio_button :stage_reached, "PROM", label: { text: t('.prom' ) } %>
         <% end %>
       </div>
       <div class="govuk-form-group">
@@ -63,7 +63,7 @@
           <%= f.govuk_text_field :date_completed, label: { size: 's', text: t('.date_completed') }, class: 'moj-js-datepicker-input' %>
         </div>
       </div>
-      <%= f.continue_button(secondary: false) %>
+      <%= f.continue_button(primary: :save_and_continue, secondary: false) %>
     <% end %>
   </div>
 </div>

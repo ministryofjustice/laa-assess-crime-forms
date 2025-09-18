@@ -10,7 +10,7 @@
         <%= f.govuk_radio_button :laa_reference_check, true, label: { text: t('shared.true' ) } %>
         <%= f.govuk_radio_button :laa_reference_check, false, label: { text: t('shared.false' ) } %>
       <% end %>
-      <%= f.continue_button(secondary: false) %>
+      <%= f.continue_button(primary: :save_and_continue, secondary: false) %>
     <% end %>
   </div>
 </div>
