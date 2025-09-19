@@ -6,7 +6,6 @@ RSpec.describe Payments::LaaReferenceResults do
 
     let(:params) { { query:, total_results: } }
     let(:query) { 'Anything' }
-    let(:search_type) { :payments }
     let(:total_results) { 10 }
     let(:search_results) do
       {
@@ -34,7 +33,7 @@ RSpec.describe Payments::LaaReferenceResults do
     end
 
     it 'returns formatted search results from app store' do
-      results = service.call(search_type, query, total_results)
+      results = service.call(query, total_results)
       expect(results.count).to eq 2
       expect(results.first.class).to eq Payments::LaaReference
       expect(results.first.value).to eq 'LAA-ABC123'

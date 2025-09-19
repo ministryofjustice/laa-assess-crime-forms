@@ -1,7 +1,7 @@
 class LaaReferencesController < ApplicationController
   def index
     authorize(:payment, :update?)
-    results = Payments::LaaReferenceResults.new.call(:payments, params[:query], params[:total_results])
+    results = Payments::LaaReferenceResults.new.call(params[:query], params[:total_results])
     respond_to do |format|
       format.json { render json: results }
     end

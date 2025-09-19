@@ -1,16 +1,7 @@
 module Payments
   class LaaReferenceResults
-    def call(source, query, total_results)
-      case source
-      when :payments
-        get_payments(query, total_results)
-      when :submissions
-        # get_submissions
-      when :all
-        # get_payments.concat(get_submissions)
-      else
-        raise source ? "Unknown source '#{source}'" : 'No source supplied'
-      end
+    def call(query, total_results)
+      get_payments(query, total_results)
     end
 
     private
@@ -20,12 +11,6 @@ module Payments
       # there are potentially multiple results per laa ref for payments - may need to use uniq
       payload['data'].map { format_payment(_1) }
     end
-
-    # def get_submissions
-    #   loop do
-    #     AppStoreClient.new.search(search_params, :submissions)
-    #   end
-    # end
 
     def format_payment(entry)
       reference = entry.dig('payment_request_claim', 'laa_reference')
