@@ -4,7 +4,6 @@ module Decisions
     WRAPPER_CLASS = CustomWrapper
 
     PAYMENT_START_PAGE = 'steps/claim_type'.freeze
-    PAYMENT_CHECK_ANSWERS = 'steps/check_your_answers'.freeze
 
     CLAIM_TYPE = '/payments/steps/claim_types'.freeze
 

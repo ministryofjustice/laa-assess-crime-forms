@@ -19,11 +19,11 @@ module Payments
     ].freeze
 
     def claim_type
-      session_answers['claim_type']
+      I18n.t("payments.requests.type.#{session_answers['claim_type']}")
     end
 
     def date_received
-      session_answers['date_received']
+      DateTime.parse(session_answers['date_received']).to_fs(:stamp)
     end
 
     def office_code
@@ -71,7 +71,7 @@ module Payments
     end
 
     def date_completed
-      session_answers['date_completed']
+      DateTime.parse(session_answers['date_completed']).to_fs(:stamp)
     end
 
     def laa_reference
