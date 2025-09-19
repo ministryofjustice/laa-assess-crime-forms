@@ -1,6 +1,6 @@
 module Payments
   module Steps
-    module Nsm
+    module Ac
       class ClaimedCostsController < BaseController
         def edit
           @form_object = Payments::Steps::Ac::ClaimedCostsForm.new(multi_step_form_session:)
