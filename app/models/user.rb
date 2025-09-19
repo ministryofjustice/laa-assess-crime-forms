@@ -25,7 +25,7 @@ class User < ApplicationRecord
   end
 
   def caseworker?
-    @supervisor ||= roles.caseworker.any?
+    @caseworker ||= roles.caseworker.any?
   end
 
   def supervisor?

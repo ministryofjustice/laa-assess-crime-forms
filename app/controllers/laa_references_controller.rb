@@ -9,4 +9,3 @@ class LaaReferencesController < ApplicationController
     expires_in 5.minutes
   end
 end
-
