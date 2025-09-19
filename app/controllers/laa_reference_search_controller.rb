@@ -1,4 +1,4 @@
-class LaaReferencesController < ApplicationController
+class LaaReferenceSearchController < ApplicationController
   def index
     authorize(:payment, :update?)
     results = Payments::LaaReferenceResults.new.call(params[:query], params[:total_results])
