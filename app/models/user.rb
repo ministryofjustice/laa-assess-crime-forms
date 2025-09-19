@@ -24,6 +24,10 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def caseworker?
+    @supervisor ||= roles.caseworker.any?
+  end
+
   def supervisor?
     @supervisor ||= roles.supervisor.any?
   end

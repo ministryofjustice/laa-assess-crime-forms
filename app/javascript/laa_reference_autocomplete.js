@@ -1,5 +1,4 @@
 import accessibleAutocomplete from 'accessible-autocomplete'
-import { FetchRequest } from '@rails/request.js'
 import $ from 'jquery'
 
 function customInput(result){
@@ -17,20 +16,17 @@ function customSuggestion(result){
 }
 
 async function referenceSearch(query){
-  var token = document.querySelector("meta[name='csrf-token']").content
-  const request = new FetchRequest("post", `/laa_references?query=${query}`,
-    {
-      contentType: "application/json",
-      responseKind: "json"
+  try{
+    let response = await fetch(`/laa_references?query=${query}`)
+    if(response.ok){
+      const references = await response.json()
+      return references
     }
-  )
-  request.addHeader("X-CSRF-Token", `${token}`)
-  const response = await request.perform()
-  if (response.ok) {
-    const body = await response.json
-    return body
+    else{
+      return []
+    }
   }
-  else{
+  catch{
     return []
   }
 }
@@ -61,7 +57,6 @@ function initAutocomplete(elementId){
 
 $("document").ready(() => {
   let selectElements = $("*[data-module='laa-reference-autocomplete']")
-
   selectElements.each((index, element) => {
     let elementId = element.id
     //enhance laa-reference-autocomplete tag
