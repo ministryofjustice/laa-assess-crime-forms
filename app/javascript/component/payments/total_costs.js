@@ -6,10 +6,10 @@ function init() {
 
   if (!calculateChangeButton || !total) return;
 
-  const profitField       = document.querySelector("input[name$='[profit_costs]']");
-  const disbursementField = document.querySelector("input[name$='[disbursement_costs]']");
-  const travelField       = document.querySelector("input[name$='[travel_costs]']");
-  const waitingField      = document.querySelector("input[name$='[waiting_costs]']");
+  const profitField       = document.getElementById("profit_costs");
+  const disbursementField = document.getElementById("disbursement_costs");
+  const travelField       = document.getElementById("travel_costs");
+  const waitingField      = document.getElementById("waiting_costs");
 
   function updateTotal() {
     const profit       = new Decimal(profitField?.value || 0);
