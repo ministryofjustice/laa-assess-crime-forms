@@ -3,7 +3,8 @@ module Payments
     module Nsm
       class LaaReferenceCheckController < BaseController
         def edit
-          @form_object = Payments::Steps::Nsm::LaaReferenceCheckForm.new(multi_step_form_session:)
+          @form_object = Payments::Steps::Nsm::LaaReferenceCheckForm.build(multi_step_form_session.answers,
+                                                                           multi_step_form_session:)
         end
 
         def update

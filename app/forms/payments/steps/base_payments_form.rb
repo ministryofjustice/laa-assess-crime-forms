@@ -11,10 +11,8 @@ module Payments
 
       # Initialize a new form object given an session object, reading and setting
       # the attributes declared in the form object.
-      # Most of the times, `record` is just the main DB table, but sometimes,
-      # for example in has_one or has_many, `record` is a different table.
       def self.build(form_data, multi_step_form_session:)
-        attrs = form_data.merge!(multi_step_form_session:)
+        attrs = form_data.slice(*attribute_names).merge!(multi_step_form_session:)
         new(attrs)
       end
 

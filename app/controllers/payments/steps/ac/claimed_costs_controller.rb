@@ -3,7 +3,7 @@ module Payments
     module Ac
       class ClaimedCostsController < BaseController
         def edit
-          @form_object = Payments::Steps::Ac::ClaimedCostsForm.new(multi_step_form_session:)
+          @form_object = Payments::Steps::Ac::ClaimedCostsForm.build(multi_step_form_session.answers, multi_step_form_session:)
         end
 
         def update
