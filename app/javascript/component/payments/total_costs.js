@@ -3,8 +3,9 @@ import Decimal from 'decimal.js';
 function init() {
   const calculateChangeButton = document.getElementById('payments_calculate_change_button');
   const total = document.getElementById('total_cost');
+  const totalHidden  = document.getElementById('calculated_total_costs');
 
-  if (!calculateChangeButton || !total) return;
+  if (!calculateChangeButton || !total || !totalHidden) return;
 
   const profitField       = document.getElementById("profit_costs");
   const disbursementField = document.getElementById("disbursement_costs");
@@ -17,8 +18,9 @@ function init() {
     const travel       = new Decimal(travelField?.value || 0);
     const waiting      = new Decimal(waitingField?.value || 0);
 
-    const sum = profit.plus(disbursement).plus(travel).plus(waiting);
-    total.textContent = sum.toFixed(2);
+    const sum = profit.plus(disbursement).plus(travel).plus(waiting).toFixed(2);
+    total.textContent = sum;
+    totalHidden.value = sum;
   }
 
   calculateChangeButton.addEventListener('click', (e) => {
