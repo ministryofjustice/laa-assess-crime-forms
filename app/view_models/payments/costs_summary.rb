@@ -26,8 +26,8 @@ module Payments
     def formatted_summed_fields
       {
         name: t('total', numeric: false),
-        total_claimed: format(session_answers['total_claimed']),
-        total_allowed: format(session_answers['total_allowed']),
+        total_claimed: format(session_answers['total_claimed_costs'].to_f),
+        total_allowed: format(session_answers['total_allowed_costs'].to_f),
       }
     end
 

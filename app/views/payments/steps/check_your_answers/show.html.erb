@@ -1,6 +1,6 @@
 <% title t('.page_title') %>
 
-<% step_header(path: payments_requests_path) %>
+<% step_header(path: previous_decision_step_path) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
@@ -10,11 +10,32 @@
   </div>
 </div>
 
-<%= govuk_summary_card(title: t('.claim_details'), html_attributes: { id: 'reason-why' }) do %>
-  <%= govuk_summary_list(rows: @claim_details.card_rows) %>
-<% end %>
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title"><%= t('.claim_details') %></h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <%= link_to 'change', payments_steps_claim_types_path %>
+        <span class="govuk-visually-hidden"><%= t('.claim_details') %></span>
+      </li>
+    </ul>
+  </div>
+  <div class="govuk-summary-card__content">
+    <%= govuk_summary_list(rows: @claim_details.card_rows) %>
+  </div>
+</div>
 
-<%= govuk_summary_card(title: t('.cost_summary'), html_attributes: { id: 'reason-why' }) do %>
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title"><%= t('.cost_summary') %></h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+        <%= link_to 'change', edit_payments_steps_nsm_claimed_costs_path %>
+        <span class="govuk-visually-hidden"><%= t('.cost_summary') %></span>
+      </li>
+    </ul>
+  </div>
+  <div class="govuk-summary-card__content">
       <%=
         caption = t('.claimed_and_allowed_costs')
         head = @cost_summary.headers
@@ -31,4 +52,5 @@
           foot:
         )
       %>
-<% end %>
+  </div>
+</div>
