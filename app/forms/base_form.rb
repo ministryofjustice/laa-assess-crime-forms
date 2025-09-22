@@ -9,8 +9,4 @@ class BaseForm
   def [](attr_name)
     public_send(attr_name)
   end
-
-  def []=(attr_name, value)
-    public_send(:"#{attr_name}=", value)
-  end
 end
