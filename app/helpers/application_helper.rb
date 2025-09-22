@@ -98,7 +98,6 @@ module ApplicationHelper
                         data: {}, **)
     data[:module] = data_module
     data[:name] = "#{form.object_name}[#{field}_suggestion]"
-    value = form.object[field]
     form.govuk_collection_select(field, values, id_field, value_field, *, data:, **)
   end
   # rubocop:enable Metrics/ParameterLists
