@@ -4,7 +4,7 @@ module Payments
       attribute :claim_type, :string
       validates :claim_type, presence: true, inclusion: { in: %w[non_standard_mag
                                                                  non_standard_mag_supplemental
-                                                                 non_standard_mag_appea
+                                                                 non_standard_mag_appeal
                                                                  non_standard_mag_amendment
                                                                  assigned_counsel
                                                                  assigned_counsel_appeal

@@ -4,11 +4,17 @@ module Decisions
 
     attr_reader :session, :id, :process
 
+    class << self
+      def find(process:, session:, session_id:)
+        session["#{process}:#{session_id}"]
+      end
+    end
+
     def initialize(process:, session:, session_id:)
       @process = process
       @session = session
       @id = session_id
-      find_or_create!
+      create!
     end
 
     def answers
@@ -33,7 +39,7 @@ module Decisions
 
     private
 
-    def find_or_create!
+    def create!
       now = Time.current
       if session[key].blank? || expired?(session[key])
         session[key] = {

@@ -3,7 +3,7 @@ module Payments
     module Nsm
       class ClaimDetailsController < BaseController
         def edit
-          @form_object = Payments::Steps::Nsm::ClaimDetailForm.new(multi_step_form_session:)
+          @form_object = Payments::Steps::Nsm::ClaimDetailForm.build(multi_step_form_session.answers, multi_step_form_session:)
         end
 
         def update
