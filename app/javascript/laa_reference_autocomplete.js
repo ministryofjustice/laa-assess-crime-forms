@@ -2,12 +2,12 @@ import accessibleAutocomplete from 'accessible-autocomplete'
 import $ from 'jquery'
 
 function customInput(result){
-  return result?.reference
+  return result?.value
 }
 
 function customSuggestion(result){
-  if(result?.reference && result?.client_surname){
-    return `${result.reference} - Defendant ${result.client_surname}`
+  if(result?.description && result?.value){
+    return `${result.description}`
   }
   else{
     return ""

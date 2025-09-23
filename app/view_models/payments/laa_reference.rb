@@ -12,5 +12,12 @@ module Payments
     def description
       "#{@reference} - #{I18n.t('shared.claim_reference_form.defendant')} #{@client_surname}"
     end
+
+    def as_json(*)
+      {
+        value:,
+        description:
+      }
+    end
   end
 end
