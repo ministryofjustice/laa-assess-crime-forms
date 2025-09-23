@@ -146,6 +146,13 @@ Rails.application.routes.draw do
     namespace :payments do
       resources :requests
       resource :search, only: %i[new show]
+      resource :claim_reference, only: %i[edit]
+    end
+
+    resources :laa_references do
+      collection do
+        get :search, format: :js
+      end
     end
   end
 

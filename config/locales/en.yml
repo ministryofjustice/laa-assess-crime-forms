@@ -105,6 +105,11 @@ en:
           payment_request_id: Payment request id
     gdpr_documents_deleted:
       message: Uploaded files deleted. Uploads are deleted after 6 months to keep the provider’s data safe.
+    claim_reference_form:
+      defendant: Defendant
+      claim_reference:
+        label: LAA reference for the original claim
+        hint: Start typing the LAA reference or the defendant last name and select one of the suggestions that appear
   generic:
     cost: cost
 

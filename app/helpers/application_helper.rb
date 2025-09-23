@@ -92,4 +92,13 @@ module ApplicationHelper
       :open
     end
   end
+
+  # rubocop:disable Metrics/ParameterLists
+  def suggestion_select(form, field, values, id_field, value_field, data_module = 'accessible-autocomplete', *,
+                        data: {}, **)
+    data[:module] = data_module
+    data[:name] = "#{form.object_name}[#{field}_suggestion]"
+    form.govuk_collection_select(field, values, id_field, value_field, *, data:, **)
+  end
+  # rubocop:enable Metrics/ParameterLists
 end

@@ -1,0 +1,10 @@
+<%= form_with(method: method, url: edit_payments_claim_reference_path, model: form_object) do |f| %>
+    <%= suggestion_select f, :claim_reference, [], :value, :description,
+        'laa-reference-autocomplete',
+        width: 20,
+        options: {include_blank: true},
+                            label: { text: t(".claim_reference.label"), size: "xl" },
+                            hint: { size: 's', text: t(".claim_reference.hint")},
+                            data: { autoselect: false } %>
+<% end %>
+<%= javascript_include_tag 'laa_reference_autocomplete', nonce: true, type: 'module' %>
