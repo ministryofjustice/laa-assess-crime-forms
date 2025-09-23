@@ -1,4 +1,4 @@
-<%= form_with(method: method, url: edit_payments_claim_reference_path, model: @form_object) do |f| %>
+<%= form_with(method: method, url: edit_payments_claim_reference_path, model: form_object) do |f| %>
     <%= suggestion_select f, :claim_reference, [], :value, :description,
         'laa-reference-autocomplete',
         width: 20,
