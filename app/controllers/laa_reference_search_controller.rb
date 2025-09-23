@@ -5,7 +5,5 @@ class LaaReferenceSearchController < ApplicationController
     respond_to do |format|
       format.json { render json: results }
     end
-
-    expires_in 5.minutes
   end
 end
