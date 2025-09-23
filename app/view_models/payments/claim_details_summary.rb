@@ -71,6 +71,8 @@ module Payments
     end
 
     def date_completed
+      return unless session_answers['date_completed']
+
       DateTime.parse(session_answers['date_completed']).to_fs(:stamp)
     end
 

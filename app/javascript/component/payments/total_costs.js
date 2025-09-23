@@ -2,6 +2,8 @@ import Decimal from 'decimal.js';
 
 function init() {
   const calculateChangeButton = document.getElementById('payments_calculate_change_button');
+  const saveButton = document.getElementById('costs_submit_button');
+
   const total = document.getElementById('total_cost');
   const totalHidden  = document.getElementById('calculated_total_costs');
 
@@ -28,6 +30,14 @@ function init() {
     updateTotal();
   });
 
+  saveButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    updateTotal();
+
+    // Find and submit the closest form
+    const form = saveButton.closest('form');
+    if (form) form.submit();
+  });
   // Run once on page load
   updateTotal();
 }
