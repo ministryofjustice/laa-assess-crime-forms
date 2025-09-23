@@ -17,7 +17,7 @@ function customSuggestion(result){
 
 async function referenceSearch(query){
   try{
-    let response = await fetch(`/laa_reference_search?query=${query}`)
+    let response = await fetch(`/laa_references/search?query=${query}`)
     if(response.ok){
       const references = await response.json()
       return references

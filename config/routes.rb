@@ -149,7 +149,11 @@ Rails.application.routes.draw do
       resource :claim_reference, only: %i[edit]
     end
 
-    resources :laa_reference_search, only: [:index], format: :js
+    resources :laa_references do
+      collection do
+        get :search, format: :js
+      end
+    end
   end
 
   get 'robots.txt', to: 'robots#index'
