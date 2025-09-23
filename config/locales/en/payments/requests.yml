@@ -1,0 +1,21 @@
+en:
+  payments:
+    requests:
+      type:
+        assigned_counsel: Assigned counsel
+        assigned_counsel_amendment: Assigned counsel - amendment
+        assigned_counsel_appeal: Assigned counsel - appeal
+        non_standard_mag: Non-Standard Magistrates'
+        non_standard_mag_appeal: Non-Standard Magistrates' - appeal
+        non_standard_mag_supplemental: Non-Standard Magistrates' - supplemental
+        non_standard_mag_amendment: Non-Standard Magistrates' - amendment
+      index:
+        page_title: Payment Requests
+        payment_requests: payment requests
+        create_payment_request: Create payment request
+        table:
+          laa_reference: LAA reference
+          firm_name: Firm name
+          client_last_name: Defendant
+          request_type: Payment type
+          submitted_at: Submitted

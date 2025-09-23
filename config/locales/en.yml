@@ -13,6 +13,9 @@ en:
       title: Alert
 
   layouts:
+    availability_banner:
+      heading: Availability of this service has changed
+      body: This service can only be used from 7am to 10pm
     header_navigation:
       menu_button: Menu
       nav_aria_label: Menu
@@ -24,6 +27,7 @@ en:
       all_claims: Open claims
       assessed_claims: Closed claims
       search: Search
+      payment_requests: Payment requests
     phase_banner:
       phase: Beta
       phase_description_html: This is a new service – your <a class="govuk-link" href="%{feedback}">feedback</a> will help us to improve it.
