@@ -14,6 +14,10 @@ module Decisions
 
     private
 
+    def laa_reference_check
+      @laa_reference_check ||= multi_step_form_session['laa_reference_check']
+    end
+
     def claim_type
       @claim_type ||= multi_step_form_session['claim_type']
     end

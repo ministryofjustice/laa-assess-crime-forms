@@ -26,14 +26,14 @@ module Decisions
     delegate :multi_step_form_session, to: :form_object
 
     def destination
-      return to_route(index: '/payments') unless rule
+      return to_route(index: '/payments/requests') unless rule
 
       detected = nil
       _, destination = rule.destinations.detect do |(condition, _)|
         detected = condition.nil? || wrapped_form_object.instance_exec(&condition.to_proc)
       end
 
-      return to_route(index: '/payments') unless destination
+      return to_route(index: '/payments/requests') unless destination
 
       to_route(resolve_procs(destination, detected))
     end

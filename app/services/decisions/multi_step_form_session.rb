@@ -6,7 +6,7 @@ module Decisions
 
     class << self
       def find(process:, session:, session_id:)
-        session["#{process}:#{session_id}"]
+        new(process, session, session_id)
       end
     end
 
