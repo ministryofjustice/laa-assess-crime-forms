@@ -51,6 +51,7 @@ function initAutocomplete(elementId){
         suggestion: customSuggestion
       },
       autoselect: element.getAttribute('data-autoselect') === "true",
+      minLength: 2
     })
   }
 }
