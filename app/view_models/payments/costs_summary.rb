@@ -6,6 +6,10 @@ module Payments
 
     PROFIT_COSTS = 'profit_costs'.freeze
 
+    def initialize(cost_details)
+      @cost_details = cost_details
+    end
+
     def headers
       [
         '',
@@ -26,8 +30,8 @@ module Payments
     def formatted_summed_fields
       {
         name: t('total', numeric: false),
-        total_claimed: format(session_answers['total_claimed_costs'].to_f),
-        total_allowed: format(session_answers['total_allowed_costs'].to_f),
+        total_claimed: format(@cost_details['total_claimed_costs'].to_f),
+        total_allowed: format(@cost_details['total_allowed_costs'].to_f),
       }
     end
 
@@ -44,8 +48,8 @@ module Payments
     def build_row(type)
       {
         name: t(type, numeric: false),
-        total_claimed: format(session_answers["claimed_#{type}"].to_f),
-        total_allowed: format(session_answers["allowed_#{type}"].to_f),
+        total_claimed: format(@cost_details["claimed_#{type}"].to_f),
+        total_allowed: format(@cost_details["allowed_#{type}"].to_f),
       }
     end
 

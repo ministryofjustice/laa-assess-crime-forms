@@ -13,6 +13,27 @@ module Payments
       render :index, locals: { pagy: model.pagy, requests: model.results }
     end
 
+    def show
+      @request_id = SecureRandom.uuid
+      @claim_details = Payments::ClaimDetails.new({
+        'claim_type' => 'non_standard_mag',
+        'date_received' => 1.day.ago,
+        'office_code' => 'A100129',
+        'ufn' => '20250112/001',
+        'stage_reached' => 'PROG',
+        'defendant_first_name' => 'Du',
+        'defendant_last_name' => 'Bois',
+        'number_of_attendances' => 3,
+        'number_of_defendants' => 1,
+        'hearing_outcome_code' => 'CP01',
+        'matter_type' => '2 - Homicide and related grave offences',
+        'court' => 'Acton - C2723',
+        'youth_court' => true,
+        'date_completed' => DateTime.now
+      })
+      @current_page = params[:current_page] || 'payment_request'
+    end
+
     private
 
     def authorize_caseworker

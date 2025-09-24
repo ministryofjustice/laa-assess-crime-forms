@@ -1,0 +1,24 @@
+<% title t('.page_title',laa_reference: @claim_details.laa_reference) %>
+
+<span class="govuk-caption-xl">
+  <%= @claim_details.firm_name %>
+</span>
+<h1 class="govuk-heading-xl">
+  <%= @claim_details.laa_reference %>
+<h1>
+<br><br>
+<p class="govuk-body-m">
+  <strong><%= t('.claim_type') %>: </strong><%= @claim_details.claim_type %>
+<p>
+<p class="govuk-body-m">
+  <strong><%= t('.last_updated') %>: </strong>
+<p>
+<nav class="moj-sub-navigation" aria-label="Sub navigation" id="claim_nav">
+<ul class="moj-sub-navigation__list">
+  <li class="moj-sub-navigation__item">
+    <%= link_to t('.payment_request'), payments_requests_path(@request_id), class: 'moj-sub-navigation__link', 'aria-current': (@current_page == 'payment_request' ? "page" : nil) %>
+  </li>
+  <li class="moj-sub-navigation__item">
+    <%= link_to t('.claim_details'), payments_requests_path(@request_id), class: 'moj-sub-navigation__link', 'aria-current': (@current_page == 'claim_details' ? "page" : nil) %>
+  </li>
+</nav>

@@ -1,3 +1,10 @@
 en:
   payments:
     service_name: Payments
+    requests:
+      show:
+        page_title: "%{laa_reference} - Payment details"
+        payment_request: Payment requests
+        claim_details: Claim details
+        claim_type: Claim type
+        last_updated: Last updated
