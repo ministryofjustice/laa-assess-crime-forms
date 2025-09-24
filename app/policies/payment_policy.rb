@@ -8,14 +8,10 @@ class PaymentPolicy < ApplicationPolicy
   end
 
   def update?
-    service_access? && !user.viewer?
-  end
-
-  def create?
     service_access? && user_access?
   end
 
-  def update?
+  def create?
     service_access? && user_access?
   end
 
