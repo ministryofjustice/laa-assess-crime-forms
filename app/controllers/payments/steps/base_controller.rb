@@ -23,7 +23,7 @@ module Payments
       end
 
       def authorized
-        authorize(:payment, :create?)
+        authorize(:payment, :update?)
       end
     end
   end
