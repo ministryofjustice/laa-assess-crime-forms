@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import "@hotwired/turbo-rails";
 import "./controllers";
 import "./component/nsm/letters_calls_adjustment";

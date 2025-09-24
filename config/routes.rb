@@ -150,11 +150,6 @@ Rails.application.routes.draw do
       resources :requests
       resource :search, only: %i[new show]
       resource :claim_reference, only: %i[edit]
-    end
-
-    resources :laa_references do
-      collection do
-        get :search, format: :js
       scope ':id' do
         namespace :steps do
           namespace :ac do
@@ -174,6 +169,12 @@ Rails.application.routes.draw do
           edit_step :laa_reference
           edit_step :claim_types
         end
+      end
+    end
+
+    resources :laa_references do
+      collection do
+        get :search, format: :js
       end
     end
   end
