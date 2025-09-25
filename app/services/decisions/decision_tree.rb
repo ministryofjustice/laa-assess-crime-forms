@@ -28,10 +28,6 @@ module Decisions
       .goto(edit: NSM_CLAIM_DETAILS)
       .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment })
       .goto(edit: NSM_LAA_REFERENCE_CHECK)
-      .when(-> { ac })
-      .goto(edit: AC_NSM_CHECK)
-      .when(-> { ac_appeal || ac_amendment })
-      .goto(edit: LAA_REFERENCE)
 
     from(:laa_reference_check)
       .when(-> { multi_step_form_session['laa_reference_check'] == true })
@@ -41,21 +37,12 @@ module Decisions
     from(:laa_reference)
       .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment || ac_appeal || ac_amendment })
       .goto(edit: DATE_RECEIVED)
-      .when(-> { ac })
-      .goto(edit: AC_CLAIM_DETAILS)
 
     from(:date_received)
       .when(-> { nsm_supplemental })
       .goto(edit: NSM_CLAIMED_COSTS)
       .when(-> { nsm_appeal || nsm_amendment })
       .goto(edit: NSM_ALLOWED_COSTS)
-
-    from(:ac_claim_details)
-      .goto(edit: AC_CLAIMED_COSTS)
-    from(:ac_claimed_costs)
-      .goto(edit: AC_ALLOWED_COSTS)
-    from(:ac_allowed_costs)
-      .goto(show: CHECK_YOUR_ANSWERS)
 
     from(:nsm_claim_details)
       .when(-> { nsm_appeal || nsm_amendment })
