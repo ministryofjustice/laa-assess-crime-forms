@@ -29,25 +29,6 @@ module Payments
         false
       end
 
-      # This is a `save if you can, but it's fine if not` method, bypassing validations
-      def save!
-        persist!
-      rescue StandardError
-        false
-      end
-
-      # Intended to quickly verify if form attribute values have changed
-      # compared to those in the persisted DB record. This will mostly work
-      # for simple hashes { attr: value }, but complex structures will require
-      # their custom, more in-deep change method, overriding this one.
-      def changed?
-        !record.slice(*attribute_names).eql?(attributes)
-      end
-
-      def attribute_changed?(attribute)
-        self[attribute] != record.public_send(attribute)
-      end
-
       def to_key
         # Intentionally returns nil so the form builder picks up only
         # the class name to generate the HTML attributes
@@ -56,21 +37,6 @@ module Payments
 
       def persisted?
         false
-      end
-
-      def new_record?
-        true
-      end
-
-      # Add the ability to read/write attributes without calling their accessor methods.
-      # Needed to behave more like an ActiveRecord model, where you can manipulate the
-      # DB attributes making use of `self[:attribute]`
-      def [](attr_name)
-        public_send(attr_name)
-      end
-
-      def []=(attr_name, value)
-        public_send(:"#{attr_name}=", value)
       end
 
       private

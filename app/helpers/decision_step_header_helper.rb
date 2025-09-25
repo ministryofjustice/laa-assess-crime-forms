@@ -10,7 +10,6 @@ module DecisionStepHeaderHelper
                                                        session: session, session_id: session[:multi_step_form_id])
     form = Payments::Steps::BasePaymentsForm.new(multi_step_form_session: form_session,
                                                  form_data: form_session.answers)
-    return { controller: :check_answers, action: :edit } if params[:return_to] == 'check_answers'
 
     Decisions::BackDecisionTree.new(
       form,

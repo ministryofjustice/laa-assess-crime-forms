@@ -14,7 +14,6 @@ module Decisions
     from(DecisionTree::DATE_RECEIVED.sub(%r{^/}, ''))
       .goto(edit: DecisionTree::LAA_REFERENCE)
     from(DecisionTree::NSM_LAA_REFERENCE_CHECK).goto(edit: DecisionTree::CLAIM_TYPE)
-    from(DecisionTree::AC_NSM_CHECK).goto(edit: DecisionTree::CLAIM_TYPE)
     from(DecisionTree::NSM_CLAIMED_COSTS)
       .when(-> { nsm })
       .goto(edit: DecisionTree::NSM_CLAIM_DETAILS)
