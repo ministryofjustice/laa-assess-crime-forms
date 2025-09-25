@@ -53,4 +53,17 @@
         )
       %>
   </div>
+
+
+</div>
+
+<div class="govuk-button-group">
+  <%= govuk_button_link_to(
+    t(".submit_payment_request"),
+    "#"
+  ) %>
+<%= govuk_link_to(
+  t(".cancel_payment_request"),
+  new_payments_request_path
+) %>
 </div>
