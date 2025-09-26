@@ -57,6 +57,17 @@ RSpec.describe Payments::Steps::BasePaymentsForm do
         expect(form.save).to be(true)
         expect(session_store[:favourite_meal]).to eq('pizza')
       end
+
+      context 'when the session already contains an answer' do
+        before do
+          session_store[:favourite_meal] = 'haggis'
+        end
+
+        it 'overwrites the existing value with the new one' do
+          expect { form.save }.to change { session_store[:favourite_meal] }
+            .from('haggis').to('pizza')
+        end
+      end
     end
 
     context 'for an invalid form' do
