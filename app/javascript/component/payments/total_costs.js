@@ -15,14 +15,28 @@ function init() {
   const waitingField      = document.getElementById("waiting_costs");
 
   function updateTotal() {
-    const profit       = new Decimal(profitField?.value || 0);
-    const disbursement = new Decimal(disbursementField?.value || 0);
-    const travel       = new Decimal(travelField?.value || 0);
-    const waiting      = new Decimal(waitingField?.value || 0);
+    function parse(field) {
+        const d = field?.value?.trim();
+        if (!d) return new Decimal(0);
+        try {
+          return new Decimal(d);
+        } catch {
+          return null;
+        }
+      }
+    const profit       = parse(profitField);
+    const disbursement = parse(disbursementField);
+    const travel       = parse(travelField);
+    const waiting      = parse(waitingField);
 
-    const sum = profit.plus(disbursement).plus(travel).plus(waiting).toFixed(2);
-    total.textContent = sum;
-    totalHidden.value = sum;
+    if (profit && disbursement && travel && waiting) {
+      const sum = profit.plus(disbursement).plus(travel).plus(waiting).toFixed(2);
+      total.textContent = sum;
+      totalHidden.value = sum;
+    } else {
+      total.textContent = "—";
+      totalHidden.value = "";
+    }
   }
 
   calculateChangeButton.addEventListener('click', (e) => {
