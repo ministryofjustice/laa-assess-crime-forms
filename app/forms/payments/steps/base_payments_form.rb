@@ -26,6 +26,10 @@ module Payments
         true
       end
 
+      def attribute_changed?(attribute)
+        public_send(attribute) != multi_step_form_session[attribute]
+      end
+
       def to_key
         # Intentionally returns nil so the form builder picks up only
         # the class name to generate the HTML attributes
