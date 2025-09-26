@@ -144,7 +144,34 @@ en:
             date_received: *shared_date_errors
             date_completed: *shared_date_errors
             ufn:
-              invalid_characters: Invalid UFN
+              invalid_characters: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
+              blank: Enter the unique file number
+            office_code:
+              blank: Select the firm office account number
+              invalid_characters: This office account number is not valid
+            stage_reached:
+              inclusion: Select the stage reached
+            defendant_first_name:
+              blank: Enter the defendant first name
+            defendant_last_name:
+              blank: Enter the defendant last name
+            number_of_defendants:
+              blank: Enter the number of defendants
+              not_a_number: Number of defendants must be a number, like 25
+              greater_than: Number of defendants must be greater than 0
+            number_of_attendances:
+              blank: Enter the number of attendances
+              not_a_number: Number of attendances must be a number, like 25
+              greater_than: Number of attendances must be greater than 0
+            hearing_outcome_code:
+              blank: Select the hearing outcome code
+            matter_type:
+              blank: Select the matter type
+            court:
+              blank: Select the court
+            youth_court:
+              inclusion: Select if this is a youth court
+
         payments/steps/claim_type_form:
           attributes:
             claim_type:
