@@ -5,10 +5,6 @@ module Payments
 
       layout 'payments'
 
-      # def subsequent_steps
-      #   Decisions::OrderedSteps.payment_after(controller_name)
-      # end
-
       def decision_tree_class
         Decisions::DecisionTree
       end
