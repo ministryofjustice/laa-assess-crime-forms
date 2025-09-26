@@ -30,7 +30,7 @@ RSpec.describe 'NSM payment request', :stub_oauth_token do
     it 'shows an error when no claim is selected' do
       start_new_payment_request
       click_button 'Save and continue'
-      expect(page).to have_content 'Chmose!'
+      expect(page).to have_content 'Select a payment claim type'
     end
   end
 
