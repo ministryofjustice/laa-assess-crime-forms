@@ -17,18 +17,13 @@ module Steps
     end
     # :nocov:
 
-    def reload
-      @form_object.valid?
-      render :edit
-    end
-
     private
 
+    # :nocov:
     def multi_step_form_session
       raise 'implement this action, in subclasses'
     end
 
-    # :nocov:
     def decision_tree_class
       raise 'implement this action, in subclasses'
     end
@@ -54,20 +49,6 @@ module Steps
       params
         .fetch(form_class.model_name.singular, {})
         .permit(form_class.attribute_names)
-    end
-
-    # :nocov:
-    def subsequent_steps
-      []
-    end
-    # :nocov:
-
-    def render_form_if_invalid(form_object, opts)
-      if form_object.validate
-        redirect_to_current_object
-      else
-        render opts.fetch(:render, :edit)
-      end
     end
   end
 end

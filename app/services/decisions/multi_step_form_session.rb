@@ -1,14 +1,8 @@
 module Decisions
   class MultiStepFormSession
-    EXPIRES_IN = 2.hours
+    EXPIRES_IN = 1.hour
 
     attr_reader :session, :id, :process
-
-    class << self
-      def find(process:, session:, session_id:)
-        new(process, session, session_id)
-      end
-    end
 
     def initialize(process:, session:, session_id:)
       @process = process
@@ -21,20 +15,12 @@ module Decisions
       data['answers']
     end
 
-    def attribute_names
-      answers.keys
-    end
-
     def [](hash_key)
       answers[hash_key.to_s]
     end
 
     def []=(hash_key, hash_value)
       answers[hash_key.to_s] = hash_value
-    end
-
-    def destroy!
-      session.delete(key)
     end
 
     private
@@ -61,8 +47,6 @@ module Decisions
     end
 
     def expired?(hash)
-      return false unless EXPIRES_IN
-
       updated_at = begin
         Time.iso8601(hash['updated_at'])
       rescue StandardError

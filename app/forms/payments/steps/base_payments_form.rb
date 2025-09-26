@@ -24,9 +24,6 @@ module Payments
         end
 
         true
-      rescue StandardError
-        errors.add(:base)
-        false
       end
 
       def to_key
