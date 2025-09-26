@@ -26,6 +26,12 @@ RSpec.describe 'NSM payment request', :stub_oauth_token do
         .to have_title('Claim type')
         .and have_content('Non-Standard Magistrates')
     end
+
+    it 'shows an error when no claim is selected' do
+      start_new_payment_request
+      click_button 'Save and continue'
+      expect(page).to have_content 'Chmose!'
+    end
   end
 
   describe 'claim details' do
