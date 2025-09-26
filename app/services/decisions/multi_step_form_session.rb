@@ -15,6 +15,10 @@ module Decisions
       data['answers']
     end
 
+    def reset_answers
+      data['answers'] = {}
+    end
+
     def [](hash_key)
       answers[hash_key.to_s]
     end
