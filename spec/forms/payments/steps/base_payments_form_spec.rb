@@ -1,46 +1,45 @@
-# spec/forms/payments/steps/base_payments_form_spec.rb
 require 'rails_helper'
 
 RSpec.describe Payments::Steps::BasePaymentsForm do
   describe '.build' do
-    let(:favourite_meal_form) do
+    let(:video_game_form) do
       Class.new(described_class) do
-        attribute :favourite_meal, :string
+        attribute :video_game, :string
       end
     end
 
     before do
-      stub_const('FavouriteMealForm', favourite_meal_form)
+      stub_const('VideoGameForm', video_game_form)
     end
 
     context 'when missing the required multi_step_form_session keyword' do
       it 'raises an ArgumentError' do
         expect do
-          FavouriteMealForm.build({})
+          VideoGameForm.build({})
         end.to raise_error(ArgumentError)
       end
     end
 
     context 'with form_data hash and a session object' do
       let(:session_store) { {} }
-      let(:form_data) { { 'favourite_meal' => 'pizza', 'ignored_key' => 'nope' } }
+      let(:form_data) { { 'video_game' => 'worms', 'ignored_key' => 'nope' } }
 
       it 'instantiates the form object using the declared attributes' do
-        form = FavouriteMealForm.build(form_data, multi_step_form_session: session_store)
+        form = VideoGameForm.build(form_data, multi_step_form_session: session_store)
 
-        expect(form).to be_a(FavouriteMealForm)
-        expect(form.favourite_meal).to eq('pizza')
+        expect(form).to be_a(VideoGameForm)
+        expect(form.video_game).to eq('worms')
         expect(form.multi_step_form_session).to be(session_store)
       end
     end
   end
 
   describe '#save' do
-    subject(:form) { form_class.new(favourite_meal: 'pizza', multi_step_form_session: session_store) }
+    subject(:form) { form_class.new(video_game: 'zelda', multi_step_form_session: session_store) }
 
     let(:form_class) do
       Class.new(described_class) do
-        attribute :favourite_meal, :string
+        attribute :video_game, :string
       end
     end
 
@@ -55,17 +54,17 @@ RSpec.describe Payments::Steps::BasePaymentsForm do
 
       it 'populates session attributes and returns true' do
         expect(form.save).to be(true)
-        expect(session_store[:favourite_meal]).to eq('pizza')
+        expect(session_store[:video_game]).to eq('zelda')
       end
 
       context 'when the session already contains an answer' do
         before do
-          session_store[:favourite_meal] = 'haggis'
+          session_store[:video_game] = 'mario'
         end
 
         it 'overwrites the existing value with the new one' do
-          expect { form.save }.to change { session_store[:favourite_meal] }
-            .from('haggis').to('pizza')
+          expect { form.save }.to change { session_store[:video_game] }
+            .from('mario').to('zelda')
         end
       end
     end
