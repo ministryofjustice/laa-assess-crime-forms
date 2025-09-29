@@ -7,11 +7,6 @@ module Decisions
 
     CLAIM_TYPE = '/payments/steps/claim_types'.freeze
 
-    AC_CLAIM_DETAILS = 'payments/steps/ac/claim_details'.freeze
-    AC_CLAIMED_COSTS = 'payments/steps/ac/claimed_costs'.freeze
-    AC_ALLOWED_COSTS = 'payments/steps/ac/allowed_costs'.freeze
-    AC_NSM_CHECK = 'payments/steps/ac/nsm_check'.freeze
-
     NSM_LAA_REFERENCE_CHECK = 'payments/steps/nsm/laa_reference_check'.freeze
     NSM_CLAIM_DETAILS = 'payments/steps/nsm/claim_details'.freeze
     NSM_CLAIMED_COSTS = 'payments/steps/nsm/claimed_costs'.freeze
@@ -35,7 +30,7 @@ module Decisions
       .when(-> { multi_step_form_session['laa_reference_check'] == false })
       .goto(edit: NSM_CLAIM_DETAILS)
     from(:laa_reference)
-      .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment || ac_appeal || ac_amendment })
+      .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment })
       .goto(edit: DATE_RECEIVED)
 
     from(:date_received)
