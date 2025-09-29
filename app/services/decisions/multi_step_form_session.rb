@@ -1,7 +1,5 @@
 module Decisions
   class MultiStepFormSession
-    EXPIRES_IN = 1.hour
-
     attr_reader :session, :id, :process
 
     def initialize(process:, session:, session_id:)
@@ -30,16 +28,15 @@ module Decisions
     private
 
     def create!
-      now = Time.current
-      if session[key].blank? || expired?(session[key])
+      # rubocop:disable Rails/Presence
+      if session[key].blank?
         session[key] = {
-          'answers' => {},
-          'created_at' => now.iso8601,
-          'updated_at' => now.iso8601,
+          'answers' => {}
         }
       else
         session[key]
       end
+      # rubocop:enable Rails/Presence
     end
 
     def key
@@ -48,15 +45,6 @@ module Decisions
 
     def data
       session[key]
-    end
-
-    def expired?(hash)
-      updated_at = begin
-        Time.iso8601(hash['updated_at'])
-      rescue StandardError
-        nil
-      end
-      updated_at && updated_at < EXPIRES_IN.ago
     end
   end
 end
