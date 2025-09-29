@@ -10,7 +10,7 @@ module Payments
 
         validates :claimed_profit_costs, :claimed_disbursement_costs,
                   :claimed_travel_costs, :claimed_waiting_costs,
-                  presence: true, numericality: { greater_than: 0 }, is_a_number: true
+                  presence: true, numericality: { greater_than_or_equal_to: 0 }, is_a_number: true
       end
     end
   end

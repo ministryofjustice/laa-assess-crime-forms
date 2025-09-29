@@ -10,7 +10,7 @@ module Payments
 
         validates :allowed_profit_costs, :allowed_disbursement_costs,
                   :allowed_travel_costs, :allowed_waiting_costs,
-                  presence: true, numericality: { greater_than: 0 }, is_a_number: true
+                  presence: true, numericality: { greater_than_or_equal_to: 0 }, is_a_number: true
       end
     end
   end
