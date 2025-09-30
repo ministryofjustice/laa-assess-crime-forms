@@ -14,7 +14,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>
-      <%= f.hidden_field :total_allowed_costs, id: "calculated_total_costs" %>
       <div class="govuk-form-group">
         <%= f.govuk_text_field :allowed_profit_costs,
           id: "profit_costs",
@@ -57,7 +56,7 @@
 
       <p class="govuk-heading-l">
         <span class="govuk-caption-m"><%= t('.total_cost') %></span>
-        £ <span id="total_cost">0.00</span>
+        <span id="total_cost"><%= LaaCrimeFormsCommon::NumberTo.pounds(@form_object.total_allowed_costs) %></span>
       </p>
 
       <%= f.continue_button(primary: :save_and_continue, secondary: false,  primary_opts: { id: 'costs_submit_button'}) %>

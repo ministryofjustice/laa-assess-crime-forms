@@ -5,9 +5,8 @@ function init() {
   const saveButton = document.getElementById('costs_submit_button');
 
   const total = document.getElementById('total_cost');
-  const totalHidden  = document.getElementById('calculated_total_costs');
 
-  if (!calculateChangeButton || !total || !totalHidden) return;
+  if (!calculateChangeButton || !total) return;
 
   const profitField       = document.getElementById("profit_costs");
   const disbursementField = document.getElementById("disbursement_costs");
@@ -32,10 +31,8 @@ function init() {
     if (profit && disbursement && travel && waiting) {
       const sum = profit.plus(disbursement).plus(travel).plus(waiting).toFixed(2);
       total.textContent = sum;
-      totalHidden.value = sum;
     } else {
       total.textContent = "—";
-      totalHidden.value = "";
     }
   }
 

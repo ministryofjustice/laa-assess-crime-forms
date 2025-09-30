@@ -42,6 +42,10 @@ module Payments
 
       private
 
+      def calculated_costs
+        attribute_names.grep(/_costs$/).sum { |attr| public_send(attr).to_d }
+      end
+
       # :nocov:
       def persist!
         raise 'Subclasses of BaseFormObject need to implement #persist!'
