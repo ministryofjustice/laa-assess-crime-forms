@@ -30,7 +30,7 @@ function init() {
 
     if (profit && disbursement && travel && waiting) {
       const sum = profit.plus(disbursement).plus(travel).plus(waiting).toFixed(2);
-      total.textContent = sum;
+      total.textContent = `£${sum}`;
     } else {
       total.textContent = "—";
     }
@@ -53,4 +53,8 @@ function init() {
   updateTotal();
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', (_event) => {
+  const paymentsCalculateContainer = document.getElementById('payments-calculate-container');
+
+  if (paymentsCalculateContainer) init()
+})
