@@ -6,6 +6,7 @@ import "./component/nsm/disbursement_adjustment";
 import "./component/prior_authority/service_cost_adjustment";
 import "./component/prior_authority/travel_cost_adjustment";
 import "./component/prior_authority/additional_cost_adjustment";
+import "./component/payments/total_costs";
 import "./component/date-picker";
 import $ from "jquery";
 import { convertSelectToAutocomplete } from "laa-crime-forms-common";
