@@ -17,6 +17,8 @@ module Payments
       @request_id = SecureRandom.uuid
       @claim_details = Payments::ClaimDetails.new({
         'claim_type' => 'non_standard_mag',
+        'firm_name' => 'Law Laywers',
+        'laa_reference' => 'LAA-1z5f76',
         'date_received' => 1.day.ago,
         'office_code' => 'A100129',
         'ufn' => '20250112/001',
@@ -29,7 +31,12 @@ module Payments
         'matter_type' => '2 - Homicide and related grave offences',
         'court' => 'Acton - C2723',
         'youth_court' => true,
-        'date_completed' => DateTime.now
+        'date_completed' => DateTime.now,
+        'allowed_profit_cost' => 140,
+        'allowed_travel_cost' => 90,
+        'allowed_waiting_cost' => 55.4,
+        'allowed_disbursement_cost' => 200,
+        'updated_at' => '2025-02-11T01:00:00.000Z'
       })
       @current_page = params[:current_page] || 'payment_request'
     end

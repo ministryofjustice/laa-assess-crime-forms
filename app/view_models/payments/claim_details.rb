@@ -70,5 +70,18 @@ module Payments
     def laa_reference
       @payment_request_claim['laa_reference']
     end
+
+    def last_updated
+      @payment_request_claim['updated_at'].to_datetime
+    end
+
+    def allowed_total
+      LaaCrimeFormsCommon::NumberTo.pounds([
+        @payment_request_claim['allowed_profit_cost'],
+        @payment_request_claim['allowed_travel_cost'],
+        @payment_request_claim['allowed_waiting_cost'],
+        @payment_request_claim['allowed_disbursement_cost']
+      ].sum)
+    end
   end
 end

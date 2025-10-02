@@ -6,12 +6,13 @@
 <h1 class="govuk-heading-xl">
   <%= @claim_details.laa_reference %>
 <h1>
-<br><br>
 <p class="govuk-body-m">
-  <strong><%= t('.claim_type') %>: </strong><%= @claim_details.claim_type %>
+  <strong><%= t('.allowed') %>: </strong><%= @claim_details.allowed_total %>
 <p>
 <p class="govuk-body-m">
-  <strong><%= t('.last_updated') %>: </strong>
+  <strong><%= t('.claim_type') %>: </strong><%= @claim_details.claim_type %>
+  <br>
+  <strong><%= t('.last_updated') %>: </strong><%= @claim_details.last_updated.to_fs(:stamp) %>
 <p>
 <nav class="moj-sub-navigation" aria-label="Sub navigation" id="claim_nav">
 <ul class="moj-sub-navigation__list">

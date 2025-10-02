@@ -126,6 +126,7 @@ en:
         claim_details: Claim details
         claim_type: Claim type
         last_updated: Last updated
+        allowed: Allowed
     shared:
       save_and_continue: 'Save and continue'
 
