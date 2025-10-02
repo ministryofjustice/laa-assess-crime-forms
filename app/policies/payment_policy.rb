@@ -8,7 +8,7 @@ class PaymentPolicy < ApplicationPolicy
   end
 
   def update?
-    service_access? && !user.viewer?
+    service_access? && user_access?
   end
 
   private

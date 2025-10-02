@@ -1,0 +1,65 @@
+<% title t('.page_title') %>
+
+<% step_header(path: previous_decision_step_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" id="payments-calculate-container">
+    <%= step_form @form_object do |f| %>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :allowed_profit_costs,
+          id: "profit_costs",
+          prefix_text: "£",
+          inputmode: "decimal",
+          label: { size: 's', text: t('.profit_costs') },
+          width: 10 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :allowed_disbursement_costs,
+          id: "disbursement_costs",
+          prefix_text: "£",
+          inputmode: "decimal",
+          label: { size: 's', text: t('.disbursement_costs') },
+          width: 10 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :allowed_travel_costs,
+          id: "travel_costs",
+          prefix_text: "£",
+          inputmode: "decimal",
+          label: { size: 's', text: t('.travel_costs') },
+          width: 10 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :allowed_waiting_costs,
+          id: "waiting_costs",
+          prefix_text: "£",
+          inputmode: "decimal",
+          label: { size: 's' , text: t('.waiting_costs') },
+          width: 10 %>
+      </div>
+
+      <div class="govuk-form-group">
+      <%= govuk_button_link_to(t('.calculate_cost'), '#',
+        secondary: true ,
+        id: 'payments_calculate_change_button'
+      ) %>
+      </div>
+
+      <p class="govuk-heading-l">
+        <span class="govuk-caption-m"><%= t('.total_cost') %></span>
+        <span id="total_cost"><%= LaaCrimeFormsCommon::NumberTo.pounds(@form_object.total_allowed_costs) %></span>
+      </p>
+
+      <%= f.continue_button(primary: :save_and_continue, secondary: false,  primary_opts: { id: 'costs_submit_button'}) %>
+    <% end %>
+  </div>
+</div>

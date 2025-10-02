@@ -25,6 +25,16 @@ en:
     blank: Enter the number of %{item_type}
     greater_than: The number of %{item_type} must be 0 or more
     not_a_number: The number of %{item_type} must be a number, like 25
+  shared_date_errors: &shared_date_errors
+    blank: Date cannot be blank
+    invalid: Enter a valid date
+    invalid_day: Enter a valid day
+    invalid_month: Enter a valid month
+    invalid_year: Enter a valid year
+    year_too_early: Date is too far in the past
+    year_too_late: Date is too far in the future
+    future_not_allowed: Date cannot be in the future
+    before_date_from: End date cannot be before start date
 
   errors:
     unauthorised: 'You are not authorised to perform this action'
@@ -129,6 +139,80 @@ en:
             base:
               nothing_specified: Enter some %{value} details or filter your search criteria
               search_error: Something went wrong trying to perform this search
+
+        payments/steps/nsm/claim_detail_form:
+          attributes:
+            date_received: *shared_date_errors
+            date_completed: *shared_date_errors
+            ufn:
+              invalid_characters: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
+              blank: Enter the unique file number
+            office_code:
+              blank: Select the firm office account number
+              invalid_characters: This office account number is not valid
+            stage_reached:
+              inclusion: Select the stage reached
+            defendant_first_name:
+              blank: Enter the defendant first name
+            defendant_last_name:
+              blank: Enter the defendant last name
+            number_of_defendants:
+              blank: Enter the number of defendants
+              not_a_number: Number of defendants must be a number, like 25
+              greater_than: Number of defendants must be greater than 0
+            number_of_attendances:
+              blank: Enter the number of attendances
+              not_a_number: Number of attendances must be a number, like 25
+              greater_than: Number of attendances must be greater than 0
+            hearing_outcome_code:
+              blank: Select the hearing outcome code
+            matter_type:
+              blank: Select the matter type
+            court:
+              blank: Select the court
+            youth_court:
+              inclusion: Select if this is a youth court
+
+        payments/steps/claim_type_form:
+          attributes:
+            claim_type:
+              blank: "Select a payment claim type"
+
+        payments/steps/nsm/laa_reference_check_form:
+          attributes:
+            laa_reference_check:
+              inclusion: "Select an option"
+
+        payments/steps/nsm/claimed_costs_form:
+          attributes:
+            claimed_profit_costs:
+              greater_than_or_equal_to: Claimed profit costs must be equal or greater than 0
+              blank: Enter claimed profit cost
+            claimed_disbursement_costs:
+              greater_than_or_equal_to: Claimed disbursement costs must be equal or greater than 0
+              blank: Enter claimed disbursement cost
+            claimed_travel_costs:
+              greater_than_or_equal_to: Claimed travel costs must be equal or greater than 0
+              blank: Enter claimed travel cost
+            claimed_waiting_costs:
+              greater_than_or_equal_to: Claimed waiting costs must be equal or greater than 0
+              blank: Enter claimed waiting cost
+
+        payments/steps/nsm/allowed_costs_form:
+          attributes:
+            allowed_profit_costs:
+              greater_than_or_equal_to: Allowed profit costs must be equal or greater than 0
+              blank: Enter allowed profit cost
+            allowed_disbursement_costs:
+              greater_than_or_equal_to: Allowed disbursement costs must be equal or greater than 0
+              blank: Enter allowed disbursement cost
+            allowed_travel_costs:
+              greater_than_or_equal_to: Allowed travel costs must be equal or greater than 0
+              blank: Enter allowed travel cost
+            allowed_waiting_costs:
+              greater_than_or_equal_to: Allowed waiting costs must be equal or greater than 0
+              blank: Enter allowed waiting cost
+
         user_form:
           attributes:
             caseworker_service:
