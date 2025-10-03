@@ -4,9 +4,12 @@ module Payments
       @payment_request_claim = payment_request_claim
     end
 
+    def id
+      @payment_request_claim['id']
+    end
 
     def claim_type
-      I18n.t("payments.requests.type.#{@payment_request_claim['claim_type']}")
+      I18n.t("payments.claim_types.#{@payment_request_claim['claim_type']}")
     end
 
     def date_received
@@ -61,27 +64,22 @@ module Payments
       @payment_request_claim['youth_court']
     end
 
-    def date_completed
-      return unless @payment_request_claim['date_completed']
-
-      DateTime.parse(@payment_request_claim['date_completed']).to_fs(:stamp)
-    end
-
     def laa_reference
       @payment_request_claim['laa_reference']
     end
 
     def last_updated
-      @payment_request_claim['updated_at'].to_datetime
+      DateTime.parse(@payment_request_claim['updated_at']).to_fs(:stamp)
     end
 
-    def allowed_total
-      LaaCrimeFormsCommon::NumberTo.pounds([
-        @payment_request_claim['allowed_profit_cost'],
-        @payment_request_claim['allowed_travel_cost'],
-        @payment_request_claim['allowed_waiting_cost'],
-        @payment_request_claim['allowed_disbursement_cost']
-      ].sum)
+    def payment_requests
+      @payment_request_claim['payment_requests']
+        .map { Payments::PaymentRequestDetails.new(_1) }
+        .sort_by(&:date_completed).reverse
+    end
+
+    def current_total
+      payment_requests.last.allowed_total
     end
   end
 end
