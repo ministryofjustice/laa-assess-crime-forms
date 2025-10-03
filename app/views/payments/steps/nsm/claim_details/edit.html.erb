@@ -43,15 +43,19 @@
       <div class="govuk-form-group">
         <%= f.govuk_text_field :number_of_attendances, label: { size: 's',  text: t('.number_of_attendances') }, width: 5 %>
       </div>
-      <div class="govuk-form-group">
-        <%= f.govuk_text_field :hearing_outcome_code, label: { size: 's', text: t('.hearing_outcome_code') }, width: 20 %>
-      </div>
-      <div class="govuk-form-group">
-        <%= f.govuk_text_field :matter_type, label: { size: 's', text: t('.matter_type') }, width: 20 %>
-      </div>
-      <div class="govuk-form-group">
-        <%= f.govuk_text_field :court, label: { size: 's', text: t('.court') }, width: 20 %>
-      </div>
+
+      <%= f.govuk_collection_select :hearing_outcome_code, LaaCrimeFormsCommon::OutcomeCode.all, :id, :name,
+          data: { module: 'accessible-autocomplete', autoselect: true }, width: 20,
+          options: { include_blank: true }, label: { size: 's', text: t('.hearing_outcome_code') } %>
+
+      <%= f.govuk_collection_select :matter_type, LaaCrimeFormsCommon::MatterType.all, :id, :name,
+          data: { module: 'accessible-autocomplete', autoselect: true }, width: 20,
+          options: { include_blank: true }, label: { size: 's', text: t('.matter_type') } %>
+
+      <%= f.govuk_collection_select :court, LaaCrimeFormsCommon::Court.all, :name, :name,
+          data: { module: 'accessible-autocomplete', autoselect: true }, width: 20,
+          options: { include_blank: true }, label: { size: 's', text: t('.court') } %>
+
       <div class="govuk-form-group">
         <%= f.govuk_radio_buttons_fieldset :youth_court, legend: { size: 's', text: t('.youth_court') } do %>
           <%= f.govuk_radio_button :youth_court, true, label: { text: t('shared.true' ) } %>

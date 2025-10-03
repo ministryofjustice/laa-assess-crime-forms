@@ -51,9 +51,9 @@ module PaymentsHelpers
     defendant_last_name: 'Flintstone',
     defendants_count: '2',
     attendances_count: '2',
-    hearing_outcome_code: '1234',
-    matter_type: '1234',
-    court: '1234',
+    hearing_outcome_code: 'CP17 - Extradition',
+    matter_type: '5 - Burglary',
+    court: 'Ely - C1166A',
     travel_required: 'Yes',
     work_completed_on: '2025-09-24'
   )
@@ -65,9 +65,9 @@ module PaymentsHelpers
     fill_in 'Defendant last name', with: defendant_last_name
     fill_in 'Number of defendants', with: defendants_count
     fill_in 'Number of attendances', with: attendances_count
-    fill_in 'Hearing outcome code', with: hearing_outcome_code
-    fill_in 'Matter type', with: matter_type
-    fill_in 'Court', with: court
+    select hearing_outcome_code, from: 'Hearing outcome code'
+    select matter_type, from: 'Matter type'
+    select court, from: 'Court'
     choose travel_required, allow_label_click: true
     fill_in 'Date work completed', with: work_completed_on
 
