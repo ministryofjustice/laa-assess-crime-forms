@@ -7,13 +7,15 @@ import "./component/prior_authority/travel_cost_adjustment";
 import "./component/prior_authority/additional_cost_adjustment";
 import "./component/payments/total_costs";
 import "./component/date-picker";
-import { Turbo } from "@hotwired/turbo-rails"
+import "@hotwired/turbo-rails"
 import { convertSelectToAutocomplete } from "laa-crime-forms-common";
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from "govuk-frontend";
 
 // set turbo to opt-in
 // https://turbo.hotwired.dev/handbook/drive#disabling-turbo-drive-on-specific-links-or-forms
+initAll();
+Turbo.setFormMode("optin");
 Turbo.session.drive = false
 
 convertSelectToAutocomplete();
