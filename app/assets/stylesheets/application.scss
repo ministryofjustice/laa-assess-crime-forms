@@ -1,5 +1,6 @@
 @use "_imports.scss";
 @forward "local/moj";
+@forward "local/accessible-autocomplete";
 
 @forward "custom/govuk-heading";
 @forward "custom/govuk-period.scss";
