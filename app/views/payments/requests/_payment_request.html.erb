@@ -1,0 +1,11 @@
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-heading-l"><%= t(".payment_request") %></h2>
+    <ul class="govuk-tabs__list" id="tabs">
+      <% claim_details.payment_requests.each do |request| %>
+        <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if selected_payment.id == request.id %>">
+          <%= link_to(request.date_completed, "/payments/requests/#{claim_details.id}?payment_id=#{request.id}") %>
+        </li>
+      <% end %>
+    </ul>
+    <%= render 'payment_details', payment: selected_payment %>
+</div>

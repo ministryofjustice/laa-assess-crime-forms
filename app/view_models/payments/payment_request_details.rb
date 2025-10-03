@@ -12,6 +12,10 @@ module Payments
       I18n.t("payments.request_types.#{@payment_request['request_type']}")
     end
 
+    def date_received_label
+      I18n.t("payments.requests.payment_details.date_received.#{@payment_request['request_type']}")
+    end
+
     def title
       I18n.t("payments.requests.payment_details.payment_heading.#{@payment_request['request_type']}")
     end
@@ -31,6 +35,10 @@ module Payments
         @payment_request['allowed_waiting_cost'],
         @payment_request['allowed_disbursement_cost']
       ].sum)
+    end
+
+    def caseworker
+      @payment_request['submitted_by']
     end
 
     def cost_summary

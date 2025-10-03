@@ -41,6 +41,7 @@ module Payments
             'allowed_waiting_cost' => 55.4,
             'allowed_disbursement_cost' => 200,
             'date_received' => '2025-01-10T01:00:00.000Z',
+            'submitted_by' => 'David Henry',
             'submitted_at' => '2025-01-11T01:00:00.000Z',
           },
           {
@@ -51,6 +52,7 @@ module Payments
             'allowed_waiting_cost' => 55.4,
             'allowed_disbursement_cost' => 200,
             'date_received' => '2025-01-13T01:00:00.000Z',
+            'submitted_by' => 'Ewan Wickson',
             'submitted_at' => '2025-01-14T01:00:00.000Z',
           },
           {
@@ -61,6 +63,7 @@ module Payments
             'allowed_waiting_cost' => 55.4,
             'allowed_disbursement_cost' => 200,
             'date_received' => '2025-01-20T01:00:00.000Z',
+            'submitted_by' => 'Patrick Gleeson',
             'submitted_at' => '2025-01-22T01:00:00.000Z',
           },
           {
@@ -71,6 +74,7 @@ module Payments
             'allowed_waiting_cost' => 45.4,
             'allowed_disbursement_cost' => 200,
             'date_received' => '2025-01-22T06:00:00.000Z',
+            'submitted_by' => 'Imtiaz Ahmed',
             'submitted_at' => '2025-01-22T08:00:00.000Z',
           }
         ]

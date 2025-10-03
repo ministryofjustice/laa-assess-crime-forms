@@ -19,30 +19,22 @@
   <li class="moj-sub-navigation__item">
     <%=
       link_to t(".payment_request"),
-      payments_requests_path(id: @claim_details.id, current_page: "payment_request"),
+      "/payments/requests/#{@claim_details.id}",
       class: "moj-sub-navigation__link", "aria-current": (@current_page == "payment_request" ? "page" : nil)
     %>
   </li>
   <li class="moj-sub-navigation__item">
     <%=
       link_to t(".claim_details"),
-      payments_requests_path(id: @claim_details.id, current_page: "claim_details"),
+      "/payments/requests/#{@claim_details.id}?current_page=claim_details",
       class: "moj-sub-navigation__link", "aria-current": (@current_page == "claim_details" ? "page" : nil)
     %>
   </li>
 </nav>
 
-<div class="govuk-tabs" data-module="govuk-tabs">
-  <h2 class="govuk-tabs__title"><%= t(".payment_request") %></h2>
-  <ul class="govuk-tabs__list" id="tabs">
-    <% @claim_details.payment_requests.each do |request| %>
-      <li class="govuk-tabs__list-item <%= "govuk-tabs__list-item--selected" if @selected_payment.id == request.id %>">
-        <%= link_to(request.date_completed, "/payments/requests/#{@claim_details.id}?payment_id=#{request.id}") %>
-      </li>
-    <% end %>
-  </ul>
-  <div class="govuk-tabs__panel">
-    <%= render 'payment_details', payment: @selected_payment %>
-  </div>
-</div>
+<% if @current_page == "payment_request" %>
+  <%= render "payment_request", claim_details: @claim_details, selected_payment: @selected_payment %>
+<% elsif @current_page == "claim_details" %>
+  <%= render "claim_details" %>
+<% end %>
 

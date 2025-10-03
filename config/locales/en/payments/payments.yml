@@ -128,6 +128,8 @@ en:
             page_title: LAA reference check
             laa_reference_check: Is there an LAA reference for the original claim?
     requests:
+      payment_request:
+        payment_request: Payment request
       payment_details:
         payment_heading:
           non_standard_mag: Claimed and allowed costs
@@ -139,6 +141,13 @@ en:
         accessible:
           total_claimed: Total claimed
           total_allowed: Total allowed
+        payment_type: Payment type
+        date_received:
+          non_standard_mag: Date payment received
+          non_standard_mag_supplemental: Date supplemental payment received
+          non_standard_mag_appeal: Date appeal received
+          non_standard_mag_amendment: Date amendment received
+        caseworker: Caseworker
       show:
         page_title: "%{laa_reference} - Payment details"
         payment_request: Payment request
