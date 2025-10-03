@@ -1032,9 +1032,9 @@
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
 "@ministryofjustice/frontend@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-5.2.0.tgz#c7ef151d972fbe6c84ba76e90715112524700635"
-  integrity sha512-qBTeezU8CGfjn4sIqjlZHrK8BPDlJVWzxB0lG1rkm0xlUk7ipp4rQcfvDh9/0+A4YCYpBbldUpDBf7TLfd3pVw==
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-5.2.1.tgz#811fc89736daa954a49a71d297d2b2ca14bf1bd1"
+  integrity sha512-6P79TnIZnmntuFoGDSY+suOtgSBmCd4cGFfzImspvYhL4GjXFR9zjWrPt33Dem2wONAA96OQNUpKqScTV74yvQ==
 
 "@parcel/watcher-android-arm64@2.5.1":
   version "2.5.1"
@@ -1609,7 +1609,7 @@ jsesc@~3.0.2:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-3.0.2.tgz#bb8b09a6597ba426425f2e4a07245c3d00b9343e"
   integrity sha512-xKqzzWXDttJuOcawBt4KnKHHIf5oQ/Cxax+0PWFG+DFDgHNAdi+TXECADI+RYiFUMmx8792xsMbbgXj4CwnP4g==
 
-laa-crime-forms-common@^1.0.5:
+laa-crime-forms-common@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/laa-crime-forms-common/-/laa-crime-forms-common-1.0.6.tgz#5c4eb0f9f06a77d6a1626659eb46eaf260bf2987"
   integrity sha512-H+G1YA8vT0Wk9p2Gttk4Mu16owRf64s1Wp/Rkkt+tKdhloHf0U5tc4sTeyP9nAQkyVVP8cp5S53Z8z2ydXSelg==
