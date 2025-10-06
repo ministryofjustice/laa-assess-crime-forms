@@ -14,12 +14,39 @@ module Payments
     end
 
     def new
-      redirect_to edit_payments_steps_claim_types_path(id: multi_step_form_session_object.id)
+      redirect_to edit_payments_steps_claim_types_path(id: new_multi_step_form_session_object.id)
     end
+
+    def confirmation; end
+
+    # rubocop:disable Metrics/AbcSize
+    def create
+      payload = multi_step_form_session.answers.merge('submitter_id' => current_user.id)
+      response = AppStoreClient.new.create_payment_request(payload)
+
+      if response['errors'].present?
+
+        flash[:alert] = response['errors'] ||
+                        'Something went wrong submitting your payment request.'
+        redirect_to payments_steps_check_your_answers_path(id: multi_step_form_session.id)
+      else
+        session.delete(:multi_step_form_id)
+        redirect_to payments_request_confirmation_path
+      end
+    end
+    # rubocop:enable Metrics/AbcSize
 
     private
 
-    def multi_step_form_session_object
+    def multi_step_form_session
+      @multi_step_form_session ||= Decisions::MultiStepFormSession.new(
+        process: 'payments',
+        session: session,
+        session_id: session[:multi_step_form_id]
+      )
+    end
+
+    def new_multi_step_form_session_object
       if session[:multi_step_form_id].present?
         destroy_current_form_session && create_new_form_session
       else
@@ -40,6 +67,15 @@ module Payments
       )
     end
 
+    def payment_request_params
+      params.permit(
+        :id,
+        :sort_by,
+        :sort_direction,
+        :page
+      )
+    end
+
     def destroy_current_form_session
       ['multi_step_form_id', "payments:#{session[:multi_step_form_id]}"].each { session.delete(_1) }
     end
@@ -51,8 +87,12 @@ module Payments
                                           session_id: session[:multi_step_form_id])
     end
 
-    def param_validator
-      @param_validator ||= PaymentRequestParams.new(controller_params)
+    def search_params_validator
+      @search_params_validator ||= SearchPaymentRequestParams.new(controller_params)
+    end
+
+    def payment_request_params_validator
+      @payment_request_params_validator ||= PaymentRequestParams.new(payment_request_params)
     end
 
     def set_default_table_sort_options

@@ -2,7 +2,7 @@ en:
   payments:
     steps:
       check_your_answers:
-        show:
+        edit:
           headers:
             costs: costs
             total: totals

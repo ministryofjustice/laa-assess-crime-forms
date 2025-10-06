@@ -7,7 +7,7 @@ module Decisions
     end
 
     def claim_type
-      @claim_type ||= multi_step_form_session['claim_type']
+      @claim_type ||= multi_step_form_session['request_type']
     end
 
     def nsm

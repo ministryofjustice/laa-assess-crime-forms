@@ -19,7 +19,7 @@ module Payments
     ].freeze
 
     def claim_type
-      I18n.t("payments.requests.type.#{session_answers['claim_type']}")
+      I18n.t("payments.requests.type.#{session_answers['request_type']}")
     end
 
     def date_received

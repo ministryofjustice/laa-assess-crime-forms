@@ -97,6 +97,10 @@ class AppStoreClient
     )
   end
 
+  def create_payment_request(payment_request)
+    self.class.post("#{host}/v1/payment_requests", **options(payment_request))
+  end
+
   private
 
   def options(payload = nil)
