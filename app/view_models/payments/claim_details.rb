@@ -1,5 +1,6 @@
 module Payments
   class ClaimDetails
+  include ActionView::Helpers::UrlHelper
     def initialize(payment_request_claim)
       @payment_request_claim = payment_request_claim
     end
@@ -40,12 +41,16 @@ module Payments
       @payment_request_claim['defendant_last_name']
     end
 
-    def number_of_attendances
-      @payment_request_claim['number_of_attendances']
+    def defendant_name
+     "#{defendant_first_name} #{defendant_last_name}"
     end
 
-    def number_of_defendants
-      @payment_request_claim['number_of_defendants']
+    def court_attendances
+      @payment_request_claim['court_attendances']
+    end
+
+    def no_of_defendants
+      @payment_request_claim['no_of_defendants']
     end
 
     def hearing_outcome_code
@@ -61,7 +66,7 @@ module Payments
     end
 
     def youth_court
-      @payment_request_claim['youth_court']
+      @payment_request_claim['youth_court'] ? 'Yes' : 'No'
     end
 
     def laa_reference
@@ -81,5 +86,38 @@ module Payments
     def current_total
       payment_requests.last.allowed_total
     end
+
+    def work_completed_date
+      DateTime.parse(@payment_request_claim['work_completed_date']).to_fs(:stamp)
+    end
+
+    def original_claim
+      link_to("Link to: #{laa_reference}", "")
+    end
+    
+    def table_format
+[
+        [ table_heading("original_claim"), { text: original_claim, numeric: false } ],
+        [ table_heading("claim_type"), { text: claim_type, numeric: false } ],
+        [ table_heading("date_received"), { text: date_received, numeric: false } ],
+        [ table_heading("office_code"), { text: office_code, numeric: false } ],
+        [ table_heading("firm_name"), { text: firm_name, numeric: false } ],
+        [ table_heading("ufn"), { text: ufn, numeric: false } ],
+        [ table_heading("stage_reached"), { text: stage_reached, numeric: false } ],
+        [ table_heading("defendant_name"), { text: defendant_name, numeric: false } ],
+        [ table_heading("no_of_defendants"), { text: no_of_defendants, numeric: false } ],
+        [ table_heading("court_attendances"), { text: court_attendances, numeric: false } ],
+        [ table_heading("hearing_outcome_code"), { text: hearing_outcome_code, numeric: false } ],
+        [ table_heading("matter_type"), { text: matter_type, numeric: false } ],
+        [ table_heading("court"), { text: court, numeric: false } ],
+        [ table_heading("youth_court"), { text: youth_court, numeric: false } ],
+        [ table_heading("work_completed_date"), { text: work_completed_date, numeric: false } ],
+      ]
+    end
+
+    def table_heading(key)
+      I18n.t("payments.requests.claim_details.table.#{key}")
+    end
+
   end
 end

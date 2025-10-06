@@ -35,5 +35,5 @@
 <% if @current_page == "payment_request" %>
   <%= render "payment_request", claim_details: @claim_details, selected_payment: @selected_payment %>
 <% elsif @current_page == "claim_details" %>
-  <%= render "claim_details" %>
+  <%= render "claim_details", claim_details: @claim_details %>
 <% end %>
