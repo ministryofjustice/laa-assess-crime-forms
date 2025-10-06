@@ -10,9 +10,9 @@ RSpec.describe Decisions::DecisionTree do
   let(:form) { FormObject.new(multi_step_form_session:) }
 
   describe '#destination' do
-    context 'from :claim_type' do
+    context 'from :request_type' do
       context 'when NSM' do
-        let(:multi_step_form_session) { { 'claim_type' => Payments::ClaimType::NSM.to_s } }
+        let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM.to_s } }
 
         it_behaves_like 'a generic decision',
                         from: :claim_type,
@@ -23,9 +23,9 @@ RSpec.describe Decisions::DecisionTree do
         'NSM_SUPPLEMENTAL' => Payments::ClaimType::NSM_SUPPLEMENTAL,
         'NSM_APPEAL'       => Payments::ClaimType::NSM_APPEAL,
         'NSM_AMENDMENT'    => Payments::ClaimType::NSM_AMENDMENT
-      }.each do |label, claim_type|
+      }.each do |label, request_type|
         context "when #{label}" do
-          let(:multi_step_form_session) { { 'claim_type' => claim_type.to_s } }
+          let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
 
           it_behaves_like 'a generic decision',
                           from: :claim_type,
@@ -57,9 +57,9 @@ RSpec.describe Decisions::DecisionTree do
         'NSM_SUPPLEMENTAL' => Payments::ClaimType::NSM_SUPPLEMENTAL,
         'NSM_APPEAL'       => Payments::ClaimType::NSM_APPEAL,
         'NSM_AMENDMENT'    => Payments::ClaimType::NSM_AMENDMENT
-      }.each do |label, claim_type|
+      }.each do |label, request_type|
         context "when #{label}" do
-          let(:multi_step_form_session) { { 'claim_type' => claim_type.to_s } }
+          let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
 
           it_behaves_like 'a generic decision',
                           from: :laa_reference,
@@ -70,7 +70,7 @@ RSpec.describe Decisions::DecisionTree do
 
     context 'from :date_received' do
       context 'when NSM supplemental' do
-        let(:multi_step_form_session) { { 'claim_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s } }
+        let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s } }
 
         it_behaves_like 'a generic decision',
                         from: :date_received,
@@ -80,9 +80,9 @@ RSpec.describe Decisions::DecisionTree do
       {
         'NSM_APPEAL'    => Payments::ClaimType::NSM_APPEAL,
         'NSM_AMENDMENT' => Payments::ClaimType::NSM_AMENDMENT
-      }.each do |label, claim_type|
+      }.each do |label, request_type|
         context "when #{label}" do
-          let(:multi_step_form_session) { { 'claim_type' => claim_type.to_s } }
+          let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
 
           it_behaves_like 'a generic decision',
                           from: :date_received,
@@ -95,9 +95,9 @@ RSpec.describe Decisions::DecisionTree do
       {
         'NSM_APPEAL'    => Payments::ClaimType::NSM_APPEAL,
         'NSM_AMENDMENT' => Payments::ClaimType::NSM_AMENDMENT
-      }.each do |label, claim_type|
+      }.each do |label, request_type|
         context "when #{label}" do
-          let(:multi_step_form_session) { { 'claim_type' => claim_type.to_s } }
+          let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
 
           it_behaves_like 'a generic decision',
                           from: :nsm_claim_details,
@@ -108,9 +108,9 @@ RSpec.describe Decisions::DecisionTree do
       {
         'NSM' => Payments::ClaimType::NSM,
         'NSM_SUPPLEMENTAL' => Payments::ClaimType::NSM_SUPPLEMENTAL
-      }.each do |label, claim_type|
+      }.each do |label, request_type|
         context "when #{label}" do
-          let(:multi_step_form_session) { { 'claim_type' => claim_type.to_s } }
+          let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
 
           it_behaves_like 'a generic decision',
                           from: :nsm_claim_details,
@@ -125,7 +125,7 @@ RSpec.describe Decisions::DecisionTree do
 
     it_behaves_like 'a generic decision',
                     from: :nsm_allowed_costs,
-                    goto: { action: :show, controller: Decisions::DecisionTree::CHECK_YOUR_ANSWERS }
+                    goto: { action: :edit, controller: Decisions::DecisionTree::CHECK_YOUR_ANSWERS }
 
     it_behaves_like 'a generic decision',
                     from: :check_your_answers,

@@ -147,7 +147,10 @@ Rails.application.routes.draw do
 
   constraints ->(_req) { FeatureFlags.payments.enabled? } do
     namespace :payments do
-      resources :requests
+      resources :requests do
+        get :confirmation
+      end
+
       resource :search, only: %i[new show]
       resource :claim_reference, only: %i[edit]
       scope ':id' do
@@ -164,7 +167,7 @@ Rails.application.routes.draw do
             edit_step :claim_details
             edit_step :laa_reference_check
           end
-          show_step :check_your_answers
+          edit_step :check_your_answers
           edit_step :date_received
           edit_step :laa_reference
           edit_step :claim_types

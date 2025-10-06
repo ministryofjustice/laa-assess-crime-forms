@@ -5,8 +5,4 @@ module RouteHelpers
              controller: name,
              path_names: { edit: '' }
   end
-
-  def show_step(name)
-    resource name, only: [:show], controller: name
-  end
 end

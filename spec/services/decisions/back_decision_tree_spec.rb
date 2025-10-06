@@ -12,7 +12,7 @@ RSpec.describe Decisions::BackDecisionTree do
   describe '#destination' do
     context 'from NSM_CLAIM_DETAILS' do
       context 'when NSM' do
-        let(:multi_step_form_session) { { 'claim_type' => Payments::ClaimType::NSM.to_s } }
+        let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM.to_s } }
 
         it_behaves_like 'a generic decision',
                         from: Decisions::DecisionTree::NSM_CLAIM_DETAILS,
@@ -23,9 +23,9 @@ RSpec.describe Decisions::BackDecisionTree do
         'NSM_SUPPLEMENTAL' => Payments::ClaimType::NSM_SUPPLEMENTAL,
         'NSM_APPEAL'       => Payments::ClaimType::NSM_APPEAL,
         'NSM_AMENDMENT'    => Payments::ClaimType::NSM_AMENDMENT
-      }.each do |label, claim_type|
+      }.each do |label, request_type|
         context "when #{label}" do
-          let(:multi_step_form_session) { { 'claim_type' => claim_type.to_s } }
+          let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
 
           it_behaves_like 'a generic decision',
                           from: Decisions::DecisionTree::NSM_CLAIM_DETAILS,
@@ -42,7 +42,7 @@ RSpec.describe Decisions::BackDecisionTree do
 
     context 'from DATE_RECEIVED (leading slash removed)' do
       let(:multi_step_form_session) do
-        { 'claim_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s,
+        { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s,
           'laa_reference_check' => true }
       end
 
@@ -59,7 +59,7 @@ RSpec.describe Decisions::BackDecisionTree do
 
     context 'from NSM_CLAIMED_COSTS' do
       context 'when NSM' do
-        let(:multi_step_form_session) { { 'claim_type' => Payments::ClaimType::NSM.to_s } }
+        let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM.to_s } }
 
         it_behaves_like 'a generic decision',
                         from: Decisions::DecisionTree::NSM_CLAIMED_COSTS,
@@ -68,7 +68,7 @@ RSpec.describe Decisions::BackDecisionTree do
 
       context 'when supplemental with laa_reference_check true' do
         let(:multi_step_form_session) do
-          { 'claim_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s,
+          { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s,
             'laa_reference_check' => true }
         end
 
@@ -79,7 +79,7 @@ RSpec.describe Decisions::BackDecisionTree do
 
       context 'when supplemental with laa_reference_check false' do
         let(:multi_step_form_session) do
-          { 'claim_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s,
+          { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s,
             'laa_reference_check' => false }
         end
 
@@ -93,9 +93,9 @@ RSpec.describe Decisions::BackDecisionTree do
       {
         'NSM' => Payments::ClaimType::NSM,
         'NSM_SUPPLEMENTAL' => Payments::ClaimType::NSM_SUPPLEMENTAL
-      }.each do |label, claim_type|
+      }.each do |label, request_type|
         context "when #{label}" do
-          let(:multi_step_form_session) { { 'claim_type' => claim_type.to_s } }
+          let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
 
           it_behaves_like 'a generic decision',
                           from: Decisions::DecisionTree::NSM_ALLOWED_COSTS,
@@ -106,10 +106,10 @@ RSpec.describe Decisions::BackDecisionTree do
       {
         'NSM_APPEAL'    => Payments::ClaimType::NSM_APPEAL,
         'NSM_AMENDMENT' => Payments::ClaimType::NSM_AMENDMENT
-      }.each do |label, claim_type|
+      }.each do |label, request_type|
         context "when #{label} with laa_reference_check true" do
           let(:multi_step_form_session) do
-            { 'claim_type' => claim_type.to_s, 'laa_reference_check' => true }
+            { 'request_type' => request_type.to_s, 'laa_reference_check' => true }
           end
 
           it_behaves_like 'a generic decision',
@@ -119,7 +119,7 @@ RSpec.describe Decisions::BackDecisionTree do
 
         context "when #{label} with laa_reference_check false" do
           let(:multi_step_form_session) do
-            { 'claim_type' => claim_type.to_s, 'laa_reference_check' => false }
+            { 'request_type' => request_type.to_s, 'laa_reference_check' => false }
           end
 
           it_behaves_like 'a generic decision',

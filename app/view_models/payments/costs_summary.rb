@@ -35,7 +35,7 @@ module Payments
 
     def t(key, numeric: true, width: nil)
       {
-        text: I18n.t("payments.steps.check_your_answers.show.#{key}"),
+        text: I18n.t("payments.steps.check_your_answers.edit.#{key}"),
         numeric: numeric,
         width: width
       }

@@ -155,4 +155,68 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       subject.search(nil, :payment_requests)
     end
   end
+
+  describe '#create_payment_request' do
+    let(:payload) { { 'some' => 'data', 'nested' => { 'a' => 1 } } }
+
+    context 'default host (from :stub_oauth_token)' do
+      let(:response) { double(:response, :code => code, :body => body, :[] => error_attr) }
+      let(:code)     { 201 }
+      let(:body)     { %({"id":"pr-123"}) }
+      let(:error_attr) { nil }
+
+      before do
+        allow(described_class).to receive(:post).and_return(response)
+      end
+
+      it 'POSTs to /v1/payment_requests with JSON body and auth header' do
+        expect(described_class).to receive(:post).with(
+          'https://appstore.example.com/v1/payment_requests',
+          body: payload.to_json,
+          headers: { authorization: 'Bearer test-bearer-token' }
+        ).and_return(response)
+
+        described_class.new.create_payment_request(payload)
+      end
+
+      it 'returns parsed JSON when response is 201' do
+        result = described_class.new.create_payment_request(payload)
+        expect(result).to eq({ 'id' => 'pr-123' })
+      end
+
+      context 'when response is not 201' do
+        let(:code) { 422 }
+        let(:body) { %({"errors":"Invalid request"}) }
+        let(:error_attr) { 'Invalid request' }
+
+        it 'raises with the composed error message' do
+          expect do
+            described_class.new.create_payment_request(payload)
+          end.to raise_error(
+            "Unexpected response from AppStore - status 422 for payment request:\nInvalid request"
+          )
+        end
+      end
+    end
+
+    context 'when APP_STORE_URL is provided' do
+      let(:response) { double(:response, :code => 201, :body => %({"ok":true}), :[] => nil) }
+
+      before do
+        allow(ENV).to receive(:fetch).with('APP_STORE_URL', 'http://localhost:8000')
+                                     .and_return('http://some.url')
+        allow(described_class).to receive(:post).and_return(response)
+      end
+
+      it 'uses the configured base URL' do
+        expect(described_class).to receive(:post).with(
+          'http://some.url/v1/payment_requests',
+          body: payload.to_json,
+          headers: { authorization: 'Bearer test-bearer-token' }
+        ).and_return(response)
+
+        described_class.new.create_payment_request(payload)
+      end
+    end
+  end
 end
