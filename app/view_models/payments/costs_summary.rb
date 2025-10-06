@@ -6,6 +6,10 @@ module Payments
 
     PROFIT_COSTS = 'profit_costs'.freeze
 
+    def initialize(cost_details)
+      @cost_details = cost_details
+    end
+
     def headers
       [
         '',
@@ -26,8 +30,8 @@ module Payments
     def formatted_summed_fields
       {
         name: t('total', numeric: false),
-        total_claimed: format(session_answers['total_claimed_costs'].to_f),
-        total_allowed: format(session_answers['total_allowed_costs'].to_f),
+        total_claimed: format(total_claimed_costs),
+        total_allowed: format(total_allowed_costs),
       }
     end
 
@@ -44,13 +48,39 @@ module Payments
     def build_row(type)
       {
         name: t(type, numeric: false),
-        total_claimed: format(session_answers["claimed_#{type}"].to_f),
-        total_allowed: format(session_answers["allowed_#{type}"].to_f),
+        total_claimed: format(@cost_details["claimed_#{type}"].to_f),
+        total_allowed: format(@cost_details["allowed_#{type}"].to_f),
       }
     end
 
     def format(value)
       { text: LaaCrimeFormsCommon::NumberTo.pounds(value), numeric: true }
+    end
+
+    def total_claimed_costs
+      @cost_details['total_claimed_costs']&.to_f || calculated_claimed_costs
+    end
+
+    def total_allowed_costs
+      @cost_details['total_allowed_costs']&.to_f || calculated_allowed_costs
+    end
+
+    def calculated_claimed_costs
+      [
+        @cost_details['claimed_profit_cost'],
+        @cost_details['claimed_travel_cost'],
+        @cost_details['claimed_waiting_cost'],
+        @cost_details['claimed_disbursement_cost']
+      ].compact.sum
+    end
+
+    def calculated_allowed_costs
+      [
+        @cost_details['allowed_profit_cost'],
+        @cost_details['allowed_travel_cost'],
+        @cost_details['allowed_waiting_cost'],
+        @cost_details['allowed_disbursement_cost']
+      ].compact.sum
     end
   end
 end
