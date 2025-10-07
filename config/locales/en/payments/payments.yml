@@ -157,11 +157,11 @@ en:
           office_code: Firm office account number
           firm_name: Firm name
           ufn: Unique file number
-          stage_reached: Stage reached
+          stage_code: Stage reached
           defendant_name: Defendant name
           no_of_defendants: Number of defendants
           court_attendances: Number of attendances
-          hearing_outcome_code: Hearing outcome code
+          outcome_code: Hearing outcome code
           matter_type: Matter type
           court: Court
           youth_court: Youth court matter

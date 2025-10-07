@@ -21,7 +21,7 @@ module Payments
     end
 
     def date_received
-      DateTime.parse(@payment_request['date_received']).to_fs(:stamp)
+      DateTime.parse(@payment_request['date_claim_received']).to_fs(:stamp)
     end
 
     def date_completed
@@ -29,16 +29,11 @@ module Payments
     end
 
     def allowed_total
-      LaaCrimeFormsCommon::NumberTo.pounds([
-        @payment_request['allowed_profit_cost'],
-        @payment_request['allowed_travel_cost'],
-        @payment_request['allowed_waiting_cost'],
-        @payment_request['allowed_disbursement_cost']
-      ].sum)
+      LaaCrimeFormsCommon::NumberTo.pounds(cost_summary.calculated_allowed_costs)
     end
 
     def caseworker
-      @payment_request['submitted_by']
+      User.find(@payment_request['submitter_id']).display_name
     end
 
     def cost_summary

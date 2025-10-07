@@ -4,13 +4,13 @@ module Payments
 
     Option = Struct.new(:value, :label)
     REQUEST_TYPES = [
-      Option.new('non_standard_mag', I18n.t('shared.claim_type.non_standard_mag')),
-      Option.new('non_standard_mag_supplemental', I18n.t('shared.claim_type.non_standard_mag_supplemental')),
-      Option.new('non_standard_mag_appeal', I18n.t('shared.claim_type.non_standard_mag_appeal')),
-      Option.new('non_standard_mag_amendment', I18n.t('shared.claim_type.non_standard_mag_amendment')),
-      Option.new('assigned_counsel', I18n.t('shared.claim_type.assigned_counsel')),
-      Option.new('assigned_counsel_appeal', I18n.t('shared.claim_type.assigned_counsel_appeal')),
-      Option.new('assigned_counsel_amendment', I18n.t('shared.claim_type.assigned_counsel_amendment')),
+      Option.new('non_standard_mag', I18n.t('shared.payment_type.non_standard_mag')),
+      Option.new('non_standard_mag_supplemental', I18n.t('shared.payment_type.non_standard_mag_supplemental')),
+      Option.new('non_standard_mag_appeal', I18n.t('shared.payment_type.non_standard_mag_appeal')),
+      Option.new('non_standard_mag_amendment', I18n.t('shared.payment_type.non_standard_mag_amendment')),
+      Option.new('assigned_counsel', I18n.t('shared.payment_type.assigned_counsel')),
+      Option.new('assigned_counsel_appeal', I18n.t('shared.payment_type.assigned_counsel_appeal')),
+      Option.new('assigned_counsel_amendment', I18n.t('shared.payment_type.assigned_counsel_amendment')),
     ].freeze
 
     attribute :query, :string

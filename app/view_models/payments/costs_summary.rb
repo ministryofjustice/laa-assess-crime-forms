@@ -35,6 +35,15 @@ module Payments
       }
     end
 
+    def calculated_allowed_costs
+      [
+        @cost_details['allowed_profit_cost']&.to_f,
+        @cost_details['allowed_travel_cost']&.to_f,
+        @cost_details['allowed_waiting_cost']&.to_f,
+        @cost_details['allowed_disbursement_cost']&.to_f
+      ].compact.sum
+    end
+
     private
 
     def t(key, numeric: true, width: nil)
@@ -48,8 +57,8 @@ module Payments
     def build_row(type)
       {
         name: t(type, numeric: false),
-        total_claimed: format(@cost_details["claimed_#{type}"].to_f),
-        total_allowed: format(@cost_details["allowed_#{type}"].to_f),
+        total_claimed: format((@cost_details["claimed_#{type}"] || @cost_details[type.to_s.singularize]).to_f),
+        total_allowed: format((@cost_details["allowed_#{type}"] || @cost_details["allowed_#{type}".singularize]).to_f),
       }
     end
 
@@ -67,19 +76,10 @@ module Payments
 
     def calculated_claimed_costs
       [
-        @cost_details['claimed_profit_cost'],
-        @cost_details['claimed_travel_cost'],
-        @cost_details['claimed_waiting_cost'],
-        @cost_details['claimed_disbursement_cost']
-      ].compact.sum
-    end
-
-    def calculated_allowed_costs
-      [
-        @cost_details['allowed_profit_cost'],
-        @cost_details['allowed_travel_cost'],
-        @cost_details['allowed_waiting_cost'],
-        @cost_details['allowed_disbursement_cost']
+        @cost_details['profit_cost']&.to_f,
+        @cost_details['travel_cost']&.to_f,
+        @cost_details['waiting_cost']&.to_f,
+        @cost_details['disbursement_cost']&.to_f
       ].compact.sum
     end
   end
