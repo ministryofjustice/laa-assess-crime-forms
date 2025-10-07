@@ -55,11 +55,11 @@ module Payments
     end
 
     def outcome_code
-      @payment_request_claim['outcome_code']
+      LaaCrimeFormsCommon::OutcomeCode.new(@payment_request_claim['outcome_code']).name
     end
 
     def matter_type
-      @payment_request_claim['matter_type']
+      LaaCrimeFormsCommon::MatterType.new(@payment_request_claim['matter_type']).name
     end
 
     def court
