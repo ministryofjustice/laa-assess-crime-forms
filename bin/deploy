@@ -25,10 +25,7 @@ deploy_branch() {
                 --set-string pingdomIPs="$PINGDOM_IPS" \
                 --set-string sharedIPs="$SHARED_IPS" \
                 --set fullnameOverride="$BRANCH_RELEASE_NAME"\
-                --set customErrorService.enabled=false \
-                --set postgresql.image.repository=bitnamilegacy/postgresql \
-                --set redis.image.repository=bitnamilegacy/redis \
-                --set postgresql.global.security.allowInsecureImages=true
+                --set customErrorService.enabled=false
 }
 
 deploy_main() {
