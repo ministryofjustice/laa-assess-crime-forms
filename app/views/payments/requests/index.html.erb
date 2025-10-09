@@ -60,7 +60,7 @@
         <% requests.each do |request| %>
             <tr class="govuk-table__row app-task-list__item">
                 <td class="govuk-table__cell">
-                    <%= govuk_link_to(request.laa_reference, payments_requests_path) %>
+                    <%= govuk_link_to(request.laa_reference, "requests/#{request.payment_request_claim_id}") %>
                 </td>
                 <td class="govuk-table__cell">
                     <%= request.firm_name %>
