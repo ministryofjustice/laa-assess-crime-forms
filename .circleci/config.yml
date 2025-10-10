@@ -239,7 +239,7 @@ jobs:
       - install-gems
       - rubocop
       - helm/install_helm_client:
-          version: 3.7.2
+          version: 3.15.3
       - *install-yamllint
       - lint-and-verify-helm-config:
           environment: dev
