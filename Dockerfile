@@ -27,6 +27,8 @@ RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
 FROM base AS dependencies
 
 # system dependencies required to build some gems
+RUN apk upgrade libxml2
+
 RUN apk add --update \
   git
 
@@ -40,6 +42,8 @@ RUN bundle config set frozen 'true' && \
 RUN yarn install --frozen-lockfile --ignore-scripts
 
 FROM base
+
+RUN apk upgrade libxml2
 
 # add non-root user and group with alpine first available uid, 1000
 
