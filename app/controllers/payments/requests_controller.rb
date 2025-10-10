@@ -13,6 +13,12 @@ module Payments
       render :index, locals: { pagy: model.pagy, requests: model.results }
     end
 
+    def show
+      @claim_details = Payments::ClaimDetails.new(payment_request_claim)
+      @current_page = params[:current_page] || 'payment_request'
+      @selected_payment = selected_payment(@claim_details.payment_requests) || @claim_details.payment_requests.first
+    end
+
     def new
       redirect_to edit_payments_steps_claim_types_path(id: multi_step_form_session_object.id)
     end
@@ -62,6 +68,14 @@ module Payments
 
     def set_current
       @current = :requests
+    end
+
+    def selected_payment(payments)
+      payments.find { |payment| payment.id == params[:payment_id] }
+    end
+
+    def payment_request_claim
+      @payment_request_claim ||= AppStoreClient.new.get_payment_request_claim(params[:id])
     end
   end
 end
