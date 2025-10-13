@@ -6,6 +6,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
   let(:endpoint) { "https://appstore.example.com/v1/payment_request_claim/#{id}" }
   let(:laa_reference) { 'LAA-ODJUfL' }
   let(:submission_id) { nil }
+  let(:youth_court) { true }
 
   before do
     sign_in caseworker
@@ -50,7 +51,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'client_last_name' => 'Andrews',
         'outcome_code' => 'CP02',
         'matter_type' => '4',
-        'youth_court' => true,
+        'youth_court' => youth_court,
         'ufn' => '123456/101',
         'submission_id' => submission_id,
         'created_at' => '2025-10-07 10:31:07 UTC',
@@ -184,6 +185,18 @@ RSpec.describe 'View payment request', :stub_oauth_token do
 
         expect(page).to have_content 'Granted'
         expect(page).to have_content laa_reference
+      end
+    end
+
+    context 'when the claim for the payment is not for a youth court' do
+      let(:youth_court) { false }
+
+      it 'shows No for youth court in claim details' do
+        click_on 'Claim details'
+
+        expect(all('table td, table th').map(&:text)).to include(
+          'Youth court matter', 'No'
+        )
       end
     end
   end
