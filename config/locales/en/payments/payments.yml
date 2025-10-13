@@ -133,7 +133,7 @@ en:
       payment_details:
         payment_heading:
           non_standard_mag: Claimed and allowed costs
-          non_standard_mag_supplemental: Allowed cost after supplemental payment
+          non_standard_mag_supplemental: Allowed costs after supplemental payment
           non_standard_mag_appeal: Allowed costs after appeal
           non_standard_mag_amendment: Allowed costs after amendment
         total_claimed: Total claimed

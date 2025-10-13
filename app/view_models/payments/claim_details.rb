@@ -81,7 +81,7 @@ module Payments
     def payment_requests
       @payment_requests ||= @payment_request_claim['payment_requests']
                             .map { Payments::PaymentRequestDetails.new(_1) }
-                            .sort_by(&:date_completed).reverse
+                            .sort_by(&:submitted_date).reverse
     end
 
     def current_total
