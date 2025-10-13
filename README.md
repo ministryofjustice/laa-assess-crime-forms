@@ -1,4 +1,5 @@
-# Assess non standard magistrates fee
+# laa-assess-crime-forms [![Ministry of Justice Repository Compliance Badge](https://github-community.service.justice.gov.uk/repository-standards/api/laa-assess-crime-forms/badge)](https://github-community.service.justice.gov.uk/repository-standards/laa-assess-crime-forms)
+# A service to assess a claim for a non-standard magistrate's payment & application for prior authority
 
 * Ruby version
 ruby 3.4.2
