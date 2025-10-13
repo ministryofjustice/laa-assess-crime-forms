@@ -56,10 +56,10 @@ RSpec.describe Payments::CostsSummary do
   end
 
   context 'when there is no allowed cost data' do
-    let(:allowed_costs) { nil }
+    let(:allowed_costs) { {} }
 
-    it 'errors when trying to show data' do
-      expect { described_class.new(data).formatted_summed_fields }.to raise_error StandardError
+    it 'does not error' do
+      expect(described_class.new(data).calculated_allowed_costs).to eq 0
     end
   end
 end
