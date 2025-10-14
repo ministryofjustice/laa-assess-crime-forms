@@ -14,7 +14,8 @@ module Payments
     end
 
     def show
-      @claim_details = Payments::ClaimDetails.new(payment_request_claim, controller_params.permit(:sort_by, :sort_direction))
+      details_class = "Payments::#{payment_request_claim['type']}Details".constantize
+      @claim_details = details_class.new(payment_request_claim, controller_params.permit(:sort_by, :sort_direction))
       @current_page = controller_params[:current_page] || 'payment_request'
       @selected_payment = selected_payment(@claim_details.payment_requests) || @claim_details.payment_requests.first
     end

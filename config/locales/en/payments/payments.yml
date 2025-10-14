@@ -142,8 +142,18 @@ en:
           non_standard_mag_supplemental: Allowed costs after supplemental payment
           non_standard_mag_appeal: Allowed costs after appeal
           non_standard_mag_amendment: Allowed costs after amendment
+          assigned_counsel: Claimed and allowed costs
+          assigned_counsel_appeal: Allowed costs after appeal
+          assigned_counsel_amendment: Allowed costs after amendment
         total_claimed: Total claimed
         total_allowed: Total allowed
+        profit_cost: Profit costs
+        disbursement_cost: Disbursements
+        travel_cost: Travel
+        waiting_cost: Waiting
+        net_assigned_counsel_cost: Net counsel fees
+        assigned_counsel_vat: VAT on counsel fees
+        total: Total
         accessible:
           total_claimed: Total claimed
           total_allowed: Total allowed
@@ -153,6 +163,9 @@ en:
           non_standard_mag_supplemental: Date supplemental payment received
           non_standard_mag_appeal: Date appeal received
           non_standard_mag_amendment: Date amendment received
+          assigned_counsel: Date claim received
+          assigned_counsel_appeal: Date appeal received
+          assigned_counsel_amendment: Date amendment received
         caseworker: Caseworker
       claim_details:
         claim_heading: Claim details
@@ -172,6 +185,13 @@ en:
           court: Court
           youth_court: Youth court matter
           work_completed_date: Date work was completed
+          linked_claim: Linked claim
+          date_received: Date claim received
+          solicitor_office_code: Solicitor office account number
+          solicitor_firm_name: Solicitor firm name
+          client_last_name: Defendant name
+          counsel_office_code: Counsel account number
+          counsel_firm_name: Counsel name
       show:
         page_title: "%{laa_reference} - Payment details"
         payment_request: Payment request

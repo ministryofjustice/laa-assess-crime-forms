@@ -1,7 +1,8 @@
 module Payments
   class PaymentRequestDetails
-    def initialize(payment_request)
+    def initialize(payment_request, claim_type)
       @payment_request = payment_request
+      @claim_type = claim_type
     end
 
     def id
@@ -41,7 +42,7 @@ module Payments
     end
 
     def cost_summary
-      @cost_summary ||= Payments::CostsSummary.new(@payment_request)
+      @cost_summary ||= Payments::ViewCostsSummary.new(@payment_request, @claim_type)
     end
   end
 end
