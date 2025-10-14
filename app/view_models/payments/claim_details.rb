@@ -2,8 +2,9 @@ module Payments
   class ClaimDetails
     include ActionView::Helpers::UrlHelper
 
-    def initialize(payment_request_claim)
+    def initialize(payment_request_claim, sort_params)
       @payment_request_claim = payment_request_claim
+      @sort_params = sort_params
     end
 
     def id
@@ -122,6 +123,16 @@ module Payments
       ].compact
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+
+    def related_payments
+      if @payment_request_claim['assigned_counsel_claim']
+        Payments::RelatedPayments.new(@payment_request_claim['assigned_counsel_claim'], @sort_params).sorted_payments
+      elsif @payment_request['nsm_claim']
+        Payments::RelatedPayments.new(@payment_request_claim['nsm_claim'], @sort_params).sorted_payments
+      else
+        []
+      end
+    end
 
     private
 

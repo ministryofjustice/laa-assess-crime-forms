@@ -1,0 +1,37 @@
+<h2 class="govuk-heading-l"> <%=t(".heading")%></h2>
+<table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
+  <th class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <% %i[laa_reference firm_name client_last_name request_type submitted_at].each do |key| %>
+        <%= table_header_with_link(key,
+                                    "payments.requests.index.table",
+                                    {
+                                    'controller' => controller_path, 'action' => 'show',
+                                    'id' => claim_details.id, 'current_page' => 'related_payments'
+                                    },
+                                    @sort_by, @sort_direction, nil) %>
+      <% end %>
+    </tr>
+  </th>
+
+  <tbody class="govuk-table__body app-task-list__items">
+      <% claim_details.related_payments.each do |payment| %>
+        <tr class="govuk-table__row app-task-list__item">
+        <td class="govuk-table__cell">
+          <%= govuk_link_to(payment[:laa_reference], payment[:link]) %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= payment[:firm_name] %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= payment[:client_last_name] %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= payment[:request_type] %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= payment[:submitted_at].to_fs(:stamp) %>
+        </td>
+      <% end %>
+  </tbody>
+</table>

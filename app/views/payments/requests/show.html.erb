@@ -30,10 +30,19 @@
       class: "moj-sub-navigation__link", "aria-current": (@current_page == "claim_details" ? "page" : nil)
     %>
   </li>
+  <li class="moj-sub-navigation__item">
+    <%=
+      link_to t(".related_payments"),
+      "/payments/requests/#{@claim_details.id}?current_page=related_payments",
+      class: "moj-sub-navigation__link", "aria-current": (@current_page == "related_payments" ? "page" : nil)
+    %>
+  </li>
 </nav>
 
 <% if @current_page == "payment_request" %>
   <%= render "payment_request", claim_details: @claim_details, selected_payment: @selected_payment %>
 <% elsif @current_page == "claim_details" %>
   <%= render "claim_details", claim_details: @claim_details %>
+<% elsif @current_page == "related_payments" %>
+  <%= render "related_payments", claim_details: @claim_details %>
 <% end %>

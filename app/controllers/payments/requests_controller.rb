@@ -4,7 +4,7 @@ module Payments
 
     before_action :set_current
     before_action :authorize_caseworker
-    before_action :set_default_table_sort_options, only: %i[index]
+    before_action :set_default_table_sort_options, only: %i[index show]
 
     def index
       model = Payments::SearchResults.new(controller_params.permit(:page, :sort_by, :sort_direction))
@@ -14,8 +14,8 @@ module Payments
     end
 
     def show
-      @claim_details = Payments::ClaimDetails.new(payment_request_claim)
-      @current_page = params[:current_page] || 'payment_request'
+      @claim_details = Payments::ClaimDetails.new(payment_request_claim, controller_params.permit(:sort_by, :sort_direction))
+      @current_page = controller_params[:current_page] || 'payment_request'
       @selected_payment = selected_payment(@claim_details.payment_requests) || @claim_details.payment_requests.first
     end
 
@@ -42,7 +42,9 @@ module Payments
         :id,
         :sort_by,
         :sort_direction,
-        :page
+        :page,
+        :current_page,
+        :payment_id
       )
     end
 
@@ -71,7 +73,7 @@ module Payments
     end
 
     def selected_payment(payments)
-      payments.find { |payment| payment.id == params[:payment_id] }
+      payments.find { |payment| payment.id == controller_params[:payment_id] }
     end
 
     def payment_request_claim
