@@ -85,9 +85,9 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         [
           '', 'Total claimed', 'Total allowed',
           'Profit costs', '£300.40', '£250.40',
-          'Disbursements', '£100.00', '£50.00',
           'Travel', '£20.55', '£0.00',
           'Waiting', '£10.33', '£6.40',
+          'Disbursements', '£100.00', '£50.00',
           'Total', 'Total claimed£431.28', 'Total allowed£306.80'
         ]
       )
