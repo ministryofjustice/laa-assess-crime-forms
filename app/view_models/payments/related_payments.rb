@@ -35,7 +35,7 @@ module Payments
     end
 
     def firm_name
-      @related_claim['firm_name']
+      @related_claim['counsel_firm_name'] || @related_claim['firm_name']
     end
 
     def client_last_name
