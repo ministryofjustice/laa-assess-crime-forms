@@ -55,8 +55,6 @@
   </div>
 </div>
 
-<%= govuk_error_summary(OpenStruct.new(full_messages: [flash[:alert]])) if flash[:alert].present? %>
-
 <div class="govuk-button-group">
   <%= form_for @form_object, url: {controller: '/payments/requests', action: :create }, method: :post do |f| %>
   <%= f.continue_button(primary: :save_and_continue, secondary: false) %>

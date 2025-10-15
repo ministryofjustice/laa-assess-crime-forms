@@ -31,21 +31,14 @@ RSpec.describe Payments::RequestsController, :stub_oauth_token do
     end
 
     context 'when the AppStore returns errors' do
-      let(:error_response) { { 'errors' => 'Something went wrong' } }
-
-      it 'sets flash alert and redirects back to Check Your Answers' do
+      it 'raises a RuntimeError' do
         expected_payload = session_answers.merge('submitter_id' => controller.current_user.id)
         expect(client_double)
           .to receive(:create_payment_request)
           .with(expected_payload)
-          .and_return(error_response)
+          .and_raise(RuntimeError)
 
-        post :create
-
-        expect(flash[:alert]).to eq('Something went wrong')
-        expect(response).to redirect_to(
-          payments_steps_check_your_answers_path(id: session_double.id)
-        )
+        expect { post :create }.to raise_error(RuntimeError)
       end
     end
 

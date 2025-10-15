@@ -23,14 +23,9 @@ module Payments
 
     def create
       response = AppStoreClient.new.create_payment_request(request_payload)
+      @payment_confirmation = Payments::ConfirmationSummary.new(response)
 
-      if response['errors'].present?
-        flash[:alert] = response['errors']
-        redirect_to payments_steps_check_your_answers_path(id: current_multi_step_form_session.id)
-      else
-        @payment_confirmation = Payments::ConfirmationSummary.new(response)
-        render :confirmation
-      end
+      render :confirmation
     end
 
     private
