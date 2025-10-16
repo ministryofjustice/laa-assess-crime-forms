@@ -19,3 +19,11 @@ en:
           client_last_name: Defendant
           request_type: Payment type
           submitted_at: Submitted
+      confirmation:
+        page_title: Payment Confirmation
+        payment_request_complete: Payment request complete
+        reference: "Reference: %{laa_reference}"
+        payment_type: Payment type
+        allowed_costs: Allowed costs
+        create_new_payment_request: Create new payment request
+        return_to_your_claims: Return to your claims

@@ -21,7 +21,7 @@ module Payments
 
         if value
           {
-            key: { text: I18n.t("payments.steps.check_your_answers.show.#{key}") },
+            key: { text: I18n.t("payments.steps.check_your_answers.edit.#{key}") },
             value: { text: value }
           }
         end

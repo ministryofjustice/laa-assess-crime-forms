@@ -1,5 +1,7 @@
 module Payments
   class RequestsController < ApplicationController
+    include Payments::MultiStepFormSessionConcern
+
     layout 'payments'
 
     before_action :set_current
@@ -14,17 +16,22 @@ module Payments
     end
 
     def new
-      redirect_to edit_payments_steps_claim_types_path(id: multi_step_form_session_object.id)
+      redirect_to edit_payments_steps_claim_types_path(id: cycle_multi_step_form_session_object.id)
+    end
+
+    def confirmation; end
+
+    def create
+      response = AppStoreClient.new.create_payment_request(request_payload)
+      @payment_confirmation = Payments::ConfirmationSummary.new(response)
+
+      render :confirmation
     end
 
     private
 
-    def multi_step_form_session_object
-      if session[:multi_step_form_id].present?
-        destroy_current_form_session && create_new_form_session
-      else
-        create_new_form_session
-      end
+    def request_payload
+      current_multi_step_form_session.answers.merge('submitter_id' => current_user.id)
     end
 
     def authorize_caseworker
@@ -38,21 +45,6 @@ module Payments
         :sort_direction,
         :page
       )
-    end
-
-    def destroy_current_form_session
-      ['multi_step_form_id', "payments:#{session[:multi_step_form_id]}"].each { session.delete(_1) }
-    end
-
-    def create_new_form_session
-      session[:multi_step_form_id] = SecureRandom.uuid
-      Decisions::MultiStepFormSession.new(process: 'payments',
-                                          session: session,
-                                          session_id: session[:multi_step_form_id])
-    end
-
-    def param_validator
-      @param_validator ||= PaymentRequestParams.new(controller_params)
     end
 
     def set_default_table_sort_options

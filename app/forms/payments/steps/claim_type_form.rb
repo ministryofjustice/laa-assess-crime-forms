@@ -1,8 +1,9 @@
 module Payments
   module Steps
     class ClaimTypeForm < BasePaymentsForm
-      attribute :claim_type, :string
-      validates :claim_type, presence: true,
+      attribute :request_type, :string
+
+      validates :request_type, presence: true,
         inclusion: { in: %w[non_standard_mag
                             non_standard_mag_supplemental
                             non_standard_mag_appeal
@@ -14,7 +15,7 @@ module Payments
       def save
         return false unless valid?
 
-        return true unless attribute_changed?(:claim_type)
+        return true unless attribute_changed?(:request_type)
 
         multi_step_form_session.reset_answers
 
