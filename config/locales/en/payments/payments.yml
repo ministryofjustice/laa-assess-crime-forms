@@ -136,6 +136,7 @@ en:
       related_payments:
         heading: Related payments
         payment_requests: Payment requests
+        table_info_item: payment request
       payment_details:
         payment_heading:
           non_standard_mag: Claimed and allowed costs

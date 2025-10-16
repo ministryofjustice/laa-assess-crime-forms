@@ -44,5 +44,5 @@
 <% elsif @current_page == "claim_details" %>
   <%= render "claim_details", claim_details: @claim_details %>
 <% elsif @current_page == "related_payments" %>
-  <%= render "related_payments", claim_details: @claim_details %>
+  <%= render "related_payments", claim_details: @claim_details, pagy: @related_payments_pagy %>
 <% end %>

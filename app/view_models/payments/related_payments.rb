@@ -1,15 +1,26 @@
 module Payments
   class RelatedPayments
-    def initialize(related_claim, sort_params)
+    def initialize(related_claim, related_payment_params)
       @related_claim = related_claim
-      @sort_by = sort_params[:sort_by] || 'submitted_at'
-      @sort_direction = sort_params[:sort_direction] || 'descending'
+      @sort_by = related_payment_params[:sort_by]
+      @sort_direction = related_payment_params[:sort_direction]
+      @per_page = related_payment_params[:per_page]
+      @page = related_payment_params[:page]
     end
 
     def sorted_payments
-      records = payments.sort_by { |payment| payment[@sort_by.to_sym] }
-      @sort_direction == 'descending' ? records.reverse : records
+      if @sort_by && @sort_direction
+        offset =  (@page - 1) * @per_page
+        delta = (@page * @per_page) - 1
+        records = payments.sort_by { |payment| payment[@sort_by.to_sym] }
+        sorted_records = @sort_direction == 'descending' ? records.reverse : records
+        sorted_records[offset..delta]
+      else
+        payments
+      end
     end
+
+    delegate :count, to: :payments
 
     private
 

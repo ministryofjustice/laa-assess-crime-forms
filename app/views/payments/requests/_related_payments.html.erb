@@ -15,7 +15,7 @@
   </th>
 
   <tbody class="govuk-table__body app-task-list__items">
-      <% claim_details.related_payments.each do |payment| %>
+      <% claim_details.related_payments.sorted_payments.each do |payment| %>
         <tr class="govuk-table__row app-task-list__item">
         <td class="govuk-table__cell">
           <%= govuk_link_to(payment[:laa_reference], payment[:link]) %>
@@ -35,3 +35,4 @@
       <% end %>
   </tbody>
 </table>
+<%= render 'shared/pagination', pagy: pagy, item: t(".table_info_item") %>

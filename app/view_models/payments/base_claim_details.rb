@@ -1,8 +1,8 @@
 module Payments
   class BaseClaimDetails
-    def initialize(payment_request_claim, sort_params)
+    def initialize(payment_request_claim, related_payment_params)
       @payment_request_claim = payment_request_claim
-      @sort_params = sort_params
+      @related_payment_params = related_payment_params
     end
 
     def id
@@ -37,9 +37,9 @@ module Payments
 
     def related_payments
       if @payment_request_claim['assigned_counsel_claim']
-        Payments::RelatedPayments.new(@payment_request_claim['assigned_counsel_claim'], @sort_params).sorted_payments
+        Payments::RelatedPayments.new(@payment_request_claim['assigned_counsel_claim'], @related_payment_params)
       elsif @payment_request_claim['nsm_claim']
-        Payments::RelatedPayments.new(@payment_request_claim['nsm_claim'], @sort_params).sorted_payments
+        Payments::RelatedPayments.new(@payment_request_claim['nsm_claim'], @related_payment_params)
       else
         []
       end
