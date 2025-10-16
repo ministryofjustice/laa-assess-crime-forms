@@ -47,7 +47,7 @@ module Decisions
     from(:nsm_claimed_costs)
       .goto(edit: NSM_ALLOWED_COSTS)
     from(:nsm_allowed_costs)
-      .goto(show: CHECK_YOUR_ANSWERS)
+      .goto(edit: CHECK_YOUR_ANSWERS)
 
     from(:check_your_answers)
       .goto(show: SUBMIT)

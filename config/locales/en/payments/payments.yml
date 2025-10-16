@@ -14,7 +14,7 @@ en:
       assigned_counsel_amendment: Assigned counsel - amendment
     steps:
       check_your_answers:
-        show:
+        edit:
           headers:
             costs: costs
             total: totals

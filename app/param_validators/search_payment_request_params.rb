@@ -1,4 +1,4 @@
-class PaymentRequestParams < BaseParamValidator
+class SearchPaymentRequestParams < BaseParamValidator
   attribute :id, :string
   attribute :sort_by, :string
   attribute :sort_direction, :string

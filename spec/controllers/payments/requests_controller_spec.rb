@@ -20,6 +20,52 @@ RSpec.describe Payments::RequestsController, :stub_oauth_token do
     end
   end
 
+  describe 'POST #create' do
+    let(:session_answers) { { 'some' => 'answer', 'nested' => { 'a' => 1 } } }
+    let(:session_double) { instance_double(Decisions::MultiStepFormSession, id: 'session-123', answers: session_answers) }
+    let(:client_double) { instance_double(AppStoreClient) }
+
+    before do
+      allow(controller).to receive(:current_multi_step_form_session).and_return(session_double)
+      allow(AppStoreClient).to receive(:new).and_return(client_double)
+    end
+
+    context 'when the AppStore returns errors' do
+      it 'raises a RuntimeError' do
+        expected_payload = session_answers.merge('submitter_id' => controller.current_user.id)
+        expect(client_double)
+          .to receive(:create_payment_request)
+          .with(expected_payload)
+          .and_raise(RuntimeError)
+
+        expect { post :create }.to raise_error(RuntimeError)
+      end
+    end
+
+    context 'when the AppStore succeeds' do
+      let(:ok_response) { { 'payment_request_id' => 'pr-123' } }
+      let(:summary_double) { instance_double(Payments::ConfirmationSummary) }
+
+      it 'builds a confirmation summary and renders :confirmation' do
+        expected_payload = session_answers.merge('submitter_id' => controller.current_user.id)
+        expect(client_double)
+          .to receive(:create_payment_request)
+          .with(expected_payload)
+          .and_return(ok_response)
+
+        allow(Payments::ConfirmationSummary)
+          .to receive(:new)
+          .with(ok_response)
+          .and_return(summary_double)
+
+        post :create
+
+        expect(assigns(:payment_confirmation)).to eq(summary_double)
+        expect(response).to render_template(:confirmation)
+      end
+    end
+  end
+
   describe '#new existing form session' do
     before do
       get :new
