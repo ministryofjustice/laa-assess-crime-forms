@@ -6,7 +6,7 @@ module Payments
     before_action :authorize_caseworker
     before_action :set_default_table_sort_options, only: %i[index show]
 
-    RELATED_PAYMENTS_LIMIT = 2
+    RELATED_PAYMENTS_LIMIT = 10
 
     def index
       model = Payments::SearchResults.new(controller_params.permit(:page, related_payment_params))
