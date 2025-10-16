@@ -54,6 +54,9 @@ en:
       send_back: Send back to provider
       save_and_come_back: Save and come back later
     claim_type:
+      NsmClaim: Non-standard Magistrates'
+      AssignedCounselClaim: Assigned counsel
+    payment_type:
       non_standard_mag: Non-standard Magistrates'
       non_standard_mag_appeal: Non-standard Magistrates' appeal
       non_standard_mag_supplemental: Non-standard Magistrates' supplemental
