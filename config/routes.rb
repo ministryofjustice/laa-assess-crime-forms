@@ -147,8 +147,10 @@ Rails.application.routes.draw do
 
   constraints ->(_req) { FeatureFlags.payments.enabled? } do
     namespace :payments do
-      resources :requests, only: %i[new show index] do
-        get :confirmation
+      resources :requests, only: %i[new create show index] do
+        member do
+          get :confirmation
+        end
       end
       resource :search, only: %i[new show]
       resource :claim_reference, only: %i[edit]
