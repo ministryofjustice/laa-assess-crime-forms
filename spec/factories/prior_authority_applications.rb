@@ -151,22 +151,6 @@ FactoryBot.define do
       travel_adjustment_comment { 'caseworker travel cost adjustment explanantion' }
     end
 
-    trait :with_adjusted_nil_travel do
-      travel_time_original { nil }
-      travel_cost_per_hour_original { nil }
-      travel_time { 2 }
-      travel_cost_per_hour { 10 }
-      travel_adjustment_comment { 'caseworker travel cost adjustment explanantion' }
-    end
-
-    trait :with_adjusted_travel do
-      travel_time_original { 1 }
-      travel_cost_per_hour_original { 1 }
-      travel_time { 2 }
-      travel_cost_per_hour { 2 }
-      travel_adjustment_comment { 'caseworker travel cost adjustment explanantion' }
-    end
-
     trait :per_hour do
       cost_type { 'per_hour' }
       cost_per_hour { '80.0' }

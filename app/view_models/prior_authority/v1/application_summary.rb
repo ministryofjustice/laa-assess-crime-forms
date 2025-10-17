@@ -61,10 +61,6 @@ module PriorAuthority
         @all_quotes ||= Quote.build(:quote, submission, 'quotes')
       end
 
-      def alt_travel_costs
-        all_quotes.find { |q| q.primary == false && q.travel_cost_per_hour.present? }
-      end
-
       def built_primary_quote
         @built_primary_quote ||= all_quotes.find { |q| q.primary == true }
       end
