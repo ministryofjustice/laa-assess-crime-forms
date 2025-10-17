@@ -23,12 +23,6 @@ module PriorAuthority
 
     private
 
-    def ensure_original_field_value_set(field)
-      return if selected_record.key?("#{field}_original") && selected_record["#{field}_original"].nil?
-
-      selected_record["#{field}_original"] ||= selected_record[field]
-    end
-
     def process_fields
       process_field(value: travel_time.to_i, field: 'travel_time')
       process_field(value: travel_cost_per_hour.to_s, field: 'travel_cost_per_hour')
