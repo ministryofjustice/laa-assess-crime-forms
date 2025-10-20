@@ -13,6 +13,45 @@ RSpec.describe 'View payment request', :stub_oauth_token do
   end
 
   context 'when payment is for an NsmClaim' do
+    let(:related_claim) do
+      {
+        'id' => SecureRandom.uuid,
+        'laa_reference' => 'LAA-XYZ321',
+        'date_received' => '2025-10-07 10:31:07 UTC',
+        'firm_name' => 'Counsel Firm',
+        'solicitor_office_code' => '320AB21',
+        'client_last_name' => 'Smith',
+        'payment_requests' => [
+          {
+            'id' => SecureRandom.uuid,
+            'submitter_id' => caseworker.id,
+            'request_type' => 'assigned_counsel',
+            'submitted_at' => '2025-09-14 10:31:07 UTC',
+            'date_claim_received' => '2025-09-16 10:31:07 UTC',
+            'net_assigned_counsel_cost' => '100',
+            'assigned_counsel_vat' => '20',
+            'allowed_net_assigned_counsel_cost' => '90',
+            'allowed_assigned_counsel_vat' => '18',
+            'created_at' => '2025-10-07 10:31:07 UTC',
+            'updated_at' => '2025-10-07 10:31:07 UTC'
+          },
+          {
+            'id' => SecureRandom.uuid,
+            'submitter_id' => caseworker.id,
+            'request_type' => 'assigned_counsel_amendment',
+            'submitted_at' => '2025-10-14 10:31:07 UTC',
+            'date_claim_received' => '2025-09-16 10:31:07 UTC',
+            'net_assigned_counsel_cost' => nil,
+            'assigned_counsel_vat' => nil,
+            'allowed_net_assigned_counsel_cost' => '100',
+            'allowed_assigned_counsel_vat' => '20',
+            'created_at' => '2025-10-07 10:31:07 UTC',
+            'updated_at' => '2025-10-07 10:31:07 UTC'
+          },
+        ]
+      }
+    end
+
     let(:payment_requests) do
       [
         {
@@ -56,7 +95,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'submission_id' => submission_id,
         'created_at' => '2025-10-07 10:31:07 UTC',
         'updated_at' => '2025-10-07 10:31:07 UTC',
-        'payment_requests' => payment_requests
+        'payment_requests' => payment_requests,
+        'assigned_counsel_claim' => related_claim
       }
     end
 
@@ -114,6 +154,19 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           'Date work was completed', '7 July 2025'
         ]
       )
+    end
+
+    it 'shows related payments tab' do
+      click_on 'Related payment requests'
+      expect(page).to have_selector '.govuk-heading-l', text: 'Related payment requests'
+      expect(all('table td, table th').map(&:text)).to eq(
+        [
+          'LAA reference', 'Firm name', 'Defendant', 'Payment type', 'Submitted',
+          'LAA-XYZ321', '320AB21', 'Smith', 'Assigned counsel - amendment', '14 October 2025',
+          'LAA-XYZ321', '320AB21', 'Smith', 'Assigned counsel', '14 September 2025'
+        ]
+      )
+      expect(page).to have_content 'Showing 2 of 2 payment requests'
     end
 
     context 'when there are multiple payments including an amendment' do

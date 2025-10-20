@@ -134,7 +134,7 @@ en:
       payment_request:
         payment_request: Payment request
       related_payments:
-        heading: Related payments
+        heading: Related payment requests
         payment_requests: Payment requests
         table_info_item: payment request
       payment_details:
@@ -197,7 +197,7 @@ en:
         page_title: "%{laa_reference} - Payment details"
         payment_request: Payment request
         claim_details: Claim details
-        related_payments: Related payments
+        related_payments: Related payment requests
         claim_type: Claim type
         last_updated: Last updated
         allowed: Allowed
