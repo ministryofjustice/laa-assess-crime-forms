@@ -9,15 +9,11 @@ module Payments
     end
 
     def sorted_payments
-      if @sort_by && @sort_direction
-        offset =  (@page - 1) * @per_page
-        delta = (@page * @per_page) - 1
-        records = payments.sort_by { |payment| payment[@sort_by.to_sym] }
-        sorted_records = @sort_direction == 'descending' ? records.reverse : records
-        sorted_records[offset..delta]
-      else
-        payments
-      end
+      offset =  (@page - 1) * @per_page
+      delta = (@page * @per_page) - 1
+      records = payments.sort_by { |payment| payment[@sort_by.to_sym] }
+      sorted_records = @sort_direction == 'descending' ? records.reverse : records
+      sorted_records[offset..delta]
     end
 
     delegate :count, to: :payments
