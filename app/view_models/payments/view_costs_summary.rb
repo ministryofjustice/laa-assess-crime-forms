@@ -46,7 +46,7 @@ module Payments
     end
 
     def calculated_allowed_costs
-      row_fields.map { @payment_request["allowed_#{_1}"]&.to_f }.compact.sum
+      row_fields.map { @payment_request["allowed_#{_1}"].to_f }.compact.sum
     end
 
     private
@@ -64,7 +64,7 @@ module Payments
     end
 
     def calculated_claimed_costs
-      row_fields.map { @payment_request[_1]&.to_f }.compact.sum
+      row_fields.map { @payment_request[_1].to_f }.compact.sum
     end
 
     def t(key, numeric: true, width: nil)

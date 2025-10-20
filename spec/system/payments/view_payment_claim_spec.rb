@@ -162,11 +162,20 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'LAA reference', 'Firm name', 'Defendant', 'Payment type', 'Submitted',
+          'LAA-XYZ321', '320AB21', 'Smith', 'Assigned counsel', '14 September 2025',
+          'LAA-XYZ321', '320AB21', 'Smith', 'Assigned counsel - amendment', '14 October 2025'
+        ]
+      )
+      expect(page).to have_content 'Showing 2 of 2 payment requests'
+
+      click_link 'Submitted'
+      expect(all('table td, table th').map(&:text)).to eq(
+        [
+          'LAA reference', 'Firm name', 'Defendant', 'Payment type', 'Submitted',
           'LAA-XYZ321', '320AB21', 'Smith', 'Assigned counsel - amendment', '14 October 2025',
           'LAA-XYZ321', '320AB21', 'Smith', 'Assigned counsel', '14 September 2025'
         ]
       )
-      expect(page).to have_content 'Showing 2 of 2 payment requests'
     end
 
     context 'when there are multiple payments including an amendment' do

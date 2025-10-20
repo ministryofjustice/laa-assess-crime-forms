@@ -82,7 +82,7 @@ module Payments
         page: controller_params[:page] ? controller_params[:page].to_i : 1,
         per_page: RELATED_PAYMENTS_LIMIT,
         sort_by: controller_params[:sort_by] || 'submitted_at',
-        sort_direction: controller_params[:sort_direction] || 'descending'
+        sort_direction: controller_params[:sort_direction] || 'ascending'
       }
     end
 
