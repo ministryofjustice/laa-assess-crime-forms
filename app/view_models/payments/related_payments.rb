@@ -9,7 +9,7 @@ module Payments
     end
 
     def sorted_payments
-      offset =  (@page - 1) * @per_page
+      offset = (@page - 1) * @per_page
       delta = (@page * @per_page) - 1
       records = payments.sort_by { |payment| payment[@sort_by.to_sym] }
       sorted_records = @sort_direction == 'descending' ? records.reverse : records
@@ -42,7 +42,7 @@ module Payments
     end
 
     def firm_name
-      @related_claim['solicitor_office_code'] || @related_claim['office_code']
+      @related_claim['office_code']
     end
 
     def client_last_name

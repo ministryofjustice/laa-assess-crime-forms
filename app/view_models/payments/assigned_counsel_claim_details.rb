@@ -15,7 +15,7 @@ module Payments
     end
 
     def date_received
-      @payment_request_claim['date_received']
+      DateTime.parse(@payment_request_claim['date_received']).to_fs(:stamp)
     end
 
     def solicitor_office_code
@@ -31,7 +31,11 @@ module Payments
     end
 
     def counsel_office_code
-      @payment_request_claim['counsel_office_code']
+      @payment_request_claim['office_code']
+    end
+
+    def counsel_firm_name
+      @payment_request_claim['firm_name']
     end
 
     def table_format
@@ -44,7 +48,7 @@ module Payments
         [table_heading('ufn'), { text: ufn, numeric: false }],
         [table_heading('client_last_name'), { text: client_last_name, numeric: false }],
         [table_heading('counsel_office_code'), { text: counsel_office_code, numeric: false }],
-        [table_heading('counsel_firm_name'), { text: firm_name, numeric: false }]
+        [table_heading('counsel_firm_name'), { text: counsel_firm_name, numeric: false }]
       ].compact
     end
   end
