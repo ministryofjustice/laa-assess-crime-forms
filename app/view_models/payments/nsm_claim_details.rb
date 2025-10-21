@@ -2,12 +2,12 @@ module Payments
   class NsmClaimDetails < BaseClaimDetails
     include ActionView::Helpers::UrlHelper
 
-    def office_code
-      @payment_request_claim['office_code']
+    def solicitor_office_code
+      @payment_request_claim['solicitor_office_code']
     end
 
     def firm_name
-      @payment_request_claim['firm_name']
+      @payment_request_claim['solicitor_firm_name']
     end
 
     def ufn
@@ -73,8 +73,8 @@ module Payments
         original_claim_row,
         [table_heading('claim_type'), { text: claim_type, numeric: false }],
         [table_heading('date_received'), { text: date_received, numeric: false }],
-        [table_heading('office_code'), { text: office_code, numeric: false }],
-        [table_heading('firm_name'), { text: firm_name, numeric: false }],
+        [table_heading('solicitor_office_code'), { text: solicitor_office_code, numeric: false }],
+        [table_heading('solicitor_firm_name'), { text: firm_name, numeric: false }],
         [table_heading('ufn'), { text: ufn, numeric: false }],
         [table_heading('stage_code'), { text: stage_code, numeric: false }],
         [table_heading('defendant_name'), { text: defendant_name, numeric: false }],

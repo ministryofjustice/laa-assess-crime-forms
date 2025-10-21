@@ -147,7 +147,7 @@ en:
             ufn:
               invalid_characters: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
               blank: Enter the unique file number
-            office_code:
+            solicitor_office_code:
               blank: Select the firm office account number
               invalid_characters: This office account number is not valid
             stage_reached:

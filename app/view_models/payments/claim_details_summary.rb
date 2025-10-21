@@ -3,7 +3,7 @@ module Payments
     CARD_ROWS = %i[
       claim_type
       date_received
-      office_code
+      solicitor_office_code
       ufn
       stage_reached
       defendant_first_name
@@ -26,8 +26,8 @@ module Payments
       DateTime.parse(session_answers['date_received']).to_fs(:stamp)
     end
 
-    def office_code
-      session_answers['office_code']
+    def solicitor_office_code
+      session_answers['solicitor_office_code']
     end
 
     def ufn

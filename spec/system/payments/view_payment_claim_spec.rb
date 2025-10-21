@@ -18,8 +18,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'id' => SecureRandom.uuid,
         'laa_reference' => 'LAA-XYZ321',
         'date_received' => '2025-10-07 10:31:07 UTC',
-        'firm_name' => 'Counsel Firm',
-        'solicitor_office_code' => '320AB21',
+        'counsel_firm_name' => 'Counsel Firm',
+        'counsel_office_code' => '320AB21',
         'client_last_name' => 'Smith',
         'payment_requests' => [
           {
@@ -79,8 +79,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'type' => 'NsmClaim',
         'laa_reference' => laa_reference,
         'date_received' => '2025-09-07 10:31:07 UTC',
-        'office_code' => '1A123B',
-        'firm_name' => 'The Firm',
+        'solicitor_office_code' => '1A123B',
+        'solicitor_firm_name' => 'The Firm',
         'stage_code' => 'PROG',
         'work_completed_date' => '2025-07-07 10:31:07 UTC',
         'court_name' => 'Acton',

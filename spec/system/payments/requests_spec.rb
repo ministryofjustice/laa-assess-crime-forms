@@ -11,7 +11,7 @@ RSpec.describe 'Payment Requests', :stub_oauth_token do
           payment_request_claim: {
             laa_reference: 'LAA-AAAAAA',
             client_last_name: 'Joe Client',
-            firm_name: 'A Firm'
+            solicitor_firm_name: 'A Firm'
           }
       }, {
         submitted_at: (DateTime.now - 1).to_s,
@@ -19,7 +19,7 @@ RSpec.describe 'Payment Requests', :stub_oauth_token do
           payment_request_claim: {
             laa_reference: 'LAA-BBBBBB',
             client_last_name: 'Joe Client',
-            firm_name: 'B Firm'
+            counsel_firm_name: 'B Firm'
           }
       }]
     end

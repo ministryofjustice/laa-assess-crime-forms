@@ -25,8 +25,8 @@ en:
           original_claim: Original claim
           claim_type: Claim type
           date_received: Date claim received
-          office_code: Firm office account number
-          firm_name: Firm name
+          solicitor_office_code: Firm office account number
+          solicitor_firm_name: Firm name
           ufn: Unique file number
           stage_reached: Stage reached
           defendant_first_name: Defendant first name
@@ -90,7 +90,7 @@ en:
         claim_details:
           edit:
             date_received: Date claim received
-            office_code: Firm office account number
+            solicitor_office_code: Firm office account number
             ufn: Unique file number
             stage_reached: Stage reached
             prog: PROG
@@ -174,8 +174,8 @@ en:
           original_claim: Original claim
           claim_type: Claim type
           date_received: Date claim received
-          office_code: Firm office account number
-          firm_name: Firm name
+          solicitor_office_code: Firm office account number
+          solicitor_firm_name: Firm name
           ufn: Unique file number
           stage_code: Stage reached
           defendant_name: Defendant name
@@ -188,8 +188,6 @@ en:
           work_completed_date: Date work was completed
           linked_claim: Linked claim
           date_received: Date claim received
-          solicitor_office_code: Solicitor office account number
-          solicitor_firm_name: Solicitor firm name
           client_last_name: Defendant name
           counsel_office_code: Counsel account number
           counsel_firm_name: Counsel name

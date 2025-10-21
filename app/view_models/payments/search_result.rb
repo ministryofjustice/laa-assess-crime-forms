@@ -27,7 +27,7 @@ module Payments
     end
 
     def firm_name
-      row[:payment_request_claim][:firm_name]
+      row[:payment_request_claim][:counsel_firm_name] || row[:payment_request_claim][:solicitor_firm_name]
     end
 
     def submitted_at
