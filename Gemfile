@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.199'
+gem 'aws-sdk-s3', '~> 1.201'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails', '>= 1.4.1'
 gem 'devise', '>= 4.9.4'
@@ -27,7 +27,7 @@ gem 'ostruct'
 gem 'pg'
 gem 'prometheus_exporter'
 gem 'propshaft'
-gem 'puma', '~> 7.0'
+gem 'puma', '~> 7.1'
 gem 'pundit'
 gem 'rails', '8.0.3'
 gem 'redis'
