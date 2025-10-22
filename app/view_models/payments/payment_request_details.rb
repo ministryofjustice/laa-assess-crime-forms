@@ -26,7 +26,7 @@ module Payments
     end
 
     def submitted_date
-      DateTime.parse(@payment_request['date_claim_received'])
+      DateTime.parse(@payment_request['submitted_at'])
     end
 
     def date_completed

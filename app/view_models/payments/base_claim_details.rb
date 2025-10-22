@@ -22,7 +22,11 @@ module Payments
     end
 
     def last_updated
-      DateTime.parse(@payment_request_claim['updated_at']).to_fs(:stamp)
+      # Note from CRM7-2702, this assumes that the last change to a payment request claim
+      # is the submission of the last payment. This method needs updating if other processes
+      # are ever added to payment request claims
+
+      payment_requests.first.date_completed
     end
 
     def payment_requests
@@ -32,7 +36,7 @@ module Payments
     end
 
     def current_total
-      payment_requests.last.allowed_total
+      payment_requests.first.allowed_total
     end
 
     def related_payments

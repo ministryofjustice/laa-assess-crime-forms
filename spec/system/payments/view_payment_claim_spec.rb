@@ -58,7 +58,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           'id' => id,
           'submitter_id' => caseworker.id,
           'request_type' => 'non_standard_mag',
-          'submitted_at' => '2025-09-12 10:31:07 UTC',
+          'submitted_at' => '2025-10-7 10:31:07 UTC',
           'date_claim_received' => '2025-09-07 10:31:07 UTC',
           'profit_cost' => '300.4',
           'allowed_profit_cost' => '250.4',
@@ -260,6 +260,111 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           'Youth court matter', 'No'
         )
       end
+    end
+  end
+
+  context 'when payment is for an AssignedCounselClaim' do
+    let(:related_claim) do
+      {
+        'id' => SecureRandom.uuid,
+        'laa_reference' => 'LAA-XYZ321',
+        'date_received' => '2025-09-07 10:31:07 UTC',
+        'solicitor_office_code' => '1A123B',
+        'solicitor_firm_name' => 'Solicitor Firm',
+        'client_last_name' => 'Andrews',
+        'payment_requests' => [
+          {
+            'id' => SecureRandom.uuid,
+            'submitter_id' => caseworker.id,
+            'request_type' => 'non_standard_mag',
+            'submitted_at' => '2025-09-12 10:31:07 UTC',
+            'date_claim_received' => '2025-09-07 10:31:07 UTC',
+            'profit_cost' => '300.4',
+            'allowed_profit_cost' => '250.4',
+            'travel_cost' => '20.55',
+            'allowed_travel_cost' => '0.0',
+            'waiting_cost' => '10.33',
+            'allowed_waiting_cost' => '6.4',
+            'disbursement_cost' => '100.0',
+            'allowed_disbursement_cost' => '50.0',
+            'created_at' => '2025-10-07 10:31:07 UTC',
+            'updated_at' => '2025-10-07 10:31:07 UTC'
+          },
+          {
+            'id' => SecureRandom.uuid,
+            'submitter_id' => caseworker.id,
+            'request_type' => 'non_standard_mag_amendment',
+            'submitted_at' => '2025-09-13 10:31:07 UTC',
+            'date_claim_received' => '2025-09-07 10:31:07 UTC',
+            'profit_cost' => '300.4',
+            'allowed_profit_cost' => '250.4',
+            'travel_cost' => '20.55',
+            'allowed_travel_cost' => '0.0',
+            'waiting_cost' => '10.33',
+            'allowed_waiting_cost' => '6.4',
+            'disbursement_cost' => '100.0',
+            'allowed_disbursement_cost' => '50.0',
+            'created_at' => '2025-10-07 10:31:07 UTC',
+            'updated_at' => '2025-10-07 10:31:07 UTC'
+          }
+        ]
+      }
+    end
+
+    let(:payload) do
+      {
+        'id' => id,
+        'laa_reference' => 'LAA-XYZ321',
+        'type' => 'AssignedCounselClaim',
+        'date_received' => '2025-10-07 10:31:07 UTC',
+        'counsel_firm_name' => 'Counsel Firm',
+        'counsel_office_code' => 'XYZB21',
+        'solicitor_office_code' => 'Solicitor Firm',
+        'solicitor_firm_name' => 'Solicitor Firm',
+        'client_last_name' => 'Smith',
+        'payment_requests' => [
+          {
+            'id' => SecureRandom.uuid,
+            'submitter_id' => caseworker.id,
+            'request_type' => 'assigned_counsel',
+            'submitted_at' => '2025-09-14 10:31:07 UTC',
+            'date_claim_received' => '2025-09-16 10:31:07 UTC',
+            'net_assigned_counsel_cost' => '100',
+            'assigned_counsel_vat' => '20',
+            'allowed_net_assigned_counsel_cost' => '90',
+            'allowed_assigned_counsel_vat' => '18',
+            'created_at' => '2025-10-07 10:31:07 UTC',
+            'updated_at' => '2025-10-07 10:31:07 UTC'
+          },
+          {
+            'id' => SecureRandom.uuid,
+            'submitter_id' => caseworker.id,
+            'request_type' => 'assigned_counsel_amendment',
+            'submitted_at' => '2025-10-14 10:31:07 UTC',
+            'date_claim_received' => '2025-09-16 10:31:07 UTC',
+            'net_assigned_counsel_cost' => nil,
+            'assigned_counsel_vat' => nil,
+            'allowed_net_assigned_counsel_cost' => '100',
+            'allowed_assigned_counsel_vat' => '20',
+            'created_at' => '2025-10-07 10:31:07 UTC',
+            'updated_at' => '2025-10-07 10:31:07 UTC'
+          },
+        ]
+      }
+    end
+
+    before do
+      allow_any_instance_of(AppStoreClient).to receive(:get_payment_request_claim)
+        .and_return(payload)
+      visit "payments/requests/#{id}"
+    end
+
+    it 'shows the correct top level details' do
+      expect(page).to have_content 'Counsel Firm'
+      expect(page).to have_content 'LAA-XYZ321'
+      expect(page).to have_content 'Allowed: £120.00'
+      expect(page).to have_content 'Claim type: Assigned counsel'
+      expect(page).to have_content 'Last updated: 14 October 2025'
     end
   end
 end
