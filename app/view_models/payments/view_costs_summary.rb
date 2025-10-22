@@ -4,24 +4,31 @@ module Payments
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::OutputSafetyHelper
 
+    NSM_COSTS = %w[
+      profit_cost
+      travel_cost
+      waiting_cost
+      disbursement_cost
+    ].freeze
+
+    ASSIGNED_COUNSEL_COSTS = %w[
+      net_assigned_counsel_cost
+      assigned_counsel_vat
+    ].freeze
+
     def initialize(payment_request, claim_type)
       @payment_request = payment_request
       @claim_type = claim_type
     end
 
     def row_fields
-      if @claim_type == 'NsmClaim'
-        %w[
-          profit_cost
-          travel_cost
-          waiting_cost
-          disbursement_cost
-        ]
-      elsif @claim_type == 'AssignedCounselClaim'
-        %w[
-          net_assigned_counsel_cost
-          assigned_counsel_vat
-        ]
+      case @claim_type
+      when 'NsmClaim'
+        NSM_COSTS
+      when 'AssignedCounselClaim'
+        ASSIGNED_COUNSEL_COSTS
+      else
+        raise "Invalid payment claim type: #{@claim_type}"
       end
     end
 
