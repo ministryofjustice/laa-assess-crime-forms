@@ -4,19 +4,12 @@ en:
       edit:
         adjusted_cost: Adjusted cost
         adjustment_blurb: Adjust the providers' costs by changing the values.
-        alternative: Alternative %{index}
-        amount: Amount
         calculate_button_text: Calculate my changes
         explanation:
           hint: For example, why you made adjustments to the cost or time. We'll share this explanation with the provider.
           label: Explain your decision
         hourly_cost: Cost per hour
         page_title: Adjust travel costs
-        primary: Primary
-        rate: Rate
-        total: Total
         travel_time: Time
-        quote: Quote
-        quotes_caption: Quotes for travel cost
       confirm_deletion:
         travel_cost: "Travel costs"

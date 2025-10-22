@@ -22,8 +22,7 @@ module PriorAuthority
 
     def delete_travel_cost_adjustment
       %w[travel_time travel_cost_per_hour].each do |field|
-        quote[field] = quote["#{field}_original"]
-        quote.delete("#{field}_original")
+        revert(quote, field)
       end
       quote.delete('travel_adjustment_comment')
     end
