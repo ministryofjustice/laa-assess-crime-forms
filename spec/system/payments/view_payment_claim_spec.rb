@@ -264,64 +264,20 @@ RSpec.describe 'View payment request', :stub_oauth_token do
   end
 
   context 'when payment is for an AssignedCounselClaim' do
-    let(:related_claim) do
-      {
-        'id' => SecureRandom.uuid,
-        'laa_reference' => 'LAA-XYZ321',
-        'date_received' => '2025-09-07 10:31:07 UTC',
-        'solicitor_office_code' => '1A123B',
-        'solicitor_firm_name' => 'Solicitor Firm',
-        'client_last_name' => 'Andrews',
-        'payment_requests' => [
-          {
-            'id' => SecureRandom.uuid,
-            'submitter_id' => caseworker.id,
-            'request_type' => 'non_standard_mag',
-            'submitted_at' => '2025-09-12 10:31:07 UTC',
-            'date_claim_received' => '2025-09-07 10:31:07 UTC',
-            'profit_cost' => '300.4',
-            'allowed_profit_cost' => '250.4',
-            'travel_cost' => '20.55',
-            'allowed_travel_cost' => '0.0',
-            'waiting_cost' => '10.33',
-            'allowed_waiting_cost' => '6.4',
-            'disbursement_cost' => '100.0',
-            'allowed_disbursement_cost' => '50.0',
-            'created_at' => '2025-10-07 10:31:07 UTC',
-            'updated_at' => '2025-10-07 10:31:07 UTC'
-          },
-          {
-            'id' => SecureRandom.uuid,
-            'submitter_id' => caseworker.id,
-            'request_type' => 'non_standard_mag_amendment',
-            'submitted_at' => '2025-09-13 10:31:07 UTC',
-            'date_claim_received' => '2025-09-07 10:31:07 UTC',
-            'profit_cost' => '300.4',
-            'allowed_profit_cost' => '250.4',
-            'travel_cost' => '20.55',
-            'allowed_travel_cost' => '0.0',
-            'waiting_cost' => '10.33',
-            'allowed_waiting_cost' => '6.4',
-            'disbursement_cost' => '100.0',
-            'allowed_disbursement_cost' => '50.0',
-            'created_at' => '2025-10-07 10:31:07 UTC',
-            'updated_at' => '2025-10-07 10:31:07 UTC'
-          }
-        ]
-      }
-    end
-
+    let(:related_claim) { nil }
     let(:payload) do
       {
         'id' => id,
         'laa_reference' => 'LAA-XYZ321',
+        'ufn' => '01112025/001',
         'type' => 'AssignedCounselClaim',
         'date_received' => '2025-10-07 10:31:07 UTC',
         'counsel_firm_name' => 'Counsel Firm',
         'counsel_office_code' => 'XYZB21',
-        'solicitor_office_code' => 'Solicitor Firm',
+        'solicitor_office_code' => 'AB2034',
         'solicitor_firm_name' => 'Solicitor Firm',
         'client_last_name' => 'Smith',
+        'nsm_claim' => related_claim,
         'payment_requests' => [
           {
             'id' => SecureRandom.uuid,
@@ -342,10 +298,10 @@ RSpec.describe 'View payment request', :stub_oauth_token do
             'request_type' => 'assigned_counsel_amendment',
             'submitted_at' => '2025-10-14 10:31:07 UTC',
             'date_claim_received' => '2025-09-16 10:31:07 UTC',
-            'net_assigned_counsel_cost' => nil,
-            'assigned_counsel_vat' => nil,
+            'net_assigned_counsel_cost' => '100',
+            'assigned_counsel_vat' => '20',
             'allowed_net_assigned_counsel_cost' => '100',
-            'allowed_assigned_counsel_vat' => '20',
+            'allowed_assigned_counsel_vat' => '50',
             'created_at' => '2025-10-07 10:31:07 UTC',
             'updated_at' => '2025-10-07 10:31:07 UTC'
           },
@@ -362,9 +318,128 @@ RSpec.describe 'View payment request', :stub_oauth_token do
     it 'shows the correct top level details' do
       expect(page).to have_content 'Counsel Firm'
       expect(page).to have_content 'LAA-XYZ321'
-      expect(page).to have_content 'Allowed: £120.00'
+      expect(page).to have_content 'Allowed: £150.00'
       expect(page).to have_content 'Claim type: Assigned counsel'
       expect(page).to have_content 'Last updated: 14 October 2025'
+    end
+
+    it 'shows payment details' do
+      expect(page).to have_content 'Payment request'
+      expect(page).to have_content 'Allowed costs after amendment'
+      expect(all('table td, table th').map(&:text)).to eq(
+        [
+          '', 'Total claimed', 'Total allowed',
+          'Net counsel fees', '£100.00', '£100.00',
+          'VAT on counsel fees', '£20.00', '£50.00',
+          'Total', 'Total claimed£120.00', 'Total allowed£150.00'
+        ]
+      )
+      click_on '14 September 2025'
+      expect(page).to have_content 'Claimed and allowed costs'
+    end
+
+    it 'shows claim details' do
+      click_on 'Claim details'
+      expect(page).to have_selector '.govuk-heading-l', text: 'Claim details'
+      expect(all('table td, table th').map(&:text)).to eq(
+        [
+          'Claim type', 'Assigned counsel',
+          'Linked claim', 'LAA-XYZ321',
+          'Date claim received', '7 October 2025',
+          'Solicitor office account number', 'AB2034',
+          'Solicitor firm name', 'Solicitor Firm',
+          'Unique file number', '01112025/001',
+          'Defendant name', 'Smith',
+          'Counsel account number', 'XYZB21',
+          'Counsel name', 'Counsel Firm'
+        ]
+      )
+    end
+
+    it 'shows related claim payments' do
+      click_on 'Related payment requests'
+      expect(page).to have_selector '.govuk-heading-l', text: 'Related payment requests'
+      expect(page).to have_content 'There are no related payment requests for this claim'
+    end
+
+    context 'there is an NsmClaim objected atteched to the AssignedCounselClaim' do
+      let(:related_claim) do
+        {
+          'id' => SecureRandom.uuid,
+          'laa_reference' => 'LAA-ABZ321',
+          'date_received' => '2025-09-07 10:31:07 UTC',
+          'solicitor_office_code' => 'A3211B',
+          'solicitor_firm_name' => 'Solicitor Firm 2',
+          'client_last_name' => 'Andrews',
+          'ufn' => '200323/021',
+          'payment_requests' => [
+            {
+              'id' => SecureRandom.uuid,
+              'submitter_id' => caseworker.id,
+              'request_type' => 'non_standard_mag',
+              'submitted_at' => '2025-09-12 10:31:07 UTC',
+              'date_claim_received' => '2025-09-07 10:31:07 UTC',
+              'profit_cost' => '300.4',
+              'allowed_profit_cost' => '250.4',
+              'travel_cost' => '20.55',
+              'allowed_travel_cost' => '0.0',
+              'waiting_cost' => '10.33',
+              'allowed_waiting_cost' => '6.4',
+              'disbursement_cost' => '100.0',
+              'allowed_disbursement_cost' => '50.0',
+              'created_at' => '2025-10-07 10:31:07 UTC',
+              'updated_at' => '2025-10-07 10:31:07 UTC'
+            },
+            {
+              'id' => SecureRandom.uuid,
+              'submitter_id' => caseworker.id,
+              'request_type' => 'non_standard_mag_amendment',
+              'submitted_at' => '2025-09-13 10:31:07 UTC',
+              'date_claim_received' => '2025-09-07 10:31:07 UTC',
+              'profit_cost' => '300.4',
+              'allowed_profit_cost' => '250.4',
+              'travel_cost' => '20.55',
+              'allowed_travel_cost' => '0.0',
+              'waiting_cost' => '10.33',
+              'allowed_waiting_cost' => '6.4',
+              'disbursement_cost' => '100.0',
+              'allowed_disbursement_cost' => '50.0',
+              'created_at' => '2025-10-07 10:31:07 UTC',
+              'updated_at' => '2025-10-07 10:31:07 UTC'
+            }
+          ]
+        }
+      end
+
+      it 'shows claim details from related claim' do
+        click_on 'Claim details'
+        expect(page).to have_selector '.govuk-heading-l', text: 'Claim details'
+        expect(all('table td, table th').map(&:text)).to eq(
+          [
+            'Claim type', 'Assigned counsel',
+            'Linked claim', 'LAA-ABZ321',
+            'Date claim received', '7 October 2025',
+            'Solicitor office account number', 'A3211B',
+            'Solicitor firm name', 'Solicitor Firm 2',
+            'Unique file number', '200323/021',
+            'Defendant name', 'Smith',
+            'Counsel account number', 'XYZB21',
+            'Counsel name', 'Counsel Firm'
+          ]
+        )
+      end
+
+      it 'shows the related claim payments' do
+        click_on 'Related payment requests'
+        expect(all('table td, table th').map(&:text)).to eq(
+          [
+            'LAA reference', 'Firm name', 'Defendant', 'Payment type', 'Submitted',
+            'LAA-ABZ321', 'A3211B', 'Andrews', "Non-standard magistrates'", '12 September 2025',
+            'LAA-ABZ321', 'A3211B', 'Andrews', "Non-standard magistrates' - amendment", '13 September 2025'
+          ]
+        )
+        expect(page).to have_content 'Showing 2 of 2 payment requests'
+      end
     end
   end
 end

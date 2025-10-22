@@ -11,7 +11,7 @@ module Payments
     end
 
     def linked_claim
-      @payment_request_claim['nsm_claim']['laa_reference']
+      @payment_request_claim.dig('nsm_claim', 'laa_reference') || @payment_request_claim['laa_reference']
     end
 
     def date_received
@@ -19,15 +19,15 @@ module Payments
     end
 
     def solicitor_office_code
-      @payment_request_claim['nsm_claim']['solicitor_office_code'] || @payment_request_claim['solicitor_office_code']
+      @payment_request_claim.dig('nsm_claim', 'solicitor_office_code') || @payment_request_claim['solicitor_office_code']
     end
 
     def solicitor_firm_name
-      @payment_request_claim['nsm_claim']['solicitor_firm_name'] || @payment_request_claim['solicitor_firm_name']
+      @payment_request_claim.dig('nsm_claim', 'solicitor_firm_name') || @payment_request_claim['solicitor_firm_name']
     end
 
     def ufn
-      @payment_request_claim['nsm_claim']['ufn']
+      @payment_request_claim.dig('nsm_claim', 'ufn') || @payment_request_claim['ufn']
     end
 
     def counsel_office_code

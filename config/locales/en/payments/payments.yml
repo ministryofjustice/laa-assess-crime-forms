@@ -137,6 +137,7 @@ en:
         heading: Related payment requests
         payment_requests: Payment requests
         table_info_item: payment request
+        no_payments: There are no related payment requests for this claim
       payment_details:
         payment_heading:
           non_standard_mag: Claimed and allowed costs
@@ -174,8 +175,10 @@ en:
           original_claim: Original claim
           claim_type: Claim type
           date_received: Date claim received
-          solicitor_office_code: Firm office account number
-          solicitor_firm_name: Firm name
+          office_code: Firm office account number
+          firm_name: Firm name
+          solicitor_office_code: Solicitor office account number
+          solicitor_firm_name: Solicitor firm name
           ufn: Unique file number
           stage_code: Stage reached
           defendant_name: Defendant name
