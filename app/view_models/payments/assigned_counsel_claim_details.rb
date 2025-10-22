@@ -34,10 +34,6 @@ module Payments
       @payment_request_claim['counsel_office_code']
     end
 
-    def counsel_firm_name
-      @payment_request_claim['counsel_firm_name']
-    end
-
     def table_format
       [
         [table_heading('claim_type'), { text: claim_type, numeric: false }],
