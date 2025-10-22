@@ -13,6 +13,36 @@ RSpec.describe 'View payment request', :stub_oauth_token do
   end
 
   context 'when payment is for an NsmClaim' do
+    let(:related_payments) do
+      [
+        {
+          'id' => SecureRandom.uuid,
+          'submitter_id' => caseworker.id,
+          'request_type' => 'assigned_counsel',
+          'submitted_at' => '2025-09-14 10:31:07 UTC',
+          'date_claim_received' => '2025-09-16 10:31:07 UTC',
+          'net_assigned_counsel_cost' => '100',
+          'assigned_counsel_vat' => '20',
+          'allowed_net_assigned_counsel_cost' => '90',
+          'allowed_assigned_counsel_vat' => '18',
+          'created_at' => '2025-10-07 10:31:07 UTC',
+          'updated_at' => '2025-10-07 10:31:07 UTC'
+        },
+        {
+          'id' => SecureRandom.uuid,
+          'submitter_id' => caseworker.id,
+          'request_type' => 'assigned_counsel_amendment',
+          'submitted_at' => '2025-10-14 10:31:07 UTC',
+          'date_claim_received' => '2025-09-16 10:31:07 UTC',
+          'net_assigned_counsel_cost' => nil,
+          'assigned_counsel_vat' => nil,
+          'allowed_net_assigned_counsel_cost' => '100',
+          'allowed_assigned_counsel_vat' => '20',
+          'created_at' => '2025-10-07 10:31:07 UTC',
+          'updated_at' => '2025-10-07 10:31:07 UTC'
+        },
+      ]
+    end
     let(:related_claim) do
       {
         'id' => SecureRandom.uuid,
@@ -21,34 +51,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'counsel_firm_name' => 'Counsel Firm',
         'counsel_office_code' => '320AB21',
         'client_last_name' => 'Smith',
-        'payment_requests' => [
-          {
-            'id' => SecureRandom.uuid,
-            'submitter_id' => caseworker.id,
-            'request_type' => 'assigned_counsel',
-            'submitted_at' => '2025-09-14 10:31:07 UTC',
-            'date_claim_received' => '2025-09-16 10:31:07 UTC',
-            'net_assigned_counsel_cost' => '100',
-            'assigned_counsel_vat' => '20',
-            'allowed_net_assigned_counsel_cost' => '90',
-            'allowed_assigned_counsel_vat' => '18',
-            'created_at' => '2025-10-07 10:31:07 UTC',
-            'updated_at' => '2025-10-07 10:31:07 UTC'
-          },
-          {
-            'id' => SecureRandom.uuid,
-            'submitter_id' => caseworker.id,
-            'request_type' => 'assigned_counsel_amendment',
-            'submitted_at' => '2025-10-14 10:31:07 UTC',
-            'date_claim_received' => '2025-09-16 10:31:07 UTC',
-            'net_assigned_counsel_cost' => nil,
-            'assigned_counsel_vat' => nil,
-            'allowed_net_assigned_counsel_cost' => '100',
-            'allowed_assigned_counsel_vat' => '20',
-            'created_at' => '2025-10-07 10:31:07 UTC',
-            'updated_at' => '2025-10-07 10:31:07 UTC'
-          },
-        ]
+        'payment_requests' => related_payments
       }
     end
 
@@ -176,6 +179,19 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           'LAA-XYZ321', '320AB21', 'Smith', 'Assigned counsel', '14 September 2025'
         ]
       )
+    end
+
+    context 'when there are many related payment requests' do
+      before do
+        5.times { related_claim['payment_requests'] += related_payments }
+      end
+
+      it 'shows multiple pages' do
+        click_on 'Related payment requests'
+        expect(page).to have_content '1 to 10 of 12 payment requests'
+        click_on 'Next'
+        expect(page).to have_content '11 to 12 of 12 payment requests'
+      end
     end
 
     context 'when there are multiple payments including an amendment' do
