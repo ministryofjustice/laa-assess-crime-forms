@@ -15,7 +15,7 @@
   <div class="govuk-grid-column-two-thirds" id="payments-calculate-container">
     <%= step_form @form_object do |f| %>
       <div class="govuk-form-group">
-        <%= f.govuk_text_field :allowed_profit_costs,
+        <%= f.govuk_text_field :allowed_profit_cost,
           id: "profit_costs",
           prefix_text: "£",
           inputmode: "decimal",
@@ -23,7 +23,7 @@
           width: 10 %>
       </div>
       <div class="govuk-form-group">
-        <%= f.govuk_text_field :allowed_disbursement_costs,
+        <%= f.govuk_text_field :allowed_disbursement_cost,
           id: "disbursement_costs",
           prefix_text: "£",
           inputmode: "decimal",
@@ -31,7 +31,7 @@
           width: 10 %>
       </div>
       <div class="govuk-form-group">
-        <%= f.govuk_text_field :allowed_travel_costs,
+        <%= f.govuk_text_field :allowed_travel_cost,
           id: "travel_costs",
           prefix_text: "£",
           inputmode: "decimal",
@@ -39,7 +39,7 @@
           width: 10 %>
       </div>
       <div class="govuk-form-group">
-        <%= f.govuk_text_field :allowed_waiting_costs,
+        <%= f.govuk_text_field :allowed_waiting_cost,
           id: "waiting_costs",
           prefix_text: "£",
           inputmode: "decimal",
@@ -56,7 +56,7 @@
 
       <p class="govuk-heading-l">
         <span class="govuk-caption-m"><%= t('.total_cost') %></span>
-        <span id="total_cost"><%= LaaCrimeFormsCommon::NumberTo.pounds(@form_object.total_allowed_costs) %></span>
+        <span id="total_cost"><%= LaaCrimeFormsCommon::NumberTo.pounds(@form_object.allowed_total) %></span>
       </p>
 
       <%= f.continue_button(primary: :save_and_continue, secondary: false,  primary_opts: { id: 'costs_submit_button'}) %>

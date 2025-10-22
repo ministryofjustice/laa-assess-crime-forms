@@ -61,7 +61,7 @@ module Payments
     def build_row(type)
       {
         name: t(type, numeric: false),
-        total_claimed: format(@payment_request[type].to_f),
+        total_claimed: format(@payment_request["claimed_#{type}"].to_f),
         total_allowed: format(@payment_request["allowed_#{type}"].to_f),
       }
     end
@@ -71,7 +71,7 @@ module Payments
     end
 
     def calculated_claimed_costs
-      row_fields.map { @payment_request[_1].to_f }.compact.sum
+      row_fields.map { @payment_request["claimed_#{_1}"].to_f }.compact.sum
     end
 
     def t(key, numeric: true, width: nil)
