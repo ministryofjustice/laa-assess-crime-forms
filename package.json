@@ -9,7 +9,7 @@
     "@rails/request.js": "^0.0.12",
     "accessible-autocomplete": "^3.0.1",
     "decimal.js": "^10.6.0",
-    "esbuild": "^0.25.10",
+    "esbuild": "^0.25.11",
     "govuk-frontend": "^5.10.2",
     "jquery": "^3.7.1",
     "laa-crime-forms-common": "^1.0.6",
