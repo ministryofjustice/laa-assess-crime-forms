@@ -91,6 +91,7 @@ module Payments
 
     private
 
+    #TODO: CRM457-2686 may affect this
     def submission
       @submission ||= submission_id ? AppStoreClient.new.get_submission(submission_id) : nil
     end
