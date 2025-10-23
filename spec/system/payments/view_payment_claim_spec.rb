@@ -458,4 +458,22 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       end
     end
   end
+
+  context 'when payment claim type is invalid' do
+    let(:payload) do
+      {
+        'id' => id,
+        'type' => 'garbage'
+      }
+    end
+
+    before do
+      allow_any_instance_of(AppStoreClient).to receive(:get_payment_request_claim)
+        .and_return(payload)
+    end
+
+    it 'raises an error trying to go to the payment request' do
+      expect { visit "payments/requests/#{id}" }.to raise_error 'Invalid claim type: garbage'
+    end
+  end
 end

@@ -95,7 +95,10 @@ module Payments
 
     def payment_request_claim
       response = AppStoreClient.new.get_payment_request_claim(controller_params[:id])
-      claim_details_class = "Payments::#{response['type']}Details".constantize
+      claim_type = response['type']
+      raise "Invalid claim type: #{claim_type}" unless claim_type.in? %w[NsmClaim AssignedCounselClaim]
+
+      claim_details_class = "Payments::#{claim_type}Details".constantize
       claim_details_class.new(response, related_payment_params)
     end
   end
