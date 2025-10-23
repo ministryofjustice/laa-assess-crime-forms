@@ -64,6 +64,10 @@ module Payments
       )
     end
 
+    def param_validator
+      @param_validator ||= Payments::RequestsParams.new(controller_params)
+    end
+
     def set_default_table_sort_options
       @sort_by = controller_params.fetch(:sort_by, 'submitted_at')
       @sort_direction = controller_params.fetch(:sort_direction, 'ascending')
