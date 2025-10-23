@@ -11,7 +11,7 @@ module Payments
     RELATED_PAYMENTS_LIMIT = 10
 
     def index
-      model = Payments::SearchResults.new(controller_params.permit(:page, related_payment_params))
+      model = Payments::SearchResults.new(controller_params.permit(:page, :sort_by, :sort_direction))
       model.execute
 
       render :index, locals: { pagy: model.pagy, requests: model.results }
