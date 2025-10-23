@@ -9,6 +9,7 @@ RSpec.describe 'Payment Requests', :stub_oauth_token do
         submitted_at: (DateTime.now - 1).to_s,
           request_type: :assigned_counsel,
           payment_request_claim: {
+            id: SecureRandom.uuid,
             laa_reference: 'LAA-AAAAAA',
             client_last_name: 'Joe Client',
             solicitor_firm_name: 'A Firm'
@@ -17,6 +18,7 @@ RSpec.describe 'Payment Requests', :stub_oauth_token do
         submitted_at: (DateTime.now - 1).to_s,
           request_type: :assigned_counsel,
           payment_request_claim: {
+            id: SecureRandom.uuid,
             laa_reference: 'LAA-BBBBBB',
             client_last_name: 'Joe Client',
             counsel_firm_name: 'B Firm'

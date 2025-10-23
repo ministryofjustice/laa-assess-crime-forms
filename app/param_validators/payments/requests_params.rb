@@ -7,7 +7,7 @@ module Payments
     attribute :current_page, :string
     attribute :payment_id, :string
 
-    validates :sort_by, inclusion: { in: %w[laa_reference solicitor_firm_name client_last_name request_type submitted_at] },
+    validates :sort_by, inclusion: { in: %w[laa_reference firm_name solicitor_firm_name client_last_name request_type submitted_at] },
   allow_nil: true
     validates :sort_direction, inclusion: { in: %w[ascending descending] }, allow_nil: true
     validates :page, numericality: { greater_than: 0 }, allow_nil: true
