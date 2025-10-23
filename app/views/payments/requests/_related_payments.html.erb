@@ -1,5 +1,5 @@
 <h2 class="govuk-heading-l"> <%=t(".heading")%></h2>
-<% if claim_details.related_payments.any? %>
+<% if claim_details.related_payments.sorted_payments.any? %>
   <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
     <thead class="govuk-table__head">
       <% %i[laa_reference firm_name client_last_name request_type submitted_at].each do |key| %>
