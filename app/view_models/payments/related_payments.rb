@@ -11,17 +11,21 @@ module Payments
     def sorted_payments
       offset = (@page - 1) * @per_page
       delta = (@page * @per_page) - 1
-      records = payments.sort_by { |payment| payment[@sort_by.to_sym] }
+      records = formatted_payments.sort_by { |payment| payment[@sort_by.to_sym] }
       sorted_records = @sort_direction == 'descending' ? records.reverse : records
       sorted_records[offset..delta]
     end
 
-    delegate :count, to: :payments
+    # rubocop:disable Rails/Delegate
+    def count
+      payment_requests.count
+    end
+    # rubocop:enable Rails/Delegate
 
     private
 
-    def payments
-      @related_claim['payment_requests'].map do |request|
+    def formatted_payments
+      payment_requests.map do |request|
         {
           laa_reference: laa_reference,
           request_type: I18n.t("payments.request_types.#{request['request_type']}"),
@@ -31,6 +35,10 @@ module Payments
           link: link
         }
       end
+    end
+
+    def payment_requests
+      @related_claim&.dig('payment_requests') || []
     end
 
     def payment_request_claim_id
