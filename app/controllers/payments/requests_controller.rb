@@ -18,7 +18,7 @@ module Payments
     end
 
     def show
-      @claim_details = claim_details_class.new(payment_request_claim, related_payment_params)
+      @claim_details = payment_request_claim
       @current_page = controller_params[:current_page] || 'payment_request'
       @selected_payment = selected_payment(@claim_details.payment_requests) || @claim_details.payment_requests.first
       @related_payments_pagy = Pagy.new(**related_payments_pagy_params)
@@ -38,10 +38,6 @@ module Payments
     end
 
     private
-
-    def claim_details_class
-      "Payments::#{payment_request_claim['type']}Details".constantize
-    end
 
     def related_payments_pagy_params
       {
@@ -98,7 +94,9 @@ module Payments
     end
 
     def payment_request_claim
-      @payment_request_claim ||= AppStoreClient.new.get_payment_request_claim(controller_params[:id])
+      response = AppStoreClient.new.get_payment_request_claim(controller_params[:id])
+      claim_details_class = "Payments::#{response['type']}Details".constantize
+      claim_details_class.new(response, related_payment_params)
     end
   end
 end
