@@ -40,13 +40,7 @@ module Payments
     end
 
     def related_payments
-      if @payment_request_claim['assigned_counsel_claim']
-        Payments::RelatedPayments.new(@payment_request_claim['assigned_counsel_claim'], @related_payment_params)
-      elsif @payment_request_claim['nsm_claim']
-        Payments::RelatedPayments.new(@payment_request_claim['nsm_claim'], @related_payment_params)
-      else
-        []
-      end
+      Payments::RelatedPayments.new(@payment_request_claim, @related_payment_params)
     end
 
     private

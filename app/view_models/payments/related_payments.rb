@@ -1,7 +1,7 @@
 module Payments
   class RelatedPayments
-    def initialize(related_claim, related_payment_params)
-      @related_claim = related_claim
+    def initialize(payment_request_claim, related_payment_params)
+      @related_claim = payment_request_claim['assigned_counsel_claim'] || payment_request_claim['nsm_claim']
       @sort_by = related_payment_params[:sort_by]
       @sort_direction = related_payment_params[:sort_direction]
       @per_page = related_payment_params[:per_page]
