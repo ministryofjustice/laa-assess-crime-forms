@@ -100,7 +100,7 @@ module Payments
       if claim_type == 'NsmClaim'
         claim_details_class = Payments::NsmClaimDetails
       elsif claim_type == 'AssignedCounselClaim'
-        claim_details_class = Payments::AssignedCounselClaim
+        claim_details_class = Payments::AssignedCounselClaimDetails
       else
         raise "Invalid claim type: #{claim_type}"
       end
