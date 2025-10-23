@@ -97,6 +97,16 @@ class AppStoreClient
     )
   end
 
+  def get_payment_request_claim(payment_request_claim_id)
+    response = self.class.get("#{host}/v1/payment_request_claims/#{payment_request_claim_id}", **options)
+    process_response(
+      response,
+      'Unexpected response from AppStore - ' \
+      "status #{response.code} for retrieval of PaymentRequestClaim: #{payment_request_claim_id}",
+      200 => ->(body) { JSON.parse(body) },
+    )
+  end
+
   def create_payment_request(payment_request)
     response = self.class.post("#{host}/v1/payment_requests", **options(payment_request))
     process_response(

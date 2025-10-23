@@ -4,7 +4,7 @@ module Payments
     module Ac
       class ClaimDetailForm < BasePaymentsForm
         attribute :date_received, :date
-        attribute :office_code, :string
+        attribute :solicitor_office_code, :string
         attribute :ufn, :string
         attribute :stage_reached, :string
         attribute :defendant_first_name, :string
@@ -25,7 +25,7 @@ module Payments
           numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
         validates :ufn, presence: true, ufn: true
-        validates :office_code, presence: true
+        validates :solicitor_office_code, presence: true
         validates :date_completed, :date_received,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
       end
