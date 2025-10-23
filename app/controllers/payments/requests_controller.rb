@@ -18,16 +18,10 @@ module Payments
     end
 
     def show
-      details_class = "Payments::#{payment_request_claim['type']}Details".constantize
-      @claim_details = details_class.new(payment_request_claim, related_payment_params)
+      @claim_details = claim_details_class.new(payment_request_claim, related_payment_params)
       @current_page = controller_params[:current_page] || 'payment_request'
       @selected_payment = selected_payment(@claim_details.payment_requests) || @claim_details.payment_requests.first
-      @related_payments_pagy = Pagy.new(
-        count: @claim_details.related_payments.count,
-        limit: related_payment_params[:per_page],
-        page: related_payment_params[:page],
-        fragment: '#related-payments'
-      )
+      @related_payments_pagy = Pagy.new(**related_payments_pagy_params)
     end
 
     def new
@@ -44,6 +38,19 @@ module Payments
     end
 
     private
+
+    def claim_details_class
+      "Payments::#{payment_request_claim['type']}Details".constantize
+    end
+
+    def related_payments_pagy_params
+      {
+        count: @claim_details.related_payments.count,
+        limit: related_payment_params[:per_page],
+        page: related_payment_params[:page],
+        fragment: '#related-payments'
+      }
+    end
 
     def request_payload
       current_multi_step_form_session.answers.merge('submitter_id' => current_user.id)
