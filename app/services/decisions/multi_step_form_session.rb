@@ -18,7 +18,7 @@ module Decisions
     end
 
     def [](hash_key)
-      answers[hash_key.to_s].is_a?(DateTime) ? answers[hash_key.to_s].to_s : answers[hash_key.to_s]
+      answers[hash_key.to_s].is_a?(Date) ? answers[hash_key.to_s].to_s : answers[hash_key.to_s]
     end
 
     def []=(hash_key, hash_value)
