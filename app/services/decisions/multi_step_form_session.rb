@@ -22,7 +22,11 @@ module Decisions
     end
 
     def []=(hash_key, hash_value)
-      answers[hash_key.to_s] = hash_value.to_s
+      answers[hash_key.to_s] = if hash_value.class.in? [TrueClass, FalseClass]
+                                 hash_value
+                               else
+                                 hash_value.to_s
+                               end
     end
 
     private
