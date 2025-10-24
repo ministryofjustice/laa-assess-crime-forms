@@ -12,6 +12,7 @@ module Payments
     attr_reader :session_answers
 
     def initialize(session_answers)
+      Rails.logger.info session_answers
       @session_answers = session_answers
     end
 
