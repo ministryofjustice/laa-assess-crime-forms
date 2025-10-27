@@ -13,10 +13,6 @@ module Payments
       I18n.t("shared.claim_type.#{@payment_request_claim['type']}")
     end
 
-    def date_received
-      DateTime.parse(@payment_request_claim['date_received']).to_fs(:stamp)
-    end
-
     def laa_reference
       @payment_request_claim['laa_reference']
     end

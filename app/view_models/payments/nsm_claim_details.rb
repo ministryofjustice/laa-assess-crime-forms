@@ -72,7 +72,6 @@ module Payments
       [
         original_claim_row,
         [table_heading('claim_type'), { text: claim_type, numeric: false }],
-        [table_heading('date_received'), { text: date_received, numeric: false }],
         [table_heading('office_code'), { text: solicitor_office_code, numeric: false }],
         [table_heading('firm_name'), { text: firm_name, numeric: false }],
         [table_heading('ufn'), { text: ufn, numeric: false }],

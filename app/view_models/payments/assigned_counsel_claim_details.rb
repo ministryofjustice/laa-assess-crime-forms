@@ -14,10 +14,6 @@ module Payments
       @payment_request_claim.dig('nsm_claim', 'laa_reference') || @payment_request_claim['laa_reference']
     end
 
-    def date_received
-      DateTime.parse(@payment_request_claim['date_received']).to_fs(:stamp)
-    end
-
     def solicitor_office_code
       @payment_request_claim.dig('nsm_claim', 'solicitor_office_code') || @payment_request_claim['solicitor_office_code']
     end
@@ -38,7 +34,6 @@ module Payments
       [
         [table_heading('claim_type'), { text: claim_type, numeric: false }],
         [table_heading('linked_claim'), { text: linked_claim, numeric: false }],
-        [table_heading('date_received'), { text: date_received, numeric: false }],
         [table_heading('solicitor_office_code'), { text: solicitor_office_code, numeric: false }],
         [table_heading('solicitor_firm_name'), { text: solicitor_firm_name, numeric: false }],
         [table_heading('ufn'), { text: ufn, numeric: false }],

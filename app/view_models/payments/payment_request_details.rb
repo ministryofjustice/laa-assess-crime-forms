@@ -22,7 +22,7 @@ module Payments
     end
 
     def date_received
-      DateTime.parse(@payment_request['date_claim_received']).to_fs(:stamp)
+      DateTime.parse(@payment_request['date_received']).to_fs(:stamp)
     end
 
     def submitted_date
