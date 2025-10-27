@@ -13,10 +13,6 @@ module Payments
       I18n.t("shared.claim_type.#{@payment_request_claim['type']}")
     end
 
-    def date_received
-      payment_requests.last.date_received
-    end
-
     def laa_reference
       @payment_request_claim['laa_reference']
     end

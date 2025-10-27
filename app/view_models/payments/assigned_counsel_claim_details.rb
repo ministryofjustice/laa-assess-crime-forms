@@ -34,7 +34,6 @@ module Payments
       [
         [table_heading('claim_type'), { text: claim_type, numeric: false }],
         [table_heading('linked_claim'), { text: linked_claim, numeric: false }],
-        [table_heading('date_received'), { text: date_received, numeric: false }],
         [table_heading('solicitor_office_code'), { text: solicitor_office_code, numeric: false }],
         [table_heading('solicitor_firm_name'), { text: solicitor_firm_name, numeric: false }],
         [table_heading('ufn'), { text: ufn, numeric: false }],

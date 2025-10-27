@@ -142,7 +142,6 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Claim type', "Non-standard Magistrates'",
-          'Date claim received', '7 September 2025',
           'Firm office account number', '1A123B',
           'Firm name', 'The Firm',
           'Unique file number', '123456/101',
@@ -361,7 +360,6 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         [
           'Claim type', 'Assigned counsel',
           'Linked claim', 'LAA-XYZ321',
-          'Date claim received', '7 October 2025',
           'Solicitor office account number', 'AB2034',
           'Solicitor firm name', 'Solicitor Firm',
           'Unique file number', '01112025/001',
@@ -434,7 +432,6 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           [
             'Claim type', 'Assigned counsel',
             'Linked claim', 'LAA-ABZ321',
-            'Date claim received', '7 October 2025',
             'Solicitor office account number', 'A3211B',
             'Solicitor firm name', 'Solicitor Firm 2',
             'Unique file number', '200323/021',
