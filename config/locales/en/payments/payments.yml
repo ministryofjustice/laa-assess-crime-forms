@@ -190,7 +190,6 @@ en:
           youth_court: Youth court matter
           work_completed_date: Date work was completed
           linked_claim: Linked claim
-          date_received: Date claim received
           client_last_name: Defendant name
           counsel_office_code: Counsel account number
           counsel_firm_name: Counsel name

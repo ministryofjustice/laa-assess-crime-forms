@@ -14,7 +14,7 @@ module Payments
     end
 
     def date_received
-      DateTime.parse(@payment_request_claim['date_received']).to_fs(:stamp)
+      payment_requests.last.date_received
     end
 
     def laa_reference
