@@ -14,10 +14,6 @@ module Payments
       @payment_request_claim.dig('nsm_claim', 'laa_reference') || @payment_request_claim['laa_reference']
     end
 
-    def date_received
-      DateTime.parse(@payment_request_claim['date_received']).to_fs(:stamp)
-    end
-
     def solicitor_office_code
       @payment_request_claim.dig('nsm_claim', 'solicitor_office_code') || @payment_request_claim['solicitor_office_code']
     end
