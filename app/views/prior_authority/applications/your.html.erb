@@ -11,7 +11,7 @@
     <% end %>
     <% if policy(PriorAuthorityApplication).assign? %>
       <div class="govuk-button-group">
-        <%= govuk_button_to(t('.next_application'), prior_authority_auto_assignments_path) %>
+        <%= govuk_button_to(t('.next_application'), prior_authority_auto_assignments_path, data: { disable_on_click: 'true' }) %>
       </div>
     <% end %>
     <% if @applications.any? %>
