@@ -18,7 +18,9 @@ RSpec.describe Decisions::BackDecisionTree do
                         from: Decisions::DecisionTree::NSM_CLAIM_DETAILS,
                         goto: { action: :edit, controller: Decisions::DecisionTree::CLAIM_TYPE }
       end
+    end
 
+    context 'from CLAIM_SEARCH' do
       {
         'NSM_SUPPLEMENTAL' => Payments::ClaimType::NSM_SUPPLEMENTAL,
         'NSM_APPEAL'       => Payments::ClaimType::NSM_APPEAL,
@@ -28,16 +30,10 @@ RSpec.describe Decisions::BackDecisionTree do
           let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
 
           it_behaves_like 'a generic decision',
-                          from: Decisions::DecisionTree::NSM_CLAIM_DETAILS,
-                          goto: { action: :edit, controller: Decisions::DecisionTree::NSM_LAA_REFERENCE_CHECK }
+                          from: Decisions::DecisionTree::CLAIM_SEARCH.sub(%r{^/}, ''),
+                          goto: { action: :edit, controller: Decisions::DecisionTree::CLAIM_TYPE }
         end
       end
-    end
-
-    context 'from LAA_REFERENCE (leading slash removed)' do
-      it_behaves_like 'a generic decision',
-                      from: Decisions::DecisionTree::LAA_REFERENCE.sub(%r{^/}, ''),
-                      goto: { action: :edit, controller: Decisions::DecisionTree::NSM_LAA_REFERENCE_CHECK }
     end
 
     context 'from DATE_RECEIVED (leading slash removed)' do
@@ -48,13 +44,7 @@ RSpec.describe Decisions::BackDecisionTree do
 
       it_behaves_like 'a generic decision',
                       from: Decisions::DecisionTree::DATE_RECEIVED.sub(%r{^/}, ''),
-                      goto: { action: :edit, controller: Decisions::DecisionTree::LAA_REFERENCE }
-    end
-
-    context 'from NSM_LAA_REFERENCE_CHECK' do
-      it_behaves_like 'a generic decision',
-                      from: Decisions::DecisionTree::NSM_LAA_REFERENCE_CHECK,
-                      goto: { action: :edit, controller: Decisions::DecisionTree::CLAIM_TYPE }
+                      goto: { action: :edit, controller: Decisions::DecisionTree::CLAIM_SEARCH.sub(%r{^/}, '') }
     end
 
     context 'from NSM_CLAIMED_COSTS' do
@@ -79,13 +69,12 @@ RSpec.describe Decisions::BackDecisionTree do
 
       context 'when supplemental with laa_reference_check false' do
         let(:multi_step_form_session) do
-          { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s,
-            'laa_reference_check' => false }
+          { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s }
         end
 
         it_behaves_like 'a generic decision',
                         from: Decisions::DecisionTree::NSM_CLAIMED_COSTS,
-                        goto: { action: :edit, controller: Decisions::DecisionTree::NSM_CLAIM_DETAILS }
+                        goto: { action: :edit, controller: Decisions::DecisionTree::DATE_RECEIVED }
       end
     end
 
@@ -119,12 +108,12 @@ RSpec.describe Decisions::BackDecisionTree do
 
         context "when #{label} with laa_reference_check false" do
           let(:multi_step_form_session) do
-            { 'request_type' => request_type.to_s, 'laa_reference_check' => false }
+            { 'request_type' => request_type.to_s }
           end
 
           it_behaves_like 'a generic decision',
                           from: Decisions::DecisionTree::NSM_ALLOWED_COSTS,
-                          goto: { action: :edit, controller: Decisions::DecisionTree::NSM_CLAIM_DETAILS }
+                          goto: { action: :edit, controller: Decisions::DecisionTree::DATE_RECEIVED }
         end
       end
     end

@@ -19,7 +19,7 @@ module Payments
             multi_step_form_session[attr.to_sym] = public_send(attr) || 0
           end
 
-          multi_step_form_session['allowed_total'] = calculated_costs
+          multi_step_form_session[:allowed_total] = calculated_costs
 
           true
         end

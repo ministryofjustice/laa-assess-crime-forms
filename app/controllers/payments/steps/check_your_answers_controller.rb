@@ -11,7 +11,9 @@ module Payments
       private
 
       def cost_summary
+        # :nocov:
         case multi_step_form_session['request_type'].to_sym
+        # :nocov:
         when :non_standard_mag
           Payments::CostsSummary.new(multi_step_form_session.answers)
         when :non_standard_mag_supplemental

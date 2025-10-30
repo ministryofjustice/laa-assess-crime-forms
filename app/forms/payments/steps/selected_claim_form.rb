@@ -25,14 +25,16 @@ module Payments
       end
 
       def latest_payment_request(claim)
-        payment_requests = claim[:payment_requests]
+        payment_requests = claim.with_indifferent_access[:payment_requests]
         return nil if payment_requests.blank?
 
+        payment_requests = payment_requests.map(&:with_indifferent_access)
+
         payment_request = payment_requests.max_by do |pr|
-          DateTime.parse(pr[:updated_at])
-        end.except!(:id, :created_at,
-                    :updated_at, :date_received,
-                    :request_type, :submitter_id, :submitted_at)
+          DateTime.parse(pr[:updated_at].to_s)
+        end.except!(:id, :created_at, :updated_at,
+                    :date_received, :request_type,
+                    :submitter_id, :submitted_at)
 
         dup_original_costs_to(payment_request)
       end

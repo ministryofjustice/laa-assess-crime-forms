@@ -116,15 +116,6 @@ class AppStoreClient
     )
   end
 
-  def show_payment_request(payment_request)
-    response = self.class.post("#{host}/v1/payment_request", **options(payment_request))
-    process_response(
-      response,
-      "Unexpected response from AppStore - status #{response.code} for payment request:\n#{response['errors']}",
-      201 => ->(body) { JSON.parse(body) },
-    )
-  end
-
   private
 
   def options(payload = nil)
