@@ -7,13 +7,12 @@ module Decisions
 
     CLAIM_TYPE = '/payments/steps/claim_types'.freeze
 
-    NSM_LAA_REFERENCE_CHECK = 'payments/steps/nsm/laa_reference_check'.freeze
     NSM_CLAIM_DETAILS = 'payments/steps/nsm/claim_details'.freeze
     NSM_CLAIMED_COSTS = 'payments/steps/nsm/claimed_costs'.freeze
     NSM_ALLOWED_COSTS = 'payments/steps/nsm/allowed_costs'.freeze
 
     DATE_RECEIVED = '/payments/steps/date_received'.freeze
-    LAA_REFERENCE = '/payments/steps/laa_reference'.freeze
+    CLAIM_SEARCH = '/payments/steps/claim_search'.freeze
     CHECK_YOUR_ANSWERS = '/payments/steps/check_your_answers'.freeze
 
     SUBMIT = 'payments'.freeze
@@ -22,15 +21,9 @@ module Decisions
       .when(-> { nsm })
       .goto(edit: NSM_CLAIM_DETAILS)
       .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment })
-      .goto(edit: NSM_LAA_REFERENCE_CHECK)
+      .goto(edit: CLAIM_SEARCH)
 
-    from(:laa_reference_check)
-      .when(-> { multi_step_form_session['laa_reference_check'] == true })
-      .goto(edit: LAA_REFERENCE)
-      .when(-> { multi_step_form_session['laa_reference_check'] == false })
-      .goto(edit: NSM_CLAIM_DETAILS)
-    from(:laa_reference)
-      .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment })
+    from(:claim_search)
       .goto(edit: DATE_RECEIVED)
 
     from(:date_received)

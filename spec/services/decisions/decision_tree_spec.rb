@@ -29,30 +29,12 @@ RSpec.describe Decisions::DecisionTree do
 
           it_behaves_like 'a generic decision',
                           from: :claim_type,
-                          goto: { action: :edit, controller: Decisions::DecisionTree::NSM_LAA_REFERENCE_CHECK }
+                          goto: { action: :edit, controller: Decisions::DecisionTree::CLAIM_SEARCH }
         end
       end
     end
 
-    context 'from :laa_reference_check' do
-      context 'when session says true' do
-        let(:multi_step_form_session) { { 'laa_reference_check' => true } }
-
-        it_behaves_like 'a generic decision',
-                        from: :laa_reference_check,
-                        goto: { action: :edit, controller: Decisions::DecisionTree::LAA_REFERENCE }
-      end
-
-      context 'when session says false' do
-        let(:multi_step_form_session) { { 'laa_reference_check' => false } }
-
-        it_behaves_like 'a generic decision',
-                        from: :laa_reference_check,
-                        goto: { action: :edit, controller: Decisions::DecisionTree::NSM_CLAIM_DETAILS }
-      end
-    end
-
-    context 'from :laa_reference' do
+    context 'from :claim_search' do
       {
         'NSM_SUPPLEMENTAL' => Payments::ClaimType::NSM_SUPPLEMENTAL,
         'NSM_APPEAL'       => Payments::ClaimType::NSM_APPEAL,
@@ -62,7 +44,7 @@ RSpec.describe Decisions::DecisionTree do
           let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
 
           it_behaves_like 'a generic decision',
-                          from: :laa_reference,
+                          from: :claim_search,
                           goto: { action: :edit, controller: Decisions::DecisionTree::DATE_RECEIVED }
         end
       end

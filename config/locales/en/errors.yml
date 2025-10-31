@@ -178,38 +178,33 @@ en:
             request_type:
               blank: "Select a payment claim type"
 
-        payments/steps/nsm/laa_reference_check_form:
-          attributes:
-            laa_reference_check:
-              inclusion: "Select an option"
-
         payments/steps/nsm/claimed_costs_form:
           attributes:
-            claimed_profit_costs:
+            claimed_profit_cost:
               greater_than_or_equal_to: Claimed profit costs must be equal or greater than 0
               blank: Enter claimed profit cost
-            claimed_disbursement_costs:
+            claimed_disbursement_cost:
               greater_than_or_equal_to: Claimed disbursement costs must be equal or greater than 0
               blank: Enter claimed disbursement cost
-            claimed_travel_costs:
+            claimed_travel_cost:
               greater_than_or_equal_to: Claimed travel costs must be equal or greater than 0
               blank: Enter claimed travel cost
-            claimed_waiting_costs:
+            claimed_waiting_cost:
               greater_than_or_equal_to: Claimed waiting costs must be equal or greater than 0
               blank: Enter claimed waiting cost
 
         payments/steps/nsm/allowed_costs_form:
           attributes:
-            allowed_profit_costs:
+            allowed_profit_cost:
               greater_than_or_equal_to: Allowed profit costs must be equal or greater than 0
               blank: Enter allowed profit cost
-            allowed_disbursement_costs:
+            allowed_disbursement_cost:
               greater_than_or_equal_to: Allowed disbursement costs must be equal or greater than 0
               blank: Enter allowed disbursement cost
-            allowed_travel_costs:
+            allowed_travel_cost:
               greater_than_or_equal_to: Allowed travel costs must be equal or greater than 0
               blank: Enter allowed travel cost
-            allowed_waiting_costs:
+            allowed_waiting_cost:
               greater_than_or_equal_to: Allowed waiting costs must be equal or greater than 0
               blank: Enter allowed waiting cost
 

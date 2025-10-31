@@ -4,6 +4,7 @@ RSpec.describe 'NSM supplemental payment request', :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:endpoint)   { 'https://appstore.example.com/v1/payment_requests/searches' }
   let(:claim_type) { "Non-Standard Magistrates' - supplemental" }
+  let(:get_claim_endpoint) { 'https://appstore.example.com/v1/payment_request_claims/1234' }
 
   let(:search_params) do
     {
@@ -14,8 +15,21 @@ RSpec.describe 'NSM supplemental payment request', :stub_oauth_token do
     }
   end
 
+  let(:claim_search_params) do
+    {
+      page: 1,
+      per_page: 20,
+      sort_by: 'submitted_at',
+      sort_direction: 'descending',
+      query: 'laa-1004',
+      request_type: 'non_standard_mag'
+    }
+  end
+
   before do
     stub_search(endpoint, search_params)
+    stub_search(endpoint, claim_search_params)
+    stub_get_claim(get_claim_endpoint)
     sign_in caseworker
   end
 
@@ -28,21 +42,24 @@ RSpec.describe 'NSM supplemental payment request', :stub_oauth_token do
     end
   end
 
-  describe 'check laa reference' do
-    it 'shows the claim type page' do
-      start_new_payment_request
-      choose_claim_type(claim_type)
-      expect(page).to have_title('LAA reference check')
+  context 'Claim not found' do
+    describe 'no query entered' do
+      it 'cant be blank' do
+        start_new_payment_request
+        choose_claim_type(claim_type)
+        expect(page).to have_title('Find a claim')
+        click_button 'Search'
+        expect(page).to have_content("can't be blank")
+      end
     end
   end
 
-  context 'laa-reference present' do
+  context 'Find a claim' do
     describe 'fill in LAA reference' do
       it 'input laa ref' do
         start_new_payment_request
         choose_claim_type(claim_type)
-        choose_laa_reference_check('Yes')
-        expect(page).to have_title('LAA Reference')
+        expect(page).to have_title('Find a claim')
       end
     end
 
@@ -50,7 +67,6 @@ RSpec.describe 'NSM supplemental payment request', :stub_oauth_token do
       it 'input date received' do
         start_new_payment_request
         choose_claim_type(claim_type)
-        choose_laa_reference_check('Yes')
         fill_in_laa_ref
         expect(page).to have_title('Date received')
       end
@@ -60,7 +76,6 @@ RSpec.describe 'NSM supplemental payment request', :stub_oauth_token do
       it 'input date claim received' do
         start_new_payment_request
         choose_claim_type(claim_type)
-        choose_laa_reference_check('Yes')
         fill_in_laa_ref
         date_claim_received
         expect(page).to have_title('Claimed costs')
@@ -71,7 +86,6 @@ RSpec.describe 'NSM supplemental payment request', :stub_oauth_token do
       it 'input claimed costs' do
         start_new_payment_request
         choose_claim_type(claim_type)
-        choose_laa_reference_check('Yes')
         fill_in_laa_ref
         date_claim_received
         fill_claimed_costs
@@ -83,56 +97,11 @@ RSpec.describe 'NSM supplemental payment request', :stub_oauth_token do
       it 'shows answers' do
         start_new_payment_request
         choose_claim_type(claim_type)
-        choose_laa_reference_check('Yes')
         fill_in_laa_ref
         date_claim_received
         fill_claimed_costs
         fill_allowed_costs
         expect(page).to have_title('Check your answers')
-      end
-    end
-  end
-
-  context 'no laa-reference' do
-    describe 'procedes to claim details' do
-      it 'completes laa-reference check and proceeds' do
-        start_new_payment_request
-        choose_claim_type(claim_type)
-        choose_laa_reference_check('No')
-        expect(page).to have_title('Claim details')
-      end
-    end
-
-    describe 'claim details' do
-      it 'completes claim details and proceeds' do
-        start_new_payment_request
-        choose_claim_type(claim_type)
-        choose_laa_reference_check('No')
-        fill_claim_details
-        expect(page).to have_title('Claimed costs')
-      end
-
-      describe 'claimed costs' do
-        it 'completes claimed costs and proceeds' do
-          start_new_payment_request
-          choose_claim_type(claim_type)
-          choose_laa_reference_check('No')
-          fill_claim_details
-          fill_claimed_costs
-          expect(page).to have_title('Allowed costs')
-        end
-      end
-
-      describe 'allowed costs' do
-        it 'completes allowed costs and proceeds' do
-          start_new_payment_request
-          choose_claim_type(claim_type)
-          choose_laa_reference_check('No')
-          fill_claim_details
-          fill_claimed_costs
-          fill_allowed_costs
-          expect(page).to have_title('Check your answers')
-        end
       end
     end
   end

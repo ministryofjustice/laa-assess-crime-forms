@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe Payments::Steps::Nsm::ClaimedCostsForm, type: :model do
   subject(:form) do
     described_class.new(
-      claimed_profit_costs: profit,
-      claimed_disbursement_costs: disbursement,
-      claimed_travel_costs: travel,
-      claimed_waiting_costs: waiting,
+      claimed_profit_cost: profit,
+      claimed_disbursement_cost: disbursement,
+      claimed_travel_cost: travel,
+      claimed_waiting_cost: waiting,
       multi_step_form_session: session_store
     )
   end
@@ -24,33 +24,33 @@ RSpec.describe Payments::Steps::Nsm::ClaimedCostsForm, type: :model do
     end
 
     it 'is invalid without claimed_profit_costs' do
-      form.claimed_profit_costs = nil
+      form.claimed_profit_cost = nil
       expect(form).not_to be_valid
-      expect(form.errors[:claimed_profit_costs]).to include('is not a number')
+      expect(form.errors[:claimed_profit_cost]).to include('is not a number')
     end
 
     it 'is invalid without claimed_disbursement_costs' do
-      form.claimed_disbursement_costs = nil
+      form.claimed_disbursement_cost = nil
       expect(form).not_to be_valid
-      expect(form.errors[:claimed_disbursement_costs]).to include('is not a number')
+      expect(form.errors[:claimed_disbursement_cost]).to include('is not a number')
     end
 
     it 'is invalid without claimed_travel_costs' do
-      form.claimed_travel_costs = nil
+      form.claimed_travel_cost = nil
       expect(form).not_to be_valid
-      expect(form.errors[:claimed_travel_costs]).to include('is not a number')
+      expect(form.errors[:claimed_travel_cost]).to include('is not a number')
     end
 
     it 'is invalid without claimed_waiting_costs' do
-      form.claimed_waiting_costs = nil
+      form.claimed_waiting_cost = nil
       expect(form).not_to be_valid
-      expect(form.errors[:claimed_waiting_costs]).to include('is not a number')
+      expect(form.errors[:claimed_waiting_cost]).to include('is not a number')
     end
 
     it 'is invalid with a negative value' do
-      form.claimed_profit_costs = -1
+      form.claimed_profit_cost = -1
       expect(form).not_to be_valid
-      expect(form.errors[:claimed_profit_costs]).to include('Claimed profit costs must be equal or greater than 0')
+      expect(form.errors[:claimed_profit_cost]).to include('Claimed profit costs must be equal or greater than 0')
     end
   end
 
@@ -63,16 +63,16 @@ RSpec.describe Payments::Steps::Nsm::ClaimedCostsForm, type: :model do
       it 'stores each claimed cost in the session' do
         form.save
         expect(session_store).to include(
-          claimed_profit_costs: profit,
-          claimed_disbursement_costs: disbursement,
-          claimed_travel_costs: travel,
-          claimed_waiting_costs: waiting
+          claimed_profit_cost: profit,
+          claimed_disbursement_cost: disbursement,
+          claimed_travel_cost: travel,
+          claimed_waiting_cost: waiting
         )
       end
 
       it 'stores the total_claimed_costs in the session' do
         form.save
-        expect(session_store[:total_claimed_costs]).to eq(profit + disbursement + travel + waiting)
+        expect(session_store[:claimed_total]).to eq(profit + disbursement + travel + waiting)
       end
     end
 
