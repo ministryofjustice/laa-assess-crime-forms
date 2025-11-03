@@ -69,8 +69,8 @@ module Payments
             :allowed_total
           ],
           ac_claim: [
-            :net_assigned_counsel_cost,
-            :assigned_counsel_vat,
+            :claimed_net_assigned_counsel_cost,
+            :claimed_assigned_counsel_vat,
             :allowed_net_assigned_counsel_cost,
             :allowed_assigned_counsel_vat,
             :claimed_total,
