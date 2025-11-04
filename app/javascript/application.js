@@ -20,6 +20,16 @@ Turbo.session.drive = false
 
 convertSelectToAutocomplete();
 
+document.querySelectorAll('[data-disable-on-click=true]').forEach(button => {
+    button.addEventListener('click', function() {
+        // Use setTimeout with 0ms delay to ensure this runs AFTER the
+        // original click event completes
+        setTimeout(() => {
+            this.disabled = true;
+        }, 0);
+    });
+});
+
 document.addEventListener("turbo:render", function () {
     initAll();
     convertSelectToAutocomplete();
