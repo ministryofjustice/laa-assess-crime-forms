@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/MethodLength, Metrics/ModuleLength
 module PaymentsHelpers
   def stub_search(endpoint, body_hash)
     stub_request(:post, endpoint)
@@ -5,11 +6,86 @@ module PaymentsHelpers
       .to_return(
         status: 201,
         body: {
-          metadata: { total_results: 0 },
-          data: [],
+          metadata: { total_results: 1 },
+          data: [
+            id: SecureRandom.uuid,
+            request_type: 'non_standard_mag',
+            submitted_at: Time.zone.now.to_s,
+            payment_request_claim: {
+              id: '1234',
+              laa_reference: 'LAA-1004',
+              client_last_name: 'Dickens'
+            }
+          ],
           raw_data: []
         }.to_json
       )
+  end
+
+  def stub_get_claim(endpoint)
+    stub_request(:get, endpoint)
+      .to_return(
+        status: 200,
+        body: claim.to_json
+      )
+  end
+
+  def claim
+    { 'id' => 'dd9fa50c-12cc-4175-a10c-51a014459ef2',
+      'type' => 'NsmClaim',
+      'laa_reference' => 'LAA-qWRbvm',
+      'solicitor_office_code' => '1asdf',
+      'solicitor_firm_name' => 'some name',
+      'client_last_name' => 'asdf',
+      'stage_code' => 'PROG',
+      'work_completed_date' => '2025-10-29 00:00:00 UTC',
+      'court_name' => 'Usk - C3208F',
+      'court_attendances' => 2,
+      'no_of_defendants' => 2,
+      'client_first_name' => 'asdf',
+      'outcome_code' => 'CP19',
+      'matter_type' => '13',
+      'youth_court' => true,
+      'ufn' => '120223/001',
+      'submission_id' => nil,
+      'created_at' => '2025-10-29 14:01:57 UTC',
+      'updated_at' => '2025-10-29 14:01:57 UTC',
+      'payment_requests' =>
+      [{ 'id' => '0604df63-ba7f-4cca-87b0-9db0b0e2d02f',
+        'submitter_id' => 'e061f876-3863-4bfd-9f25-ffefb942c90e',
+        'request_type' => 'non_standard_mag',
+        'submitted_at' => '2025-10-29 14:01:57 UTC',
+        'date_received' => '2025-10-29 00:00:00 UTC',
+        'claimed_profit_cost' => '123.0',
+        'allowed_profit_cost' => '123.0',
+        'claimed_travel_cost' => '123.0',
+        'allowed_travel_cost' => '123.0',
+        'claimed_waiting_cost' => '123.0',
+        'allowed_waiting_cost' => '123.0',
+        'claimed_disbursement_cost' => '123.0',
+        'allowed_disbursement_cost' => '123.0',
+        'claimed_total' => '492.0',
+        'allowed_total' => '492.0',
+        'created_at' => '2025-10-29 14:01:57 UTC',
+        'updated_at' => '2025-10-29 14:01:57 UTC' },
+       { 'id' => 'e34f2e9e-4c4b-4b07-acb1-e5c072ab06e2',
+         'submitter_id' => 'e061f876-3863-4bfd-9f25-ffefb942c90e',
+         'request_type' => 'non_standard_mag_amendment',
+         'submitted_at' => '2025-10-29 14:07:19 UTC',
+         'date_received' => '2025-10-29 00:00:00 UTC',
+         'claimed_profit_cost' => '123.0',
+         'allowed_profit_cost' => '123.0',
+         'claimed_travel_cost' => '123.0',
+         'allowed_travel_cost' => '123.0',
+         'claimed_waiting_cost' => '123.0',
+         'allowed_waiting_cost' => '100.0',
+         'claimed_disbursement_cost' => '123.0',
+         'allowed_disbursement_cost' => '123.0',
+         'claimed_total' => '492.0',
+         'allowed_total' => '469.0',
+         'created_at' => '2025-10-29 14:07:19 UTC',
+         'updated_at' => '2025-10-29 14:07:19 UTC' }],
+      'assigned_counsel_claim' => nil }
   end
 
   def start_new_payment_request
@@ -32,13 +108,11 @@ module PaymentsHelpers
   end
 
   def fill_in_laa_ref(laa_ref = 'laa-1004')
-    fill_in 'LAA reference for the original claim', with: laa_ref
-    click_button 'Save and continue'
-  end
-
-  def choose_laa_reference_check(check)
-    choose check
-    click_button 'Save and continue'
+    fill_in 'Find a claim', with: laa_ref
+    click_button 'Search'
+    within('tr', text: laa_ref.upcase) do
+      click_button 'Select claim'
+    end
   end
 
   # rubocop:disable Metrics/ParameterLists
@@ -91,5 +165,5 @@ module PaymentsHelpers
     alias_method name, :fill_costs
   end
 end
-
+# rubocop:enable Metrics/MethodLength, Metrics/ModuleLength
 RSpec.configuration.include PaymentsHelpers

@@ -43,7 +43,7 @@ module Payments
       private
 
       def calculated_costs
-        attribute_names.grep(/_costs$/).sum { |attr| public_send(attr).to_d }
+        attribute_names.grep(/_cost$/).sum { |attr| public_send(attr).to_d }
       end
 
       # :nocov:

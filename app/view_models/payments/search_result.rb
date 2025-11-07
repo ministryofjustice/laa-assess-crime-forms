@@ -30,6 +30,14 @@ module Payments
       row[:payment_request_claim][:counsel_firm_name] || row[:payment_request_claim][:solicitor_firm_name]
     end
 
+    def ufn
+      row[:payment_request_claim][:ufn]
+    end
+
+    def office_code
+      row[:payment_request_claim][:office_code]
+    end
+
     def submitted_at
       Time.zone.parse(row[:submitted_at]).to_fs(:stamp)
     end

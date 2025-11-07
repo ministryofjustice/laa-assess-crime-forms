@@ -106,6 +106,9 @@ en:
           request_type: Payment request type
           client_last_name: Client last name
           payment_request_id: Payment request id
+          office_code: Firm account
+          ufn: UFN
+          actions: Actions
     gdpr_documents_deleted:
       message: Uploaded files deleted. Uploads are deleted after 6 months to keep the provider’s data safe.
     claim_reference_form:
