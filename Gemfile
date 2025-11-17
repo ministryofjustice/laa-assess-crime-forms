@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.201'
+gem 'aws-sdk-s3', '~> 1.203'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails', '>= 1.4.1'
 gem 'devise', '>= 4.9.4'
@@ -29,7 +29,7 @@ gem 'prometheus_exporter'
 gem 'propshaft'
 gem 'puma', '~> 7.1'
 gem 'pundit'
-gem 'rails', '8.0.3'
+gem 'rails', '8.0.4'
 gem 'redis'
 gem 'sidekiq', '~> 8.0'
 gem 'sidekiq_alive', '~> 2.4'
@@ -76,5 +76,5 @@ group :test do
   gem 'simplecov-lcov'
   gem 'simplecov-rcov'
   gem 'super_diff'
-  gem 'webmock', '~> 3.25'
+  gem 'webmock', '~> 3.26'
 end
