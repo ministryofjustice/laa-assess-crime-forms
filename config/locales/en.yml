@@ -57,7 +57,7 @@ en:
       NsmClaim: Non-standard Magistrates'
       AssignedCounselClaim: Assigned counsel
     payment_type:
-      non_standard_mag: Non-standard Magistrates'
+      non_standard_magistrate: Non-standard Magistrates'
       non_standard_mag_appeal: Non-standard Magistrates' appeal
       non_standard_mag_supplemental: Non-standard Magistrates' supplemental
       non_standard_mag_amendment: Non-standard Magistrates' amendment

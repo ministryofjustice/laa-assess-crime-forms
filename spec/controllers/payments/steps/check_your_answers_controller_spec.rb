@@ -14,7 +14,7 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
   end
 
   {
-    'non_standard_mag' => Payments::CostsSummary,
+    'non_standard_magistrate' => Payments::CostsSummary,
     'non_standard_mag_supplemental' => Payments::CostsSummaryAmendedAndClaimed,
     'non_standard_mag_amendment' => Payments::CostsSummaryAmended,
     'non_standard_mag_appeal' => Payments::CostsSummaryAmended

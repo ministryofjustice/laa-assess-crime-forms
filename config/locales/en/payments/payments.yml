@@ -2,10 +2,10 @@ en:
   payments:
     service_name: Payments
     claim_types:
-      non_standard_mag: Non-standard magistrates'
+      non_standard_magistrate: Non-standard magistrates'
       assigned_counsel: Assigned counsel
     request_types:
-      non_standard_mag: Non-standard magistrates'
+      non_standard_magistrate: Non-standard magistrates'
       non_standard_mag_supplemental: Non-standard magistrates' - supplemental
       non_standard_mag_appeal: Non-standard magistrates' - appeal
       non_standard_mag_amendment: Non-standard magistrates' - amendment
@@ -142,7 +142,7 @@ en:
         no_payments: There are no related payment requests for this claim
       payment_details:
         payment_heading:
-          non_standard_mag: Claimed and allowed costs
+          non_standard_magistrate: Claimed and allowed costs
           non_standard_mag_supplemental: Allowed costs after supplemental payment
           non_standard_mag_appeal: Allowed costs after appeal
           non_standard_mag_amendment: Allowed costs after amendment
@@ -163,7 +163,7 @@ en:
           total_allowed: Total allowed
         payment_type: Payment type
         date_received:
-          non_standard_mag: Date payment received
+          non_standard_magistrate: Date payment received
           non_standard_mag_supplemental: Date supplemental payment received
           non_standard_mag_appeal: Date appeal received
           non_standard_mag_amendment: Date amendment received

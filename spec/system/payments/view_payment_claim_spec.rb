@@ -60,7 +60,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         {
           'id' => id,
           'submitter_id' => caseworker.id,
-          'request_type' => 'non_standard_mag',
+          'request_type' => 'non_standard_magistrate',
           'submitted_at' => '2025-10-7 10:31:07 UTC',
           'date_received' => '2025-09-07 10:31:07 UTC',
           'claimed_profit_cost' => '300.4',
@@ -199,7 +199,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           {
             'id' => 'ed374f60-1a8b-4c2a-9ff4-135e35109c81',
             'submitter_id' => caseworker.id,
-            'request_type' => 'non_standard_mag',
+            'request_type' => 'non_standard_magistrate',
             'submitted_at' => '2025-09-12 10:31:07 UTC',
             'date_received' => '2025-09-07 10:31:07 UTC',
             'claimed_profit_cost' => '300.4',
@@ -390,7 +390,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
             {
               'id' => SecureRandom.uuid,
               'submitter_id' => caseworker.id,
-              'request_type' => 'non_standard_mag',
+              'request_type' => 'non_standard_magistrate',
               'submitted_at' => '2025-09-12 10:31:07 UTC',
               'date_received' => '2025-09-07 10:31:07 UTC',
               'claimed_profit_cost' => '300.4',

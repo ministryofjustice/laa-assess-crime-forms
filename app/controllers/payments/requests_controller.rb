@@ -32,6 +32,7 @@ module Payments
 
     def create
       response = AppStoreClient.new.create_payment_request(request_payload)
+      # TODO: destroy session
       @payment_confirmation = Payments::ConfirmationSummary.new(response)
 
       render :confirmation

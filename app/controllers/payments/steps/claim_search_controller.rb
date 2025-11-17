@@ -33,11 +33,6 @@ module Payments
           request_type: parent_claim_class
         }
       end
-
-      def parent_claim_class
-        multi_step_form_session['request_type']
-          .sub(/_(supplemental|appeal|amendment)\z/, '')
-      end
     end
   end
 end

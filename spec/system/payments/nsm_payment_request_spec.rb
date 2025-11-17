@@ -23,7 +23,7 @@ RSpec.describe 'NSM payment request', :stub_oauth_token do
     stub_request(:post, create_endpoint).to_return(
       status: 201,
       body: { claim: { laa_reference: '1234-abc' },
-payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_standard_mag' } }.to_json
+payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_standard_magistrate' } }.to_json
     )
   end
 

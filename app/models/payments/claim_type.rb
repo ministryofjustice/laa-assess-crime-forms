@@ -1,6 +1,6 @@
 module Payments
   class ClaimType
-    NSM = 'non_standard_mag'.freeze
+    NSM = 'non_standard_magistrate'.freeze
     NSM_SUPPLEMENTAL = 'non_standard_mag_supplemental'.freeze
     NSM_APPEAL = 'non_standard_mag_appeal'.freeze
     NSM_AMENDMENT = 'non_standard_mag_amendment'.freeze

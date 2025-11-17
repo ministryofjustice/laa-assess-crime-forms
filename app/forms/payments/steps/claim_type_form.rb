@@ -4,7 +4,7 @@ module Payments
       attribute :request_type, :string
 
       validates :request_type, presence: true,
-        inclusion: { in: %w[non_standard_mag
+        inclusion: { in: %w[non_standard_magistrate
                             non_standard_mag_supplemental
                             non_standard_mag_appeal
                             non_standard_mag_amendment

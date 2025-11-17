@@ -51,7 +51,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     let(:data) do
       [
         id: SecureRandom.uuid,
-        request_type: 'non_standard_mag',
+        request_type: 'non_standard_magistrate',
         submitted_at: Time.zone.now.to_s,
         payment_request_claim: payment_request_claim
       ]

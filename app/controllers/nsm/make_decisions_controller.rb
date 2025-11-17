@@ -6,6 +6,7 @@ module Nsm
       render locals: { claim:, decision: }
     end
 
+    # rubocop:disable Metrics/AbcSize
     def update
       authorize(claim)
       decision = MakeDecisionForm.new(claim:, **form_params)
@@ -13,11 +14,16 @@ module Nsm
         decision.stash
         redirect_to your_nsm_claims_path
       elsif decision.save
-        redirect_to closed_nsm_claims_path, flash: { success: success_notice(decision) }
+        if FeatureFlags.payments.enabled?
+          redirect_to nsm_claim_decision_path(claim)
+        else
+          redirect_to closed_nsm_claims_path, flash: { success: success_notice(decision) }
+        end
       else
         render :edit, locals: { claim:, decision: }
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 

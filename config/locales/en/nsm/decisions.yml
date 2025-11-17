@@ -1,0 +1,18 @@
+---
+en:
+  nsm:
+    decisions:
+      show:
+        page_title: Decision sent
+        sent_to_provider: Your decision has been sent to the provider.
+        laa_reference: Application reference
+        laa_decision: LAA decision
+        decisions:
+          granted: Granted
+          part_grant: Part granted
+          rejected: Rejected
+        comments: Comments
+        no_comments: No comments
+        next_application: Assess next application
+        create_payment_request: Create payment request
+        return: Return to the application

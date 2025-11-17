@@ -22,7 +22,7 @@ RSpec.describe 'NSM supplemental payment request', :stub_oauth_token do
       sort_by: 'submitted_at',
       sort_direction: 'descending',
       query: 'laa-1004',
-      request_type: 'non_standard_mag'
+      request_type: 'non_standard_magistrate'
     }
   end
 
