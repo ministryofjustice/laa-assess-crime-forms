@@ -22,6 +22,9 @@ module Decisions
       .goto(edit: DecisionTree::NSM_CLAIMED_COSTS)
       .when(-> { nsm_appeal || nsm_amendment })
       .goto(edit: DecisionTree::DATE_RECEIVED)
-    from(CHECK_YOUR_ANSWERS).goto(edit: DecisionTree::NSM_ALLOWED_COSTS)
+    from(DecisionTree::SUBMISSION_ALLOWED_COSTS)
+      .goto(edit: CHECK_YOUR_ANSWERS)
+    from(CHECK_YOUR_ANSWERS)
+      .goto(edit: DecisionTree::NSM_ALLOWED_COSTS)
   end
 end

@@ -1,8 +1,4 @@
-<% content_for(:primary_navigation) do %>
-  <%# render 'layouts/prior_authority/primary_navigation', current: @summary.current_section(current_user) %>
-<% end %>
-
- <% title t('.page_title') %>
+<% title t('.page_title') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -41,7 +37,7 @@
 
     <div class="govuk-button-group govuk-button-group-vertically-centred">
       <%= govuk_link_to(t('.create_payment_request'), edit_payments_steps_check_your_answers_path(@decision.id, submission: true), data: { disable_on_click: 'true' }) %>
-      <%= govuk_link_to(t('.return'), prior_authority_application_path(@decision.id)) %>
+      <%= govuk_link_to(t('.return'), nsm_claim_claim_details_path(@decision.id)) %>
     </div>
   </div>
 </div>

@@ -4,6 +4,8 @@ module Payments
     include ActionView::Helpers::OutputSafetyHelper
     include ActionView::Helpers::UrlHelper
     include ActionView::Helpers::TextHelper
+    include Rails.application.routes.url_helpers
+
     include NameConstructable
 
     CARD_ROWS = [].freeze

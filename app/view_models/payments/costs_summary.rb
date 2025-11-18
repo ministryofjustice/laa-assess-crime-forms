@@ -1,9 +1,5 @@
 module Payments
   class CostsSummary < BaseCard
-    include ActionView::Helpers::UrlHelper
-    include ActionView::Helpers::TagHelper
-    include ActionView::Helpers::OutputSafetyHelper
-
     PROFIT_COSTS = 'profit_costs'.freeze
 
     def headers

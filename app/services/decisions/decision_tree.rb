@@ -14,6 +14,7 @@ module Decisions
     DATE_RECEIVED = '/payments/steps/date_received'.freeze
     CLAIM_SEARCH = '/payments/steps/claim_search'.freeze
     CHECK_YOUR_ANSWERS = '/payments/steps/check_your_answers'.freeze
+    SUBMISSION_ALLOWED_COSTS = 'payments/steps/submission_allowed_costs'.freeze
 
     SUBMIT = 'payments'.freeze
 
@@ -41,7 +42,8 @@ module Decisions
       .goto(edit: NSM_ALLOWED_COSTS)
     from(:nsm_allowed_costs)
       .goto(edit: CHECK_YOUR_ANSWERS)
-
+    from(:submission_allowed_costs)
+      .goto(edit: CHECK_YOUR_ANSWERS)
     from(:check_your_answers)
       .goto(show: SUBMIT)
   end

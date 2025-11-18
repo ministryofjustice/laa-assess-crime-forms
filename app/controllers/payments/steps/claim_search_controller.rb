@@ -5,6 +5,7 @@ module Payments
         @form_object = Payments::Steps::SelectedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(search_params)
         @search_form.execute if @search_form.valid?
+
         render :edit
       end
 
@@ -32,6 +33,11 @@ module Payments
           page: params.fetch(:page, '1'),
           request_type: parent_claim_class
         }
+      end
+
+      def parent_claim_class
+        @parent_claim_class ||= multi_step_form_session['request_type']
+                                .sub(/_(supplemental|appeal|amendment)\z/, '').sub(/mag\z/, 'magistrate')
       end
     end
   end

@@ -72,6 +72,11 @@ en:
           laa_reference: Search for the original claim
           payment_requests: payment requests
           result: result
+      submission_allowed_costs:
+        edit:
+          page_title: Amend allowed profit costs
+          heading: Amend allowed profit costs
+          profit_costs: Amend allowed profit costs
       ac:
         nsm_check:
           edit:

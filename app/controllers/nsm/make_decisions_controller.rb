@@ -14,7 +14,7 @@ module Nsm
         decision.stash
         redirect_to your_nsm_claims_path
       elsif decision.save
-        if FeatureFlags.payments.enabled?
+        if FeatureFlags.payments.enabled? && decision.state != Claim::REJECTED
           redirect_to nsm_claim_decision_path(claim)
         else
           redirect_to closed_nsm_claims_path, flash: { success: success_notice(decision) }

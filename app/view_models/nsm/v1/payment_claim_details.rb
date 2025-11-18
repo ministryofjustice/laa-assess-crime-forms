@@ -53,7 +53,12 @@ module Nsm
       end
 
       def request_type
-        submission.data[:claim_type]
+        case submission.data[:claim_type]
+        when 'breach_of_injunction'
+          'non_standard_magistrate'
+        else
+          submission.data[:claim_type]
+        end
       end
 
       def claimed_profit_cost
