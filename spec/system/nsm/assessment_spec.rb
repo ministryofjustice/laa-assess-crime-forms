@@ -47,8 +47,9 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
     end
 
     it 'records a paper trail in the access logs' do
+      # TODO: rename decision to payment?
       expect(user.access_logs.where(submission_id: claim.id).order(:created_at).pluck(:controller, :action)).to eq(
-        [%w[claim_details show], %w[make_decisions edit], %w[make_decisions update]]
+        [%w[claim_details show], %w[make_decisions edit], %w[make_decisions update], %w[decisions show]]
       )
     end
   end

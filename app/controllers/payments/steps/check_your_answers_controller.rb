@@ -34,7 +34,7 @@ module Payments
 
       def cost_summary
         # :nocov:
-        case current_multi_step_form_session['request_type'].to_sym
+        case multi_step_form_session['request_type'].to_sym
         # :nocov:
         when :non_standard_magistrate
           Payments::CostsSummary.new(multi_step_form_session.answers)
