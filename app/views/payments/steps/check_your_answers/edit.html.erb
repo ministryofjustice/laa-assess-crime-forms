@@ -1,9 +1,9 @@
 <% title t('.page_title') %>
 
-<% if @claim_details.session_answers['submission_id'] %>
-  <% step_header(path: nsm_claim_claim_details_path(@claim_details.session_answers['submission_id'])) %>
-<% else %>
+<% if @claim_details.session_answers['submission_id'].blank? %>
   <% step_header(path: previous_decision_step_path) %>
+<% else %>
+  <% step_header(path: nsm_claim_claim_details_path(@claim_details.session_answers['submission_id'])) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -68,10 +68,10 @@
 <div class="govuk-button-group">
   <%= form_for @form_object, url: {controller: '/payments/requests', action: :create }, method: :post do |f| %>
   <%= f.continue_button(primary: :save_and_continue, secondary: false) %>
-  <% if @claim_details.session_answers['submission_id'] %>
-    <%= govuk_link_to( t(".cancel_payment_request"), nsm_claim_claim_details_path(@claim_details.session_answers['submission_id'])) %>
-  <% else %>
+  <% if @claim_details.session_answers['submission_id'].blank? %>
     <%= govuk_link_to( t(".cancel_payment_request"), payments_requests_path) %>
+  <% else %>
+    <%= govuk_link_to( t(".cancel_payment_request"), nsm_claim_claim_details_path(@claim_details.session_answers['submission_id'])) %>
   <% end %>
 <% end %>
 </div>

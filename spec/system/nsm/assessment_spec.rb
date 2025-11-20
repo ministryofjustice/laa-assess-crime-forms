@@ -6,6 +6,13 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
   let(:fixed_arbitrary_date) { DateTime.new(2024, 7, 4, 12, 3, 12) }
   let(:user) { create(:caseworker) }
   let(:claim) { build(:claim) }
+  let(:search_params) do
+    { page: 1,
+      sort_by: 'submitted_at',
+      sort_direction: 'descending',
+      submission_id: claim.id,
+      per_page: 20 }
+  end
 
   before do
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
@@ -13,6 +20,11 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
     )
 
+    stub_request(:post, 'https://appstore.example.com/v1/payment_requests/searches').with(body: search_params).to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 },
+              raw_data: [] }.to_json
+    )
     stub_app_store_interactions(claim)
 
     sign_in user
