@@ -19,6 +19,7 @@ module Payments
     attribute :submitted_to, :string
     attribute :received_from, :string
     attribute :received_to, :string
+    attribute :submission_id, :string
 
     validates :submitted_from, :submitted_to, :received_from, :received_to, is_a_date: true
 

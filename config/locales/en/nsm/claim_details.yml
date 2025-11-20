@@ -22,6 +22,7 @@ en:
         further_information: Further information
         provider_updated: Provider updated %{date}
         provider_updates: Provider updates
+        create_payment_request: Create payment request
       details_of_claim:
         title: Claim summary
         ufn: Unique file number

@@ -12,8 +12,7 @@ module Nsm
       delegate :id, to: :submission
 
       def date_completed
-        # TODO: check correct field
-        submission.data[:work_after_date]
+        submission.data[:work_completed_date]
       end
 
       def hearing_outcome_code

@@ -117,6 +117,10 @@ class Claim < Submission
     data.key?('gdpr_documents_deleted') ? data['gdpr_documents_deleted'] : false
   end
 
+  def eligible_for_payment_request?
+    (part_grant? || granted?) && Payments::SearchForm.new(submission_id: id).execute[:metadata][:total_results].zero?
+  end
+
   private
 
   def youth_court_fee_claimed

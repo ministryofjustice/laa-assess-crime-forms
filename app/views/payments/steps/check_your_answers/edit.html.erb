@@ -1,6 +1,8 @@
 <% title t('.page_title') %>
 
-<% unless @claim_details.session_answers['submission_id'] %>
+<% if @claim_details.session_answers['submission_id'] %>
+  <% step_header(path: nsm_claim_claim_details_path(@claim_details.session_answers['submission_id'])) %>
+<% else %>
   <% step_header(path: previous_decision_step_path) %>
 <% end %>
 
@@ -66,6 +68,10 @@
 <div class="govuk-button-group">
   <%= form_for @form_object, url: {controller: '/payments/requests', action: :create }, method: :post do |f| %>
   <%= f.continue_button(primary: :save_and_continue, secondary: false) %>
-  <%= govuk_link_to( t(".cancel_payment_request"), payments_requests_path) %>
+  <% if @claim_details.session_answers['submission_id'] %>
+    <%= govuk_link_to( t(".cancel_payment_request"), nsm_claim_claim_details_path(@claim_details.session_answers['submission_id'])) %>
+  <% else %>
+    <%= govuk_link_to( t(".cancel_payment_request"), payments_requests_path) %>
+  <% end %>
 <% end %>
 </div>
