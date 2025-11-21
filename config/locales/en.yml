@@ -110,7 +110,10 @@ en:
           ufn: UFN
           actions: Actions
     gdpr_documents_deleted:
-      message: Uploaded files deleted. Uploads are deleted after 6 months to keep the provider’s data safe.
+      granted: The uploaded files have been deleted because the claim was granted more than 6 months ago.
+      part_grant: The uploaded files have been deleted because the claim was part granted more than 6 months ago.
+      rejected: The uploaded files have been deleted because the claim was rejected more than 6 months ago.
+      expired: The uploaded files have been deleted because the claim expired more than 6 months ago.
     claim_reference_form:
       defendant: Defendant
       claim_reference:
