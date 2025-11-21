@@ -39,13 +39,7 @@ module Nsm
 
       def provider_response
         response_content = [simple_format(information_supplied)]
-
-        if gdpr_documents_deleted?
-          response_content << ApplicationController.renderer.render(partial: 'shared/gdpr_documents_deleted')
-        else
-          response_content.concat(uploaded_documents.flat_map { [tag.br, document_link(_1)] })
-        end
-
+        response_content.concat(uploaded_documents.flat_map { [tag.br, document_link(_1)] })
         safe_join(response_content)
       end
 
@@ -77,10 +71,6 @@ module Nsm
 
       def url_helpers
         Rails.application.routes.url_helpers
-      end
-
-      def gdpr_documents_deleted?
-        submission.data.key?('gdpr_documents_deleted') ? submission.data['gdpr_documents_deleted'] : false
       end
     end
   end
