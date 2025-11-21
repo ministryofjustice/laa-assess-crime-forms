@@ -92,10 +92,10 @@ RSpec.describe 'Supporting Evidence', :stub_oauth_token do
     end
 
     context 'GDPR documents deleted' do
-      let(:claim) { build(:claim, data: build(:nsm_data, gdpr_documents_deleted: true)) }
+      let(:claim) { build(:claim, state: 'granted', data: build(:nsm_data, gdpr_documents_deleted: true)) }
 
       it 'shows GDPR documents deleted message' do
-        expect(page).to have_content I18n.t('shared.gdpr_documents_deleted.message')
+        expect(page).to have_content I18n.t('shared.gdpr_documents_deleted.granted')
       end
 
       it 'does not show supporting evidence table' do

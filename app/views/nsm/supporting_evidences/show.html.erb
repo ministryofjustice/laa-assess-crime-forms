@@ -10,7 +10,7 @@
       <%= t('.heading') %>
     </h2>
     <% if claim.gdpr_documents_deleted? %>
-      <%= render 'shared/gdpr_documents_deleted', locals: { state: claim.state } %>
+      <%= render 'shared/gdpr_documents_deleted', { state: claim.state } %>
     <% elsif @supporting_evidence.present? %>
       <%= render 'supporting_evidence_table', { claim: claim, supporting_evidence: @supporting_evidence } %>
     <% end %>
