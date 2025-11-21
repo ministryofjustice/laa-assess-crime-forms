@@ -21,7 +21,7 @@ RSpec.describe Payments::MultiStepFormSessionConcern, type: :controller do
     before do
       session_store['multi_step_form_id'] = 'abc-123'
       session_store['payments:abc-123'] = { some: 'data' }
-      controller.destroy_current_form_session
+      controller.destroy_current_form_sessions
     end
 
     it 'removes both the multi_step_form_id and the namespaced session key' do

@@ -2,8 +2,12 @@ module Payments
   module MultiStepFormSessionConcern
     extend ActiveSupport::Concern
 
-    def destroy_current_form_session
-      ['multi_step_form_id', "payments:#{session[:multi_step_form_id]}"].each { session.delete(_1) }
+    def destroy_current_form_sessions
+      session.delete('multi_step_form_id')
+
+      session.keys.grep(/^payments:/).each do |key|
+        session.delete(key)
+      end
     end
 
     def create_new_form_session
@@ -23,7 +27,7 @@ module Payments
 
     def cycle_multi_step_form_session_object
       if session[:multi_step_form_id].present?
-        destroy_current_form_session && create_new_form_session
+        destroy_current_form_sessions && create_new_form_session
       else
         create_new_form_session
       end
