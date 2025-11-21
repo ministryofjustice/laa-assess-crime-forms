@@ -249,9 +249,21 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       let(:claim) { build(:claim, state: 'granted') }
       let(:laa_reference) { claim.data['laa_reference'] }
       let(:submission_id) { claim.id }
+      let(:search_params) do
+        { page: 1,
+          sort_by: 'submitted_at',
+          sort_direction: 'descending',
+          submission_id: claim.id,
+          per_page: 20 }
+      end
 
       before do
         stub_app_store_interactions(claim)
+        stub_request(:post, 'https://appstore.example.com/v1/payment_requests/searches').with(body: search_params).to_return(
+          status: 201,
+          body: { metadata: { total_results: 0 },
+            raw_data: [] }.to_json
+        )
       end
 
       it 'shows link for original submission in claim details page' do

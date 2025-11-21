@@ -118,6 +118,7 @@ class Claim < Submission
   end
 
   def eligible_for_payment_request?
+    return false unless FeatureFlags.payments.enabled?
     return false if data['supplemental_claim'] == 'yes'
     return false unless part_grant? || granted?
 

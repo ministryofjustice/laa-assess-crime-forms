@@ -35,23 +35,12 @@ RSpec.describe Nsm::MakeDecisionsController do
           allow(FeatureFlags).to receive_messages(payments: double(enabled?: false))
         end
 
-        it 'redirects to claim details' do
-          put :update,
-              params: { claim_id: claim.id,
-                nsm_make_decision_form: { state: 'granted', grant_comment: 'Something' } }
-          expect(controller).to redirect_to(
-            closed_nsm_claims_path
-          )
-        end
-      end
-
-      context 'payment feature enabled' do
         it 'redirects to closed claims' do
           put :update,
               params: { claim_id: claim.id,
                 nsm_make_decision_form: { state: 'granted', grant_comment: 'Something' } }
           expect(controller).to redirect_to(
-            nsm_claim_decision_path(claim.id)
+            closed_nsm_claims_path
           )
         end
       end
@@ -61,6 +50,9 @@ RSpec.describe Nsm::MakeDecisionsController do
       let(:save) { false }
 
       it 'renders rather than redirects' do
+        put :update,
+            params: { claim_id: claim.id,
+              nsm_make_decision_form: { state: 'granted', grant_comment: 'Something' } }
         expect(response).to be_successful
       end
     end

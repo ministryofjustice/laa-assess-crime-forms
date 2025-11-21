@@ -253,4 +253,41 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
       )
     end
   end
+
+  describe 'payments' do
+    before do
+      allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
+    end
+
+    context 'payment request ineligible' do
+      let(:claim) { build(:claim, state: 'rejected') }
+
+      it 'shows create payment request button' do
+        visit nsm_claim_claim_details_path(claim)
+        expect(page).to have_no_content('create payment request')
+      end
+    end
+
+    context 'suplemental claim' do
+      let(:claim) { build(:claim, state: 'granted') }
+
+      before do
+        claim.data['supplemental_claim'] = 'yes'
+      end
+
+      it 'shows create payment request button' do
+        visit nsm_claim_claim_details_path(claim)
+        expect(page).to have_no_content('Create payment request')
+      end
+    end
+
+    context 'payment request eligible' do
+      let(:claim) { build(:claim, state: 'granted') }
+
+      it 'does show create payment request button' do
+        visit nsm_claim_claim_details_path(claim)
+        expect(page).to have_content('Create payment request')
+      end
+    end
+  end
 end
