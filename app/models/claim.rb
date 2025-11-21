@@ -118,7 +118,10 @@ class Claim < Submission
   end
 
   def eligible_for_payment_request?
-    (part_grant? || granted?) && Payments::SearchForm.new(submission_id: id).execute[:metadata][:total_results].zero?
+    return false if data['supplemental_claim'] == 'yes'
+    return false unless part_grant? || granted?
+
+    Payments::SearchForm.new(submission_id: id).execute[:metadata][:total_results].zero?
   end
 
   private

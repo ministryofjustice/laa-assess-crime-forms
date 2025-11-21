@@ -36,8 +36,12 @@
     </dl>
 
     <div class="govuk-button-group govuk-button-group-vertically-centred">
-      <%= govuk_link_to(t('.create_payment_request'), edit_payments_steps_check_your_answers_path(@decision.id, submission: true), data: { disable_on_click: 'true' }) %>
-      <%= govuk_link_to(t('.return'), nsm_claim_claim_details_path(@decision.id)) %>
+      <%= govuk_link_to(t('.create_payment_request'), edit_payments_steps_check_your_answers_path(@decision.id, submission: true),
+                        class: 'govuk-button',
+                        'data-module': 'govuk-button',
+                        data: { disable_on_click: 'true' }) %>
+      <%= govuk_link_to(t('.return'), nsm_claim_claim_details_path(@decision.id),
+                        data: { disable_on_click: 'true' }) %>
     </div>
   </div>
 </div>
