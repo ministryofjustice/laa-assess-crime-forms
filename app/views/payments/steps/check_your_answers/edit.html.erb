@@ -3,7 +3,7 @@
 <% if @claim_details.session_answers['submission_id'].blank? %>
   <% step_header(path: previous_decision_step_path) %>
 <% else %>
-  <% step_header(path: nsm_claim_claim_details_path(@claim_details.session_answers['submission_id'])) %>
+  <% step_header(path: nsm_claim_decision_path(@claim_details.session_answers['submission_id'])) %>
 <% end %>
 
 <div class="govuk-grid-row">
