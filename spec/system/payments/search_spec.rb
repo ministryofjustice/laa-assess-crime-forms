@@ -32,6 +32,7 @@ RSpec.describe 'Search', :stub_oauth_token do
   end
 
   before do
+    allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     your_applications_stub
     sign_in caseworker
   end

@@ -28,6 +28,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
   end
 
   before do
+    allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     create_payment_stub
     stub_search(index_endpoint, search_params)
     sign_in caseworker

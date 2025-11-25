@@ -27,6 +27,7 @@ RSpec.describe 'NSM supplemental payment request', :stub_oauth_token do
   end
 
   before do
+    allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     stub_search(endpoint, search_params)
     stub_search(endpoint, claim_search_params)
     stub_get_claim(get_claim_endpoint)

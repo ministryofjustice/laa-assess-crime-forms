@@ -9,6 +9,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
   let(:youth_court) { true }
 
   before do
+    allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     sign_in caseworker
   end
 
