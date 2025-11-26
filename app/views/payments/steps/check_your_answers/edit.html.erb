@@ -36,7 +36,7 @@
     <h2 class="govuk-summary-card__title"><%= t('.cost_summary') %></h2>
     <ul class="govuk-summary-card__actions">
       <li class="govuk-summary-card__action">
-        <% if @claim_details.session_answers['submission_id'] %>
+        <% if @claim_details.session_answers['submission_id'].present? %>
           <%= link_to 'change profit cost', edit_payments_steps_submission_allowed_costs_path %>
         <% else %>
           <%= link_to 'change', edit_payments_steps_nsm_claimed_costs_path %>
