@@ -56,7 +56,7 @@ RSpec.describe Payments::Steps::ClaimTypeForm, type: :model do
 
       context 'and differs from the value in the session (changed)' do
         before do
-          multi_step_form_session[:request_type] = 'non_standard_mag'
+          multi_step_form_session[:request_type] = 'non_standard_magistrate'
           multi_step_form_session[:some_other_answer] = 'wipe-me'
         end
 

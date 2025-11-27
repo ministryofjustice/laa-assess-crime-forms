@@ -3,9 +3,21 @@ require 'rails_helper'
 RSpec.describe 'Overview', :stub_oauth_token, type: :system do
   let(:user) { create(:caseworker) }
   let(:claim) { build(:claim) }
+  let(:search_params) do
+    { page: 1,
+      sort_by: 'submitted_at',
+      sort_direction: 'descending',
+      submission_id: claim.id,
+      per_page: 20 }
+  end
 
   before do
     stub_app_store_interactions(claim)
+    stub_request(:post, 'https://appstore.example.com/v1/payment_requests/searches').with(body: search_params).to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 },
+              raw_data: [] }.to_json
+    )
     sign_in user
     claim.assigned_user_id = user.id
   end
@@ -239,6 +251,43 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
       expect(page).to have_current_path(
         %r{/421727bc53d347ea81edd6a00833671d\?response-content-disposition=attachment%3B%20filename%3D%22Some_Info.pdf}
       )
+    end
+  end
+
+  describe 'payments' do
+    before do
+      allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
+    end
+
+    context 'payment request ineligible' do
+      let(:claim) { build(:claim, state: 'rejected') }
+
+      it 'shows create payment request button' do
+        visit nsm_claim_claim_details_path(claim)
+        expect(page).to have_no_content('create payment request')
+      end
+    end
+
+    context 'suplemental claim' do
+      let(:claim) { build(:claim, state: 'granted') }
+
+      before do
+        claim.data['supplemental_claim'] = 'yes'
+      end
+
+      it 'shows create payment request button' do
+        visit nsm_claim_claim_details_path(claim)
+        expect(page).to have_no_content('Create payment request')
+      end
+    end
+
+    context 'payment request eligible' do
+      let(:claim) { build(:claim, state: 'granted') }
+
+      it 'does show create payment request button' do
+        visit nsm_claim_claim_details_path(claim)
+        expect(page).to have_content('Create payment request')
+      end
     end
   end
 end

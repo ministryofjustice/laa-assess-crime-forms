@@ -18,10 +18,19 @@
         <p><strong><%= t(".provider_updated", date: format_in_zone(claim.data['updated_at'])) %></strong></p>
         <%= govuk_link_to t('.further_information'), '#further-info' %>
       </div>
-    <% elsif claim.assessed? && claim_summary.assessment_comment.present? %>
+    <% elsif claim.assessed? && (claim_summary.assessment_comment.present? || claim.eligible_for_payment_request?) %>
       <div class="govuk-inset-text">
         <p><strong><%= t(".assessed_statuses.#{claim.state}") %></strong></p>
         <%= simple_format claim_summary.assessment_comment %>
+        <% if claim.eligible_for_payment_request? %>
+          <div class="govuk-button-group">
+            <%= govuk_link_to(t('.create_payment_request'),
+                              edit_payments_steps_check_your_answers_path(claim.id, submission: true),
+                              class: 'govuk-button', 'data-module': 'govuk-button',
+                              data: { disable_on_click: 'true' }) %>
+          </div>
+        <% end %>
+
         <% if claim.part_grant? %>
           <ul class="govuk-list">
           <% if claim.any_work_items_adjusted? %>

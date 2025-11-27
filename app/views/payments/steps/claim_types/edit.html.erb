@@ -7,7 +7,7 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset :request_type, legend: { size: 'xl', text: t('.heading') } do %>
-        <%= f.govuk_radio_button :request_type, Payments::ClaimType::NSM, label: { text: t('payments.requests.type.non_standard_mag' ) } %>
+        <%= f.govuk_radio_button :request_type, Payments::ClaimType::NSM, label: { text: t('payments.requests.type.non_standard_magistrate' ) } %>
         <%= f.govuk_radio_button :request_type, Payments::ClaimType::NSM_SUPPLEMENTAL, label: { text: t('payments.requests.type.non_standard_mag_supplemental' ) } %>
         <%= f.govuk_radio_button :request_type, Payments::ClaimType::NSM_AMENDMENT, label: { text: t('payments.requests.type.non_standard_mag_amendment' ) } %>
         <%= f.govuk_radio_button :request_type, Payments::ClaimType::NSM_APPEAL, label: { text: t('payments.requests.type.non_standard_mag_appeal' ) } %>

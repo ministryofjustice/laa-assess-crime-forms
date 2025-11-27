@@ -22,11 +22,12 @@ RSpec.describe 'NSM amendment payment request', :stub_oauth_token do
       sort_by: 'submitted_at',
       sort_direction: 'descending',
       query: 'laa-1004',
-      request_type: 'non_standard_mag'
+      request_type: 'non_standard_magistrate'
     }
   end
 
   before do
+    allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     stub_search(endpoint, search_params)
     stub_search(endpoint, claim_search_params)
     stub_get_claim(get_claim_endpoint)

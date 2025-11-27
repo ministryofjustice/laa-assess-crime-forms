@@ -27,6 +27,7 @@ RSpec.describe 'Payment Requests', :stub_oauth_token do
     end
 
     before do
+      allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
       allow_any_instance_of(Payments::SearchResults).to receive(:conduct_search).and_return(
         {
           metadata: { total_results: results.count }, data: results

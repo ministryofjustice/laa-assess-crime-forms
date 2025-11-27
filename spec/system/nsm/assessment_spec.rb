@@ -6,6 +6,13 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
   let(:fixed_arbitrary_date) { DateTime.new(2024, 7, 4, 12, 3, 12) }
   let(:user) { create(:caseworker) }
   let(:claim) { build(:claim) }
+  let(:search_params) do
+    { page: 1,
+      sort_by: 'submitted_at',
+      sort_direction: 'descending',
+      submission_id: claim.id,
+      per_page: 20 }
+  end
 
   before do
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
@@ -13,6 +20,11 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
     )
 
+    stub_request(:post, 'https://appstore.example.com/v1/payment_requests/searches').with(body: search_params).to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 },
+              raw_data: [] }.to_json
+    )
     stub_app_store_interactions(claim)
 
     sign_in user
@@ -23,6 +35,7 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
 
   context 'when granted' do
     before do
+      allow(FeatureFlags).to receive_messages(payments: double(enabled?: false))
       travel_to fixed_arbitrary_date
       visit nsm_claim_claim_details_path(claim)
       click_link_or_button 'Make a decision'
@@ -50,6 +63,173 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
       expect(user.access_logs.where(submission_id: claim.id).order(:created_at).pluck(:controller, :action)).to eq(
         [%w[claim_details show], %w[make_decisions edit], %w[make_decisions update]]
       )
+    end
+  end
+
+  describe 'payments' do
+    before do
+      allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
+    end
+
+    context 'granted' do
+      before do
+        travel_to fixed_arbitrary_date
+        visit nsm_claim_claim_details_path(claim)
+        click_link_or_button 'Make a decision'
+        choose 'Grant'
+        fill_in 'nsm-make-decision-form-grant-comment-field', with: 'Test Data'
+        click_link_or_button 'Submit decision'
+      end
+
+      it 'records a paper trail in the access logs' do
+        expect(user.access_logs.where(submission_id: claim.id).order(:created_at).pluck(:controller, :action)).to eq(
+          [%w[claim_details show], %w[make_decisions edit], %w[make_decisions update], %w[decisions show]]
+        )
+      end
+
+      it 'confirms decision sent' do
+        expect(page).to have_content 'Decision sent'
+        expect(page).to have_content 'Application reference'
+        expect(page).to have_content 'LAA decision'
+      end
+
+      it 'can create a payment request' do
+        expect(page).to have_content 'Create payment request'
+      end
+
+      it 'links to return to application' do
+        expect(page).to have_content 'Return to the application'
+      end
+
+      it 'clicking "create payment" request takes user to payment check your answers page' do
+        click_link_or_button 'Create payment request'
+        expect(page).to have_content 'Check your answers'
+      end
+
+      it 'clicking "back" takes user to nsm claims page' do
+        click_link_or_button 'Create payment request'
+        find('div[role="navigation"]').click_link('Back')
+        expect(page).to have_content 'Decision sent'
+      end
+
+      it 'clicking "create payment request" takes user check answers page' do
+        click_link_or_button 'Create payment request'
+        click_link_or_button 'change profit cost'
+        expect(page).to have_content 'Amend allowed profit costs'
+      end
+
+      it 'allows profit cost to be amended' do
+        click_link_or_button 'Create payment request'
+        click_link_or_button 'change profit cost'
+        fill_in 'payments_steps_submission_allowed_costs_form[allowed_profit_cost]', with: '200'
+        click_link_or_button 'Save and continue'
+        expect(page).to have_content 'Check your answers'
+      end
+    end
+
+    context 'part-granted' do
+      let(:claim) { build(:claim, data:) }
+      let(:data) { build(:nsm_data) }
+
+      before do
+        claim.data['work_items'].first['time_spent_original'] = claim.data['work_items'].first['time_spent']
+        claim.data['work_items'].first['time_spent'] -= 1
+        claim.data['work_items'].first['adjustment_comment'] = 'reducing this work item'
+        travel_to fixed_arbitrary_date
+        visit nsm_claim_claim_details_path(claim)
+        click_link_or_button 'Make a decision'
+        choose 'Part grant'
+        fill_in 'nsm-make-decision-form-partial-comment-field', with: 'Test Data'
+        click_link_or_button 'Submit decision'
+      end
+
+      it 'records a paper trail in the access logs' do
+        expect(user.access_logs.where(submission_id: claim.id).order(:created_at).pluck(:controller, :action)).to eq(
+          [%w[claim_details show], %w[make_decisions edit], %w[make_decisions update], %w[decisions show]]
+        )
+      end
+
+      it 'confirms decision sent' do
+        expect(page).to have_content 'Decision sent'
+        expect(page).to have_content 'Application reference'
+        expect(page).to have_content 'LAA decision'
+      end
+
+      it 'can create a payment request' do
+        expect(page).to have_content 'Create payment request'
+      end
+
+      it 'has link back to application' do
+        expect(page).to have_content 'Return to the application'
+      end
+
+      it 'clicking "create payment" request takes user to payment check your answers page' do
+        click_link_or_button 'Create payment request'
+        expect(page).to have_content 'Check your answers'
+      end
+
+      it 'clicking "back" takes user to nsm claims page' do
+        click_link_or_button 'Create payment request'
+        find('div[role="navigation"]').click_link('Back')
+        expect(page).to have_content 'Decision sent'
+      end
+
+      it 'clicking "create payment request" takes user check answers page' do
+        click_link_or_button 'Create payment request'
+        click_link_or_button 'change profit cost'
+        expect(page).to have_content 'Amend allowed profit costs'
+      end
+
+      it 'allows profit cost to be amended' do
+        click_link_or_button 'Create payment request'
+        click_link_or_button 'change profit cost'
+        fill_in 'payments_steps_submission_allowed_costs_form[allowed_profit_cost]', with: '200'
+        click_link_or_button 'Save and continue'
+        expect(page).to have_content 'Check your answers'
+      end
+
+      it 'profit costs changes only allows numeric' do
+        click_link_or_button 'Create payment request'
+        click_link_or_button 'change profit cost'
+        fill_in 'payments_steps_submission_allowed_costs_form[allowed_profit_cost]', with: 'lgtm'
+        click_link_or_button 'Save and continue'
+        expect(page).to have_content 'Error: is not a number'
+      end
+    end
+
+    context 'rejected' do
+      before do
+        travel_to fixed_arbitrary_date
+        visit nsm_claim_claim_details_path(claim)
+        click_link_or_button 'Make a decision'
+        choose 'Reject'
+        fill_in 'nsm-make-decision-form-reject-comment-field', with: 'Test Data'
+        click_link_or_button 'Submit decision'
+      end
+
+      it 'sends a part granted notification' do
+        expect(page).to have_content 'Closed claims'
+        expect(page).to have_content 'You rejected this claim'
+      end
+    end
+
+    context 'breach of injunction' do
+      before do
+        claim.data['claim_type'] = 'breach_of_injunction'
+        claim.data['cntp_date'] = Time.zone.today
+        travel_to fixed_arbitrary_date
+        visit nsm_claim_claim_details_path(claim)
+        click_link_or_button 'Make a decision'
+        choose 'Grant'
+        fill_in 'nsm-make-decision-form-grant-comment-field', with: 'Test Data'
+        click_link_or_button 'Submit decision'
+      end
+
+      it 'clicking "create payment" request takes user to payment check your answers page' do
+        click_link_or_button 'Create payment request'
+        expect(page).to have_content 'Check your answers'
+        expect(page).to have_content 'Claim typeNon-Standard Magistrates'
+      end
     end
   end
 

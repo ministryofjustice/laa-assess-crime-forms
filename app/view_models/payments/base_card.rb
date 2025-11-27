@@ -4,6 +4,7 @@ module Payments
     include ActionView::Helpers::OutputSafetyHelper
     include ActionView::Helpers::UrlHelper
     include ActionView::Helpers::TextHelper
+
     include NameConstructable
 
     CARD_ROWS = [].freeze

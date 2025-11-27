@@ -117,6 +117,14 @@ class Claim < Submission
     data.key?('gdpr_documents_deleted') ? data['gdpr_documents_deleted'] : false
   end
 
+  def eligible_for_payment_request?
+    return false unless FeatureFlags.payments.enabled?
+    return false if data['supplemental_claim'] == 'yes'
+    return false unless part_grant? || granted?
+
+    Payments::SearchForm.new(submission_id: id).execute[:metadata][:total_results].zero?
+  end
+
   private
 
   def youth_court_fee_claimed

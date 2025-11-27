@@ -4,7 +4,7 @@ module Payments
 
     Option = Struct.new(:value, :label)
     REQUEST_TYPES = [
-      Option.new('non_standard_mag', I18n.t('shared.payment_type.non_standard_mag')),
+      Option.new('non_standard_magistrate', I18n.t('shared.payment_type.non_standard_magistrate')),
       Option.new('non_standard_mag_supplemental', I18n.t('shared.payment_type.non_standard_mag_supplemental')),
       Option.new('non_standard_mag_appeal', I18n.t('shared.payment_type.non_standard_mag_appeal')),
       Option.new('non_standard_mag_amendment', I18n.t('shared.payment_type.non_standard_mag_amendment')),
@@ -19,6 +19,7 @@ module Payments
     attribute :submitted_to, :string
     attribute :received_from, :string
     attribute :received_to, :string
+    attribute :submission_id, :string
 
     validates :submitted_from, :submitted_to, :received_from, :received_to, is_a_date: true
 

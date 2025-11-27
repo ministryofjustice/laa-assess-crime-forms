@@ -13,6 +13,10 @@ module Decisions
       data['answers']
     end
 
+    def answers=(claim_hash)
+      data['answers'] = claim_hash
+    end
+
     def reset_answers
       data['answers'] = {}
     end

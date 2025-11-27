@@ -9,6 +9,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
   let(:youth_court) { true }
 
   before do
+    allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     sign_in caseworker
   end
 
@@ -60,7 +61,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         {
           'id' => id,
           'submitter_id' => caseworker.id,
-          'request_type' => 'non_standard_mag',
+          'request_type' => 'non_standard_magistrate',
           'submitted_at' => '2025-10-7 10:31:07 UTC',
           'date_received' => '2025-09-07 10:31:07 UTC',
           'claimed_profit_cost' => '300.4',
@@ -199,7 +200,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           {
             'id' => 'ed374f60-1a8b-4c2a-9ff4-135e35109c81',
             'submitter_id' => caseworker.id,
-            'request_type' => 'non_standard_mag',
+            'request_type' => 'non_standard_magistrate',
             'submitted_at' => '2025-09-12 10:31:07 UTC',
             'date_received' => '2025-09-07 10:31:07 UTC',
             'claimed_profit_cost' => '300.4',
@@ -249,9 +250,21 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       let(:claim) { build(:claim, state: 'granted') }
       let(:laa_reference) { claim.data['laa_reference'] }
       let(:submission_id) { claim.id }
+      let(:search_params) do
+        { page: 1,
+          sort_by: 'submitted_at',
+          sort_direction: 'descending',
+          submission_id: claim.id,
+          per_page: 20 }
+      end
 
       before do
         stub_app_store_interactions(claim)
+        stub_request(:post, 'https://appstore.example.com/v1/payment_requests/searches').with(body: search_params).to_return(
+          status: 201,
+          body: { metadata: { total_results: 0 },
+            raw_data: [] }.to_json
+        )
       end
 
       it 'shows link for original submission in claim details page' do
@@ -390,7 +403,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
             {
               'id' => SecureRandom.uuid,
               'submitter_id' => caseworker.id,
-              'request_type' => 'non_standard_mag',
+              'request_type' => 'non_standard_magistrate',
               'submitted_at' => '2025-09-12 10:31:07 UTC',
               'date_received' => '2025-09-07 10:31:07 UTC',
               'claimed_profit_cost' => '300.4',

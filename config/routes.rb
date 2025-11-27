@@ -95,6 +95,7 @@ Rails.application.routes.draw do
       resource :history, only: [:show, :create]
       resource :change_risk, only: [:edit, :update], path_names: { edit: '' }
       resource :make_decision, only: [:edit, :update], path_names: { edit: '' }
+      resource :decision, only: [:show]
       resource :send_back, only: [:edit, :update, :show]
       resource :unassignment, only: [:edit, :update], path_names: { edit: '' }
       resources :assignments, only: %i[new create]
@@ -167,6 +168,7 @@ Rails.application.routes.draw do
             edit_step :claimed_costs
             edit_step :claim_details
           end
+          edit_step :submission_allowed_costs
           edit_step :check_your_answers
           edit_step :date_received
           resource :claim_search, only: %i[new edit update],

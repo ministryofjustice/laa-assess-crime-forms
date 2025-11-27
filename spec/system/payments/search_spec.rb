@@ -32,6 +32,7 @@ RSpec.describe 'Search', :stub_oauth_token do
   end
 
   before do
+    allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     your_applications_stub
     sign_in caseworker
   end
@@ -46,12 +47,12 @@ RSpec.describe 'Search', :stub_oauth_token do
   end
 
   context 'when I search for an application that has already been imported' do
-    let(:payment_request_claim) { { laa_reference: 'LAA-0111', client_last_name: 'Dickens' } }
+    let(:payment_request_claim) { { id: '1234', laa_reference: 'LAA-0111', client_last_name: 'Dickens' } }
 
     let(:data) do
       [
         id: SecureRandom.uuid,
-        request_type: 'non_standard_mag',
+        request_type: 'non_standard_magistrate',
         submitted_at: Time.zone.now.to_s,
         payment_request_claim: payment_request_claim
       ]

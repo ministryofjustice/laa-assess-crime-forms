@@ -92,7 +92,7 @@
                   <%= search_result.payment_request_id %>
                 </td>
                 <td class="govuk-table__cell">
-                  <%= link_to search_result.laa_reference %>
+                  <%= link_to search_result.laa_reference, payments_request_path(search_result.payment_request_claim_id) %>
                 </td>
                 <td class="govuk-table__cell">
                   <%= search_result.request_type %>

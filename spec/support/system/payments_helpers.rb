@@ -9,7 +9,7 @@ module PaymentsHelpers
           metadata: { total_results: 1 },
           data: [
             id: SecureRandom.uuid,
-            request_type: 'non_standard_mag',
+            request_type: 'non_standard_magistrate',
             submitted_at: Time.zone.now.to_s,
             payment_request_claim: {
               id: '1234',
@@ -53,7 +53,7 @@ module PaymentsHelpers
       'payment_requests' =>
       [{ 'id' => '0604df63-ba7f-4cca-87b0-9db0b0e2d02f',
         'submitter_id' => 'e061f876-3863-4bfd-9f25-ffefb942c90e',
-        'request_type' => 'non_standard_mag',
+        'request_type' => 'non_standard_magistrate',
         'submitted_at' => '2025-10-29 14:01:57 UTC',
         'date_received' => '2025-10-29 00:00:00 UTC',
         'claimed_profit_cost' => '123.0',

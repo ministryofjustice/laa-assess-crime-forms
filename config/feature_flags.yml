@@ -30,7 +30,7 @@ feature_flags:
     uat: true
     production: true
   payments:
-    local: <%= ENV.fetch("PAYMENTS", true) %>
+    local: <%= ENV.fetch("PAYMENTS", false) %>
     development: true
     uat: true
     production: false
