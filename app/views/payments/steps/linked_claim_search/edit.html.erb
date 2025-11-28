@@ -58,6 +58,7 @@
     </table>
     <%= render 'shared/pagination', pagy: @search_form.pagy, item: t(".result") %>
   <% else %>
-    <p class="govuk-text"><%= t('shared.search.search_results.none_para') %></p>
+    <div><%= t('.no_results_html').html_safe %></div>
+    <%= govuk_button_to t('.new_record'), edit_payments_steps_ac_claim_details_path, method: :get%>
   <% end %>
 <% end %>

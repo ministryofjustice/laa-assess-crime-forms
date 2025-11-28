@@ -24,7 +24,6 @@ module Payments
                       :id, :court_attendances, :matter_type, :no_of_defendants,
                       :outcome_code, :stage_code, :work_completed_date, :youth_court,
                       :court_name)
-        claim.merge!(type: 'assigned_counsel')
       end
 
       def payment_request_claim
