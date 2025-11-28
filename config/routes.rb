@@ -171,6 +171,8 @@ Rails.application.routes.draw do
           edit_step :submission_allowed_costs
           edit_step :check_your_answers
           edit_step :date_received
+          resource :linked_claim_search, only: %i[new edit update],
+            controller: 'linked_claim_search', path_names: { edit: '' }
           resource :claim_search, only: %i[new edit update],
             controller: 'claim_search', path_names: { edit: '' }
           edit_step :claim_types

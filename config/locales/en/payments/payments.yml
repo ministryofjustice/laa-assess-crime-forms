@@ -73,6 +73,12 @@ en:
           laa_reference: Search for the original claim
           payment_requests: payment requests
           result: result
+      linked_claim_search:
+        edit:
+          page_title: Search for the claim
+          heading: Search for the linked non-standard magistrates claim
+          payment_requests: payment requests
+          result: result
       submission_allowed_costs:
         edit:
           page_title: Amend allowed profit costs
@@ -227,6 +233,10 @@ en:
         date_received: For example, 17/5/2025.
       payments_steps_claim_search_form:
         query: You can search by defendant, firm account, UFN or LAA reference
+      payments_steps_linked_claim_search_form:
+        query: You can search by defendant, firm account, UFN or LAA reference
     label:
       payments_steps_claim_search_form:
+        query: Find a claim
+      payments_steps_linked_claim_search_form:
         query: Find a claim

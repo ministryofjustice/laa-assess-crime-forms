@@ -1,0 +1,63 @@
+<% title t('.page_title') %>
+<% step_header(path: previous_decision_step_path) %>
+<%= govuk_error_summary(@form_object) %>
+
+<%= form_with(url: new_payments_steps_linked_claim_search_path(anchor: 'search-results'), method: :get, model: @search_form) do |f| %>
+  <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+  <div class="moj-search" style="margin-bottom: 20px;">
+    <div class="govuk-form-group" role="search">
+      <%= f.govuk_text_field :query, class: "govuk-input moj-search__input", type: "search" %>
+    </div>
+    <%= f.submit "Search", class: "govuk-button moj-search__button" %>
+  </div>
+<% end %>
+
+<p></p>
+<% if @search_form.executed? %>
+  <h2 id="search-results" class="govuk-heading-m"><%= t('shared.search.search_results', count: @search_form.pagy.count) %></h2>
+  <% if @search_form.results.any? %>
+    <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <% %i[laa_reference office_code firm_name ufn client_last_name].each do |key| %>
+            <%= table_header_with_link(key,
+                                       'shared.search.table.header',
+                                       { 'controller' => controller_path, 'action' => 'edit',  'payments_claim_search_form' => @search_form.attributes },
+                                       @search_form.sort_by, @search_form.sort_direction, 'payments_claim_search_form') %>
+                                   <% end %>
+                                   <th scope="col" class="govuk-table__header"><%= t('shared.search.table.header.actions') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body app-task-list__items">
+        <% @search_form.results.each do |search_result| %>
+          <%= step_form @form_object do |f| %>
+            <tr class="govuk-table__row app-task-list__item">
+              <td class="govuk-table__cell">
+                <%= search_result.laa_reference %>
+                <%= f.hidden_field(:payment_request_claim_id, value: search_result.payment_request_claim_id) %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= search_result.office_code %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= search_result.firm_name %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= search_result.ufn %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= search_result.client_last_name %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= f.submit "Select claim",  class: "govuk-button moj-search__button"%>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <%= render 'shared/pagination', pagy: @search_form.pagy, item: t(".result") %>
+  <% else %>
+    <p class="govuk-text"><%= t('shared.search.search_results.none_para') %></p>
+  <% end %>
+<% end %>

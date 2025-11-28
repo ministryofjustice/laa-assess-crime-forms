@@ -10,6 +10,8 @@ module Decisions
       .goto(edit: DecisionTree::CLAIM_SEARCH.sub(%r{^/}, ''))
     from(DecisionTree::CLAIM_SEARCH.sub(%r{^/}, ''))
       .goto(edit: DecisionTree::CLAIM_TYPE)
+    from(DecisionTree::LINKED_CLAIM_SEARCH.sub(%r{^/}, ''))
+      .goto(edit: DecisionTree::CLAIM_TYPE)
     from(DecisionTree::NSM_CLAIMED_COSTS)
       .when(-> { nsm })
       .goto(edit: DecisionTree::NSM_CLAIM_DETAILS)

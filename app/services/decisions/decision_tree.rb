@@ -11,8 +11,11 @@ module Decisions
     NSM_CLAIMED_COSTS = 'payments/steps/nsm/claimed_costs'.freeze
     NSM_ALLOWED_COSTS = 'payments/steps/nsm/allowed_costs'.freeze
 
+    AC_CLAIM_DETAILS = 'payments/steps/ac/claim_details'.freeze
+
     DATE_RECEIVED = '/payments/steps/date_received'.freeze
     CLAIM_SEARCH = '/payments/steps/claim_search'.freeze
+    LINKED_CLAIM_SEARCH = '/payments/steps/linked_claim_search'.freeze
     CHECK_YOUR_ANSWERS = '/payments/steps/check_your_answers'.freeze
     SUBMISSION_ALLOWED_COSTS = 'payments/steps/submission_allowed_costs'.freeze
 
@@ -23,6 +26,11 @@ module Decisions
       .goto(edit: NSM_CLAIM_DETAILS)
       .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment })
       .goto(edit: CLAIM_SEARCH)
+      .when(-> { ac })
+      .goto(edit: LINKED_CLAIM_SEARCH)
+
+    from(:linked_claim_search)
+      .goto(edit: AC_CLAIM_DETAILS)
 
     from(:claim_search)
       .goto(edit: DATE_RECEIVED)
