@@ -66,6 +66,7 @@ en:
         edit:
           page_title: Claim type
           heading: Claim type
+          or: or
       claim_search:
         edit:
           page_title: Find a claim
