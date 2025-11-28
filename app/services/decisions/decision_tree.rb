@@ -11,7 +11,7 @@ module Decisions
     NSM_CLAIMED_COSTS = 'payments/steps/nsm/claimed_costs'.freeze
     NSM_ALLOWED_COSTS = 'payments/steps/nsm/allowed_costs'.freeze
 
-    AC_CLAIM_DETAILS = 'payments/steps/ac/claim_details'.freeze
+    AC_CLAIM_DETAILS = '/payments/steps/ac/claim_details'.freeze
 
     DATE_RECEIVED = '/payments/steps/date_received'.freeze
     CLAIM_SEARCH = '/payments/steps/claim_search'.freeze

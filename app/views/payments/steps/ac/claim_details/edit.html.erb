@@ -1,12 +1,20 @@
 <% title t('.page_title') %>
 
-<% step_header(path: payments_requests_path) %>
+<% step_header(path: previous_decision_step_path) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :ufn, label: { size: 'm' }, width: 10 %>
+      <div class="govuk-date-input__item">
+        <div class="moj-datepicker" data-module="moj-date-picker">
+          <%=
+            f.govuk_text_field :date_received, label: { size: 's', text: t('.date_received') },
+            hint: { size: 's', text: t('.date_received_hint') }, class: 'moj-js-datepicker-input' %>
+        </div>
+      </div>
+      <%= f.govuk_text_field :counsel_office_code, label: { size: 's', text: t('.counsel_office_code') }, width: 20 %>
+      <%= f.govuk_text_field :counsel_office_name, label: { size: 's', text: t('.counsel_office_name') }, width: 20 %>
       <%= f.continue_button(secondary: false) %>
     <% end %>
   </div>
