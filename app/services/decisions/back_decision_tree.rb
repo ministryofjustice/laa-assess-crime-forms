@@ -31,5 +31,8 @@ module Decisions
       .goto(edit: DecisionTree::CLAIM_TYPE)
     from(DecisionTree::AC_CLAIM_DETAILS)
       .goto(edit: DecisionTree::LINKED_CLAIM_SEARCH.sub(%r{^/}, ''))
+    from(DecisionTree::AC_CLAIMED_COSTS)
+      .goto(edit: DecisionTree::AC_CLAIM_DETAILS)
+
   end
 end

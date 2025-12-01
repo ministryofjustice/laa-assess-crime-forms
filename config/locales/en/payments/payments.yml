@@ -104,6 +104,10 @@ en:
           edit:
             page_title: Claimed costs
             heading: Claimed costs
+            claimed_net_counsel_cost: Net counsel fees
+            claimed_vat_counsel_cost: VAT on counsel fees
+            calculate_cost: Calculate cost
+            total_cost: Total claimed cost
         allowed_costs:
           edit:
             page_title: Allowed costs

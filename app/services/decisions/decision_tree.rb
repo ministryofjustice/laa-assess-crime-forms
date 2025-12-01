@@ -12,6 +12,7 @@ module Decisions
     NSM_ALLOWED_COSTS = 'payments/steps/nsm/allowed_costs'.freeze
 
     AC_CLAIM_DETAILS = '/payments/steps/ac/claim_details'.freeze
+    AC_CLAIMED_COSTS = '/payments/steps/ac/claimed_costs'.freeze
 
     DATE_RECEIVED = '/payments/steps/date_received'.freeze
     CLAIM_SEARCH = '/payments/steps/claim_search'.freeze
@@ -31,6 +32,8 @@ module Decisions
 
     from(:linked_claim_search)
       .goto(edit: AC_CLAIM_DETAILS)
+    from(:ac_claim_details)
+      .goto(edit: AC_CLAIMED_COSTS)
 
     from(:claim_search)
       .goto(edit: DATE_RECEIVED)
