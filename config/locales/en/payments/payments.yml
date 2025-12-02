@@ -112,6 +112,10 @@ en:
           edit:
             page_title: Allowed costs
             heading: Allowed costs
+            allowed_net_counsel_cost: Net counsel fees
+            allowed_vat_counsel_cost: VAT on counsel fees
+            calculate_cost: Calculate cost
+            total_cost: Total allowed cost
       nsm:
         claim_details:
           edit:

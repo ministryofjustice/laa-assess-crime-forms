@@ -33,5 +33,7 @@ module Decisions
       .goto(edit: DecisionTree::LINKED_CLAIM_SEARCH)
     from(DecisionTree::AC_CLAIMED_COSTS)
       .goto(edit: DecisionTree::AC_CLAIM_DETAILS)
+    from(DecisionTree::AC_ALLOWED_COSTS)
+      .goto(edit: DecisionTree::AC_CLAIMED_COSTS)
   end
 end
