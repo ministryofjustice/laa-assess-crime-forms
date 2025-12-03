@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/ministryofjustice/laa-crime-forms-common.git
-  revision: 9e36e1085779e67f8c72a7ad263080b9239425f1
+  revision: 6ed9b3111999f64fe0ef9927f3567ee5d0c3c62b
+  branch: CRM457-2842-uplift
   specs:
     laa_crime_forms_common (0.12.4)
       activesupport
@@ -655,7 +656,7 @@ DEPENDENCIES
   httparty
   jbuilder
   jsbundling-rails (>= 1.3.1)
-  laa_crime_forms_common (~> 0.12.4)!
+  laa_crime_forms_common!
   launchy
   lograge
   logstash-event
