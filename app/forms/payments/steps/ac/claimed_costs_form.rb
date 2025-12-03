@@ -1,4 +1,3 @@
-# :nocov:
 module Payments
   module Steps
     module Ac
@@ -25,4 +24,3 @@ module Payments
     end
   end
 end
-# :nocov:
