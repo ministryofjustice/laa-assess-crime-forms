@@ -36,6 +36,8 @@ module Decisions
       .goto(edit: AC_CLAIMED_COSTS)
     from(:ac_claimed_costs)
       .goto(edit: AC_ALLOWED_COSTS)
+    from(:ac_allowed_costs)
+      .goto(edit: CHECK_YOUR_ANSWERS)
 
     from(:claim_search)
       .goto(edit: DATE_RECEIVED)

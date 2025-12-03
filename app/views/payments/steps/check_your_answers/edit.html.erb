@@ -17,10 +17,10 @@
 <div class="govuk-summary-card">
   <div class="govuk-summary-card__title-wrapper">
     <h2 class="govuk-summary-card__title"><%= t('.claim_details') %></h2>
-    <% unless @claim_details.session_answers['submission_id'] %>
+    <% unless @claim_details.session_answers['submission_id'].present? %>
       <ul class="govuk-summary-card__actions">
         <li class="govuk-summary-card__action">
-          <%= link_to 'change', payments_steps_claim_types_path %>
+          <%= link_to t('.change'), payments_steps_claim_types_path %>
           <span class="govuk-visually-hidden"><%= t('.claim_details') %></span>
         </li>
       </ul>
@@ -37,9 +37,9 @@
     <ul class="govuk-summary-card__actions">
       <li class="govuk-summary-card__action">
         <% if @claim_details.session_answers['submission_id'].present? %>
-          <%= link_to 'change profit cost', edit_payments_steps_submission_allowed_costs_path %>
+          <%= link_to t('.change_profit'), edit_payments_steps_submission_allowed_costs_path %>
         <% else %>
-          <%= link_to 'change', edit_payments_steps_nsm_claimed_costs_path %>
+          <%= link_to t('.change'), @cost_summary.change_link %>
         <% end %>
         <span class="govuk-visually-hidden"><%= t('.cost_summary') %></span>
       </li>

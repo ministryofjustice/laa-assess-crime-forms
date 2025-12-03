@@ -1,5 +1,5 @@
 module Payments
-  class ClaimDetailsSummary < BaseCard
+  class NsmClaimDetailsSummary < BaseCard
     CARD_ROWS = %i[
       claim_type
       date_received

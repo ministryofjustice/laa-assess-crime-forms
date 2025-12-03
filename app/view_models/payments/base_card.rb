@@ -10,10 +10,11 @@ module Payments
     CARD_ROWS = [].freeze
     TABLE_ROWS = [].freeze
 
-    attr_reader :session_answers
+    attr_reader :session_answers, :id
 
-    def initialize(session_answers)
+    def initialize(session_answers, id = nil)
       @session_answers = session_answers
+      @id = id
     end
 
     def card_rows

@@ -1,5 +1,7 @@
 module Payments
-  class CostsSummary < BaseCard
+  class AcCostsSummary < BaseCard
+    include Routing
+
     PROFIT_COSTS = 'profit_costs'.freeze
 
     def headers
@@ -12,10 +14,8 @@ module Payments
 
     def table_fields
       [
-        build_row(:profit_cost),
-        build_row(:disbursement_cost),
-        build_row(:travel_cost),
-        build_row(:waiting_cost)
+        build_row(:net_counsel_cost),
+        build_row(:vat_counsel_cost)
       ]
     end
 
@@ -25,6 +25,10 @@ module Payments
         total_claimed: format(session_answers['claimed_total'].to_f),
         total_allowed: format(session_answers['allowed_total'].to_f)
       }
+    end
+
+    def change_link
+      url_helpers.edit_payments_steps_ac_claimed_costs_path(@id)
     end
 
     private
