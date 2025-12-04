@@ -15,19 +15,19 @@
   <div class="govuk-grid-column-two-thirds" id="payments-calculate-container">
     <%= step_form @form_object do |f| %>
       <div class="govuk-form-group">
-        <%= f.govuk_text_field :claimed_net_counsel_cost,
+        <%= f.govuk_text_field :claimed_net_assigned_counsel_cost,
           id: "counsel_costs_net",
           prefix_text: "£",
           inputmode: "decimal",
-          label: { size: 's', text: t('.claimed_net_counsel_cost') },
+          label: { size: 's', text: t('.claimed_net_assigned_counsel_cost') },
           width: 10 %>
       </div>
       <div class="govuk-form-group">
-        <%= f.govuk_text_field :claimed_vat_counsel_cost,
+        <%= f.govuk_text_field :claimed_assigned_counsel_vat,
           id: "counsel_costs_vat",
           prefix_text: "£",
           inputmode: "decimal",
-          label: { size: 's', text: t('.claimed_vat_counsel_cost') },
+          label: { size: 's', text: t('.claimed_assigned_counsel_vat') },
           width: 10 %>
       </div>
 

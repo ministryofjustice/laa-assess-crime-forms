@@ -58,8 +58,8 @@ en:
           disbursement_cost: Disbursements
           travel_cost: Travel
           waiting_cost: Waiting
-          net_counsel_cost: Net counsel fees
-          vat_counsel_cost: VAT on counsel fees
+          net_assigned_counsel_cost: Net counsel fees
+          assigned_counsel_vat: VAT on counsel fees
           total: Total
           laa_reference: LAA reference
           submit_payment_request: Submit payment request
@@ -112,16 +112,16 @@ en:
           edit:
             page_title: Claimed costs
             heading: Claimed costs
-            claimed_net_counsel_cost: Net counsel fees
-            claimed_vat_counsel_cost: VAT on counsel fees
+            claimed_net_assigned_counsel_cost: Net counsel fees
+            claimed_assigned_counsel_vat: VAT on counsel fees
             calculate_cost: Calculate cost
             total_cost: Total claimed cost
         allowed_costs:
           edit:
             page_title: Allowed costs
             heading: Allowed costs
-            allowed_net_counsel_cost: Net counsel fees
-            allowed_vat_counsel_cost: VAT on counsel fees
+            allowed_net_assigned_counsel_cost: Net counsel fees
+            allowed_assigned_counsel_vat: VAT on counsel fees
             calculate_cost: Calculate cost
             total_cost: Total allowed cost
       nsm:

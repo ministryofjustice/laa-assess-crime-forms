@@ -14,8 +14,8 @@ module Payments
 
     def table_fields
       [
-        build_row(:net_counsel_cost),
-        build_row(:vat_counsel_cost)
+        build_row(:net_assigned_counsel_cost),
+        build_row(:assigned_counsel_vat)
       ]
     end
 
