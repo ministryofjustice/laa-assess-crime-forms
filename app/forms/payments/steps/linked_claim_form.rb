@@ -19,11 +19,12 @@ module Payments
 
       def claim
         claim = payment_request_claim.deep_stringify_keys.with_indifferent_access
-        claim[:nsm_claim_id] = claim[:id]
-        claim.except!(:payment_requests, :created_at, :updated_at, :type,
-                      :id, :court_attendances, :matter_type, :no_of_defendants,
-                      :outcome_code, :stage_code, :work_completed_date, :youth_court,
-                      :court_name)
+        {
+          'nsm_claim_id' => claim[:id],
+          'defendant_last_name' => claim[:client_last_name],
+          'solicitor_office_code' => claim[:solicitor_office_code],
+          'solicitor_firm_name' => claim[:solicitor_firm_name]
+        }
       end
 
       def payment_request_claim
