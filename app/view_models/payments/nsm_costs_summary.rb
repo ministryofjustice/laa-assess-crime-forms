@@ -1,6 +1,6 @@
 module Payments
   class NsmCostsSummary < BaseCard
-    include Rails.application.routes.url_helpers
+    include Routing
 
     PROFIT_COSTS = 'profit_costs'.freeze
 
@@ -30,14 +30,10 @@ module Payments
     end
 
     def change_link
-      edit_payments_steps_nsm_claimed_costs_path
+      url_helpers.edit_payments_steps_nsm_claimed_costs_path(@id)
     end
 
     private
-
-    def controller
-      super.controller
-    end
 
     def t(key, numeric: true, width: nil)
       {

@@ -1,6 +1,6 @@
 module Payments
   class NsmCostsSummaryAmendedAndClaimed < BaseCard
-    include Rails.application.routes.url_helpers
+    include Routing
     include ActionView::Helpers::UrlHelper
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::OutputSafetyHelper
@@ -37,7 +37,7 @@ module Payments
     end
 
     def change_link
-      edit_payments_steps_nsm_claimed_costs_path
+      url_helpers.edit_payments_steps_nsm_claimed_costs_path(@id)
     end
 
     private

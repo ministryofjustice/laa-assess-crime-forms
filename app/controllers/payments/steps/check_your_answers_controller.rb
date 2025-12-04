@@ -44,11 +44,11 @@ module Payments
       def cost_summary
         case multi_step_form_session['request_type'].to_sym
         when :non_standard_magistrate
-          Payments::NsmCostsSummary.new(multi_step_form_session.answers)
+          Payments::NsmCostsSummary.new(multi_step_form_session.answers, session[:multi_step_form_id])
         when :non_standard_mag_supplemental
-          Payments::NsmCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers)
+          Payments::NsmCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers, session[:multi_step_form_id])
         when :non_standard_mag_amendment, :non_standard_mag_appeal
-          Payments::NsmCostsSummaryAmended.new(multi_step_form_session.answers)
+          Payments::NsmCostsSummaryAmended.new(multi_step_form_session.answers, session[:multi_step_form_id])
         when :assigned_counsel
           Payments::AcCostsSummary.new(multi_step_form_session.answers, session[:multi_step_form_id])
         end
