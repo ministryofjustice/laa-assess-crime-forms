@@ -9,7 +9,7 @@ module PaymentsHelpers
           metadata: { total_results: 1 },
           data: [
             id: SecureRandom.uuid,
-            request_type: 'non_standard_magistrate',
+            search_scope: 'nsm_claim',
             submitted_at: Time.zone.now.to_s,
             payment_request_claim: {
               id: '1234',
@@ -36,7 +36,7 @@ module PaymentsHelpers
       'laa_reference' => 'LAA-qWRbvm',
       'solicitor_office_code' => '1asdf',
       'solicitor_firm_name' => 'some name',
-      'client_last_name' => 'asdf',
+      'defendant_last_name' => 'asdf',
       'stage_code' => 'PROG',
       'work_completed_date' => '2025-10-29 00:00:00 UTC',
       'court_name' => 'Usk - C3208F',

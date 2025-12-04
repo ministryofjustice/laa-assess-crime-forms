@@ -2,7 +2,7 @@ module Payments
   module Steps
     class ClaimSearchForm < Payments::SearchForm
       attribute :query, :string
-      attribute :request_type, :string
+      attribute :search_scope, :string
 
       validates :query, presence: true
 

@@ -31,8 +31,22 @@ module Payments
       def default_params
         {
           page: params.fetch(:page, '1'),
-          request_type: parent_claim_class
+          search_scope: search_scope
         }
+      end
+
+      def search_scope
+        search_scope = multi_step_form_session['request_type']
+                       .sub(/_(supplemental|appeal|amendment)\z/, '').sub(/mag\z/, 'magistrate')
+
+        # :nocov:
+        case search_scope.to_sym
+        when :non_standard_magistrate, :breach_of_injunction
+          :nsm_claim
+        when :assigned_counsel_claim
+          :ac_claim
+        end
+        # :nocov:
       end
     end
   end
