@@ -82,9 +82,11 @@ en:
           payment_requests: payment requests
           result: result
       linked_claim_search:
+        heading_non_standard_magistrate: Search for the linked non-standard magistrates claim
+        heading_assigned_counsel: Search for the original assigned counsel claim
         edit:
           page_title: Search for the claim
-          heading: Search for the linked non-standard magistrates claim
+
           payment_requests: payment requests
           result: result
           no_results_html: |

@@ -3,7 +3,7 @@
 <%= govuk_error_summary(@form_object) %>
 
 <%= form_with(url: new_payments_steps_linked_claim_search_path(anchor: 'search-results'), method: :get, model: @search_form) do |f| %>
-  <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+  <h1 class="govuk-heading-xl"><%= @page_heading %></h1>
   <div class="moj-search" style="margin-bottom: 20px;">
     <div class="govuk-form-group" role="search">
       <%= f.govuk_text_field :query, class: "govuk-input moj-search__input", type: "search" %>

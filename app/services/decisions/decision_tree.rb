@@ -27,7 +27,7 @@ module Decisions
       .goto(edit: NSM_CLAIM_DETAILS)
       .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment })
       .goto(edit: CLAIM_SEARCH)
-      .when(-> { ac })
+      .when(-> { ac || ac_appeal || ac_amendment })
       .goto(edit: LINKED_CLAIM_SEARCH)
 
     from(:linked_claim_search)
