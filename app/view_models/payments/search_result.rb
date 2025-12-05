@@ -35,7 +35,7 @@ module Payments
     end
 
     def office_code
-      row[:payment_request_claim][:office_code]
+      row[:payment_request_claim][:solicitor_office_code]
     end
 
     def submitted_at
