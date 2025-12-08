@@ -31,6 +31,9 @@
         <%= f.continue_button(secondary: false) %>
       <% end %>
     <% else %>
+      <%= step_form @form_object do |f| %>
+        <%= govuk_error_summary(@form_object) %>
+      <% end %>
       <h1 class="govuk-heading-xl"><%= t('.no_results_found') %></h1>
     <% end %>
   </div>

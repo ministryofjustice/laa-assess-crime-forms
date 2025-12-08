@@ -34,6 +34,13 @@ module Decisions
     def ac_amendment
       @ac_amendment ||= claim_type == Payments::ClaimType::AC_AMENDMENT.to_s
     end
+
+    def solicitor_not_found
+      @solicitor_not_found ||= [
+        multi_step_form_session[:solicitor_office_code],
+        multi_step_form_session[:solicitor_firm_name]
+      ].all?(&:blank?)
+    end
     # :nocov:
   end
 end

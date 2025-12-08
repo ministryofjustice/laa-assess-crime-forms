@@ -59,6 +59,6 @@
     <%= render 'shared/pagination', pagy: @search_form.pagy, item: t(".result") %>
   <% else %>
     <div><%= t('.no_results_html').html_safe %></div>
-    <%= govuk_button_to t('.new_record'), edit_payments_steps_ac_claim_details_path, method: :get%>
+    <%= govuk_button_to t('.new_record'), edit_payments_steps_office_code_search_path, method: :get%>
   <% end %>
 <% end %>

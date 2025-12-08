@@ -33,10 +33,10 @@ module Decisions
       .goto(edit: LINKED_CLAIM_SEARCH)
 
     from(:linked_claim_search)
-      .when(-> { ac })
-      .goto(edit: AC_CLAIM_DETAILS)
-      .when(-> { ac_appeal || ac_amendment })
+      .when(-> { ac && solicitor_not_found })
       .goto(edit: OFFICE_CODE_SEARCH)
+      .when(-> { ac || ac_appeal || ac_amendment })
+      .goto(edit: AC_CLAIM_DETAILS)
     from(:ac_claim_details)
       .goto(edit: AC_CLAIMED_COSTS)
     from(:ac_claimed_costs)
@@ -46,7 +46,10 @@ module Decisions
 
     from(:office_code_search)
       .goto(edit: OFFICE_CODE_CONFIRM)
-
+    from(:office_code_confirm)
+      .when(-> { solicitor_not_found })
+      .goto(edit: OFFICE_CODE_SEARCH)
+      .goto(edit: DATE_RECEIVED)
     from(:claim_search)
       .goto(edit: DATE_RECEIVED)
 
