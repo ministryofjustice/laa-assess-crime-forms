@@ -14,6 +14,8 @@ module Decisions
     AC_CLAIM_DETAILS = '/payments/steps/ac/claim_details'.freeze
     AC_CLAIMED_COSTS = 'payments/steps/ac/claimed_costs'.freeze
     AC_ALLOWED_COSTS = 'payments/steps/ac/allowed_costs'.freeze
+    OFFICE_CODE_SEARCH = '/payments/steps/office_code_search'.freeze
+    OFFICE_CODE_CONFIRM = '/payments/steps/office_code_confirm'.freeze
     DATE_RECEIVED = '/payments/steps/date_received'.freeze
     CLAIM_SEARCH = '/payments/steps/claim_search'.freeze
     LINKED_CLAIM_SEARCH = '/payments/steps/linked_claim_search'.freeze
@@ -31,13 +33,19 @@ module Decisions
       .goto(edit: LINKED_CLAIM_SEARCH)
 
     from(:linked_claim_search)
+      .when(-> { ac })
       .goto(edit: AC_CLAIM_DETAILS)
+      .when(-> { ac_appeal || ac_amendment })
+      .goto(edit: OFFICE_CODE_SEARCH)
     from(:ac_claim_details)
       .goto(edit: AC_CLAIMED_COSTS)
     from(:ac_claimed_costs)
       .goto(edit: AC_ALLOWED_COSTS)
     from(:ac_allowed_costs)
       .goto(edit: CHECK_YOUR_ANSWERS)
+
+    from(:office_code_search)
+      .goto(edit: OFFICE_CODE_CONFIRM)
 
     from(:claim_search)
       .goto(edit: DATE_RECEIVED)

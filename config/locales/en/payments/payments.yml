@@ -98,6 +98,21 @@ en:
           page_title: Amend allowed profit costs
           heading: Amend allowed profit costs
           profit_costs: Amend allowed profit costs
+      office_code_search:
+        edit:
+          page_title: Solicitor's firm account number
+          solicitor_office_code: What is the solicitor's firm account number?
+      office_code_confirm:
+        edit:
+          page_title: Check solicitor details
+          heading: Check solicitor details
+          solicitor_office_code: Firm account number
+          solicitor_firm_name: Firm name
+          confirm_office_code: Is this the right account?
+          confirm_office_code_options:
+            'true': "Yes"
+            'false': No, I need to change the number
+          no_results_found: Account not found
       ac:
         nsm_check:
           edit:

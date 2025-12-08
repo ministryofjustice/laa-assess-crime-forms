@@ -47,7 +47,7 @@ module Payments
       end
 
       def set_page_heading
-        @page_heading ||= I18n.t("payments.steps.linked_claim_search.heading_#{linked_request_type}")
+        @set_page_heading ||= I18n.t("payments.steps.linked_claim_search.heading_#{linked_request_type}")
       end
     end
   end

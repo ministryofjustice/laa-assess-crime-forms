@@ -40,5 +40,11 @@ module Decisions
       .goto(edit: DecisionTree::AC_CLAIMED_COSTS)
     from(DecisionTree::CHECK_YOUR_ANSWERS)
       .goto(edit: DecisionTree::AC_ALLOWED_COSTS)
+
+    from(DecisionTree::OFFICE_CODE_SEARCH.sub(%r{^/}, ''))
+      .when(-> { ac_appeal || ac_amendment })
+      .goto(edit: DecisionTree::LINKED_CLAIM_SEARCH)
+    from(DecisionTree::OFFICE_CODE_CONFIRM.sub(%r{^/}, ''))
+      .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)
   end
 end

@@ -30,7 +30,6 @@ module Steps
     # :nocov:
 
     def update_and_advance(form_class, opts = {})
-      # replace current_application with session_form
       hash = permitted_params(form_class).to_h
       @form_object = form_class.build(hash, multi_step_form_session:)
 
