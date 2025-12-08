@@ -69,7 +69,12 @@ en:
         edit:
           page_title: Date received
           heading: Date received
-          date_received: Date claim received
+          date_received:
+            non_standard_mag_supplemental: Date supplemental claim received
+            non_standard_mag_appeal: Date appeal received
+            non_standard_mag_amendment: Date claim amended
+            assigned_counsel_appeal: Date appeal received
+            assigned_counsel_amendment: Date claim amended
       claim_types:
         edit:
           page_title: Claim type

@@ -2,7 +2,7 @@ module Payments
   module Steps
     class LinkedClaimSearchController < BaseController
       def new
-        set_page_heading
+        page_heading
         @form_object = Payments::Steps::LinkedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(search_params)
         @search_form.execute if @search_form.valid?
@@ -11,7 +11,7 @@ module Payments
       end
 
       def edit
-        set_page_heading
+        page_heading
         @form_object = Payments::Steps::LinkedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(default_params)
       end
@@ -46,8 +46,8 @@ module Payments
         end
       end
 
-      def set_page_heading
-        @set_page_heading ||= I18n.t("payments.steps.linked_claim_search.heading_#{linked_request_type}")
+      def page_heading
+        @page_heading ||= I18n.t("payments.steps.linked_claim_search.heading_#{linked_request_type}")
       end
     end
   end

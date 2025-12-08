@@ -49,7 +49,10 @@ module Decisions
     from(:office_code_confirm)
       .when(-> { solicitor_not_found })
       .goto(edit: OFFICE_CODE_SEARCH)
+      .when(-> { ac_appeal || ac_amendment })
       .goto(edit: DATE_RECEIVED)
+      .when(-> { ac })
+      .goto(edit: AC_CLAIM_DETAILS)
     from(:claim_search)
       .goto(edit: DATE_RECEIVED)
 
