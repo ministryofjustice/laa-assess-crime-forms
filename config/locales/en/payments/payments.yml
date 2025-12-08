@@ -126,6 +126,9 @@ en:
           edit:
             page_title: Claim Details
             heading: Claim details
+            ufn: Unique file number
+            ufn_hint: For example, 120223/001
+            defendant_last_name: Defendant last name
             date_received: Date claim received
             date_received_hint: For example, 17/5/2025.
             counsel_office_code: Counsel office account number
