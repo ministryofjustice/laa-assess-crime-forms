@@ -3,7 +3,7 @@ module Payments
     class LinkedClaimSearchController < BaseController
       def new
         page_heading
-        @form_object = Payments::Steps::LinkedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
+        @form_object = Payments::Steps::SelectedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(search_params)
         @search_form.execute if @search_form.valid?
 
@@ -12,12 +12,12 @@ module Payments
 
       def edit
         page_heading
-        @form_object = Payments::Steps::LinkedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
+        @form_object = Payments::Steps::SelectedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(default_params)
       end
 
       def update
-        update_and_advance(Payments::Steps::LinkedClaimForm, as: :linked_claim_search)
+        update_and_advance(Payments::Steps::SelectedClaimForm, as: :linked_claim_search)
       end
 
       private

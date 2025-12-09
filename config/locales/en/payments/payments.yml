@@ -129,7 +129,10 @@ en:
             ufn: Unique file number
             ufn_hint: For example, 120223/001
             defendant_last_name: Defendant last name
-            date_received: Date claim received
+            date_received:
+              assigned_counsel: Date claim received
+              assigned_counsel_appeal: Date appeal received
+              assigned_counsel_amendment: Date claim amended
             date_received_hint: For example, 17/5/2025.
             counsel_office_code: Counsel office account number
             counsel_firm_name: Counsel name

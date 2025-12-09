@@ -52,7 +52,11 @@ module Payments
         when :assigned_counsel
           Payments::AcCostsSummary.new(multi_step_form_session.answers, session[:multi_step_form_id])
         when :assigned_counsel_appeal, :assigned_counsel_amendment
-          Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, session[:multi_step_form_id])
+          if multi_step_form_session.answers['claimed_total'].present?
+            Payments::AcCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers, session[:multi_step_form_id])
+          else
+            Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, session[:multi_step_form_id])
+          end
         end
       end
     end
