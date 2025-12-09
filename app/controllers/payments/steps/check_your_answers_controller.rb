@@ -41,6 +41,7 @@ module Payments
         multi_step_form_session && session[:multi_step_form_id] = params[:id]
       end
 
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def cost_summary
         case multi_step_form_session['request_type'].to_sym
         when :non_standard_magistrate
@@ -59,6 +60,7 @@ module Payments
           end
         end
       end
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     end
   end
 end

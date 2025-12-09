@@ -31,7 +31,7 @@ module ProviderData
         unless handlers.key?(response.code)
           return fallback if fallback
 
-          raise "Unexpected status code #{response.code} when querying provider API endpoint #{endpoint}"
+          raise StandardError, "Unexpected status code #{response.code} when querying provider API endpoint #{endpoint}"
         end
 
         handler = handlers[response.code]
