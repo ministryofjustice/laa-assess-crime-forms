@@ -21,6 +21,8 @@ module Payments
           Payments::NsmClaimDetailsSummary
         when :assigned_counsel, :assigned_counsel_appeal, :assigned_counsel_amendment
           Payments::AcClaimDetailsSummary
+        else
+          raise StandardError, "Unknown request type: #{multi_step_form_session['request_type']}"
         end
       end
 
@@ -58,6 +60,8 @@ module Payments
           else
             Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, session[:multi_step_form_id])
           end
+        else
+          raise StandardError, "Unknown request type: #{multi_step_form_session['request_type']}"
         end
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
