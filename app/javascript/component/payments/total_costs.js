@@ -31,7 +31,7 @@ function init() {
     const counselNet = parse(counselNetField);
     const counselVat = parse(counselVatField);
 
-    var sum = 0;
+    let sum = 0;
     if (profitField && disbursementField && travelField && waitingField) {
       sum = profit.plus(disbursement).plus(travel).plus(waiting).toFixed(2);
       total.textContent = `£${sum}`;
