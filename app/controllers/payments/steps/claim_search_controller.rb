@@ -2,6 +2,8 @@ module Payments
   module Steps
     class ClaimSearchController < BaseController
       def new
+        form_url
+        page_heading
         @form_object = Payments::Steps::SelectedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(search_params)
         @search_form.execute if @search_form.valid?
@@ -10,6 +12,8 @@ module Payments
       end
 
       def edit
+        form_url
+        page_heading
         @form_object = Payments::Steps::SelectedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(default_params)
       end
@@ -33,6 +37,14 @@ module Payments
           page: params.fetch(:page, '1'),
           request_type: parent_claim_class
         }
+      end
+
+      def page_heading
+        @page_heading ||= I18n.t("payments.steps.claim_search.edit.heading")
+      end
+
+      def form_url
+        @form_url ||= new_payments_steps_claim_search_path(anchor: 'search-results')
       end
     end
   end
