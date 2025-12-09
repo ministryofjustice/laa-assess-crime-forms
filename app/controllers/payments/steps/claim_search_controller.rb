@@ -40,7 +40,7 @@ module Payments
       end
 
       def page_heading
-        @page_heading ||= I18n.t("payments.steps.claim_search.edit.heading")
+        @page_heading ||= I18n.t('payments.steps.claim_search.edit.heading')
       end
 
       def form_url

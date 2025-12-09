@@ -43,7 +43,7 @@ module Decisions
     end
 
     def ac_claim_details_incomplete?
-      @claim_details_complete ||= [
+      @ac_claim_details_incomplete ||= [
         multi_step_form_session[:ufn],
         multi_step_form_session[:defendant_last_name],
         multi_step_form_session[:counsel_office_code],

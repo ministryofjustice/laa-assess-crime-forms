@@ -26,7 +26,7 @@ module Decisions
 
     from(:claim_type)
       .when(-> { nsm })
-      .goto(edit:OFFICE_CODE_SEARCH)
+      .goto(edit: OFFICE_CODE_SEARCH)
       .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment })
       .goto(edit: CLAIM_SEARCH)
       .when(-> { ac || ac_appeal || ac_amendment })
@@ -60,7 +60,7 @@ module Decisions
       .goto(edit: DATE_RECEIVED)
       .when(-> { ac })
       .goto(edit: AC_CLAIM_DETAILS)
-      .when(-> { nsm || nsm_appeal || nsm_amendment } )
+      .when(-> { nsm || nsm_appeal || nsm_amendment })
       .goto(edit: NSM_CLAIM_DETAILS)
     from(:claim_search)
       .goto(edit: DATE_RECEIVED)
@@ -70,7 +70,7 @@ module Decisions
       .goto(edit: NSM_CLAIMED_COSTS)
       .when(-> { nsm_appeal || nsm_amendment })
       .goto(edit: NSM_ALLOWED_COSTS)
-      .when(-> { ac_appeal ||  ac_amendment })
+      .when(-> { ac_appeal || ac_amendment })
       .goto(edit: AC_ALLOWED_COSTS)
 
     from(:nsm_claim_details)
