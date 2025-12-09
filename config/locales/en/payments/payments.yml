@@ -132,7 +132,7 @@ en:
             date_received: Date claim received
             date_received_hint: For example, 17/5/2025.
             counsel_office_code: Counsel office account number
-            counsel_office_name: Counsel name
+            counsel_firm_name: Counsel name
         claimed_costs:
           edit:
             page_title: Claimed costs

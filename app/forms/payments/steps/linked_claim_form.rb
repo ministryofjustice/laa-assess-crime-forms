@@ -20,14 +20,14 @@ module Payments
       def claim
         claim = payment_request_claim.deep_stringify_keys.with_indifferent_access
         case claim['type']
-        when 'non_standard_magistrate'
+        when 'NsmClaim'
           {
             'nsm_claim_id' => claim[:id],
             'defendant_last_name' => claim[:client_last_name],
             'solicitor_office_code' => claim[:solicitor_office_code],
             'solicitor_firm_name' => claim[:solicitor_firm_name]
           }
-        when 'assigned_counsel'
+        when 'AssignedCounselClaim'
           {
             'counsel_office_code' => claim[:counsel_office_code],
             'counsel_firm_name' => claim[:counsel_firm_name],

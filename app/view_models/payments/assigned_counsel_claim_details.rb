@@ -23,7 +23,7 @@ module Payments
     end
 
     def ufn
-      @payment_request_claim.dig('nsm_claim', 'ufn') || @payment_request_claim['ufn']
+      @payment_request_claim['ufn']
     end
 
     def counsel_office_code

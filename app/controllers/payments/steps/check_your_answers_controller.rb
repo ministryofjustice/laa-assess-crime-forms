@@ -19,7 +19,7 @@ module Payments
         case multi_step_form_session['request_type'].to_sym
         when :non_standard_magistrate, :non_standard_mag_supplemental, :non_standard_mag_amendment, :non_standard_mag_appeal
           Payments::NsmClaimDetailsSummary
-        when :assigned_counsel
+        when :assigned_counsel, :assigned_counsel_appeal, :assigned_counsel_amendment
           Payments::AcClaimDetailsSummary
         end
       end
@@ -51,6 +51,8 @@ module Payments
           Payments::NsmCostsSummaryAmended.new(multi_step_form_session.answers, session[:multi_step_form_id])
         when :assigned_counsel
           Payments::AcCostsSummary.new(multi_step_form_session.answers, session[:multi_step_form_id])
+        when :assigned_counsel_appeal, :assigned_counsel_amendment
+          Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, session[:multi_step_form_id])
         end
       end
     end

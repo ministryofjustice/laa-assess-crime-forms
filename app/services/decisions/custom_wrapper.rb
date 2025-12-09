@@ -41,6 +41,15 @@ module Decisions
         multi_step_form_session[:solicitor_firm_name]
       ].all?(&:blank?)
     end
+
+    def ac_claim_details_incomplete?
+      @claim_details_complete ||= [
+        multi_step_form_session[:ufn],
+        multi_step_form_session[:defendant_last_name],
+        multi_step_form_session[:counsel_office_code],
+        multi_step_form_session[:counsel_firm_name]
+      ].any?(&:blank?)
+    end
     # :nocov:
   end
 end

@@ -6,9 +6,9 @@ module Payments
         attribute :ufn, :string
         attribute :defendant_last_name, :string
         attribute :counsel_office_code, :string
-        attribute :counsel_office_name, :string
+        attribute :counsel_firm_name, :string
 
-        validates :counsel_office_code, :counsel_office_name, :defendant_last_name, presence: true
+        validates :counsel_office_code, :counsel_firm_name, :defendant_last_name, presence: true
         validates :ufn, presence: true, ufn: true
         validates :date_received,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
