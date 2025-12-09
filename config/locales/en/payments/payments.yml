@@ -45,6 +45,8 @@ en:
           counsel_office_code: Counsel account number
           counsel_firm_name: Counsel name
           claimed_and_allowed_costs: Claimed and allowed costs
+          amended_allowed_costs: Amended allowed costs
+          allowed_costs: Allowed costs
           accessible:
             total_claimed: Total claimed
             total_allowed: Total allowed
