@@ -9,7 +9,7 @@ module PaymentsHelpers
           metadata: { total_results: 1 },
           data: [
             id: SecureRandom.uuid,
-            search_scope: 'nsm_claim',
+            request_type: 'non_standard_magistrate',
             submitted_at: Time.zone.now.to_s,
             payment_request_claim: {
               id: '1234',

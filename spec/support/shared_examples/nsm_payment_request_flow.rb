@@ -22,7 +22,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
       sort_by: 'submitted_at',
       sort_direction: 'descending',
       query: 'laa-1004',
-      search_scope: 'nsm_claim'
+      request_type: 'non_standard_magistrate'
     }
   end
 
