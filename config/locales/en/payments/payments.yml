@@ -88,6 +88,10 @@ en:
           heading: Search for the original claim
           payment_requests: payment requests
           result: result
+          new_record: Create a new record
+          no_results_html: |
+            <p>If you expected to find a claim, check your search term and try again or search by different criteria (defendant, firm account, UFN or LAA reference).</p>
+            <p>If there is no original claim, you can create a new record.</p>
       linked_claim_search:
         edit:
           page_title: Search for the claim
@@ -95,10 +99,6 @@ en:
           heading_assigned_counsel: Search for the original assigned counsel claim
           payment_requests: payment requests
           result: result
-          no_results_html: |
-            <p>If you expected to find a claim, check your search term and try again or search by different criteria (defendant, firm account, UFN or LAA reference).</p>
-            <p>If there is no original claim, you can create a new record.</p>
-          new_record: Create a new record
       submission_allowed_costs:
         edit:
           page_title: Amend allowed profit costs
