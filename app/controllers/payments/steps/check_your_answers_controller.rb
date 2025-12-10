@@ -8,7 +8,7 @@ module Payments
       def edit
         @form_object = Payments::Steps::CheckYourAnswersForm.build(payment_details,
                                                                    multi_step_form_session:)
-        @claim_details = Payments::ClaimDetailsSummary.new(payment_details)
+        @report = Payments::CheckYourAnswers::Report.new(payment_details)
 
         @cost_summary = cost_summary
       end
@@ -36,7 +36,7 @@ module Payments
         # :nocov:
         case multi_step_form_session['request_type'].to_sym
         # :nocov:
-        when :non_standard_magistrate
+        when :non_standard_magistrate, :breach_of_injunction
           Payments::CostsSummary.new(multi_step_form_session.answers)
         when :non_standard_mag_supplemental
           Payments::CostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers)

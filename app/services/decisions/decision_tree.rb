@@ -19,7 +19,7 @@ module Decisions
     SUBMIT = 'payments'.freeze
 
     from(:claim_type)
-      .when(-> { nsm })
+      .when(-> { nsm || boi })
       .goto(edit: NSM_CLAIM_DETAILS)
       .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment })
       .goto(edit: CLAIM_SEARCH)
@@ -36,7 +36,7 @@ module Decisions
     from(:nsm_claim_details)
       .when(-> { nsm_appeal || nsm_amendment })
       .goto(edit: NSM_ALLOWED_COSTS)
-      .when(-> { nsm || nsm_supplemental })
+      .when(-> { nsm || boi || nsm_supplemental })
       .goto(edit: NSM_CLAIMED_COSTS)
     from(:nsm_claimed_costs)
       .goto(edit: NSM_ALLOWED_COSTS)

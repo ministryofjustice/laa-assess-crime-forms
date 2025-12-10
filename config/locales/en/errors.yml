@@ -140,6 +140,10 @@ en:
               nothing_specified: Enter some %{value} details or filter your search criteria
               search_error: Something went wrong trying to perform this search
 
+        payments/steps/date_received_form:
+          attributes:
+            date_received: *shared_date_errors
+
         payments/steps/nsm/claim_detail_form:
           attributes:
             date_received: *shared_date_errors

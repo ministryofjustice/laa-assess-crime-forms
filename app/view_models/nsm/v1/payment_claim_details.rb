@@ -1,8 +1,6 @@
 module Nsm
   module V1
     class PaymentClaimDetails < BaseViewModel
-      attribute :laa_reference, :string
-
       attribute :matter_type
       attribute :youth_court
       attribute :court
@@ -10,6 +8,10 @@ module Nsm
 
       attribute :submission
       delegate :id, to: :submission
+
+      def linked_laa_reference
+        submission.data[:laa_reference]
+      end
 
       def date_completed
         submission.data[:work_completed_date]
@@ -52,12 +54,7 @@ module Nsm
       end
 
       def request_type
-        case submission.data[:claim_type]
-        when 'breach_of_injunction'
-          'non_standard_magistrate'
-        else
-          submission.data[:claim_type]
-        end
+        submission.data[:claim_type]
       end
 
       def claimed_profit_cost
@@ -107,8 +104,9 @@ module Nsm
       # rubocop:disable Metrics/MethodLength
       def to_h
         [
+          :id,
           :submission_id,
-          :laa_reference,
+          :linked_laa_reference,
           :youth_court,
           :court,
           :hearing_outcome_code,

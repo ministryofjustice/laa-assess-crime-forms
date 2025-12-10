@@ -36,7 +36,7 @@ module PaymentsHelpers
       'laa_reference' => 'LAA-qWRbvm',
       'solicitor_office_code' => '1asdf',
       'solicitor_firm_name' => 'some name',
-      'client_last_name' => 'asdf',
+      'defendant_last_name' => 'asdf',
       'stage_code' => 'PROG',
       'work_completed_date' => '2025-10-29 00:00:00 UTC',
       'court_name' => 'Usk - C3208F',

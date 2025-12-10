@@ -2,6 +2,7 @@ en:
   payments:
     requests:
       type:
+        breach_of_injunction: Breach of injunction
         assigned_counsel: Assigned counsel
         assigned_counsel_amendment: Assigned counsel - amendment
         assigned_counsel_appeal: Assigned counsel - appeal

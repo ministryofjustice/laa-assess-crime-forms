@@ -1,6 +1,11 @@
 module Payments
-  class CostsSummary < BaseCard
+  class CostsSummary
     PROFIT_COSTS = 'profit_costs'.freeze
+    attr_reader :session_answers
+
+    def initialize(session_answers)
+      @session_answers = session_answers
+    end
 
     def headers
       [

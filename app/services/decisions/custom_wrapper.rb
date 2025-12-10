@@ -10,6 +10,10 @@ module Decisions
       @nsm ||= claim_type == Payments::ClaimType::NSM.to_s
     end
 
+    def boi
+      @boi ||= claim_type == Payments::ClaimType::BOI.to_s
+    end
+
     def nsm_supplemental
       @nsm_supplemental ||= claim_type == Payments::ClaimType::NSM_SUPPLEMENTAL.to_s
     end
