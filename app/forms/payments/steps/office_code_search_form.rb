@@ -8,7 +8,7 @@ module Payments
       def save
         return false unless valid?
 
-        multi_step_form_session[:office_code_search] = solicitor_office_code
+        multi_step_form_session[:solicitor_office_code] = solicitor_office_code
       end
     end
   end
