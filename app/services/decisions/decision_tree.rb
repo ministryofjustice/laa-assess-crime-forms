@@ -18,7 +18,6 @@ module Decisions
     OFFICE_CODE_CONFIRM = '/payments/steps/office_code_confirm'.freeze
     DATE_RECEIVED = '/payments/steps/date_received'.freeze
     CLAIM_SEARCH = '/payments/steps/claim_search'.freeze
-    LINKED_CLAIM_SEARCH = '/payments/steps/linked_claim_search'.freeze
     CHECK_YOUR_ANSWERS = '/payments/steps/check_your_answers'.freeze
     SUBMISSION_ALLOWED_COSTS = 'payments/steps/submission_allowed_costs'.freeze
 
@@ -27,18 +26,8 @@ module Decisions
     from(:claim_type)
       .when(-> { nsm })
       .goto(edit: OFFICE_CODE_SEARCH)
-      .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment })
       .goto(edit: CLAIM_SEARCH)
-      .when(-> { ac || ac_appeal || ac_amendment })
-      .goto(edit: LINKED_CLAIM_SEARCH)
 
-    from(:linked_claim_search)
-      .when(-> { (ac_appeal || ac_amendment || ac) && solicitor_not_found })
-      .goto(edit: OFFICE_CODE_SEARCH)
-      .when(-> { ac })
-      .goto(edit: AC_CLAIM_DETAILS)
-      .when(-> { ac_appeal || ac_amendment })
-      .goto(edit: DATE_RECEIVED)
     from(:ac_claim_details)
       .when(-> { ac })
       .goto(edit: AC_CLAIMED_COSTS)
@@ -63,6 +52,10 @@ module Decisions
       .when(-> { nsm || nsm_appeal || nsm_amendment })
       .goto(edit: NSM_CLAIM_DETAILS)
     from(:claim_search)
+      .when(-> { (ac_appeal || ac_amendment || ac) && no_existing_ref })
+      .goto(edit: OFFICE_CODE_SEARCH)
+      .when(-> { ac })
+      .goto(edit: AC_CLAIM_DETAILS)
       .goto(edit: DATE_RECEIVED)
 
     from(:date_received)

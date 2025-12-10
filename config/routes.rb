@@ -175,8 +175,6 @@ Rails.application.routes.draw do
           edit_step :date_received
           edit_step :office_code_search
           edit_step :office_code_confirm
-          resource :linked_claim_search, only: %i[new edit update],
-            controller: 'linked_claim_search', path_names: { edit: '' }
           resource :claim_search, only: %i[new edit update],
             controller: 'claim_search', path_names: { edit: '' }
           edit_step :claim_types

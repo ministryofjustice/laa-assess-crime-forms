@@ -30,10 +30,8 @@ module Decisions
       .when(-> { nsm || nsm_supplemental || nsm_appeal || nsm_amendment })
       .goto(edit: DecisionTree::NSM_ALLOWED_COSTS)
 
-    from(DecisionTree::LINKED_CLAIM_SEARCH.sub(%r{^/}, ''))
-      .goto(edit: DecisionTree::CLAIM_TYPE)
     from(DecisionTree::AC_CLAIM_DETAILS.sub(%r{^/}, ''))
-      .goto(edit: DecisionTree::LINKED_CLAIM_SEARCH)
+      .goto(edit: DecisionTree::CLAIM_SEARCH)
     from(DecisionTree::AC_CLAIMED_COSTS)
       .goto(edit: DecisionTree::AC_CLAIM_DETAILS)
     from(DecisionTree::AC_ALLOWED_COSTS)
@@ -42,7 +40,7 @@ module Decisions
       .goto(edit: DecisionTree::AC_ALLOWED_COSTS)
 
     from(DecisionTree::OFFICE_CODE_SEARCH.sub(%r{^/}, ''))
-      .goto(edit: DecisionTree::LINKED_CLAIM_SEARCH)
+      .goto(edit: DecisionTree::CLAIM_SEARCH)
     from(DecisionTree::OFFICE_CODE_CONFIRM.sub(%r{^/}, ''))
       .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)
   end
