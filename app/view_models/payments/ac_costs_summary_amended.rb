@@ -1,5 +1,5 @@
 module Payments
-  class AcCostsSummaryAmended < BaseCard
+  class AcCostsSummaryAmended < CostsSummaryAmended
     def table_fields
       [
         build_row(:net_assigned_counsel_cost),

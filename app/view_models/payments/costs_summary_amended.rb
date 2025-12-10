@@ -1,5 +1,5 @@
 module Payments
-  class AcCostsSummaryAmended < BaseCard
+  class CostsSummaryAmended < BaseCard
     include Routing
     include ActionView::Helpers::UrlHelper
     include ActionView::Helpers::TagHelper
