@@ -31,7 +31,7 @@ module Payments
                                payment_claim_details = BaseViewModel.build(:payment_claim_details, claim)
                                current_multi_step_form_session.answers = payment_claim_details.to_h
                              else
-                               multi_step_form_session.answers
+                               current_multi_step_form_session.answers
                              end
       end
 
@@ -47,18 +47,18 @@ module Payments
       def cost_summary
         case multi_step_form_session['request_type'].to_sym
         when :non_standard_magistrate
-          Payments::NsmCostsSummary.new(multi_step_form_session.answers, session[:multi_step_form_id])
+          Payments::NsmCostsSummary.new(multi_step_form_session.answers, params[:id])
         when :non_standard_mag_supplemental
-          Payments::NsmCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers, session[:multi_step_form_id])
+          Payments::NsmCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers, params[:id])
         when :non_standard_mag_amendment, :non_standard_mag_appeal
-          Payments::NsmCostsSummaryAmended.new(multi_step_form_session.answers, session[:multi_step_form_id])
+          Payments::NsmCostsSummaryAmended.new(multi_step_form_session.answers, params[:id])
         when :assigned_counsel
-          Payments::AcCostsSummary.new(multi_step_form_session.answers, session[:multi_step_form_id])
+          Payments::AcCostsSummary.new(multi_step_form_session.answers, params[:id])
         when :assigned_counsel_appeal, :assigned_counsel_amendment
           if multi_step_form_session.answers['claimed_total'].present?
-            Payments::AcCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers, session[:multi_step_form_id])
+            Payments::AcCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers, params[:id])
           else
-            Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, session[:multi_step_form_id])
+            Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, params[:id])
           end
         else
           raise StandardError, "Unknown request type: #{multi_step_form_session['request_type']}"
