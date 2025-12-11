@@ -447,7 +447,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
             'Linked claim', 'LAA-ABZ321',
             'Solicitor office account number', 'A3211B',
             'Solicitor firm name', 'Solicitor Firm 2',
-            'Unique file number', '200323/021',
+            'Unique file number', '01112025/001',
             'Defendant name', 'Smith',
             'Counsel account number', 'XYZB21',
             'Counsel name', 'Counsel Firm'
