@@ -5,7 +5,7 @@ module Decisions
     CHECK_YOUR_ANSWERS = 'payments/steps/check_your_answers'.freeze
 
     from(DecisionTree::NSM_CLAIM_DETAILS)
-      .goto(edit: DecisionTree::CLAIM_TYPE)
+      .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)
     from(DecisionTree::DATE_RECEIVED.sub(%r{^/}, ''))
       .goto(edit: DecisionTree::CLAIM_SEARCH.sub(%r{^/}, ''))
     from(DecisionTree::CLAIM_SEARCH.sub(%r{^/}, ''))
@@ -31,7 +31,7 @@ module Decisions
       .goto(edit: DecisionTree::NSM_ALLOWED_COSTS)
 
     from(DecisionTree::AC_CLAIM_DETAILS.sub(%r{^/}, ''))
-      .goto(edit: DecisionTree::CLAIM_SEARCH)
+      .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)
     from(DecisionTree::AC_CLAIMED_COSTS)
       .goto(edit: DecisionTree::AC_CLAIM_DETAILS)
     from(DecisionTree::AC_ALLOWED_COSTS)
