@@ -103,7 +103,7 @@ module PaymentsHelpers
   end
 
   def date_claim_received(date = '2025-09-24')
-    fill_in 'Date claim received', with: date
+    fill_in 'payments-steps-date-received-form-date-received-field', with: date
     click_button 'Save and continue'
   end
 
