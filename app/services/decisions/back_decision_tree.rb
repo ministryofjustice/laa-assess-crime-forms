@@ -25,7 +25,7 @@ module Decisions
     from(DecisionTree::SUBMISSION_ALLOWED_COSTS)
       .goto(edit: CHECK_YOUR_ANSWERS)
     from(CHECK_YOUR_ANSWERS)
-      .when(-> { ac || ac_appeal ||  ac_amendment })
+      .when(-> { ac || ac_appeal || ac_amendment })
       .goto(edit: DecisionTree::AC_ALLOWED_COSTS)
       .when(-> { nsm || nsm_supplemental || nsm_appeal || nsm_amendment })
       .goto(edit: DecisionTree::NSM_ALLOWED_COSTS)
