@@ -9,7 +9,7 @@
       <div class="govuk-form-group">
         <div class="govuk-date-input__item">
           <div class="moj-datepicker" data-module="moj-date-picker">
-            <%= f.govuk_text_field :date_received, label: { size: 'xl', text: t(".date_received.#{@request_type}") }, class: 'moj-js-datepicker-input' %>
+            <%= f.govuk_text_field :date_received, label: { size: 'xl', text: t(".date_received.#{@form_object.request_type}") }, class: 'moj-js-datepicker-input' %>
           </div>
         </div>
       </div>
