@@ -3,7 +3,7 @@ module Payments
     class OfficeCodeSearchForm < BasePaymentsForm
       attribute :solicitor_office_code, :string
 
-      validates :solicitor_office_code, presence: true
+      validates :solicitor_office_code, office_code: true, presence: true
 
       def save
         return false unless valid?
