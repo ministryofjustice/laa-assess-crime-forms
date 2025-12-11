@@ -54,6 +54,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
     it 'completes claim details and proceeds' do
       start_new_payment_request
       choose_claim_type("Non-Standard Magistrates'")
+      select_office_code
       fill_claim_details
       expect(page).to have_title('Claimed costs')
     end
@@ -62,6 +63,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       it 'completes claimed costs and proceeds' do
         start_new_payment_request
         choose_claim_type("Non-Standard Magistrates'")
+        select_office_code
         fill_claim_details
         fill_claimed_costs
         expect(page).to have_title('Allowed costs')
@@ -72,6 +74,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       it 'completes claimed costs and proceeds' do
         start_new_payment_request
         choose_claim_type("Non-Standard Magistrates'")
+        select_office_code
         fill_claim_details
         fill_claimed_costs
         fill_allowed_costs
@@ -83,6 +86,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       it 'submits payment and redirects to payment confirmation' do
         start_new_payment_request
         choose_claim_type("Non-Standard Magistrates'")
+        select_office_code
         fill_claim_details
         fill_claimed_costs
         fill_allowed_costs
@@ -95,6 +99,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       it 'submits payment and redirects to payment confirmation' do
         start_new_payment_request
         choose_claim_type("Non-Standard Magistrates'")
+        select_office_code
         fill_claim_details
         fill_claimed_costs
         fill_allowed_costs

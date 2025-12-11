@@ -114,7 +114,13 @@ en:
             'true': "Yes"
             'false': No, I need to change the number
           no_results_found: Account not found
-      ac:
+          no_results_found_html: |
+            <p>No account found for <strong>%{office_code}</strong>.</p>
+            <p>Check you've entered the correct number and try again.</p>
+            <p>Check the number with the provider if you are not getting the expected account.</p>
+          back: Go back
+          cancel: Cancel payment request
+        ac:
         nsm_check:
           edit:
             page_title: Is this claim linked to a non-standard magistrates' claim?

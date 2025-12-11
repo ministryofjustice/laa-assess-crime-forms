@@ -35,6 +35,11 @@
         <%= govuk_error_summary(@form_object) %>
       <% end %>
       <h1 class="govuk-heading-xl"><%= t('.no_results_found') %></h1>
+      <div class="govuk-body">
+        <%= t('.no_results_found_html', office_code: @form_object.searched_code) %>
+        <p><%= govuk_link_to t('.back'), previous_decision_step_path %></p>
+        <p><%= govuk_link_to t('.cancel'), payments_requests_path %></p>
+      </div>
     <% end %>
   </div>
 </div>

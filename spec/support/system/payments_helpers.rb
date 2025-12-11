@@ -115,6 +115,13 @@ module PaymentsHelpers
     end
   end
 
+  def select_office_code(office_code = '1A123B')
+    fill_in "What is the solicitor's firm account number?", office_code
+    click_button 'Save and continue'
+    choose 'Yes'
+    click_button 'Save and continue'
+  end
+
   # rubocop:disable Metrics/ParameterLists
   def fill_claim_details(
     received_on: '2025-09-24',

@@ -18,8 +18,12 @@ module Payments
         true
       end
 
+      def searched_code
+        multi_step_form_session[:solicitor_office_code]
+      end
+
       def office_code_details
-        ProviderData::ProviderDataClient.new.office_details(multi_step_form_session[:solicitor_office_code])
+        ProviderData::ProviderDataClient.new.office_details(searched_code)
       end
 
       private
