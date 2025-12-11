@@ -16,7 +16,7 @@ RSpec.describe Decisions::BackDecisionTree do
 
         it_behaves_like 'a generic decision',
                         from: Decisions::DecisionTree::NSM_CLAIM_DETAILS,
-                        goto: { action: :edit, controller: Decisions::DecisionTree::CLAIM_TYPE }
+                        goto: { action: :edit, controller: Decisions::DecisionTree::OFFICE_CODE_SEARCH }
       end
     end
 
