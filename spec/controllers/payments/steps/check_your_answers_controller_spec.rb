@@ -11,8 +11,7 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
       :answers => answers,
       :[] => request_type
     )
-    allow(controller).to receive(:params).and_return({ id: id })
-    allow(controller).to receive(:multi_step_form_session).and_return(fake_session)
+    allow(controller).to receive_messages(params: { id: }, multi_step_form_session: fake_session)
   end
 
   {
@@ -26,7 +25,7 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
 
       it "initializes #{klass} with answers" do
         expect(klass).to receive(:new).with(answers, id)
-        get :edit, params: { id: id }
+        get :edit, params: { id: }
       end
     end
   end
