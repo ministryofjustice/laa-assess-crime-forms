@@ -117,15 +117,14 @@ module PaymentsHelpers
 
   def select_office_code(office_code = '1A123B')
     fill_in "What is the solicitor's firm account number?", with: office_code
-    click_button 'Save and continue'
+    click_button 'Continue'
     choose 'Yes'
-    click_button 'Save and continue'
+    click_button 'Continue'
   end
 
   # rubocop:disable Metrics/ParameterLists
   def fill_claim_details(
     received_on: '2025-09-24',
-    firm_office_account_number: 'asdf',
     ufn: '120223/001',
     prosecution_type: 'PROM',
     defendant_first_name: 'Fred',
@@ -139,7 +138,6 @@ module PaymentsHelpers
     work_completed_on: '2025-09-24'
   )
     fill_in 'Date claim received', with: received_on
-    fill_in 'Firm office account number', with: firm_office_account_number
     fill_in 'Unique file number', with: ufn
     choose prosecution_type, allow_label_click: true
     fill_in 'Defendant first name', with: defendant_first_name
