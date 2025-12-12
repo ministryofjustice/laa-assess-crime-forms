@@ -1,0 +1,45 @@
+<% title t('.page_title') %>
+<% step_header(path: previous_decision_step_path) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% if @form_object.office_code_details.present? %>
+      <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+      <%= step_form @form_object do |f| %>
+        <%= govuk_error_summary(@form_object) %>
+        <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t('.solicitor_office_code') %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form_object.office_code_details['firmOfficeCode'] %>
+          </dd>
+        </div>
+         <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t('.solicitor_firm_name') %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @form_object.office_code_details['officeName'] %>
+          </dd>
+        </div>
+      </dl>
+        <%= f.govuk_radio_buttons_fieldset :confirm_office_code, legend: { text: t('.confirm_office_code'), size: 's' } do %>
+          <%= f.govuk_radio_button :confirm_office_code, 'true', label: { text: t('.confirm_office_code_options.true') } %>
+          <%= f.govuk_radio_button :confirm_office_code, 'false', label: { text: t('.confirm_office_code_options.false') } %>
+        <% end %>
+        <%= f.continue_button(secondary: false) %>
+      <% end %>
+    <% else %>
+      <%= step_form @form_object do |f| %>
+        <%= govuk_error_summary(@form_object) %>
+      <% end %>
+      <h1 class="govuk-heading-xl"><%= t('.no_results_found') %></h1>
+      <div class="govuk-body">
+        <%= t('.no_results_found_html', office_code: @form_object.searched_code) %>
+        <p><%= govuk_link_to t('.back'), previous_decision_step_path %></p>
+        <p><%= govuk_link_to t('.cancel'), payments_requests_path %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

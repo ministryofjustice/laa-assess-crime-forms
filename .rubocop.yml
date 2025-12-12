@@ -123,6 +123,7 @@ Naming/BlockForwarding:
 Naming/MethodParameterName:
   AllowedNames:
     - as
+    - id
 
 # Rubocop mistakenly consider `#values` method as being called on a Hash
 Style/HashEachMethods:

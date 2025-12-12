@@ -21,6 +21,7 @@ module Payments
         claim = payment_request_claim.deep_stringify_keys.with_indifferent_access
         latest_payment_request = latest_payment_request(claim)
         claim.except!(:payment_requests, :created_at, :updated_at, :type, :id)
+        claim.except!(:ufn) if multi_step_form_session['request_type'] == 'assigned_counsel'
         claim.merge!(latest_payment_request)
       end
 
@@ -68,7 +69,7 @@ module Payments
             :claimed_total,
             :allowed_total
           ],
-          ac_claim: [
+          assigned_counsel_claim: [
             :claimed_net_assigned_counsel_cost,
             :claimed_assigned_counsel_vat,
             :allowed_net_assigned_counsel_cost,
