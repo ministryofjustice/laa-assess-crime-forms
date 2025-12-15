@@ -39,13 +39,6 @@ module Decisions
       @no_existing_ref ||= multi_step_form_session[:laa_reference].blank?
     end
 
-    def solicitor_not_found
-      @solicitor_not_found ||= [
-        multi_step_form_session[:solicitor_firm_name],
-        multi_step_form_session[:solicitor_office_code]
-      ].all?(&:blank?)
-    end
-
     def ac_claim_details_incomplete?
       @ac_claim_details_incomplete ||= [
         multi_step_form_session[:ufn],
