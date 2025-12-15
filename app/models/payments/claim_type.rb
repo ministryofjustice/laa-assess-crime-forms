@@ -1,5 +1,6 @@
 module Payments
   class ClaimType
+    BOI = 'breach_of_injunction'.freeze
     NSM = 'non_standard_magistrate'.freeze
     NSM_SUPPLEMENTAL = 'non_standard_mag_supplemental'.freeze
     NSM_APPEAL = 'non_standard_mag_appeal'.freeze
