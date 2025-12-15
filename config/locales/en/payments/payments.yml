@@ -120,7 +120,7 @@ en:
             <p>Check the number with the provider if you are not getting the expected account.</p>
           back: Go back
           cancel: Cancel payment request
-        ac:
+      ac:
         nsm_check:
           edit:
             page_title: Is this claim linked to a non-standard magistrates' claim?
