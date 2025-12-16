@@ -1,22 +1,25 @@
 # rubocop:disable Metrics/MethodLength, Metrics/ModuleLength
 module PaymentsHelpers
-  def stub_search(endpoint, body_hash)
+  def stub_search(endpoint, body_hash, data=nil)
+    payload = data || begin
+      [
+        id: SecureRandom.uuid,
+        request_type: 'non_standard_magistrate',
+        submitted_at: Time.zone.now.to_s,
+        payment_request_claim: {
+          id: '1234',
+          laa_reference: 'LAA-1004',
+          client_last_name: 'Dickens'
+        }
+      ]
+    end
     stub_request(:post, endpoint)
       .with(body: body_hash)
       .to_return(
         status: 201,
         body: {
           metadata: { total_results: 1 },
-          data: [
-            id: SecureRandom.uuid,
-            request_type: 'non_standard_magistrate',
-            submitted_at: Time.zone.now.to_s,
-            payment_request_claim: {
-              id: '1234',
-              laa_reference: 'LAA-1004',
-              client_last_name: 'Dickens'
-            }
-          ],
+          data: payload,
           raw_data: []
         }.to_json
       )

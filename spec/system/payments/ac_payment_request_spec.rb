@@ -22,6 +22,16 @@ RSpec.describe 'NSM payment request', :stub_oauth_token do
       sort_direction: 'descending'
     }
   end
+  let(:empty_search_params) do
+    {
+      page: 1,
+      per_page: 20,
+      query: 'garbage',
+      request_type: 'non_standard_magistrate',
+      sort_by: 'submitted_at',
+      sort_direction: 'descending'
+    }
+  end
 
   let(:create_endpoint) { 'https://appstore.example.com/v1/payment_requests' }
   let(:create_payload) do
@@ -81,13 +91,27 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
   context 'No linked NSM claim' do
     before do
       start_new_payment_request
-      stub_search(index_endpoint, search_params)
+      stub_search(index_endpoint, empty_search_params, [])
       stub_get_claim('https://appstore.example.com/v1/payment_request_claims/1234')
       choose_claim_type('Assigned counsel')
       fill_in 'Find a claim', with: 'garbage'
+      click_button 'Search'
       click_on 'Create a new record'
-      select_office_code
+    end
 
+    it 'allows user to complete payment journey' do
+      select_office_code
+      fill_ac_claim_details
+      fill_in id: 'counsel_costs_net', with: '150.40'
+      fill_in id: 'counsel_costs_vat', with: '100'
+      click_on 'Save and continue'
+      fill_in id: 'counsel_costs_net', with: '100'
+      fill_in id: 'counsel_costs_vat', with: '70'
+      click_on 'Save and continue'
+
+      expect(page).to have_content("Not linked to a non-standard magistrates' claim")
+      click_on 'Submit payment request'
+      expect(page).to have_title('Payment Confirmation')
     end
   end
 end
