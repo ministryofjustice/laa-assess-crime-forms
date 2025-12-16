@@ -41,7 +41,6 @@ module Decisions
     from(:office_code_search)
       .goto(edit: OFFICE_CODE_CONFIRM)
     from(:office_code_confirm)
-      .goto(edit: OFFICE_CODE_SEARCH)
       .when(-> { (ac_appeal || ac_amendment) && ac_claim_details_incomplete? })
       .goto(edit: AC_CLAIM_DETAILS)
       .when(-> { ac_appeal || ac_amendment })
