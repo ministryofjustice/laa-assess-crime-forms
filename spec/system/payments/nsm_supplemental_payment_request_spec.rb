@@ -78,7 +78,7 @@ RSpec.describe 'NSM supplemental payment request', :stub_oauth_token do
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
-        date_claim_received
+        fill_date_claim_received
         expect(page).to have_title('Claimed costs')
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe 'NSM supplemental payment request', :stub_oauth_token do
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
-        date_claim_received
+        fill_date_claim_received
         fill_claimed_costs
         expect(page).to have_title('Allowed costs')
       end
@@ -99,7 +99,7 @@ RSpec.describe 'NSM supplemental payment request', :stub_oauth_token do
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
-        date_claim_received
+        fill_date_claim_received
         fill_claimed_costs
         fill_allowed_costs
         expect(page).to have_title('Check your answers')

@@ -66,7 +66,7 @@ RSpec.describe 'NSM amendment payment request', :stub_oauth_token do
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
-        date_claim_received
+        fill_date_claim_received
         expect(page).to have_title('Allowed costs')
       end
     end
@@ -76,7 +76,7 @@ RSpec.describe 'NSM amendment payment request', :stub_oauth_token do
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
-        date_claim_received
+        fill_date_claim_received
         fill_allowed_costs
         expect(page).to have_title('Check your answers')
       end
