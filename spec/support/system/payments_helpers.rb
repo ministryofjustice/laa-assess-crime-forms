@@ -1,6 +1,6 @@
 # rubocop:disable Metrics/MethodLength, Metrics/ModuleLength
 module PaymentsHelpers
-  def stub_search(endpoint, body_hash, data=nil)
+  def stub_search(endpoint, body_hash, data = nil)
     payload = data || begin
       [
         id: SecureRandom.uuid,
