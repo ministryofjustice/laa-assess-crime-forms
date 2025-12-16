@@ -154,6 +154,22 @@ module PaymentsHelpers
   end
   # rubocop:enable Metrics/ParameterLists
 
+  def fill_ac_claim_details(
+    received_on: '2025-09-24',
+    ufn: '120223/001',
+    defendant_last_name: 'Fred',
+    counsel_office_account_number: '1A123B',
+    counsel_name: 'Firth & Coln'
+  )
+    fill_in 'Date claim received', with: received_on
+    fill_in 'Unique file number', with: ufn
+    fill_in 'Defendant last name', with: defendant_last_name
+    fill_in 'Counsel office account number', with: counsel_office_account_number
+    fill_in 'Counsel name', with: counsel_name
+
+    click_button 'Save and continue'
+  end
+
   def fill_costs(profit_costs: 10,
                  disbursement_costs: 10,
                  travel_costs: 10,

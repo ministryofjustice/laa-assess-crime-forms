@@ -67,7 +67,7 @@
 
 <div class="govuk-button-group">
   <%= form_for @form_object, url: {controller: '/payments/requests', action: :create }, method: :post do |f| %>
-  <%= f.continue_button(primary: :save_and_continue, secondary: false) %>
+  <%= f.submit_button('submit_payment') %>
   <% if @claim_details.session_answers['submission_id'].blank? %>
     <%= govuk_link_to( t(".cancel_payment_request"), payments_requests_path) %>
   <% else %>
