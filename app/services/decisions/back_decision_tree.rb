@@ -40,6 +40,8 @@ module Decisions
       .goto(edit: DecisionTree::AC_ALLOWED_COSTS)
 
     from(DecisionTree::OFFICE_CODE_SEARCH.sub(%r{^/}, ''))
+      .when(-> { nsm })
+      .goto(edit: DecisionTree::CLAIM_TYPE)
       .goto(edit: DecisionTree::CLAIM_SEARCH)
     from(DecisionTree::OFFICE_CODE_CONFIRM.sub(%r{^/}, ''))
       .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)

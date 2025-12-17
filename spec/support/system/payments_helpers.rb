@@ -165,7 +165,7 @@ module PaymentsHelpers
     fill_in "What is the solicitor's firm account number?", with: office_code
     click_button 'Continue'
     choose 'Yes'
-    click_button 'Continue'
+    click_button 'Save and continue'
   end
 
   # rubocop:disable Metrics/ParameterLists
