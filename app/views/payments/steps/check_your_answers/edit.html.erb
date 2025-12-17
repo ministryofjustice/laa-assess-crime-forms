@@ -1,9 +1,9 @@
 <% title t('.page_title') %>
 
-<% if @report.session_answers['submission_id'].blank? %>
+<% if @report.session_answers['linked_laa_reference'].blank? %>
   <% step_header(path: previous_decision_step_path) %>
 <% else %>
-  <% step_header(path: nsm_claim_decision_path(@report.session_answers['submission_id'])) %>
+  <% step_header(path: nsm_claim_decision_path(@report.session_answers['id'])) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -82,7 +82,7 @@
   <% if @report.session_answers['submission_id'].blank? %>
     <%= govuk_link_to( t(".cancel_payment_request"), payments_requests_path) %>
   <% else %>
-    <%= govuk_link_to( t(".cancel_payment_request"), nsm_claim_claim_details_path(@report.session_answers['submission_id'])) %>
+    <%= govuk_link_to( t(".cancel_payment_request"), nsm_claim_claim_details_path(@report.session_answers['id'])) %>
   <% end %>
 <% end %>
 </div>
