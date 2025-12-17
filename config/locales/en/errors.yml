@@ -188,7 +188,7 @@ en:
             claimed_profit_cost:
               greater_than_or_equal_to: Claimed profit costs must be equal or greater than 0
               blank: Enter claimed profit cost
-              not_a_number: Claimed net counsel fees must be a number, like 25
+              not_a_number: Claimed profit costs must be a number, like 25
             claimed_disbursement_cost:
               greater_than_or_equal_to: Claimed disbursement costs must be equal or greater than 0
               blank: Enter claimed disbursement cost
