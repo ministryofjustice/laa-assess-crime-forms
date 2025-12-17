@@ -8,14 +8,16 @@ RSpec.describe ProviderData::LocalDataClient do
       let(:office_code) { '1A123B' }
 
       it 'returns the correct office details' do
-        expect(described_class.new.office_details(office_code)).to eq({
-                                                                        'firmOfficeId' => 1,
-          'ccmsFirmOfficeId' => 1,
-          'firmOfficeCode' => '1A123B',
-          'officeName' => 'Firm & Sons',
-          'officeCodeAlt' => '1A123B',
-          'type' => 'Solicitor'
-                                                                      })
+        expect(described_class.new.office_details(office_code)).to eq(
+          {
+            'firmOfficeId' => 1,
+            'ccmsFirmOfficeId' => 1,
+            'firmOfficeCode' => '1A123B',
+            'officeName' => 'Firm & Sons',
+            'officeCodeAlt' => '1A123B',
+            'type' => 'Solicitor'
+          }
+        )
       end
     end
 

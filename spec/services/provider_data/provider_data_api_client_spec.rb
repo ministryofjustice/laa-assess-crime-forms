@@ -30,14 +30,16 @@ RSpec.describe ProviderData::ProviderDataApiClient do
       end
 
       it 'returns the correct office details' do
-        expect(described_class.office_details(office_code)).to eq({
-                                                                    'firmOfficeId' => 1,
-          'ccmsFirmOfficeId' => 1,
-          'firmOfficeCode' => '1A123B',
-          'officeName' => 'Firm & Sons',
-          'officeCodeAlt' => '1A123B',
-          'type' => 'Solicitor'
-                                                                  })
+        expect(described_class.office_details(office_code)).to eq(
+          {
+            'firmOfficeId' => 1,
+            'ccmsFirmOfficeId' => 1,
+            'firmOfficeCode' => '1A123B',
+            'officeName' => 'Firm & Sons',
+            'officeCodeAlt' => '1A123B',
+            'type' => 'Solicitor'
+          }
+        )
       end
     end
 
