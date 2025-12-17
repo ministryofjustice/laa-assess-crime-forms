@@ -19,7 +19,12 @@ function init() {
         const d = field?.value?.trim();
         if (!d) return new Decimal(0);
         try {
-          return new Decimal(d);
+          if(isNaN(d)){
+            return NaN;
+          }
+          else{
+            return new Decimal(d);
+          }
         } catch {
           return null;
         }
@@ -32,9 +37,12 @@ function init() {
     const counselVat = parse(counselVatField);
 
     let sum = 0;
-    if (profitField && disbursementField && travelField && waitingField) {
-      sum = profit.plus(disbursement).plus(travel).plus(waiting).toFixed(2);
-      total.textContent = `£${sum}`;
+    if (isNaN(profit) || isNaN(disbursement) || isNaN(travel) || isNaN(waiting) || isNaN(counselNet) || isNaN(counselVat)) {
+      total.textContent = "—";
+    }
+    else if(profitField && disbursementField && travelField && waitingField) {
+        sum = profit.plus(disbursement).plus(travel).plus(waiting).toFixed(2);
+        total.textContent = `£${sum}`;
     }
     else if(counselNetField && counselVatField){
       sum = counselNet.plus(counselVat).toFixed(2);

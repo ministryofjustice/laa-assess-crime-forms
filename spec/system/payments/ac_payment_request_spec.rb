@@ -113,5 +113,24 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       click_on 'Submit payment request'
       expect(page).to have_title('Payment Confirmation')
     end
+
+    it 'fails claimed payment journey when inputs invalid' do
+      select_office_code
+      fill_ac_claim_details
+      fill_in id: 'counsel_costs_net', with: 'garbage'
+      click_button 'Save and continue'
+      expect(page).to have_content('Claimed net counsel fees must be a number, like 25')
+    end
+
+    it 'fails allowed payment journey when inputs invalid' do
+      select_office_code
+      fill_ac_claim_details
+      fill_in id: 'counsel_costs_net', with: '150.40'
+      fill_in id: 'counsel_costs_vat', with: '100'
+      click_on 'Save and continue'
+      fill_in id: 'counsel_costs_net', with: 'garbage'
+      click_button 'Save and continue'
+      expect(page).to have_content('Allowed net counsel fees must be a number, like 25')
+    end
   end
 end

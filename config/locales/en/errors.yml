@@ -188,31 +188,60 @@ en:
             claimed_profit_cost:
               greater_than_or_equal_to: Claimed profit costs must be equal or greater than 0
               blank: Enter claimed profit cost
+              not_a_number: Claimed net counsel fees must be a number, like 25
             claimed_disbursement_cost:
               greater_than_or_equal_to: Claimed disbursement costs must be equal or greater than 0
               blank: Enter claimed disbursement cost
+              not_a_number: Claimed disbursement costs must be a number, like 25
             claimed_travel_cost:
               greater_than_or_equal_to: Claimed travel costs must be equal or greater than 0
               blank: Enter claimed travel cost
+              not_a_number: Claimed travel costs must be a number, like 25
             claimed_waiting_cost:
               greater_than_or_equal_to: Claimed waiting costs must be equal or greater than 0
               blank: Enter claimed waiting cost
+              not_a_number: Claimed waiting costs must be a number, like 25
 
         payments/steps/nsm/allowed_costs_form:
           attributes:
             allowed_profit_cost:
               greater_than_or_equal_to: Allowed profit costs must be equal or greater than 0
               blank: Enter allowed profit cost
+              not_a_number: Allowed profit costs must be a number, like 25
             allowed_disbursement_cost:
               greater_than_or_equal_to: Allowed disbursement costs must be equal or greater than 0
               blank: Enter allowed disbursement cost
+              not_a_number: Allowed disbursement costs must be a number, like 25
             allowed_travel_cost:
               greater_than_or_equal_to: Allowed travel costs must be equal or greater than 0
               blank: Enter allowed travel cost
+              not_a_number: Allowed travel costs must be a number, like 25
             allowed_waiting_cost:
               greater_than_or_equal_to: Allowed waiting costs must be equal or greater than 0
               blank: Enter allowed waiting cost
+              not_a_number: Allowed waiting costs must be a number, like 25
 
+        payments/steps/ac/claimed_costs_form:
+          attributes:
+            claimed_net_assigned_counsel_cost:
+              greater_than_or_equal_to: Claimed net counsel fees must be equal or greater than 0
+              blank: Enter claimed net counsel fees
+              not_a_number: Claimed net counsel fees must be a number, like 25
+            claimed_assigned_counsel_vat:
+              greater_than_or_equal_to: Claimed VAT on counsel fees must be equal or greater than 0
+              blank: Enter claimed VAT on counsel fees
+              not_a_number: Claimed VAT on counsel fees must be a number, like 25
+
+        payments/steps/ac/allowed_costs_form:
+          attributes:
+            allowed_net_assigned_counsel_cost:
+              greater_than_or_equal_to: Allowed net counsel fees must be equal or greater than 0
+              blank: Enter allowed net counsel fees
+              not_a_number: Allowed net counsel fees must be a number, like 25
+            allowed_assigned_counsel_vat:
+              greater_than_or_equal_to: Allowed VAT on counsel fees must be equal or greater than 0
+              blank: Enter allowed VAT on counsel fees
+              not_a_number: Allowed VAT on counsel fees must be a number, like 25
         user_form:
           attributes:
             caseworker_service:
