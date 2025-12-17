@@ -11,8 +11,6 @@ module Payments
         if confirm_office_code
           multi_step_form_session[:solicitor_office_code] = office_code_details['firmOfficeCode']
           multi_step_form_session[:solicitor_firm_name] = office_code_details['officeName']
-        else
-          reset_office_details
         end
 
         true
@@ -24,13 +22,6 @@ module Payments
 
       def office_code_details
         ProviderData::ProviderDataClient.new.office_details(searched_code)
-      end
-
-      private
-
-      def reset_office_details
-        multi_step_form_session[:solicitor_office_code] = nil
-        multi_step_form_session[:solicitor_firm_name] = nil
       end
     end
   end
