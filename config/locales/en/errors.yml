@@ -183,6 +183,11 @@ en:
             request_type:
               blank: "Select a payment claim type"
 
+        payments/steps/office_code_search_form:
+          attributes:
+            solicitor_office_code:
+              blank: Enter the office code
+
         payments/steps/nsm/claimed_costs_form:
           attributes:
             claimed_profit_cost:
