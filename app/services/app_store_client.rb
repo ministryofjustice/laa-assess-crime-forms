@@ -108,12 +108,7 @@ class AppStoreClient
   end
 
   def create_payment_request(payment_request)
-    body =  payment_request.to_json
-    options = { body:, headers: }
-
-    options[:headers][:idempotency_token] = payment_request['idempotency_token'] if payment_request['idempotency_token']
-
-    response = self.class.post("#{host}/v1/payment_requests", **options)
+    response = self.class.post("#{host}/v1/payment_requests", **options(payment_request))
     process_response(
       response,
       "Unexpected response from AppStore - status #{response.code} for payment request:\n#{response['errors']}",
