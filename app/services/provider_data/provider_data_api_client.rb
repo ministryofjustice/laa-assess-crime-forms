@@ -26,11 +26,9 @@ module ProviderData
 
       private
 
-      def query(method, endpoint, handlers, fallback = nil)
+      def query(method, endpoint, handlers)
         response = send(method, endpoint)
         unless handlers.key?(response.code)
-          return fallback if fallback
-
           raise StandardError, "Unexpected status code #{response.code} when querying provider API endpoint #{endpoint}"
         end
 
