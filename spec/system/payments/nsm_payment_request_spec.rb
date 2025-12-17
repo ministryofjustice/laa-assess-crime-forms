@@ -69,6 +69,15 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       expect(page).to have_content("What is the solicitor's firm account number?")
     end
 
+    it 'shows an error when no field is selected on office code confirmation' do
+      start_new_payment_request
+      choose_claim_type("Non-Standard Magistrates'")
+      fill_in "What is the solicitor's firm account number?", with: '1A123B'
+      click_button 'Continue'
+      click_button 'Save and continue'
+      expect(page).to have_content('Please select an option')
+    end
+
     describe 'claimed costs' do
       it 'completes claimed costs and proceeds' do
         start_new_payment_request

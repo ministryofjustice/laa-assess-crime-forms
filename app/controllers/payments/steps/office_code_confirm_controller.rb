@@ -16,9 +16,7 @@ module Payments
       private
 
       def incorrect_office?
-        params
-          .expect(payments_steps_office_code_confirm_form: [:confirm_office_code])
-          .fetch(:confirm_office_code) == 'false'
+        params.dig(:payments_steps_office_code_confirm_form, :confirm_office_code) == 'false'
       end
     end
   end

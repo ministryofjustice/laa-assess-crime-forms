@@ -140,6 +140,10 @@ en:
             base:
               nothing_specified: Enter some %{value} details or filter your search criteria
               search_error: Something went wrong trying to perform this search
+        payments/steps/office_code_confirm_form:
+          attributes:
+            confirm_office_code:
+              inclusion: Please select an option
 
         payments/steps/nsm/claim_detail_form:
           attributes:
