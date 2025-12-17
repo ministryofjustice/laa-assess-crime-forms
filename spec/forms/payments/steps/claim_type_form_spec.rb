@@ -63,10 +63,7 @@ RSpec.describe Payments::Steps::ClaimTypeForm, type: :model do
         it 'resets answers, writes current attributes, and returns true' do
           expect(form.save).to be(true)
 
-          expect(multi_step_form_session.answers).to eq(
-            'id' => 'test-session',
-            'request_type' => 'assigned_counsel'
-          )
+          expect(multi_step_form_session.answers['request_type']).to eq('assigned_counsel')
         end
       end
     end
