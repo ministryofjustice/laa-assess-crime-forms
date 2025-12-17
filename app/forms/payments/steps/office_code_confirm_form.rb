@@ -11,7 +11,11 @@ module Payments
         if confirm_office_code
           multi_step_form_session[:solicitor_office_code] = office_code_details['firmOfficeCode']
           multi_step_form_session[:solicitor_firm_name] = office_code_details['officeName']
+        # :nocov:
+        else
+          false
         end
+        # :nocov:
 
         true
       end
