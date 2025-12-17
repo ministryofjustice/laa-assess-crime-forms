@@ -161,7 +161,6 @@ Rails.application.routes.draw do
             edit_step :allowed_costs
             edit_step :claimed_costs
             edit_step :claim_details
-            edit_step :nsm_check
           end
 
           namespace :nsm do

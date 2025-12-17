@@ -121,9 +121,6 @@ en:
           back: Go back
           cancel: Cancel payment request
       ac:
-        nsm_check:
-          edit:
-            page_title: Is this claim linked to a non-standard magistrates' claim?
         claim_details:
           edit:
             page_title: Claim Details
