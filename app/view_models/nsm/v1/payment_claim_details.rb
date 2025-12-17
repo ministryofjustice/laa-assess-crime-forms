@@ -37,10 +37,6 @@ module Nsm
         submission.data[:number_of_hearing]
       end
 
-      def submission_id
-        id
-      end
-
       def defendant_first_name
         submission.data[:defendants].detect { _1[:main] == true }[:first_name]
       end
@@ -101,11 +97,15 @@ module Nsm
         Time.current.to_fs(:db)
       end
 
+      def idempotency_token
+        SecureRandom.uuid
+      end
+
       # rubocop:disable Metrics/MethodLength
       def to_h
         [
           :id,
-          :submission_id,
+          :idempotency_token,
           :linked_laa_reference,
           :youth_court,
           :court,
