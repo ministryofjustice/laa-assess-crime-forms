@@ -14,17 +14,6 @@ module Payments
 
       private
 
-      def details_class
-        case multi_step_form_session['request_type'].to_sym
-        when :non_standard_magistrate, :non_standard_mag_supplemental, :non_standard_mag_amendment, :non_standard_mag_appeal
-          Payments::NsmClaimDetailsSummary
-        when :assigned_counsel, :assigned_counsel_appeal, :assigned_counsel_amendment
-          Payments::AcClaimDetailsSummary
-        else
-          raise StandardError, "Unknown request type: #{multi_step_form_session['request_type']}"
-        end
-      end
-
       def payment_details
         @payment_details ||= if params[:submission]
                                payment_claim_details = BaseViewModel.build(:payment_claim_details, claim)
