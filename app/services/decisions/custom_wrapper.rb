@@ -40,7 +40,7 @@ module Decisions
     end
 
     def no_existing_ref
-      @no_existing_ref ||= multi_step_form_session[:laa_reference].blank?
+      @no_existing_ref ||= multi_step_form_session[:laa_reference].blank? && multi_step_form_session[:linked_nsm_claim].blank?
     end
 
     def ac_claim_details_incomplete?

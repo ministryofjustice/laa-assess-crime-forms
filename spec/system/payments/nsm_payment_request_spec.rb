@@ -63,7 +63,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       start_new_payment_request
       choose_claim_type("Non-Standard Magistrates'")
       click_button 'Continue'
-      expect(page).to have_content("Enter the office code")
+      expect(page).to have_content('Enter the office code')
     end
 
     it 'returns to office code selection when office code is not selected' do
