@@ -29,7 +29,7 @@ module Payments
 
       def non_standard_magistrate
         linked_ref = ac? ? session_answers['linked_nsm_claim'] : session_answers['laa_reference']
-        return nil unless linked_ref
+        return nil if linked_ref.blank?
 
         {
           head_key: 'non_standard_magistrate',
