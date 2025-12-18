@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'NSM amendment payment request', :stub_oauth_token do
+RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:endpoint)   { 'https://appstore.example.com/v1/payment_requests/searches' }
-  let(:claim_type) { "Non-Standard Magistrates' - amendment" }
+  let(:claim_type) { "Non-Standard Magistrates' - #{type_suffix}" }
   let(:get_claim_endpoint) { 'https://appstore.example.com/v1/payment_request_claims/1234' }
 
   let(:search_params) do
@@ -39,7 +39,7 @@ RSpec.describe 'NSM amendment payment request', :stub_oauth_token do
       start_new_payment_request
       expect(page)
         .to have_title('Claim type')
-        .and have_content("Non-Standard Magistrates' - amendment")
+        .and have_content(claim_type)
     end
   end
 
@@ -52,6 +52,16 @@ RSpec.describe 'NSM amendment payment request', :stub_oauth_token do
       end
     end
 
+    describe 'fills in wrong reference' do
+      it 'input date received' do
+        start_new_payment_request
+        choose_claim_type(claim_type)
+        fill_in 'Find a claim', with: ''
+        click_button 'Search'
+        expect(page).to have_content("can't be blank")
+      end
+    end
+
     describe 'Date received' do
       it 'input date received' do
         start_new_payment_request
@@ -61,12 +71,23 @@ RSpec.describe 'NSM amendment payment request', :stub_oauth_token do
       end
     end
 
+    describe 'claimed costs' do
+      it 'input date claim received' do
+        start_new_payment_request
+        choose_claim_type(claim_type)
+        fill_in_laa_ref
+        fill_date_claim_received
+        expect(page).to have_title('Claimed costs')
+      end
+    end
+
     describe 'allowed costs' do
       it 'input claimed costs' do
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
         fill_date_claim_received
+        fill_claimed_costs
         expect(page).to have_title('Allowed costs')
       end
     end
@@ -77,6 +98,7 @@ RSpec.describe 'NSM amendment payment request', :stub_oauth_token do
         choose_claim_type(claim_type)
         fill_in_laa_ref
         fill_date_claim_received
+        fill_claimed_costs
         fill_allowed_costs
         expect(page).to have_title('Check your answers')
       end

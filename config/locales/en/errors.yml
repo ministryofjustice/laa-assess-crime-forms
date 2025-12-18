@@ -145,6 +145,10 @@ en:
             confirm_office_code:
               inclusion: Please select an option
 
+        payments/steps/date_received_form:
+          attributes:
+            date_received: *shared_date_errors
+
         payments/steps/nsm/claim_detail_form:
           attributes:
             date_received: *shared_date_errors

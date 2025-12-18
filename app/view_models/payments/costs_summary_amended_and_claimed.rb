@@ -1,5 +1,5 @@
 module Payments
-  class CostsSummaryAmendedAndClaimed < BaseCard
+  class CostsSummaryAmendedAndClaimed < CostsSummary
     include Routing
     include ActionView::Helpers::UrlHelper
     include ActionView::Helpers::TagHelper
@@ -41,14 +41,6 @@ module Payments
 
     private
 
-    def t(key, numeric: true, width: nil)
-      {
-        text: I18n.t("payments.steps.check_your_answers.edit.#{key}"),
-        numeric: numeric,
-        width: width
-      }
-    end
-
     def build_row(type)
       {
         name: t(type, numeric: false),
@@ -57,10 +49,6 @@ module Payments
         original_total_allowed: format(session_answers["original_allowed_#{type}"].to_f),
         total_allowed: format(session_answers["allowed_#{type}"].to_f)
       }
-    end
-
-    def format(value)
-      { text: LaaCrimeFormsCommon::NumberTo.pounds(value), numeric: true }
     end
   end
 end

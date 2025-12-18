@@ -134,4 +134,16 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       end
     end
   end
+
+  describe 'appeal', :stub_oauth_token do
+    it_behaves_like 'NSM payment request flow', 'appeal'
+  end
+
+  describe 'amendment', :stub_oauth_token do
+    it_behaves_like 'NSM payment request flow', 'amendment'
+  end
+
+  describe 'supplemental', :stub_oauth_token do
+    it_behaves_like 'NSM payment request flow', 'supplemental'
+  end
 end

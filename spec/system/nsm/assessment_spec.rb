@@ -228,7 +228,7 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
       it 'clicking "create payment" request takes user to payment check your answers page' do
         click_link_or_button 'Create payment request'
         expect(page).to have_content 'Check your answers'
-        expect(page).to have_content 'Claim typeNon-Standard Magistrates'
+        expect(page).to have_content 'Claim typeBreach of injunction'
       end
     end
   end

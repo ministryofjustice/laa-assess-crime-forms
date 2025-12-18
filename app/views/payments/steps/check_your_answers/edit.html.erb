@@ -1,9 +1,9 @@
 <% title t('.page_title') %>
 
-<% if @claim_details.session_answers['submission_id'].blank? %>
+<% if @report.session_answers['submission_id'].blank? %>
   <% step_header(path: previous_decision_step_path) %>
 <% else %>
-  <% step_header(path: nsm_claim_decision_path(@claim_details.session_answers['submission_id'])) %>
+  <% step_header(path: nsm_claim_decision_path(@report.session_answers['submission_id'])) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -14,29 +14,40 @@
   </div>
 </div>
 
-<div class="govuk-summary-card">
-  <div class="govuk-summary-card__title-wrapper">
-    <h2 class="govuk-summary-card__title"><%= t('.claim_details') %></h2>
-    <% unless @claim_details.session_answers['submission_id'].present? %>
-      <ul class="govuk-summary-card__actions">
-        <li class="govuk-summary-card__action">
-          <%= link_to t('.change'), payments_steps_claim_types_path %>
-          <span class="govuk-visually-hidden"><%= t('.claim_details') %></span>
-        </li>
-      </ul>
-    <% end %>
-  </div>
-  <div class="govuk-summary-card__content">
-    <%= govuk_summary_list(rows: @claim_details.card_rows) %>
-  </div>
-</div>
+<% @report.section_groups.each do |section_group| %>
+  <% if section_group[:heading] %>
+    <h2 class="govuk-heading-l"><%= section_group[:heading] %></h2>
+  <% end %>
+  <% section_group[:sections].each do |section| %>
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title"><%= section[:card][:title] %></h2>
+        <ul class="govuk-summary-card__actions">
+          <% section[:card][:actions].each do |action| %>
+            <li class="govuk-summary-card__action">
+              <%= action %>
+              <span class="govuk-visually-hidden"><%= section[:card][:title] %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="govuk-summary-card__content">
+        <% if section[:custom] %>
+          <%= render section[:custom][:partial], **section[:custom][:locals] %>
+        <% elsif section[:rows] %>
+          <%= govuk_summary_list(rows: section[:rows]) %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
 
 <div class="govuk-summary-card">
   <div class="govuk-summary-card__title-wrapper">
     <h2 class="govuk-summary-card__title"><%= t('.cost_summary') %></h2>
     <ul class="govuk-summary-card__actions">
       <li class="govuk-summary-card__action">
-        <% if @claim_details.session_answers['submission_id'].present? %>
+        <% if @report.session_answers['submission_id'].present? %>
           <%= link_to t('.change_profit'), edit_payments_steps_submission_allowed_costs_path %>
         <% else %>
           <%= link_to t('.change'), @cost_summary.change_link %>
@@ -68,10 +79,10 @@
 <div class="govuk-button-group">
   <%= form_for @form_object, url: {controller: '/payments/requests', action: :create }, method: :post do |f| %>
   <%= f.submit_button('submit_payment') %>
-  <% if @claim_details.session_answers['submission_id'].blank? %>
+  <% if @report.session_answers['submission_id'].blank? %>
     <%= govuk_link_to( t(".cancel_payment_request"), payments_requests_path) %>
   <% else %>
-    <%= govuk_link_to( t(".cancel_payment_request"), nsm_claim_claim_details_path(@claim_details.session_answers['submission_id'])) %>
+    <%= govuk_link_to( t(".cancel_payment_request"), nsm_claim_claim_details_path(@report.session_answers['submission_id'])) %>
   <% end %>
 <% end %>
 </div>

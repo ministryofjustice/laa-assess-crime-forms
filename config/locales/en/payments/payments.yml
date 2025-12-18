@@ -6,6 +6,7 @@ en:
       non_standard_magistrate: Non-standard magistrates'
       assigned_counsel: Assigned counsel
     request_types:
+      breach_of_injunction: Breach of injunction
       non_standard_magistrate: Non-standard magistrates'
       non_standard_mag_supplemental: Non-standard magistrates' - supplemental
       non_standard_mag_appeal: Non-standard magistrates' - appeal
@@ -16,34 +17,42 @@ en:
     steps:
       check_your_answers:
         edit:
+          page_title: Check your answers
+          heading: Check your answers
           headers:
             costs: costs
             total: totals
-          page_title: Check your answers
-          heading: Check your answers
-          change: Change
-          change_profit: Change profit cost
-          claim_details: Claim details
+          sections:
+            claim_types:
+              title: Claim type
+              claim_type: Claim type
+            claim_details:
+              title: Claim details
+              date_received: Date claim received
+              solicitor_office_code: Firm office account number
+              solicitor_firm_name: Firm name
+              ufn: Unique file number
+              stage_reached: Stage reached
+              defendant_first_name: Defendant first name
+              defendant_last_name: Defendant last name
+              number_of_defendants: Number of defendants
+              number_of_attendances: Number of attendances
+              hearing_outcome_code: Hearing outcome code
+              matter_type: Matter type
+              court: Court
+              youth_court: Youth court matter
+              date_completed: Date work was completed
+              linked_claim: Linked non-standard claim
+              counsel_office_code: Counsel account number
+              counsel_firm_name: Counsel name
+            linked_claim:
+              title: Linked claims
+              non_standard_magistrate: Non standard magistrates
+              assigned_counsel: Assigned counsel
+              no_linked_claim: No linked claim
           cost_summary: Cost Summary
           original_claim: Original claim
-          claim_type: Claim type
-          date_received: Date claim received
-          solicitor_office_code: Firm office account number
-          solicitor_firm_name: Firm name
-          ufn: Unique file number
-          stage_reached: Stage reached
-          defendant_first_name: Defendant first name
-          defendant_last_name: Defendant last name
-          number_of_defendants: Number of defendants
-          number_of_attendances: Number of attendances
-          hearing_outcome_code: Hearing outcome code
-          matter_type: Matter type
-          court: Court
-          youth_court: Youth court matter
-          date_completed: Date work was completed
-          linked_claim: Linked non-standard claim
-          counsel_office_code: Counsel account number
-          counsel_firm_name: Counsel name
+          linked_laa_reference: Linked LAA reference
           claimed_and_allowed_costs: Claimed and allowed costs
           amended_allowed_costs: Amended allowed costs
           allowed_costs: Allowed costs
@@ -63,7 +72,6 @@ en:
           net_assigned_counsel_cost: Net counsel fees
           assigned_counsel_vat: VAT on counsel fees
           total: Total
-          laa_reference: LAA reference
           submit_payment_request: Submit payment request
           cancel_payment_request: Cancel payment request
           change: Change
@@ -205,6 +213,7 @@ en:
         no_payments: There are no related payment requests for this claim
       payment_details:
         payment_heading:
+          breach_of_injunction: Breach of injunction
           non_standard_magistrate: Claimed and allowed costs
           non_standard_mag_supplemental: Allowed costs after supplemental payment
           non_standard_mag_appeal: Allowed costs after appeal
@@ -226,6 +235,7 @@ en:
           total_allowed: Total allowed
         payment_type: Payment type
         date_received:
+          breach_of_injunction: Date payment received
           non_standard_magistrate: Date payment received
           non_standard_mag_supplemental: Date supplemental payment received
           non_standard_mag_appeal: Date appeal received

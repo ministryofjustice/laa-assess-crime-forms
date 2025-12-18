@@ -15,15 +15,15 @@ module Payments
     end
 
     def stage_code
-      @payment_request_claim['stage_code']
+      @payment_request_claim['stage_reached']
     end
 
     def defendant_first_name
-      @payment_request_claim['client_first_name']
+      @payment_request_claim['defendant_first_name']
     end
 
     def defendant_last_name
-      @payment_request_claim['client_last_name']
+      @payment_request_claim['defendant_last_name']
     end
 
     def defendant_name
@@ -31,15 +31,15 @@ module Payments
     end
 
     def court_attendances
-      @payment_request_claim['court_attendances']
+      @payment_request_claim['number_of_attendances']
     end
 
     def no_of_defendants
-      @payment_request_claim['no_of_defendants']
+      @payment_request_claim['number_of_defendants']
     end
 
     def outcome_code
-      LaaCrimeFormsCommon::OutcomeCode.new(@payment_request_claim['outcome_code']).name
+      LaaCrimeFormsCommon::OutcomeCode.new(@payment_request_claim['hearing_outcome_code']).name
     end
 
     def matter_type
@@ -47,7 +47,7 @@ module Payments
     end
 
     def court
-      @payment_request_claim['court_name']
+      @payment_request_claim['court']
     end
 
     def youth_court

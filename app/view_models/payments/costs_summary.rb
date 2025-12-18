@@ -1,6 +1,15 @@
 module Payments
-  class CostsSummary < BaseCard
+  class CostsSummary
     include Routing
+
+    attr_reader :session_answers, :id
+
+    PROFIT_COSTS = 'profit_costs'.freeze
+
+    def initialize(session_answers, id = nil)
+      @session_answers = session_answers
+      @id = id
+    end
 
     def heading
       I18n.t('payments.steps.check_your_answers.edit.claimed_and_allowed_costs')

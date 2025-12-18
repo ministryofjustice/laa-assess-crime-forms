@@ -18,7 +18,7 @@ module Decisions
     end
 
     def reset_answers
-      data['answers'] = {}
+      data['answers'] = { 'id' => id }
     end
 
     def [](hash_key)
@@ -39,7 +39,7 @@ module Decisions
       # rubocop:disable Rails/Presence
       if session[key].blank?
         session[key] = {
-          'answers' => {}
+          'answers' => { 'id' => id }
         }
       else
         session[key]
