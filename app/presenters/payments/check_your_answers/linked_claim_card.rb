@@ -19,6 +19,7 @@ module Payments
 
       def assigned_counsel
         return unless session_answers['request_type'].in?(%w[assigned_counsel_appeal assigned_counsel_amendment])
+
         {
           head_key: 'assigned_counsel',
           text: session_answers['laa_reference'] ||

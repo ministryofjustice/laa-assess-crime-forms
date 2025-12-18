@@ -36,13 +36,6 @@ module Payments
         }
       end
 
-      def date_received
-        {
-          head_key: 'date_received',
-          text: DateTime.parse(session_answers['date_received']).to_fs(:stamp)
-        }
-      end
-
       def solicitor_office_code
         {
           head_key: 'solicitor_office_code',
