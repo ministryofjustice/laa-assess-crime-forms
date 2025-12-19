@@ -31,21 +31,23 @@ RSpec.describe Nsm::V1::ClaimDetails do
 
   describe '#data' do
     context 'work done before and after' do
-      subject = described_class.new(
-        {
-          'prosecution_evidence' => 5,
-          'defence_statement' => 10,
-          'number_of_witnesses' => 2,
-          'preparation_time' => 'yes',
-          'time_spent' => 110,
-          'work_before' => 'yes',
-          'work_before_date' => '2023-01-20',
-          'work_after' => 'yes',
-          'work_after_date' => '2023-02-02',
-          'work_completed_date' => '2023-02-03',
-          'wasted_costs' => 'yes'
-        }
-      )
+      subject do
+        described_class.new(
+          {
+            'prosecution_evidence' => 5,
+            'defence_statement' => 10,
+            'number_of_witnesses' => 2,
+            'preparation_time' => 'yes',
+            'time_spent' => 110,
+            'work_before' => 'yes',
+            'work_before_date' => '2023-01-20',
+            'work_after' => 'yes',
+            'work_after_date' => '2023-02-02',
+            'work_completed_date' => '2023-02-03',
+            'wasted_costs' => 'yes'
+          }
+        )
+      end
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
@@ -65,18 +67,20 @@ RSpec.describe Nsm::V1::ClaimDetails do
     end
 
     context 'No work done or evidence recorded' do
-      subject = described_class.new(
-        {
-          'prosecution_evidence' => 5,
-          'defence_statement' => 10,
-          'number_of_witnesses' => 2,
-          'preparation_time' => 'no',
-          'time_spent' => 110,
-          'work_before' => 'no',
-          'work_after' => 'no',
-          'work_completed_date' => '2023-02-03'
-        }
-      )
+      subject do
+        described_class.new(
+          {
+            'prosecution_evidence' => 5,
+            'defence_statement' => 10,
+            'number_of_witnesses' => 2,
+            'preparation_time' => 'no',
+            'time_spent' => 110,
+            'work_before' => 'no',
+            'work_after' => 'no',
+            'work_completed_date' => '2023-02-03'
+          }
+        )
+      end
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
