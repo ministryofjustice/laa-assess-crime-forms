@@ -50,7 +50,8 @@ module Payments
 
       def claim_details_section
         case session_answers['request_type'].to_sym
-        when :breach_of_injunction,:non_standard_magistrate, :non_standard_mag_supplemental, :non_standard_mag_amendment, :non_standard_mag_appeal
+        when :breach_of_injunction, :non_standard_magistrate, :non_standard_mag_supplemental,
+             :non_standard_mag_amendment, :non_standard_mag_appeal
           [ClaimDetailsCard.new(session_answers)]
         when :assigned_counsel, :assigned_counsel_appeal, :assigned_counsel_amendment
           [AcClaimDetailsCard.new(session_answers)]
