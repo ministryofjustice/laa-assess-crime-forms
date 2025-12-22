@@ -43,9 +43,11 @@ module Payments
           'non_standard_magistrate'
         when 'assigned_counsel_appeal', 'assigned_counsel_amendment'
           'assigned_counsel'
+        # :nocov:
         else
           raise StandardError, "Unknown request type for: #{multi_step_form_session['request_type']}"
         end
+        # :nocov:
       end
 
       def page_heading

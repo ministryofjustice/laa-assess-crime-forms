@@ -29,13 +29,6 @@ module Payments
         }
       end
 
-      def claim_type
-        {
-          head_key: 'claim_type',
-          text: I18n.t("payments.requests.type.#{session_answers['request_type']}")
-        }
-      end
-
       def solicitor_office_code
         {
           head_key: 'solicitor_office_code',
