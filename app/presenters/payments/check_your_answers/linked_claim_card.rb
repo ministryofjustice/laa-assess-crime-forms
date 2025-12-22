@@ -23,18 +23,17 @@ module Payments
         {
           head_key: 'assigned_counsel',
           text: session_answers['laa_reference'] ||
-            I18n.t('payments.steps.check_your_answers.edit.sections.linked_claim.no_linked_claim')
+            I18n.t('payments.steps.check_your_answers.edit.sections.linked_claim.no_linked_crm8')
         }
       end
 
       def non_standard_magistrate
         linked_ref = ac? ? session_answers['linked_nsm_claim'] : session_answers['laa_reference']
-        return nil if linked_ref.blank?
-
+        linked_ref = nil if linked_ref.blank?
         {
           head_key: 'non_standard_magistrate',
           text: linked_ref ||
-            I18n.t('payments.steps.check_your_answers.edit.sections.linked_claim.no_linked_claim')
+            I18n.t('payments.steps.check_your_answers.edit.sections.linked_claim.no_linked_crm7')
         }
       end
 

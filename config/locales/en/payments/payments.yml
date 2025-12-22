@@ -1,7 +1,6 @@
 en:
   payments:
     service_name: Payments
-    no_linked_claim: Not linked to a non-standard magistrates' claim
     claim_types:
       non_standard_magistrate: Non-standard magistrates'
       assigned_counsel: Assigned counsel
@@ -49,7 +48,8 @@ en:
               title: Linked claims
               non_standard_magistrate: Non standard magistrates
               assigned_counsel: Assigned counsel
-              no_linked_claim: No linked claim
+              no_linked_crm7: Not linked to a non-standard magistrates' claim
+              no_linked_crm8: Not linked to an assigned counsel claim
           cost_summary: Cost Summary
           original_claim: Original claim
           linked_laa_reference: Linked LAA reference

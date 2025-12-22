@@ -12,10 +12,10 @@ module Payments
       end
 
       def groups
-        [
-          'claim_types',
-          no_linked_claims? ? nil : 'linked_claim',
-          'claim_details'
+        %w[
+          claim_types
+          linked_claim
+          claim_details
         ]
       end
 
@@ -66,10 +66,6 @@ module Payments
       end
 
       private
-
-      def no_linked_claims?
-        session_answers['laa_reference'].blank? && session_answers['linked_nsm_claim'].blank?
-      end
 
       def actions(card)
         return [] if card.read_only?
