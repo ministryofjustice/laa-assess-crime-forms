@@ -304,7 +304,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'counsel_office_code' => 'XYZB21',
         'solicitor_office_code' => 'AB2034',
         'solicitor_firm_name' => 'Solicitor Firm',
-        'client_last_name' => 'Smith',
+        'defendant_last_name' => 'Smith',
         'nsm_claim' => related_claim,
         'payment_requests' => [
           {
