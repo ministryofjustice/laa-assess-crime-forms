@@ -101,7 +101,7 @@ module Payments
               laa_reference: nil
             }
           )
-        elsif multi_step_form_session['request_type'].in?(%w[assigned_counsel_appeal assigned_counsel_amendment])
+        else
           claim[:nsm_claim_id] = claim.dig('nsm_claim', 'id')
           claim[:linked_nsm_ref] = claim.dig('nsm_claim', 'laa_reference')
         end
