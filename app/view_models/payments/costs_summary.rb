@@ -1,10 +1,18 @@
 module Payments
   class CostsSummary
-    PROFIT_COSTS = 'profit_costs'.freeze
-    attr_reader :session_answers
+    include Routing
 
-    def initialize(session_answers)
+    attr_reader :session_answers, :id
+
+    PROFIT_COSTS = 'profit_costs'.freeze
+
+    def initialize(session_answers, id = nil)
       @session_answers = session_answers
+      @id = id
+    end
+
+    def heading
+      I18n.t('payments.steps.check_your_answers.edit.claimed_and_allowed_costs')
     end
 
     def headers
@@ -15,14 +23,15 @@ module Payments
       ]
     end
 
+    # :nocov:
     def table_fields
-      [
-        build_row(:profit_cost),
-        build_row(:disbursement_cost),
-        build_row(:travel_cost),
-        build_row(:waiting_cost)
-      ]
+      raise 'implement this action, if needed, in subclasses'
     end
+
+    def change_link
+      raise 'implement this action, if needed, in subclasses'
+    end
+    # :nocov:
 
     def formatted_summed_fields
       {

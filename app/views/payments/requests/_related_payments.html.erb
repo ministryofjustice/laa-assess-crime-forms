@@ -35,5 +35,5 @@
   </table>
   <%= render 'shared/pagination', pagy: pagy, item: t(".table_info_item") %>
 <% else %>
-  <%= t(".no_payments")%>
+  <div class="govuk-body"><%= t(".no_payments")%></div>
 <% end %>

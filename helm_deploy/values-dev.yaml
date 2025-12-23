@@ -62,6 +62,7 @@ variables:
   appStoreUrl: https://main-nscc-store-dev.cloud-platform.service.justice.gov.uk
   enableSyncTriggerEndpoint: 'true'
   allowIndexing: 'false'
+  providerApiHost: https://laa-provider-details-api-preprod.apps.live.cloud-platform.service.justice.gov.uk
 
 service_account:
   name: laa-assess-crime-forms-dev-irsa

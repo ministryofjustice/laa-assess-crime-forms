@@ -40,6 +40,10 @@ module Payments
         false
       end
 
+      def request_type
+        multi_step_form_session['request_type']
+      end
+
       private
 
       def calculated_costs

@@ -11,33 +11,36 @@ module Payments
       end
 
       def row_data
-        row = [
+        [
           non_standard_magistrate,
           assigned_counsel
-        ]
-        row.flatten.compact
+        ].flatten.compact
       end
 
       def assigned_counsel
-        # TODO: add coverage when AC flow implemented
-        # :nocov:
-        return unless session_answers['linked_crm8_laa_reference']
+        return unless session_answers['request_type'].in?(%w[assigned_counsel_appeal assigned_counsel_amendment])
 
         {
           head_key: 'assigned_counsel',
-          text: session_answers['linked_crm8_laa_reference'] ||
-            I18n.t('payments.steps.check_your_answers.edit.sections.linked_claim.no_linked_claim')
+          text: session_answers['laa_reference'] ||
+            I18n.t('payments.steps.check_your_answers.edit.sections.linked_claim.no_linked_crm8')
         }
-        # :nocov:
       end
 
       def non_standard_magistrate
+        linked_ref = ac? ? session_answers['linked_nsm_ref'] : session_answers['laa_reference']
+        linked_ref = nil if linked_ref.blank?
         {
           head_key: 'non_standard_magistrate',
-          text: session_answers['linked_laa_reference'] ||
-            session_answers['laa_reference'] ||
-            I18n.t('payments.steps.check_your_answers.edit.sections.linked_claim.no_linked_claim')
+          text: linked_ref ||
+            I18n.t('payments.steps.check_your_answers.edit.sections.linked_claim.no_linked_crm7')
         }
+      end
+
+      private
+
+      def ac?
+        session_answers['request_type'].in?(%w[assigned_counsel assigned_counsel_appeal assigned_counsel_amendment])
       end
     end
   end

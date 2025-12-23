@@ -5,20 +5,22 @@ module Payments
       include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
 
-      GROUPS = %w[
-        claim_types
-        linked_claim
-        claim_details
-      ].freeze
-
       attr_reader :session_answers
 
       def initialize(session_answers)
         @session_answers = session_answers
       end
 
+      def groups
+        %w[
+          claim_types
+          linked_claim
+          claim_details
+        ]
+      end
+
       def section_groups
-        GROUPS.map do |group_name|
+        groups.compact.map do |group_name|
           section_group(public_send(:"#{group_name}_section"))
         end
       end
@@ -47,7 +49,17 @@ module Payments
       end
 
       def claim_details_section
-        [ClaimDetailsCard.new(session_answers)]
+        case session_answers['request_type'].to_sym
+        when :breach_of_injunction, :non_standard_magistrate, :non_standard_mag_supplemental,
+             :non_standard_mag_amendment, :non_standard_mag_appeal
+          [ClaimDetailsCard.new(session_answers)]
+        when :assigned_counsel, :assigned_counsel_appeal, :assigned_counsel_amendment
+          [AcClaimDetailsCard.new(session_answers)]
+        # :nocov:
+        else
+          false
+        end
+        # :nocov:
       end
 
       def linked_claim_section

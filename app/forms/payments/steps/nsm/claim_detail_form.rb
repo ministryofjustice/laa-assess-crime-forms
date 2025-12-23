@@ -3,7 +3,6 @@ module Payments
     module Nsm
       class ClaimDetailForm < BasePaymentsForm
         attribute :date_received, :date
-        attribute :solicitor_office_code, :string
         attribute :ufn, :string
         attribute :stage_reached, :string
         attribute :defendant_first_name, :string
@@ -29,7 +28,6 @@ module Payments
         validates :stage_reached, inclusion: { in: %w[PROG PROM] }
 
         validates :ufn, presence: true, ufn: true
-        validates :solicitor_office_code, presence: true
         validates :date_completed, :date_received,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
       end

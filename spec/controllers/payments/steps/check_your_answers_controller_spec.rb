@@ -2,6 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
+  let(:id) { SecureRandom.uuid }
   let(:answers) { {} }
 
   before do
@@ -10,7 +11,7 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
       :answers => answers,
       :[] => request_type
     )
-    allow(controller).to receive(:multi_step_form_session).and_return(fake_session)
+    allow(controller).to receive_messages(params: { id: }, multi_step_form_session: fake_session)
   end
 
   {
@@ -23,8 +24,8 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
       let(:request_type) { type }
 
       it "initializes #{klass} with answers" do
-        expect(klass).to receive(:new).with(answers)
-        get :edit, params: { id: SecureRandom.uuid }
+        expect(klass).to receive(:new).with(answers, id)
+        get :edit, params: { id: }
       end
     end
   end

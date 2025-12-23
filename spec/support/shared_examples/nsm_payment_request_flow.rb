@@ -77,7 +77,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
           start_new_payment_request
           choose_claim_type(claim_type)
           fill_in_laa_ref
-          date_claim_received
+          fill_date_claim_received
           expect(page).to have_title('Claimed costs')
         end
       end
@@ -88,7 +88,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
-        date_claim_received
+        fill_date_claim_received
         fill_claimed_costs if type_suffix == 'supplemental'
         expect(page).to have_title('Allowed costs')
       end
@@ -99,7 +99,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
-        date_claim_received
+        fill_date_claim_received
         fill_claimed_costs if type_suffix == 'supplemental'
         fill_allowed_costs
         expect(page).to have_title('Check your answers')

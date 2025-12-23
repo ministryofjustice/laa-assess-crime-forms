@@ -1,22 +1,25 @@
 # rubocop:disable Metrics/MethodLength, Metrics/ModuleLength
 module PaymentsHelpers
-  def stub_search(endpoint, body_hash)
+  def stub_search(endpoint, body_hash, data = nil, total_results = 1)
+    payload = data || begin
+      [
+        id: SecureRandom.uuid,
+        request_type: 'non_standard_magistrate',
+        submitted_at: Time.zone.now.to_s,
+        payment_request_claim: {
+          id: '1234',
+          laa_reference: 'LAA-1004',
+          client_last_name: 'Dickens'
+        }
+      ]
+    end
     stub_request(:post, endpoint)
       .with(body: body_hash)
       .to_return(
         status: 201,
         body: {
-          metadata: { total_results: 1 },
-          data: [
-            id: SecureRandom.uuid,
-            request_type: 'non_standard_magistrate',
-            submitted_at: Time.zone.now.to_s,
-            payment_request_claim: {
-              id: '1234',
-              laa_reference: 'LAA-1004',
-              client_last_name: 'Dickens'
-            }
-          ],
+          metadata: { total_results: },
+          data: payload,
           raw_data: []
         }.to_json
       )
@@ -28,6 +31,49 @@ module PaymentsHelpers
         status: 200,
         body: claim.to_json
       )
+  end
+
+  def stub_get_ac_claim(endpoint)
+    stub_request(:get, endpoint)
+      .to_return(
+        status: 200,
+        body: ac_claim.to_json
+      )
+  end
+
+  def ac_claim
+    {
+      'id' => '7c136cd8-f149-4a23-ab6d-2ce02e5ab8d7',
+      'type' => 'AssignedCounselClaim',
+      'laa_reference' => 'LAA-kk1HAd',
+      'solicitor_office_code' => '1A123B',
+      'solicitor_firm_name' => 'Firm & Sons',
+      'client_last_name' => 'Trevors',
+      'ufn' => '120223/001',
+      'submission_id' => nil,
+      'counsel_office_code' => '1A123B',
+      'counsel_firm_name' => 'Firth',
+      'created_at' => '2025-12-16 11:51:56 UTC',
+      'updated_at' => '2025-12-16 11:51:56 UTC',
+      'payment_requests' => [
+        {
+          'id' => '3508e3f3-a59c-4bf8-a4b1-453998b1618c',
+          'submitter_id' => '3db4e107-6670-4bac-8025-cd2661e99d0c',
+          'request_type' => 'assigned_counsel',
+          'submitted_at' => '2025-12-16 11:51:56 UTC',
+          'date_received' => '2025-12-10 00:00:00 UTC',
+          'claimed_net_assigned_counsel_cost' => '1000.0',
+          'claimed_assigned_counsel_vat' => '800.0',
+          'allowed_net_assigned_counsel_cost' => '900.0',
+          'allowed_assigned_counsel_vat' => '300.0',
+          'claimed_total' => '1000.0',
+          'allowed_total' => '900.0',
+          'created_at' => '2025-12-16 11:51:56 UTC',
+          'updated_at' => '2025-12-16 11:51:56 UTC'
+        }
+      ],
+      'nsm_claim' => nil
+    }
   end
 
   def claim
@@ -102,8 +148,8 @@ module PaymentsHelpers
     click_button 'Save and continue'
   end
 
-  def date_claim_received(date = '2025-09-24')
-    fill_in 'Date claim received', with: date
+  def fill_date_claim_received(date = '2025-09-24')
+    fill_in 'payments-steps-date-received-form-date-received-field', with: date
     click_button 'Save and continue'
   end
 
@@ -115,10 +161,16 @@ module PaymentsHelpers
     end
   end
 
+  def select_office_code(office_code = '1A123B')
+    fill_in "What is the solicitor's firm account number?", with: office_code
+    click_button 'Continue'
+    choose 'Yes'
+    click_button 'Save and continue'
+  end
+
   # rubocop:disable Metrics/ParameterLists
   def fill_claim_details(
     received_on: '2025-09-24',
-    firm_office_account_number: 'asdf',
     ufn: '120223/001',
     prosecution_type: 'PROM',
     defendant_first_name: 'Fred',
@@ -132,7 +184,6 @@ module PaymentsHelpers
     work_completed_on: '2025-09-24'
   )
     fill_in 'Date claim received', with: received_on
-    fill_in 'Firm office account number', with: firm_office_account_number
     fill_in 'Unique file number', with: ufn
     choose prosecution_type, allow_label_click: true
     fill_in 'Defendant first name', with: defendant_first_name
@@ -148,6 +199,22 @@ module PaymentsHelpers
     click_button 'Save and continue'
   end
   # rubocop:enable Metrics/ParameterLists
+
+  def fill_ac_claim_details(
+    received_on: '2025-09-24',
+    ufn: '120223/001',
+    defendant_last_name: 'Fred',
+    counsel_office_account_number: '1A123B',
+    counsel_name: 'Firth & Coln'
+  )
+    fill_in id: 'payments-steps-ac-claim-detail-form-date-received-field', with: received_on
+    fill_in 'Unique file number', with: ufn
+    fill_in 'Defendant last name', with: defendant_last_name
+    fill_in 'Counsel office account number', with: counsel_office_account_number
+    fill_in 'Counsel name', with: counsel_name
+
+    click_button 'Save and continue'
+  end
 
   def fill_costs(profit_costs: 10,
                  disbursement_costs: 10,
