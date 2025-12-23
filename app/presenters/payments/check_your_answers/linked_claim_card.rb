@@ -28,7 +28,7 @@ module Payments
       end
 
       def non_standard_magistrate
-        linked_ref = ac? ? session_answers['linked_nsm_claim'] : session_answers['laa_reference']
+        linked_ref = ac? ? session_answers['linked_nsm_ref'] : session_answers['laa_reference']
         linked_ref = nil if linked_ref.blank?
         {
           head_key: 'non_standard_magistrate',

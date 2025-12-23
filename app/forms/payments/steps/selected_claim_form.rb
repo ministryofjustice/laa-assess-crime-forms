@@ -5,6 +5,13 @@ module Payments
 
       validates :payment_request_claim_id, presence: true
 
+      NSM_KEYS = %w[
+        stage_reached hearing_outcome_code defendant_first_name
+        work_completed_date number_of_defendants number_of_attendances
+        matter_type youth_court court work_completed_date assigned_counsel_claim
+        submission_id
+      ].freeze
+
       def save
         return false unless valid?
 
@@ -20,14 +27,9 @@ module Payments
       def claim
         claim = payment_request_claim.deep_stringify_keys.with_indifferent_access
         latest_payment_request = latest_payment_request(claim)
-        claim.except!(:payment_requests, :created_at, :updated_at, :type, :id)
-        if multi_step_form_session['request_type'] == 'assigned_counsel'
-          claim.except!(:ufn)
-          claim['linked_nsm_claim'] = claim['laa_reference']
-          claim['laa_reference'] = nil
-        else
-          claim['linked_nsm_claim'] = claim.dig('nsm_claim', 'laa_reference')
-        end
+        format_ac_claim(claim) if multi_step_form_session['request_type'].in?(%w[assigned_counsel assigned_counsel_appeal
+                                                                                 assigned_counsel_amendment])
+        claim.except!(:payment_requests, :created_at, :updated_at, :type, :id, :nsm_claim, :assigned_counsel_claim)
         claim.merge!(latest_payment_request)
       end
 
@@ -86,6 +88,25 @@ module Payments
         }
       end
       # rubocop:enable Metrics/MethodLength
+
+      private
+
+      def format_ac_claim(claim)
+        if multi_step_form_session['request_type'] == 'assigned_counsel'
+          claim.except!(:ufn)
+          claim.merge!(
+            {
+              nsm_claim_id: claim['id'],
+              linked_nsm_ref: claim['laa_reference'],
+              laa_reference: nil
+            }
+          )
+        elsif multi_step_form_session['request_type'].in?(%w[assigned_counsel_appeal assigned_counsel_amendment])
+          claim[:nsm_claim_id] = claim.dig('nsm_claim', 'id')
+          claim[:linked_nsm_ref] = claim.dig('nsm_claim', 'laa_reference')
+        end
+        claim.except!(*NSM_KEYS)
+      end
     end
   end
 end
