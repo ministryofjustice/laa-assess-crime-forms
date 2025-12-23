@@ -31,7 +31,9 @@ module Decisions
       .goto(edit: DecisionTree::NSM_ALLOWED_COSTS)
 
     from(DecisionTree::AC_CLAIM_DETAILS.sub(%r{^/}, ''))
+      .when(-> { no_existing_ref})
       .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)
+      .goto(edit: DecisionTree::CLAIM_SEARCH)
     from(DecisionTree::AC_CLAIMED_COSTS)
       .goto(edit: DecisionTree::AC_CLAIM_DETAILS)
     from(DecisionTree::AC_ALLOWED_COSTS)
