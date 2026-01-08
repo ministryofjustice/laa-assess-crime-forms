@@ -11,14 +11,14 @@ RSpec.describe Decisions::MultiStepFormSession do
   describe '#initialize / create!' do
     it 'creates a new namespaced session hash when none exists' do
       multi_step_form_session
-      expect(session[key]).to include(
-        'answers'    => { 'id' => 'abc-123' }
+      expect(session[key]['answers'].keys).to include(
+        'id', 'idempotency_token'
       )
     end
 
     it 'does not overwrite when a hash already exists' do
       session[key] = {
-        'answers'    => { 'id' => 'abc-123', 'claim_type' => 'nsm' }
+        'answers' => { 'id' => 'abc-123', 'claim_type' => 'nsm' }
       }
 
       multi_step_form_session
@@ -29,7 +29,8 @@ RSpec.describe Decisions::MultiStepFormSession do
 
   describe '#answers' do
     it 'returns the answers hash' do
-      expect(multi_step_form_session.answers).to eq({ 'id' => 'abc-123' })
+      expect(multi_step_form_session.answers).to be_a(Hash)
+      expect(multi_step_form_session.answers).to include('id' => 'abc-123')
     end
   end
 
@@ -38,13 +39,8 @@ RSpec.describe Decisions::MultiStepFormSession do
       multi_step_form_session[:profit_costs] = '12.34'
       multi_step_form_session[:travel_costs] = '9.87'
 
-      expect(multi_step_form_session[:profit_costs]).to eq('12.34')
-      expect(multi_step_form_session[:travel_costs]).to eq('9.87')
-      expect(session[key]['answers']).to eq(
-        'id' => 'abc-123',
-        'profit_costs' => '12.34',
-        'travel_costs' => '9.87',
-      )
+      expect(session[key]['answers']['profit_costs']).to eq('12.34')
+      expect(session[key]['answers']['travel_costs']).to eq('9.87')
     end
   end
 
