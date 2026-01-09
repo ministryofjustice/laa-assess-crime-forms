@@ -22,12 +22,14 @@ RSpec.describe Nsm::V1::CaseDisposal do
   end
 
   describe '#data' do
-    subject = described_class.new(
-      {
-        'plea' => 'guilty',
-        'plea_category' => 'category_1a',
-      }
-    )
+    subject do
+      described_class.new(
+        {
+          'plea' => 'guilty',
+          'plea_category' => 'category_1a',
+        }
+      )
+    end
 
     it 'shows correct table data' do
       expect(subject.data).to eq(

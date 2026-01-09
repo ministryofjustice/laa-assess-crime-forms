@@ -25,14 +25,16 @@ RSpec.describe Nsm::V1::OtherInfo do
 
   describe '#data' do
     context 'other info and case concluded is yes' do
-      subject = described_class.new(
-        {
-          'is_other_info' => 'yes',
-          'other_info' => 'Line 1 \nLine 2',
-          'concluded' => 'yes',
-          'conclusion' => 'Line 1'
-        }
-      )
+      subject do
+        described_class.new(
+          {
+            'is_other_info' => 'yes',
+            'other_info' => 'Line 1 \nLine 2',
+            'concluded' => 'yes',
+            'conclusion' => 'Line 1'
+          }
+        )
+      end
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
@@ -45,14 +47,16 @@ RSpec.describe Nsm::V1::OtherInfo do
     end
 
     context 'other info and case concluded is no' do
-      subject = described_class.new(
-        {
-          'is_other_info' => 'no',
-          'other_info' => 'Line 1 \nLine 2',
-          'concluded' => 'no',
-          'conclusion' => 'Line 1'
-        }
-      )
+      subject do
+        described_class.new(
+          {
+            'is_other_info' => 'no',
+            'other_info' => 'Line 1 \nLine 2',
+            'concluded' => 'no',
+            'conclusion' => 'Line 1'
+          }
+        )
+      end
 
       it 'shows correct table data' do
         expect(subject.data).to eq([

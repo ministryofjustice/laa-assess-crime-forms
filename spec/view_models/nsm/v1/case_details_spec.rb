@@ -29,18 +29,20 @@ RSpec.describe Nsm::V1::CaseDetails do
 
   describe '#data' do
     context 'Remittal' do
-      subject = described_class.new(
-        {
-          'main_offence' => 'Stole an apple',
-          'main_offence_date' => '2023-01-01',
-          'assigned_counsel' => 'yes',
-          'unassigned_counsel' => 'no',
-          'agent_instructed' => 'yes',
-          'remitted_to_magistrate' => 'yes',
-          'remitted_to_magistrate_date' => '2023-02-01',
-          'main_offence_type' => 'summary_only'
-        }
-      )
+      subject do
+        described_class.new(
+          {
+            'main_offence' => 'Stole an apple',
+            'main_offence_date' => '2023-01-01',
+            'assigned_counsel' => 'yes',
+            'unassigned_counsel' => 'no',
+            'agent_instructed' => 'yes',
+            'remitted_to_magistrate' => 'yes',
+            'remitted_to_magistrate_date' => '2023-02-01',
+            'main_offence_type' => 'summary_only'
+          }
+        )
+      end
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
@@ -57,18 +59,20 @@ RSpec.describe Nsm::V1::CaseDetails do
     end
 
     context 'No remittal' do
-      subject = described_class.new(
-        {
-          'main_offence' => 'Stole an apple',
-          'main_offence_date' => '2023-01-01',
-          'assigned_counsel' => 'yes',
-          'unassigned_counsel' => 'no',
-          'agent_instructed' => 'yes',
-          'remitted_to_magistrate' => 'no',
-          'remitted_to_magistrate_date' => '2023-02-01',
-          'main_offence_type' => 'summary_only',
-        }
-      )
+      subject do
+        described_class.new(
+          {
+            'main_offence' => 'Stole an apple',
+            'main_offence_date' => '2023-01-01',
+            'assigned_counsel' => 'yes',
+            'unassigned_counsel' => 'no',
+            'agent_instructed' => 'yes',
+            'remitted_to_magistrate' => 'no',
+            'remitted_to_magistrate_date' => '2023-02-01',
+            'main_offence_type' => 'summary_only',
+          }
+        )
+      end
 
       it 'shows correct table data' do
         expect(subject.data).to eq([
