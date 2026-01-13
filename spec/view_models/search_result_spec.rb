@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe SearchResult do
   describe '#application_path' do
-    application_id = SecureRandom.uuid
+    let(:application_id) { SecureRandom.uuid }
+
     context 'submission is nsm' do
       subject do
         described_class.new(
@@ -22,17 +23,19 @@ RSpec.describe SearchResult do
     end
 
     context 'submission is prior authority' do
+      subject do
+        described_class.new(
+          {
+            application_type: 'crm4',
+            application_id: application_id,
+            version: 1
+          }
+        )
+      end
+
       before do
         build(:prior_authority_application, id: application_id)
       end
-
-      subject = described_class.new(
-        {
-          application_type: 'crm4',
-          application_id: application_id,
-          version: 1
-        }
-      )
 
       it 'generates a link to the prior authority details page' do
         expect(subject.application_path).to eq("/prior_authority/applications/#{application_id}")

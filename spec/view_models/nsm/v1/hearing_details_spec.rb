@@ -26,16 +26,18 @@ RSpec.describe Nsm::V1::HearingDetails do
   end
 
   describe '#data' do
-    subject = described_class.new(
-      {
-        'first_hearing_date' => '2023-01-02',
-        'number_of_hearing' => 3,
-        'court' => 'A Mag Court',
-        'youth_court' => 'no',
-        'hearing_outcome' => 'CP01',
-        'matter_type' => '1',
-      }
-    )
+    subject do
+      described_class.new(
+        {
+          'first_hearing_date' => '2023-01-02',
+          'number_of_hearing' => 3,
+          'court' => 'A Mag Court',
+          'youth_court' => 'no',
+          'hearing_outcome' => 'CP01',
+          'matter_type' => '1',
+        }
+      )
+    end
 
     it 'shows correct table data' do
       expect(subject.data).to eq(
