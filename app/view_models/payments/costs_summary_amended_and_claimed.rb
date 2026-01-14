@@ -1,6 +1,5 @@
 module Payments
   class CostsSummaryAmendedAndClaimed < CostsSummary
-    include Routing
     include ActionView::Helpers::UrlHelper
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::OutputSafetyHelper

@@ -11,7 +11,7 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
       :answers => answers,
       :[] => request_type
     )
-    allow(controller).to receive_messages(params: { id: }, multi_step_form_session: fake_session)
+    allow(controller).to receive(:multi_step_form_session).and_return(fake_session)
   end
 
   {
