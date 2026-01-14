@@ -7,20 +7,18 @@ module Payments
 
       attr_reader :session_answers
 
+      GROUPS = %w[
+        claim_types
+        linked_claim
+        claim_details
+      ].freeze
+
       def initialize(session_answers)
         @session_answers = session_answers
       end
 
-      def groups
-        %w[
-          claim_types
-          linked_claim
-          claim_details
-        ]
-      end
-
       def section_groups
-        groups.compact.map do |group_name|
+        GROUPS.compact.map do |group_name|
           section_group(public_send(:"#{group_name}_section"))
         end
       end
