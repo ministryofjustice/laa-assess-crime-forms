@@ -11,7 +11,7 @@ module Payments
     end
 
     def linked_claim
-      @payment_request_claim.dig('nsm_claim', 'laa_reference') || @payment_request_claim['laa_reference']
+      @payment_request_claim.dig('nsm_claim', 'laa_reference')
     end
 
     def solicitor_office_code
@@ -33,7 +33,7 @@ module Payments
     def table_format
       [
         [table_heading('claim_type'), { text: claim_type, numeric: false }],
-        [table_heading('linked_claim'), { text: linked_claim, numeric: false }],
+        ([table_heading('linked_claim'), { text: linked_claim, numeric: false }] if linked_claim),
         [table_heading('solicitor_office_code'), { text: solicitor_office_code, numeric: false }],
         [table_heading('solicitor_firm_name'), { text: solicitor_firm_name, numeric: false }],
         [table_heading('ufn'), { text: ufn, numeric: false }],
