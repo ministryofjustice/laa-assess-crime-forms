@@ -45,7 +45,11 @@ module Payments
           ref = session_answers['laa_reference']
         elsif nsm_original?
           ref = session_answers['linked_laa_reference']
+        # :nocov:
+        else
+          false
         end
+        # :nocov:
         ref.presence
       end
 
