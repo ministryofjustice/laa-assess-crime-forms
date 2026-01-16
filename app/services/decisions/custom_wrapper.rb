@@ -38,19 +38,6 @@ module Decisions
     def ac_amendment
       @ac_amendment ||= claim_type == Payments::ClaimType::AC_AMENDMENT.to_s
     end
-
-    def no_existing_ref
-      @no_existing_ref ||= multi_step_form_session[:laa_reference].blank? && multi_step_form_session[:linked_nsm_ref].blank?
-    end
-
-    def ac_claim_details_incomplete?
-      @ac_claim_details_incomplete ||= [
-        multi_step_form_session[:ufn],
-        multi_step_form_session[:defendant_last_name],
-        multi_step_form_session[:counsel_office_code],
-        multi_step_form_session[:counsel_firm_name]
-      ].any?(&:blank?)
-    end
     # :nocov:
   end
 end
