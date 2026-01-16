@@ -372,7 +372,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Claim type', 'Assigned counsel',
-          'Linked claim', 'LAA-XYZ321',
+          'Linked claim', "Not linked to a non-standard magistrates' claim",
           'Solicitor office account number', 'AB2034',
           'Solicitor firm name', 'Solicitor Firm',
           'Unique file number', '01112025/001',
