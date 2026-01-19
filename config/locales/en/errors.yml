@@ -230,6 +230,20 @@ en:
               blank: Enter allowed waiting cost
               not_a_number: Allowed waiting costs must be a number, like 25
 
+        payments/steps/ac/claim_detail_form:
+          attributes:
+            date_received: *shared_date_errors
+            ufn:
+              invalid_characters: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
+              blank: Enter the unique file number
+            defendant_last_name:
+              blank: Enter the defendant last name
+            counsel_office_code:
+              blank: Enter the counsel office code
+            counsel_firm_name:
+              blank: Enter the counsel firm name
+
+
         payments/steps/ac/claimed_costs_form:
           attributes:
             claimed_net_assigned_counsel_cost:
