@@ -93,7 +93,6 @@ module Payments
 
       def format_ac_claim(claim)
         if multi_step_form_session['request_type'] == 'assigned_counsel'
-          claim.except!(:ufn)
           claim.merge!(
             {
               nsm_claim_id: claim['id'],
