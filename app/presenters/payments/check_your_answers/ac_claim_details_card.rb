@@ -70,6 +70,17 @@ module Payments
           text: session_answers['counsel_firm_name']
         }
       end
+
+      def change_link_controller_path
+        "payments/steps/ac/#{section}"
+      end
+
+      def read_only?
+        return false if session_answers['request_type'] == 'assigned_counsel'
+
+        session_answers['request_type'].in?(%w[assigned_counsel_appeal
+                                               assigned_counsel_amendment]) && session_answers['laa_reference'].blank?
+      end
     end
   end
 end
