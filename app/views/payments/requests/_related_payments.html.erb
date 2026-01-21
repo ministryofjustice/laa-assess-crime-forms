@@ -2,7 +2,7 @@
 <% if claim_details.related_payments.sorted_payments.any? %>
   <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
     <thead class="govuk-table__head">
-      <% %i[laa_reference firm_name client_last_name request_type submitted_at].each do |key| %>
+      <% %i[laa_reference firm_name defendant_last_name request_type submitted_at].each do |key| %>
         <%= table_header_with_link(key,
                                     "payments.requests.index.table",
                                     {
@@ -22,7 +22,7 @@
             <%= payment[:firm_name] %>
           </td>
           <td class="govuk-table__cell">
-            <%= payment[:client_last_name] %>
+            <%= payment[:defendant_last_name] %>
           </td>
           <td class="govuk-table__cell">
             <%= payment[:request_type] %>

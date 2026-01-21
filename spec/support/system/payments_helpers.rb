@@ -80,7 +80,7 @@ module PaymentsHelpers
     { 'id' => 'dd9fa50c-12cc-4175-a10c-51a014459ef2',
       'type' => 'NsmClaim',
       'laa_reference' => 'LAA-qWRbvm',
-      'solicitor_office_code' => '1asdf',
+      'solicitor_office_code' => '1A123B',
       'solicitor_firm_name' => 'some name',
       'defendant_last_name' => 'Doe',
       'stage_code' => 'PROG',

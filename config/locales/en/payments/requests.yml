@@ -17,7 +17,7 @@ en:
         table:
           laa_reference: LAA reference
           firm_name: Firm name
-          client_last_name: Defendant
+          defendant_last_name: Defendant
           request_type: Payment type
           submitted_at: Submitted
       confirmation:

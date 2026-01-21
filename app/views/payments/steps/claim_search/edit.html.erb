@@ -19,7 +19,7 @@
     <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <% %i[laa_reference office_code firm_name ufn client_last_name].each do |key| %>
+          <% %i[laa_reference office_code firm_name ufn defendant_last_name].each do |key| %>
             <%= table_header_with_link(key,
                                        'shared.search.table.header',
                                        { 'controller' => controller_path, 'action' => 'edit',  'payments_claim_search_form' => @search_form.attributes },
@@ -46,7 +46,7 @@
                 <%= search_result.ufn %>
               </td>
               <td class="govuk-table__cell">
-                <%= search_result.client_last_name %>
+                <%= search_result.defendant_last_name %>
               </td>
               <td class="govuk-table__cell">
                 <%= f.submit "Select claim",  class: "govuk-button moj-search__button"%>
