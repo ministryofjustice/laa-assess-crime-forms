@@ -34,12 +34,6 @@ RSpec.describe 'Assigned counsel payment request', :stub_oauth_token do
   end
 
   let(:create_endpoint) { 'https://appstore.example.com/v1/payment_requests' }
-  let(:create_payload) do
-    {
-      laa_reference: '123-abc'
-    }
-  end
-
   let(:create_payment_stub) do
     stub_request(:post, create_endpoint).to_return(
       status: 201,
@@ -64,6 +58,11 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       fill_in 'Find a claim', with: nsm_claim_ref
       click_button 'Search'
       click_button 'Select claim'
+    end
+
+    it 'pre-populates AC claim details from linked NSM claim' do
+      expect(page).to have_field('Defendant last name', with: 'Doe')
+      expect(page).to have_field('Unique file number', with: '120223/001')
     end
 
     it 'allows user to complete payment journey' do
