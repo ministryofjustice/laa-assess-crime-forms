@@ -72,14 +72,22 @@ module Payments
       end
 
       def change_link_controller_path
-        "payments/steps/ac/#{section}"
+        if linked_ac?
+          'payments/steps/date_received'
+        else
+          "payments/steps/ac/#{section}"
+        end
       end
 
       def read_only?
-        return false if session_answers['request_type'] == 'assigned_counsel'
+        false
+      end
 
-        session_answers['request_type'].in?(%w[assigned_counsel_appeal
-                                               assigned_counsel_amendment]) && session_answers['laa_reference'].blank?
+      private
+
+      def linked_ac?
+        session_answers['laa_reference'].present? && session_answers['request_type'].in?(%w[assigned_counsel_appeal
+                                                                                            assigned_counsel_amendment])
       end
     end
   end
