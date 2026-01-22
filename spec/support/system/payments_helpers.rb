@@ -205,14 +205,16 @@ module PaymentsHelpers
     ufn: '120223/001',
     defendant_last_name: 'Fred',
     counsel_office_account_number: '1A123B',
-    counsel_name: 'Firth & Coln'
+    counsel_name: 'Firth & Coln',
+    linked_claim: false
   )
     fill_in id: 'payments-steps-ac-claim-detail-form-date-received-field', with: received_on
-    fill_in 'Unique file number', with: ufn
-    fill_in 'Defendant last name', with: defendant_last_name
     fill_in 'Counsel office account number', with: counsel_office_account_number
     fill_in 'Counsel name', with: counsel_name
-
+    unless linked_claim
+      fill_in 'Unique file number', with: ufn
+      fill_in 'Defendant last name', with: defendant_last_name
+    end
     click_button 'Save and continue'
   end
 

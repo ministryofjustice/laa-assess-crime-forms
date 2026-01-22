@@ -60,14 +60,14 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       click_button 'Select claim'
     end
 
-    it 'pre-populates AC claim details from linked NSM claim' do
-      expect(page).to have_field('Defendant last name', with: 'Doe')
-      expect(page).to have_field('Unique file number', with: '120223/001')
+    it 'does not show linked claim details in form' do
+      expect(page).not_to have_field('Defendant last name', with: 'Doe')
+      expect(page).not_to have_field('Unique file number', with: '120223/001')
     end
 
     it 'allows user to complete payment journey' do
       expect(page).to have_title('Claim Details')
-      fill_ac_claim_details
+      fill_ac_claim_details(linked_claim: true)
 
       expect(page).to have_title('Claimed costs')
       fill_in id: 'counsel_costs_net', with: '150.40'

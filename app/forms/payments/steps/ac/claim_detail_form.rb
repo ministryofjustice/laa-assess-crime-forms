@@ -13,6 +13,19 @@ module Payments
         validates :ufn, presence: true, ufn: true
         validates :date_received,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
+
+        def save
+          if linked_claim?
+            self.ufn = multi_step_form_session[:ufn]
+            self.defendant_last_name = multi_step_form_session[:defendant_last_name]
+          end
+
+          super
+        end
+
+        def linked_claim?
+          multi_step_form_session[:nsm_claim_id].present?
+        end
       end
     end
   end
