@@ -50,9 +50,11 @@ module Payments
           end
         when :assigned_counsel_amendment
           Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, params[:id])
+        # :nocov:
         else
           raise StandardError, "Unknown request type: #{multi_step_form_session['request_type']}"
         end
+        # :nocov:
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
     end
