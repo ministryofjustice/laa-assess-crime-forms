@@ -31,10 +31,9 @@ module Payments
         multi_step_form_session && session[:multi_step_form_id] = params[:id]
       end
 
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
       def cost_summary
         case multi_step_form_session['request_type'].to_sym
-        # :nocov:
         when :non_standard_magistrate, :breach_of_injunction
           Payments::NsmCostsSummary.new(multi_step_form_session.answers, params[:id])
         when :non_standard_mag_supplemental
@@ -43,17 +42,19 @@ module Payments
           Payments::NsmCostsSummaryAmended.new(multi_step_form_session.answers, params[:id])
         when :assigned_counsel
           Payments::AcCostsSummary.new(multi_step_form_session.answers, params[:id])
-        when :assigned_counsel_appeal, :assigned_counsel_amendment
+        when :assigned_counsel_appeal
           if multi_step_form_session.answers['claimed_total'].present?
             Payments::AcCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers, params[:id])
           else
             Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, params[:id])
           end
+        when :assigned_counsel_amendment
+          Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, params[:id])
         else
           raise StandardError, "Unknown request type: #{multi_step_form_session['request_type']}"
         end
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
     end
   end
 end
