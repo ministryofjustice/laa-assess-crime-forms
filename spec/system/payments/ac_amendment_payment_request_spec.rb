@@ -66,7 +66,6 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       click_button 'Select claim'
     end
 
-    # rubocop:disable RSpec/MultipleExpectations
     it 'allows user to complete payment journey' do
       fill_date_claim_received
 
@@ -78,14 +77,12 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       click_on 'Save and continue'
 
       expect(page).to have_title('Check your answers')
-      expect(page).to have_content('Claimed and allowed costs')
-      expect(page).to have_content('Previously claimed')
+      expect(page).to have_content('Amended allowed costs')
       expect(page).to have_content('Previously allowed')
       click_on 'Submit payment request'
 
       expect(page).to have_title('Payment Confirmation')
     end
-    # rubocop:enable RSpec/MultipleExpectations
   end
 
   context 'No linked assigned counsel claim found' do

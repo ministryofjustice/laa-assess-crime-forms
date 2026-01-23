@@ -46,7 +46,7 @@ module Payments
           if multi_step_form_session.answers['claimed_total'].present?
             Payments::AcCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers, params[:id])
           else
-            Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, params[:id])
+            Payments::AcCostsSummaryAppealed.new(multi_step_form_session.answers, params[:id])
           end
         when :assigned_counsel_amendment
           Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, params[:id])
