@@ -78,9 +78,9 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       click_on 'Save and continue'
 
       expect(page).to have_title('Check your answers')
-      expect(page).to have_content('Claimed and allowed costs')
-      expect(page).to have_content('Previously claimed')
+      expect(page).to have_content('Allowed costs')
       expect(page).to have_content('Previously allowed')
+      expect(page).to have_content('Total allowed')
       click_on 'Submit payment request'
 
       expect(page).to have_title('Payment Confirmation')
