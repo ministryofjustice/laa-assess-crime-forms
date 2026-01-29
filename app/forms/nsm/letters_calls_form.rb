@@ -1,5 +1,7 @@
 module Nsm
   class LettersCallsForm < BaseAdjustmentForm
+    include NumericLimits
+
     # subclasses required here to give scoping for translations
     class Letters < LettersCallsForm; end
     class Calls < LettersCallsForm; end
@@ -14,7 +16,8 @@ module Nsm
 
     validates :type, inclusion: { in: %w[letters calls] }
     validates :uplift, inclusion: { in: [UPLIFT_PROVIDED, UPLIFT_RESET] }, if: -> { item.uplift? }
-    validates :count, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+    validates :count, presence: true,
+              numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }
 
     # overwrite uplift setter to allow value to be passed as either string (form)
     # or integer (initial setup) value

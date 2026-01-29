@@ -1,6 +1,7 @@
 module Nsm
   class WorkItemForm < BaseAdjustmentForm
     include LaaCrimeFormsCommon::Validators
+    include NumericLimits
 
     UPLIFT_PROVIDED = 'no'.freeze
     UPLIFT_RESET = 'yes'.freeze
@@ -13,6 +14,7 @@ module Nsm
 
     validates :uplift, inclusion: { in: [UPLIFT_PROVIDED, UPLIFT_RESET] }, if: -> { item.uplift? }
     validates :time_spent, allow_nil: true, time_period: { allow_zero: true }
+    validate :time_spent_hours_within_limit
 
     # overwrite uplift setter to allow value to be passed as either string (form)
     # or integer (initial setup) value
@@ -69,6 +71,12 @@ module Nsm
 
     def work_type_changed?
       work_type_value != item.work_type.value
+    end
+
+    def time_spent_hours_within_limit
+      return if time_spent.blank?
+
+      validate_time_period_max_hours(:time_spent, max_hours: NumericLimits::MAX_INTEGER)
     end
   end
 end

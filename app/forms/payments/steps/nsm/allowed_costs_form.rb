@@ -2,6 +2,8 @@ module Payments
   module Steps
     module Nsm
       class AllowedCostsForm < BasePaymentsForm
+        include NumericLimits
+
         attribute :allowed_profit_cost, :gbp
         attribute :allowed_disbursement_cost, :gbp
         attribute :allowed_travel_cost, :gbp
@@ -10,7 +12,9 @@ module Payments
 
         validates :allowed_profit_cost, :allowed_disbursement_cost,
                   :allowed_travel_cost, :allowed_waiting_cost,
-                  presence: true, numericality: { greater_than_or_equal_to: 0 }, is_a_number: true
+                  presence: true,
+                  numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT },
+                  is_a_number: true
 
         def save
           return false unless valid?
