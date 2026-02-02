@@ -10,7 +10,7 @@ gem 'bootsnap', require: false
 gem 'cssbundling-rails', '>= 1.4.1'
 gem 'devise', '>= 4.9.4'
 gem 'faker'
-gem 'govuk-components', '5.13.1'
+gem 'govuk-components', '5.11.1'
 gem 'govuk_design_system_formbuilder'
 gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'httparty'
@@ -29,13 +29,13 @@ gem 'prometheus_exporter'
 gem 'propshaft'
 gem 'puma', '~> 7.2'
 gem 'pundit'
-gem 'rails', '8.1.2'
+gem 'rails', '~> 8.0.4'
 gem 'redis'
-gem 'sidekiq', '~> 8.1'
+gem 'sidekiq', '~> 8.0'
 gem 'sidekiq_alive', '~> 2.4'
-# Pin connection_pool to avoid bumping connection pool inadvertently to 3~ since this will break with our version of rails/sidekiq
+# Pin connection_pool to avoid Rails/Sidekiq compatibility issues
 # See: https://github.com/rails/rails/issues/56461
-gem "connection_pool", "~> 3.0"
+gem 'connection_pool', '~> 2.5'
 gem 'solid_cache'
 gem 'stimulus-rails'
 gem 'turbo-rails'
