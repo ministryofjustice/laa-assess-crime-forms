@@ -102,7 +102,7 @@ module PriorAuthority
         submission.data['further_information']
                   .select { _1['information_supplied'].present? }
                   .map do |further_information|
-                    FurtherInformationCard.new(self, further_information)
+          FurtherInformationCard.new(self, further_information)
         end
       end
 
@@ -112,7 +112,7 @@ module PriorAuthority
         submission.data['incorrect_information']
                   .select { _1['sections_changed'].present? }
                   .map do |incorrect_information|
-                    IncorrectInformationCard.new(self, incorrect_information)
+          IncorrectInformationCard.new(self, incorrect_information)
         end
       end
 
