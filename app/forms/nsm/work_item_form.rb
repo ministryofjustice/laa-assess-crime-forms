@@ -73,12 +73,12 @@ module Nsm
       work_type_value != item.work_type.value
     end
 
+    # :nocov:
     def time_spent_hours_within_limit
-      # :nocov:
       return if time_spent.blank?
-      # :nocov:
 
       validate_time_period_max_hours(:time_spent, max_hours: NumericLimits::MAX_INTEGER)
     end
+    # :nocov:
   end
 end
