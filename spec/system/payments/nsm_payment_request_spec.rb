@@ -72,7 +72,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       fill_in "What is the solicitor's firm account number?", with: '1A123B'
       click_button 'Continue'
       choose 'No, I need to change the number'
-      click_button 'Save and continue'
+      click_button 'Continue'
       expect(page).to have_content("What is the solicitor's firm account number?")
     end
 
@@ -81,7 +81,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       choose_claim_type("Non-Standard Magistrates'")
       fill_in "What is the solicitor's firm account number?", with: '1A123B'
       click_button 'Continue'
-      click_button 'Save and continue'
+      click_button 'Continue'
       expect(page).to have_content('Please select an option')
     end
 
