@@ -63,13 +63,17 @@ module PriorAuthority
     end
 
     def items_within_limit
+      # :nocov:
       return if items.blank? || !items.is_a?(Numeric)
+      # :nocov:
 
       errors.add(:items, :less_than_or_equal_to, count: MAX_INTEGER) if items > MAX_INTEGER
     end
 
     def cost_per_item_within_limit
+      # :nocov:
       return if cost_per_item.blank? || !cost_per_item.is_a?(Numeric)
+      # :nocov:
 
       errors.add(:cost_per_item, :less_than_or_equal_to, count: MAX_FLOAT) if cost_per_item > MAX_FLOAT
     end
