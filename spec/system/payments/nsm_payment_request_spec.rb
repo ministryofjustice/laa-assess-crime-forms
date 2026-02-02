@@ -117,7 +117,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
         fill_claimed_costs
         fill_allowed_costs
         click_button 'Submit payment request'
-        expect(page).to have_title('Payment Confirmation')
+        expect(page).to have_content('Payment request complete')
       end
     end
 

@@ -83,7 +83,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       expect(page).to have_content('Claimed and allowed costs')
       click_on 'Submit payment request'
 
-      expect(page).to have_title('Payment Confirmation')
+      expect(page).to have_content('Payment request complete')
     end
   end
 
@@ -110,7 +110,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
       expect(page).to have_content("Not linked to a non-standard magistrates' claim")
       click_on 'Submit payment request'
-      expect(page).to have_title('Payment Confirmation')
+      expect(page).to have_content('Payment request complete')
     end
 
     it 'fails claimed payment journey when inputs invalid' do
