@@ -28,7 +28,7 @@
           <%= f.govuk_radio_button :confirm_office_code, 'true', label: { text: t('.confirm_office_code_options.true') } %>
           <%= f.govuk_radio_button :confirm_office_code, 'false', label: { text: t('.confirm_office_code_options.false') } %>
         <% end %>
-        <%= f.continue_button(primary: :save_and_continue, secondary: false) %>
+        <%= f.continue_button(secondary: false) %>
       <% end %>
     <% else %>
       <%= step_form @form_object do |f| %>
