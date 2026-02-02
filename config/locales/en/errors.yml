@@ -21,10 +21,12 @@ en:
   shared_cost_per_item_errors: &shared_cost_per_item_errors
     blank: Enter the cost per %{item_type}
     greater_than: The cost per %{item_type} must be more than 0
+    less_than_or_equal_to: The cost must be %{count} or less
     not_a_number: The cost per %{item_type} must be a number, like 25
   shared_items_errors: &shared_items_errors
     blank: Enter the number of %{item_type}
     greater_than: The number of %{item_type} must be 0 or more
+    less_than_or_equal_to: The number must be %{count} or less
     not_a_number: The number of %{item_type} must be a number, like 25
   shared_date_errors: &shared_date_errors
     blank: Date cannot be blank

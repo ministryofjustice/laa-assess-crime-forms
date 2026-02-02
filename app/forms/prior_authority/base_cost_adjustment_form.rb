@@ -14,10 +14,10 @@ module PriorAuthority
     attribute :cost_per_hour, :gbp
 
     with_options if: :per_item? do
-      validates :items, item_type_dependant: true,
-                numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER, allow_blank: true }
-      validates :cost_per_item, cost_item_type_dependant: true,
-                numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT, allow_blank: true }
+      validates :items, item_type_dependant: true
+      validates :cost_per_item, cost_item_type_dependant: true
+      validate :items_within_limit
+      validate :cost_per_item_within_limit
     end
 
     with_options if: :per_hour? do
@@ -60,6 +60,18 @@ module PriorAuthority
 
     def period_hours_within_limit
       validate_time_period_max_hours(:period, max_hours: NumericLimits::MAX_INTEGER)
+    end
+
+    def items_within_limit
+      return if items.blank? || !items.is_a?(Numeric)
+
+      errors.add(:items, :less_than_or_equal_to, count: MAX_INTEGER) if items > MAX_INTEGER
+    end
+
+    def cost_per_item_within_limit
+      return if cost_per_item.blank? || !cost_per_item.is_a?(Numeric)
+
+      errors.add(:cost_per_item, :less_than_or_equal_to, count: MAX_FLOAT) if cost_per_item > MAX_FLOAT
     end
 
     def data_has_changed?
