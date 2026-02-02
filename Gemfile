@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.212'
+gem 'aws-sdk-s3', '~> 1.213'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails', '>= 1.4.1'
 gem 'devise', '>= 4.9.4'
@@ -29,13 +29,13 @@ gem 'prometheus_exporter'
 gem 'propshaft'
 gem 'puma', '~> 7.2'
 gem 'pundit'
-gem 'rails', '8.0.4'
+gem 'rails', '~> 8.0.4'
 gem 'redis'
 gem 'sidekiq', '~> 8.0'
 gem 'sidekiq_alive', '~> 2.4'
-# Pin connection_pool to avoid bumping connection pool inadvertently to 3~ since this will break with our version of rails/sidekiq
+# Pin connection_pool to avoid Rails/Sidekiq compatibility issues
 # See: https://github.com/rails/rails/issues/56461
-gem "connection_pool", "~> 2.5"
+gem 'connection_pool', '~> 2.5'
 gem 'solid_cache'
 gem 'stimulus-rails'
 gem 'turbo-rails'
