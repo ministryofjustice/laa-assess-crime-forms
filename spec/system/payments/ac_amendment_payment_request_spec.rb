@@ -63,7 +63,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     before do
       fill_in 'Find a claim', with: ac_claim_ref
       click_button 'Search'
-      click_button 'Select claim'
+      click_button 'Select'
     end
 
     it 'allows user to complete payment journey' do

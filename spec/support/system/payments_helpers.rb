@@ -157,7 +157,7 @@ module PaymentsHelpers
     fill_in 'Find a claim', with: laa_ref
     click_button 'Search'
     within('tr', text: laa_ref.upcase) do
-      click_button 'Select claim'
+      click_button 'Select'
     end
   end
 

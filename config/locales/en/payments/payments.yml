@@ -51,7 +51,7 @@ en:
               assigned_counsel: Assigned counsel
               no_linked_crm7: Not linked to a non-standard magistrates' claim
               no_linked_crm8: Not linked to an assigned counsel claim
-          cost_summary: Cost Summary
+          cost_summary: Cost summary
           original_claim: Original claim
           linked_laa_reference: Linked LAA reference
           claimed_and_allowed_costs: Claimed and allowed costs
@@ -100,6 +100,7 @@ en:
           payment_requests: payment requests
           result: result
           new_record: Create a new record
+          select: Select
           no_results_html: |
             <p>If you expected to find a claim, check your search term and try again or search by different criteria (defendant, firm account, UFN or LAA reference).</p>
             <p>If there is no original claim, you can create a new record.</p>

@@ -57,7 +57,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       choose_claim_type('Assigned counsel')
       fill_in 'Find a claim', with: nsm_claim_ref
       click_button 'Search'
-      click_button 'Select claim'
+      click_button 'Select'
     end
 
     it 'does not show linked claim details in form' do

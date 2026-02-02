@@ -38,7 +38,7 @@ RSpec.describe 'Payment Requests', :stub_oauth_token do
     end
 
     it 'renders the page' do
-      expect(page).to have_content('Payment Requests')
+      expect(page).to have_content('Payment requests')
     end
 
     it 'allows sorting in both directions' do
