@@ -120,6 +120,17 @@ RSpec.describe 'Adjust service costs', :stub_oauth_token do
         .and have_content('The cost per hour must be a number')
         .and have_field('Hours', with: 'a')
         .and have_field('Cost per hour', with: 'b')
+
+      fill_in 'Hours', with: '9999999999'
+      fill_in 'Minutes', with: '0'
+      fill_in 'Cost per hour', with: '9999999999'
+      fill_in 'Explain your decision', with: 'test'
+
+      click_on 'Save changes'
+
+      expect(page)
+        .to have_content('Enter a valid number of hours')
+        .and have_content('less than or equal to 99999999.99')
     end
   end
 
@@ -217,6 +228,15 @@ RSpec.describe 'Adjust service costs', :stub_oauth_token do
         .and have_content('The cost per minute must be a number, like 25')
         .and have_field('Number of minutes', with: 'a')
         .and have_field('Cost per minute', with: 'a')
+
+      fill_in 'Number of minutes', with: '9999999999'
+      fill_in 'Cost per minute', with: '9999999999'
+      fill_in 'Explain your decision', with: 'test'
+
+      click_on 'Save changes'
+      expect(page)
+        .to have_content('The number must be 2147483647 or less')
+        .and have_content('The cost must be 99999999.99 or less')
     end
 
     it 'displays information about the quotes on the application' do

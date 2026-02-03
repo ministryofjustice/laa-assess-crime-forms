@@ -99,4 +99,17 @@ RSpec.describe 'Adjust travel costs', :stub_oauth_token do
     click_on 'Calculate my changes'
     expect(page).to have_css('#adjusted-cost', text: '200.00')
   end
+
+  it 'displays error when values exceed database limits' do
+    fill_in 'Hours', with: '9999999999'
+    fill_in 'Minutes', with: '0'
+    fill_in 'Cost per hour', with: '9999999999'
+    fill_in 'Explain your decision', with: 'test'
+
+    click_on 'Save changes'
+
+    expect(page)
+      .to have_content('Enter a valid number of hours')
+      .and have_content('less than or equal to 99999999.99')
+  end
 end

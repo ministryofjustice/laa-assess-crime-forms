@@ -131,6 +131,7 @@ en:
               blank: Enter the cost
               not_a_number: The cost must be a number
               greater_than_or_equal_to: The cost must be 0 or more
+              less_than_or_equal_to: The cost must be %{count} or less
             miles:
               blank: Enter the number of miles to allow
               not_a_number: The number of miles must be a number
