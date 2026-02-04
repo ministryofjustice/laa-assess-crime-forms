@@ -5,7 +5,7 @@ module Decisions
     CHECK_YOUR_ANSWERS = 'payments/steps/check_your_answers'.freeze
 
     from(DecisionTree::NSM_CLAIM_DETAILS)
-      .goto(edit: DecisionTree::CLAIM_TYPE)
+      .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)
     from(DecisionTree::DATE_RECEIVED.sub(%r{^/}, ''))
       .goto(edit: DecisionTree::CLAIM_SEARCH.sub(%r{^/}, ''))
     from(DecisionTree::CLAIM_SEARCH.sub(%r{^/}, ''))
@@ -25,6 +25,27 @@ module Decisions
     from(DecisionTree::SUBMISSION_ALLOWED_COSTS)
       .goto(edit: CHECK_YOUR_ANSWERS)
     from(CHECK_YOUR_ANSWERS)
+      .when(-> { ac || ac_appeal || ac_amendment })
+      .goto(edit: DecisionTree::AC_ALLOWED_COSTS)
+      .when(-> { nsm || nsm_supplemental || nsm_appeal || nsm_amendment })
       .goto(edit: DecisionTree::NSM_ALLOWED_COSTS)
+
+    from(DecisionTree::AC_CLAIM_DETAILS.sub(%r{^/}, ''))
+      .when(-> { multi_step_form_session.no_existing_ref? })
+      .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)
+      .goto(edit: DecisionTree::CLAIM_SEARCH)
+    from(DecisionTree::AC_CLAIMED_COSTS)
+      .goto(edit: DecisionTree::AC_CLAIM_DETAILS)
+    from(DecisionTree::AC_ALLOWED_COSTS)
+      .goto(edit: DecisionTree::AC_CLAIMED_COSTS)
+    from(DecisionTree::CHECK_YOUR_ANSWERS)
+      .goto(edit: DecisionTree::AC_ALLOWED_COSTS)
+
+    from(DecisionTree::OFFICE_CODE_SEARCH.sub(%r{^/}, ''))
+      .when(-> { nsm })
+      .goto(edit: DecisionTree::CLAIM_TYPE)
+      .goto(edit: DecisionTree::CLAIM_SEARCH)
+    from(DecisionTree::OFFICE_CODE_CONFIRM.sub(%r{^/}, ''))
+      .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)
   end
 end

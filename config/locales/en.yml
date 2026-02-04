@@ -101,7 +101,7 @@ en:
           status_with_assignment: Status
           submitted_at: Submitted at
           request_type: Payment request type
-          client_last_name: Client last name
+          defendant_last_name: Defendant
           payment_request_id: Payment request id
           office_code: Firm account
           ufn: UFN

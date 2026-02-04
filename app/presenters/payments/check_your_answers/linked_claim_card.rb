@@ -11,33 +11,58 @@ module Payments
       end
 
       def row_data
-        row = [
+        [
           non_standard_magistrate,
           assigned_counsel
-        ]
-        row.flatten.compact
+        ].flatten.compact
       end
 
       def assigned_counsel
-        # TODO: add coverage when AC flow implemented
-        # :nocov:
-        return unless session_answers['linked_crm8_laa_reference']
+        return unless session_answers['request_type'].in?(%w[assigned_counsel_appeal assigned_counsel_amendment])
 
         {
           head_key: 'assigned_counsel',
-          text: session_answers['linked_crm8_laa_reference'] ||
-            I18n.t('payments.steps.check_your_answers.edit.sections.linked_claim.no_linked_claim')
+          text: session_answers['laa_reference'] ||
+            I18n.t('payments.steps.check_your_answers.edit.sections.linked_claim.no_linked_crm8')
         }
-        # :nocov:
       end
 
       def non_standard_magistrate
         {
           head_key: 'non_standard_magistrate',
-          text: session_answers['linked_laa_reference'] ||
-            session_answers['laa_reference'] ||
-            I18n.t('payments.steps.check_your_answers.edit.sections.linked_claim.no_linked_claim')
+          text: linked_ref ||
+            I18n.t('payments.steps.check_your_answers.edit.sections.linked_claim.no_linked_crm7')
         }
+      end
+
+      private
+
+      def linked_ref
+        ref = nil
+        if ac?
+          ref = session_answers['linked_nsm_ref']
+        elsif nsm_addition?
+          ref = session_answers['laa_reference']
+        elsif nsm_original?
+          ref = session_answers['linked_laa_reference']
+        # :nocov:
+        else
+          false
+        end
+        # :nocov:
+        ref.presence
+      end
+
+      def ac?
+        session_answers['request_type'].in?(%w[assigned_counsel assigned_counsel_appeal assigned_counsel_amendment])
+      end
+
+      def nsm_addition?
+        session_answers['request_type'].in?(%w[non_standard_mag_amendment non_standard_mag_appeal non_standard_mag_supplemental])
+      end
+
+      def nsm_original?
+        session_answers['request_type'].in?(%w[non_standard_magistrate breach_of_injunction])
       end
     end
   end

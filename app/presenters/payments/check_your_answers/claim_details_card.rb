@@ -11,15 +11,14 @@ module Payments
       end
 
       def row_data
-        row = [
+        [
           date_received, solicitor_office_code,
           ufn, stage_reached, defendant_first_name,
           defendant_last_name, number_of_attendances,
           number_of_defendants, hearing_outcome_code,
           matter_type, court, youth_court,
           date_completed,
-        ]
-        row.flatten.compact
+        ].flatten.compact
       end
 
       def date_received

@@ -161,16 +161,19 @@ Rails.application.routes.draw do
             edit_step :allowed_costs
             edit_step :claimed_costs
             edit_step :claim_details
-            edit_step :nsm_check
           end
+
           namespace :nsm do
             edit_step :allowed_costs
             edit_step :claimed_costs
             edit_step :claim_details
           end
+
           edit_step :submission_allowed_costs
           edit_step :check_your_answers
           edit_step :date_received
+          edit_step :office_code_search
+          edit_step :office_code_confirm
           resource :claim_search, only: %i[new edit update],
             controller: 'claim_search', path_names: { edit: '' }
           edit_step :claim_types

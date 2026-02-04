@@ -304,7 +304,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'counsel_office_code' => 'XYZB21',
         'solicitor_office_code' => 'AB2034',
         'solicitor_firm_name' => 'Solicitor Firm',
-        'client_last_name' => 'Smith',
+        'defendant_last_name' => 'Smith',
         'nsm_claim' => related_claim,
         'payment_requests' => [
           {
@@ -372,7 +372,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Claim type', 'Assigned counsel',
-          'Linked claim', 'LAA-XYZ321',
+          'Linked claim', "Not linked to a non-standard magistrates' claim",
           'Solicitor office account number', 'AB2034',
           'Solicitor firm name', 'Solicitor Firm',
           'Unique file number', '01112025/001',
@@ -447,7 +447,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
             'Linked claim', 'LAA-ABZ321',
             'Solicitor office account number', 'A3211B',
             'Solicitor firm name', 'Solicitor Firm 2',
-            'Unique file number', '200323/021',
+            'Unique file number', '01112025/001',
             'Defendant name', 'Smith',
             'Counsel account number', 'XYZB21',
             'Counsel name', 'Counsel Firm'

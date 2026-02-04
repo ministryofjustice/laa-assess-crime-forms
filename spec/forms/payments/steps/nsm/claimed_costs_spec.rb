@@ -26,25 +26,25 @@ RSpec.describe Payments::Steps::Nsm::ClaimedCostsForm, type: :model do
     it 'is invalid without claimed_profit_costs' do
       form.claimed_profit_cost = nil
       expect(form).not_to be_valid
-      expect(form.errors[:claimed_profit_cost]).to include('is not a number')
+      expect(form.errors[:claimed_profit_cost]).to include('Claimed profit costs must be a number, like 25')
     end
 
     it 'is invalid without claimed_disbursement_costs' do
       form.claimed_disbursement_cost = nil
       expect(form).not_to be_valid
-      expect(form.errors[:claimed_disbursement_cost]).to include('is not a number')
+      expect(form.errors[:claimed_disbursement_cost]).to include('Claimed disbursement costs must be a number, like 25')
     end
 
     it 'is invalid without claimed_travel_costs' do
       form.claimed_travel_cost = nil
       expect(form).not_to be_valid
-      expect(form.errors[:claimed_travel_cost]).to include('is not a number')
+      expect(form.errors[:claimed_travel_cost]).to include('Claimed travel costs must be a number, like 25')
     end
 
     it 'is invalid without claimed_waiting_costs' do
       form.claimed_waiting_cost = nil
       expect(form).not_to be_valid
-      expect(form.errors[:claimed_waiting_cost]).to include('is not a number')
+      expect(form.errors[:claimed_waiting_cost]).to include('Claimed waiting costs must be a number, like 25')
     end
 
     it 'is invalid with a negative value' do

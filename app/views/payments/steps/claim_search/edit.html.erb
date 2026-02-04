@@ -3,7 +3,7 @@
 <%= govuk_error_summary(@form_object) %>
 
 <%= form_with(url: new_payments_steps_claim_search_path(anchor: 'search-results'), method: :get, model: @search_form) do |f| %>
-  <h1 class="govuk-heading-xl"><%= t('.laa_reference') %></h1>
+  <h1 class="govuk-heading-xl"><%= page_heading %></h1>
   <div class="moj-search" style="margin-bottom: 20px;">
     <div class="govuk-form-group" role="search">
       <%= f.govuk_text_field :query, class: "govuk-input moj-search__input", type: "search" %>
@@ -19,7 +19,7 @@
     <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <% %i[laa_reference office_code firm_name ufn client_last_name].each do |key| %>
+          <% %i[laa_reference office_code firm_name ufn defendant_last_name].each do |key| %>
             <%= table_header_with_link(key,
                                        'shared.search.table.header',
                                        { 'controller' => controller_path, 'action' => 'edit',  'payments_claim_search_form' => @search_form.attributes },
@@ -46,10 +46,10 @@
                 <%= search_result.ufn %>
               </td>
               <td class="govuk-table__cell">
-                <%= search_result.client_last_name %>
+                <%= search_result.defendant_last_name %>
               </td>
               <td class="govuk-table__cell">
-                <%= f.submit "Select claim",  class: "govuk-button moj-search__button"%>
+                <%= f.submit t(".select"),  class: "govuk-button moj-search__button"%>
               </td>
             </tr>
           <% end %>
@@ -58,6 +58,7 @@
     </table>
     <%= render 'shared/pagination', pagy: @search_form.pagy, item: t(".result") %>
   <% else %>
-    <p class="govuk-text"><%= t('shared.search.search_results.none_para') %></p>
+    <div><%= t('.no_results_html').html_safe %></div>
+    <%= govuk_button_to t('.new_record'), edit_payments_steps_office_code_search_path, method: :get, secondary: true%>
   <% end %>
 <% end %>

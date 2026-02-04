@@ -26,25 +26,25 @@ RSpec.describe Payments::Steps::Nsm::AllowedCostsForm, type: :model do
     it 'is invalid without allowed_profit_costs' do
       form.allowed_profit_cost = nil
       expect(form).not_to be_valid
-      expect(form.errors[:allowed_profit_cost]).to include('is not a number')
+      expect(form.errors[:allowed_profit_cost]).to include('Allowed profit costs must be a number, like 25')
     end
 
     it 'is invalid without allowed_disbursement_costs' do
       form.allowed_disbursement_cost = nil
       expect(form).not_to be_valid
-      expect(form.errors[:allowed_disbursement_cost]).to include('is not a number')
+      expect(form.errors[:allowed_disbursement_cost]).to include('Allowed disbursement costs must be a number, like 25')
     end
 
     it 'is invalid without allowed_travel_costs' do
       form.allowed_travel_cost = nil
       expect(form).not_to be_valid
-      expect(form.errors[:allowed_travel_cost]).to include('is not a number')
+      expect(form.errors[:allowed_travel_cost]).to include('Allowed travel costs must be a number, like 25')
     end
 
     it 'is invalid without allowed_waiting_costs' do
       form.allowed_waiting_cost = nil
       expect(form).not_to be_valid
-      expect(form.errors[:allowed_waiting_cost]).to include('is not a number')
+      expect(form.errors[:allowed_waiting_cost]).to include('Allowed waiting costs must be a number, like 25')
     end
 
     it 'is invalid with a negative value' do

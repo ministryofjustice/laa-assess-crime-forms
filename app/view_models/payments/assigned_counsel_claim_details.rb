@@ -6,12 +6,12 @@ module Payments
       @payment_request_claim['counsel_firm_name']
     end
 
-    def client_last_name
-      @payment_request_claim['client_last_name']
+    def defendant_last_name
+      @payment_request_claim['defendant_last_name']
     end
 
     def linked_claim
-      @payment_request_claim.dig('nsm_claim', 'laa_reference') || @payment_request_claim['laa_reference']
+      @payment_request_claim.dig('nsm_claim', 'laa_reference') || I18n.t('payments.requests.claim_details.table.no_linked_claim')
     end
 
     def solicitor_office_code
@@ -23,7 +23,7 @@ module Payments
     end
 
     def ufn
-      @payment_request_claim.dig('nsm_claim', 'ufn') || @payment_request_claim['ufn']
+      @payment_request_claim['ufn']
     end
 
     def counsel_office_code
@@ -37,10 +37,10 @@ module Payments
         [table_heading('solicitor_office_code'), { text: solicitor_office_code, numeric: false }],
         [table_heading('solicitor_firm_name'), { text: solicitor_firm_name, numeric: false }],
         [table_heading('ufn'), { text: ufn, numeric: false }],
-        [table_heading('client_last_name'), { text: client_last_name, numeric: false }],
+        [table_heading('defendant_last_name'), { text: defendant_last_name, numeric: false }],
         [table_heading('counsel_office_code'), { text: counsel_office_code, numeric: false }],
         [table_heading('counsel_firm_name'), { text: firm_name, numeric: false }]
-      ].compact
+      ]
     end
   end
 end

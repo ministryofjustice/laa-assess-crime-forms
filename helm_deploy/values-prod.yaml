@@ -62,6 +62,7 @@ variables:
   appStoreUrl: http://laa-crime-application-store-app.laa-crime-application-store-production.svc.cluster.local
   enableSyncTriggerEndpoint: 'false'
   allowIndexing: 'true'
+  providerApiHost: https://laa-provider-details-api-prod.apps.live.cloud-platform.service.justice.gov.uk
 
 service_account:
   name: laa-assess-crime-forms-prod-irsa

@@ -5,6 +5,7 @@ en:
       continue_button: "Continue"
       cancel_button: "Cancel"
       save_and_continue: "Save and continue"
+      submit_payment: "Submit payment request"
     back_link: Back
     time_period:
       hours:

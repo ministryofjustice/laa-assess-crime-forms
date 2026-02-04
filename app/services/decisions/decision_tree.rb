@@ -11,6 +11,11 @@ module Decisions
     NSM_CLAIMED_COSTS = 'payments/steps/nsm/claimed_costs'.freeze
     NSM_ALLOWED_COSTS = 'payments/steps/nsm/allowed_costs'.freeze
 
+    AC_CLAIM_DETAILS = '/payments/steps/ac/claim_details'.freeze
+    AC_CLAIMED_COSTS = 'payments/steps/ac/claimed_costs'.freeze
+    AC_ALLOWED_COSTS = 'payments/steps/ac/allowed_costs'.freeze
+    OFFICE_CODE_SEARCH = '/payments/steps/office_code_search'.freeze
+    OFFICE_CODE_CONFIRM = '/payments/steps/office_code_confirm'.freeze
     DATE_RECEIVED = '/payments/steps/date_received'.freeze
     CLAIM_SEARCH = '/payments/steps/claim_search'.freeze
     CHECK_YOUR_ANSWERS = '/payments/steps/check_your_answers'.freeze
@@ -20,11 +25,36 @@ module Decisions
 
     from(:claim_type)
       .when(-> { nsm || boi })
-      .goto(edit: NSM_CLAIM_DETAILS)
-      .when(-> { nsm_supplemental || nsm_appeal || nsm_amendment })
+      .goto(edit: OFFICE_CODE_SEARCH)
+      .when(-> { ac || ac_appeal || ac_amendment || nsm_supplemental || nsm_appeal || nsm_amendment })
       .goto(edit: CLAIM_SEARCH)
 
+    from(:ac_claim_details)
+      .when(-> { ac })
+      .goto(edit: AC_CLAIMED_COSTS)
+      .when(-> { ac_appeal || ac_amendment })
+      .goto(edit: AC_ALLOWED_COSTS)
+    from(:ac_claimed_costs)
+      .goto(edit: AC_ALLOWED_COSTS)
+    from(:ac_allowed_costs)
+      .goto(edit: CHECK_YOUR_ANSWERS)
+
+    from(:office_code_search)
+      .goto(edit: OFFICE_CODE_CONFIRM)
+    from(:office_code_confirm)
+      .when(-> { (ac_appeal || ac_amendment) && multi_step_form_session.ac_claim_details_incomplete? })
+      .goto(edit: AC_CLAIM_DETAILS)
+      .when(-> { ac_appeal || ac_amendment })
+      .goto(edit: DATE_RECEIVED)
+      .when(-> { ac })
+      .goto(edit: AC_CLAIM_DETAILS)
+      .when(-> { nsm || nsm_appeal || nsm_amendment })
+      .goto(edit: NSM_CLAIM_DETAILS)
     from(:claim_search)
+      .when(-> { (ac_appeal || ac_amendment || ac) && multi_step_form_session.no_existing_ref? })
+      .goto(edit: OFFICE_CODE_SEARCH)
+      .when(-> { ac })
+      .goto(edit: AC_CLAIM_DETAILS)
       .goto(edit: DATE_RECEIVED)
 
     from(:date_received)
@@ -32,6 +62,8 @@ module Decisions
       .goto(edit: NSM_CLAIMED_COSTS)
       .when(-> { nsm_appeal || nsm_amendment })
       .goto(edit: NSM_ALLOWED_COSTS)
+      .when(-> { ac_appeal || ac_amendment })
+      .goto(edit: AC_ALLOWED_COSTS)
 
     from(:nsm_claim_details)
       .when(-> { nsm_appeal || nsm_amendment })

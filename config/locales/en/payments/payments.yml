@@ -18,6 +18,7 @@ en:
         edit:
           page_title: Check your answers
           heading: Check your answers
+          change_profit:  Change profit costs
           headers:
             costs: costs
             total: totals
@@ -41,28 +42,36 @@ en:
               court: Court
               youth_court: Youth court matter
               date_completed: Date work was completed
+              linked_claim: Linked non-standard claim
+              counsel_office_code: Counsel account number
+              counsel_firm_name: Counsel name
             linked_claim:
               title: Linked claims
               non_standard_magistrate: Non standard magistrates
               assigned_counsel: Assigned counsel
-              no_linked_claim: No linked claim
-          cost_summary: Cost Summary
+              no_linked_crm7: Not linked to a non-standard magistrates' claim
+              no_linked_crm8: Not linked to an assigned counsel claim
+          cost_summary: Cost summary
           original_claim: Original claim
           linked_laa_reference: Linked LAA reference
           claimed_and_allowed_costs: Claimed and allowed costs
+          amended_allowed_costs: Amended allowed costs
+          allowed_costs: Allowed costs
           accessible:
             total_claimed: Total claimed
             total_allowed: Total allowed
             original_total_claimed: Previous claim
             original_total_allowed: Previously allowed
           total_claimed: Total claimed
-          original_total_claimed: Previous claimed
+          original_total_claimed: Previously claimed
           total_allowed: Total allowed
           original_total_allowed: Previously allowed
           profit_cost: Profit costs
           disbursement_cost: Disbursements
           travel_cost: Travel
           waiting_cost: Waiting
+          net_assigned_counsel_cost: Net counsel fees
+          assigned_counsel_vat: VAT on counsel fees
           total: Total
           submit_payment_request: Submit payment request
           cancel_payment_request: Cancel payment request
@@ -71,38 +80,87 @@ en:
         edit:
           page_title: Date received
           heading: Date received
-          date_received: Date claim received
+          date_received:
+            non_standard_mag_supplemental: Date supplemental claim received
+            non_standard_mag_appeal: Date appeal received
+            non_standard_mag_amendment: Date claim amended
+            assigned_counsel_appeal: Date appeal received
+            assigned_counsel_amendment: Date claim amended
       claim_types:
         edit:
           page_title: Claim type
           heading: Claim type
+          or: or
       claim_search:
         edit:
           page_title: Find a claim
-          laa_reference: Search for the original claim
+          heading: Search for the original claim
+          heading_non_standard_magistrate: Search for the linked non-standard magistrates claim
+          heading_assigned_counsel: Search for the original assigned counsel claim
           payment_requests: payment requests
           result: result
+          new_record: Create a new record
+          select: Select
+          no_results_html: |
+            <p>If you expected to find a claim, check your search term and try again or search by different criteria (defendant, firm account, UFN or LAA reference).</p>
+            <p>If there is no original claim, you can create a new record.</p>
       submission_allowed_costs:
         edit:
           page_title: Amend allowed profit costs
           heading: Amend allowed profit costs
           profit_costs: Amend allowed profit costs
+      office_code_search:
+        edit:
+          page_title: Solicitor's firm account number
+          solicitor_office_code: What is the solicitor's firm account number?
+      office_code_confirm:
+        edit:
+          page_title: Check solicitor details
+          heading: Check solicitor details
+          solicitor_office_code: Firm account number
+          solicitor_firm_name: Firm name
+          confirm_office_code: Is this the right account?
+          confirm_office_code_options:
+            'true': "Yes"
+            'false': No, I need to change the number
+          no_results_found: Account not found
+          no_results_found_html: |
+            <p>No account found for <strong>%{office_code}</strong>.</p>
+            <p>Check you've entered the correct number and try again.</p>
+            <p>Check the number with the provider if you are not getting the expected account.</p>
+          back: Go back
+          cancel: Cancel payment request
       ac:
-        nsm_check:
-          edit:
-            page_title: Is this claim linked to a non-standard magistrates' claim?
         claim_details:
           edit:
             page_title: Claim Details
             heading: Claim details
+            ufn: Unique file number
+            ufn_hint: For example, 120223/001
+            defendant_last_name: Defendant last name
+            date_received:
+              assigned_counsel: Date claim received
+              assigned_counsel_appeal: Date appeal received
+              assigned_counsel_amendment: Date claim amended
+            date_received_hint: For example, 17/5/2025.
+            counsel_office_code: Counsel office account number
+            counsel_firm_name: Counsel name
         claimed_costs:
           edit:
             page_title: Claimed costs
             heading: Claimed costs
+            claimed_net_assigned_counsel_cost: Net counsel fees
+            claimed_assigned_counsel_vat: VAT on counsel fees
+            calculate_cost: Calculate cost
+            total_cost: Total claimed cost
         allowed_costs:
           edit:
             page_title: Allowed costs
             heading: Allowed costs
+            allowed_net_assigned_counsel_cost: Net counsel fees
+            allowed_assigned_counsel_vat: VAT on counsel fees
+            calculate_cost: Calculate cost
+            total_cost: Total allowed cost
       nsm:
         claim_details:
           edit:
@@ -209,7 +267,8 @@ en:
           youth_court: Youth court matter
           work_completed_date: Date work was completed
           linked_claim: Linked claim
-          client_last_name: Defendant name
+          no_linked_claim: Not linked to a non-standard magistrates' claim
+          defendant_last_name: Defendant name
           counsel_office_code: Counsel account number
           counsel_firm_name: Counsel name
       show:

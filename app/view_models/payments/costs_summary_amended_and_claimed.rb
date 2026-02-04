@@ -1,5 +1,13 @@
 module Payments
   class CostsSummaryAmendedAndClaimed < CostsSummary
+    include ActionView::Helpers::UrlHelper
+    include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::OutputSafetyHelper
+
+    def heading
+      I18n.t('payments.steps.check_your_answers.edit.claimed_and_allowed_costs')
+    end
+
     def headers
       [
         '',
@@ -9,6 +17,16 @@ module Payments
         t('total_allowed')
       ]
     end
+
+    # :nocov:
+    def table_fields
+      raise 'implement this action, if needed, in subclasses'
+    end
+
+    def change_link
+      raise 'implement this action, if needed, in subclasses'
+    end
+    # :nocov:
 
     def formatted_summed_fields
       {

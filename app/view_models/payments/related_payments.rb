@@ -30,7 +30,7 @@ module Payments
           laa_reference: laa_reference,
           request_type: I18n.t("payments.request_types.#{request['request_type']}"),
           firm_name: firm_name,
-          client_last_name: client_last_name,
+          defendant_last_name: defendant_last_name,
           submitted_at: DateTime.parse(request['submitted_at']),
           link: link
         }
@@ -53,7 +53,7 @@ module Payments
       @related_claim['counsel_office_code'] || @related_claim['solicitor_office_code']
     end
 
-    def client_last_name
+    def defendant_last_name
       @related_claim['client_last_name']
     end
 

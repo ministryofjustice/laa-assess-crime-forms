@@ -48,9 +48,9 @@
     <ul class="govuk-summary-card__actions">
       <li class="govuk-summary-card__action">
         <% if @report.session_answers['submission_id'].present? %>
-          <%= link_to 'change profit cost', edit_payments_steps_submission_allowed_costs_path %>
+          <%= link_to t('.change_profit'), edit_payments_steps_submission_allowed_costs_path %>
         <% else %>
-          <%= link_to 'change', edit_payments_steps_nsm_claimed_costs_path %>
+          <%= link_to t('.change'), @cost_summary.change_link %>
         <% end %>
         <span class="govuk-visually-hidden"><%= t('.cost_summary') %></span>
       </li>
@@ -58,7 +58,7 @@
   </div>
   <div class="govuk-summary-card__content">
       <%=
-        caption = t('.claimed_and_allowed_costs')
+        caption = @cost_summary.heading
         head = @cost_summary.headers
         rows = @cost_summary.table_fields.map(&:values)
         foot = @cost_summary.formatted_summed_fields.map do |key, value|
@@ -78,7 +78,7 @@
 
 <div class="govuk-button-group">
   <%= form_for @form_object, url: {controller: '/payments/requests', action: :create }, method: :post do |f| %>
-  <%= f.continue_button(primary: :save_and_continue, secondary: false) %>
+  <%= f.submit_button('submit_payment') %>
   <% if @report.session_answers['submission_id'].blank? %>
     <%= govuk_link_to( t(".cancel_payment_request"), payments_requests_path) %>
   <% else %>

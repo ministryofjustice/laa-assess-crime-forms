@@ -18,7 +18,7 @@ module Payments
       row[:payment_request_claim][:id]
     end
 
-    def client_last_name
+    def defendant_last_name
       row[:payment_request_claim][:client_last_name]
     end
 
@@ -35,7 +35,7 @@ module Payments
     end
 
     def office_code
-      row[:payment_request_claim][:office_code]
+      row[:payment_request_claim][:solicitor_office_code]
     end
 
     def submitted_at

@@ -1,13 +1,49 @@
 <% title t('.page_title') %>
 
-<% step_header(path: payments_requests_path) %>
+<% step_header(path: previous_decision_step_path) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" id="payments-calculate-container">
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :ufn, label: { size: 'm' }, width: 10 %>
-      <%= f.continue_button(secondary: false) %>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :allowed_net_assigned_counsel_cost,
+          id: "counsel_costs_net",
+          prefix_text: "£",
+          inputmode: "decimal",
+          label: { size: 's', text: t('.allowed_net_assigned_counsel_cost') },
+          width: 10 %>
+      </div>
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :allowed_assigned_counsel_vat,
+          id: "counsel_costs_vat",
+          prefix_text: "£",
+          inputmode: "decimal",
+          label: { size: 's', text: t('.allowed_assigned_counsel_vat') },
+          width: 10 %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= govuk_button_link_to(t('.calculate_cost'), '#',
+          secondary: true ,
+          id: 'payments_calculate_change_button'
+        ) %>
+      </div>
+
+      <p class="govuk-heading-l">
+        <span class="govuk-caption-m"><%= t('.total_cost') %></span>
+        <span id="total_cost"><%= "#{LaaCrimeFormsCommon::NumberTo.pounds(@form_object.allowed_total)}" %></span>
+      </p>
+
+      <%= f.continue_button(primary: :save_and_continue, secondary: false, primary_opts: { id: 'costs_submit_button'}) %>
     <% end %>
   </div>
 </div>

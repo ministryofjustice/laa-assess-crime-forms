@@ -9,7 +9,6 @@ module Payments
         @form_object = Payments::Steps::CheckYourAnswersForm.build(payment_details,
                                                                    multi_step_form_session:)
         @report = Payments::CheckYourAnswers::Report.new(payment_details)
-
         @cost_summary = cost_summary
       end
 
@@ -20,7 +19,7 @@ module Payments
                                payment_claim_details = BaseViewModel.build(:payment_claim_details, claim)
                                current_multi_step_form_session.answers = payment_claim_details.to_h
                              else
-                               multi_step_form_session.answers
+                               current_multi_step_form_session.answers
                              end
       end
 
@@ -32,18 +31,28 @@ module Payments
         multi_step_form_session && session[:multi_step_form_id] = params[:id]
       end
 
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def cost_summary
-        # :nocov:
         case multi_step_form_session['request_type'].to_sym
-        # :nocov:
         when :non_standard_magistrate, :breach_of_injunction
-          Payments::CostsSummary.new(multi_step_form_session.answers)
+          Payments::NsmCostsSummary.new(multi_step_form_session.answers, params[:id])
         when :non_standard_mag_supplemental
-          Payments::CostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers)
+          Payments::NsmCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers, params[:id])
         when :non_standard_mag_amendment, :non_standard_mag_appeal
-          Payments::CostsSummaryAmended.new(multi_step_form_session.answers)
+          Payments::NsmCostsSummaryAmended.new(multi_step_form_session.answers, params[:id])
+        when :assigned_counsel
+          Payments::AcCostsSummary.new(multi_step_form_session.answers, params[:id])
+        when :assigned_counsel_appeal
+          Payments::AcCostsSummaryAppealed.new(multi_step_form_session.answers, params[:id])
+        when :assigned_counsel_amendment
+          Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, params[:id])
+        # :nocov:
+        else
+          raise StandardError, "Unknown request type: #{multi_step_form_session['request_type']}"
         end
+        # :nocov:
       end
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     end
   end
 end

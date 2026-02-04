@@ -11,13 +11,13 @@ en:
         non_standard_mag_supplemental: Non-Standard Magistrates' - supplemental
         non_standard_mag_amendment: Non-Standard Magistrates' - amendment
       index:
-        page_title: Payment Requests
+        page_title: Payment requests
         payment_requests: payment requests
         create_payment_request: Create payment request
         table:
           laa_reference: LAA reference
           firm_name: Firm name
-          client_last_name: Defendant
+          defendant_last_name: Defendant
           request_type: Payment type
           submitted_at: Submitted
       confirmation:

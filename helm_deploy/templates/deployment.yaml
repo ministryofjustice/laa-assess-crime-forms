@@ -146,6 +146,13 @@ spec:
                 secretKeyRef:
                   name: app-store-auth
                   key: caseworker_client_secret
+            - name: PROVIDER_API_HOST
+              value: '{{ .Values.variables.providerApiHost }}'
+            - name: PROVIDER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: provider_api_key
             - name: RACK_ENV
               value: 'production'
             - name: RAILS_ENV

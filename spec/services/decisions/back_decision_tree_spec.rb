@@ -16,7 +16,7 @@ RSpec.describe Decisions::BackDecisionTree do
 
         it_behaves_like 'a generic decision',
                         from: Decisions::DecisionTree::NSM_CLAIM_DETAILS,
-                        goto: { action: :edit, controller: Decisions::DecisionTree::CLAIM_TYPE }
+                        goto: { action: :edit, controller: Decisions::DecisionTree::OFFICE_CODE_SEARCH }
       end
     end
 
@@ -119,9 +119,13 @@ RSpec.describe Decisions::BackDecisionTree do
     end
 
     context 'from CHECK_YOUR_ANSWERS' do
-      it_behaves_like 'a generic decision',
-                      from: Decisions::BackDecisionTree::CHECK_YOUR_ANSWERS,
-                      goto: { action: :edit, controller: Decisions::DecisionTree::NSM_ALLOWED_COSTS }
+      context 'when NSM' do
+        let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM.to_s } }
+
+        it_behaves_like 'a generic decision',
+                        from: Decisions::BackDecisionTree::CHECK_YOUR_ANSWERS,
+                        goto: { action: :edit, controller: Decisions::DecisionTree::NSM_ALLOWED_COSTS }
+      end
     end
 
     context 'when step has no matching rule' do
