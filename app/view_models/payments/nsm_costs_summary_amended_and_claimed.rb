@@ -10,7 +10,7 @@ module Payments
     end
 
     def change_link
-      url_helpers.edit_payments_steps_nsm_claimed_costs_path(@id)
+      url_helpers.edit_payments_steps_nsm_claimed_costs_path(session_answers['id'])
     end
   end
 end

@@ -68,17 +68,17 @@ module Payments
       def cost_summary
         case multi_step_form_session['request_type'].to_sym
         when :non_standard_magistrate, :breach_of_injunction
-          Payments::NsmCostsSummary.new(multi_step_form_session.answers, params[:id])
+          Payments::NsmCostsSummary.new(multi_step_form_session.answers)
         when :non_standard_mag_supplemental
-          Payments::NsmCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers, params[:id])
+          Payments::NsmCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers)
         when :non_standard_mag_amendment, :non_standard_mag_appeal
-          Payments::NsmCostsSummaryAmended.new(multi_step_form_session.answers, params[:id])
+          Payments::NsmCostsSummaryAmended.new(multi_step_form_session.answers)
         when :assigned_counsel
-          Payments::AcCostsSummary.new(multi_step_form_session.answers, params[:id])
+          Payments::AcCostsSummary.new(multi_step_form_session.answers)
         when :assigned_counsel_appeal
-          Payments::AcCostsSummaryAppealed.new(multi_step_form_session.answers, params[:id])
+          Payments::AcCostsSummaryAppealed.new(multi_step_form_session.answers)
         when :assigned_counsel_amendment
-          Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers, params[:id])
+          Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers)
         # :nocov:
         else
           raise StandardError, "Unknown request type: #{multi_step_form_session['request_type']}"
