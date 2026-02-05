@@ -34,7 +34,7 @@ RSpec.describe 'Payment submission safeguards', type: :system do
     visit edit_payments_steps_check_your_answers_path(claim_id, submission: true)
     expect(page).to have_title('Check your answers')
 
-    click_button 'Save and continue'
+    click_button 'Submit payment request'
     expect(page).to have_title('Payment Confirmation')
 
     visit edit_payments_steps_check_your_answers_path(claim_id, submission: true)
@@ -59,7 +59,6 @@ RSpec.describe 'Payment submission safeguards', type: :system do
     expect(page).to have_title('Check your answers')
   end
 
-  # rubocop:disable Naming/MethodParameterName
   def stub_submission_claim(id)
     claim_double = instance_double(Claim)
     allow(Claim).to receive(:load_from_app_store).with(id).and_return(claim_double)
@@ -69,9 +68,8 @@ RSpec.describe 'Payment submission safeguards', type: :system do
       .with(:payment_claim_details, claim_double)
       .and_return(instance_double(Nsm::V1::PaymentClaimDetails, to_h: answers))
   end
-  # rubocop:enable Naming/MethodParameterName
 
-  # rubocop:disable Metrics/MethodLength, Naming/MethodParameterName
+  # rubocop:disable Metrics/MethodLength
   def submission_answers(id)
     timestamp = Time.zone.now
     {
@@ -105,7 +103,7 @@ RSpec.describe 'Payment submission safeguards', type: :system do
       'idempotency_token' => token
     }
   end
-  # rubocop:enable Metrics/MethodLength, Naming/MethodParameterName
+  # rubocop:enable Metrics/MethodLength
 
   def rack_session
     page.driver.request.session
