@@ -62,10 +62,14 @@ module Payments
     def persist_last_submission_token
       answers = current_multi_step_form_session.answers
 
-      token_payload = answers.slice('id', 'idempotency_token')
-      return if token_payload['idempotency_token'].blank?
+      id = answers['id']
+      idempotency_token = answers['idempotency_token']
+      return if id.blank? || idempotency_token.blank?
 
-      session[:payments_last_submission] = token_payload
+      session[:payments_last_submission] = {
+        'id' => id,
+        'idempotency_token' => idempotency_token
+      }
     end
 
     def authorize_caseworker
