@@ -71,7 +71,7 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
       expect(current_answers).to include('claimed_total' => '25')
     end
 
-    it 'returns early when the previous submission id is blank' do
+    it 'proceeds with new submission when previous submission id is blank' do
       session[:payments_last_submission] = { 'id' => nil, 'idempotency_token' => SecureRandom.uuid }
       allow(controller).to receive(:refresh_answers_from_claim).and_return(refreshed_answers.dup)
 
