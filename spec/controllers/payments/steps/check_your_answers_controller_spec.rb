@@ -77,7 +77,7 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
 
       get :edit, params: { id: submission_id, submission: true }
 
-      expect(session.keys).not_to include('payments:')
+      expect(session.keys.grep(/\Apayments:/)).to be_empty
       expect(response).to be_successful
     end
   end
