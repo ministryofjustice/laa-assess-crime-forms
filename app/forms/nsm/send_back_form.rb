@@ -22,7 +22,6 @@ module Nsm
       return false unless valid?
 
       update_local_data
-      AppStoreClient.new.unassign(claim)
       NotifyAppStore.perform_now(submission: claim)
 
       true
