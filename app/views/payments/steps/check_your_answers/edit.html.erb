@@ -47,7 +47,7 @@
     <h2 class="govuk-summary-card__title"><%= t('.cost_summary') %></h2>
     <ul class="govuk-summary-card__actions">
       <li class="govuk-summary-card__action">
-        <% if @report.session_answers['submission_id'].present? %>
+        <% if @report.session_answers['linked_laa_reference'].present? %>
           <%= link_to t('.change_profit'), edit_payments_steps_submission_allowed_costs_path %>
         <% else %>
           <%= link_to t('.change'), @cost_summary.change_link %>
@@ -79,7 +79,7 @@
 <div class="govuk-button-group">
   <%= form_for @form_object, url: {controller: '/payments/requests', action: :create }, method: :post do |f| %>
   <%= f.submit_button('submit_payment') %>
-  <% if @report.session_answers['submission_id'].blank? %>
+  <% if @report.session_answers['linked_laa_reference'].blank? %>
     <%= govuk_link_to( t(".cancel_payment_request"), payments_requests_path) %>
   <% else %>
     <%= govuk_link_to( t(".cancel_payment_request"), nsm_claim_claim_details_path(@report.session_answers['id'])) %>
