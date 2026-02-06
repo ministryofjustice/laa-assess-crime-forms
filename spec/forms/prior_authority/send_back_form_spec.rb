@@ -7,12 +7,8 @@ RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
   let(:further_information_explanation) { 'foo' }
   let(:incorrect_information_explanation) { 'bar' }
   let(:deadline) { DateTime.new(2024, 9, 1, 6, 46, 34) }
-  let(:unassignment_stub) do
-    stub_request(:delete, "https://appstore.example.com/v1/submissions/#{submission.id}/assignment").to_return(status: 204)
-  end
 
   before do
-    unassignment_stub
     allow(LaaCrimeFormsCommon::WorkingDayService).to receive(:call).with(10).and_return(deadline)
   end
 
@@ -60,7 +56,7 @@ RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
   describe '#save' do
     let(:fixed_arbitrary_date) { DateTime.new(2023, 12, 3, 12, 3, 12) }
     let(:user) { create(:caseworker) }
-    let(:client) { instance_double(AppStoreClient, get_submission: app_store_record, unassign: :success) }
+    let(:client) { instance_double(AppStoreClient, get_submission: app_store_record) }
     let(:app_store_record) do
       {
         'version' => 1,
@@ -136,7 +132,6 @@ RSpec.describe PriorAuthority::SendBackForm, :stub_oauth_token do
 
         it 'notifies the app store' do
           expect(NotifyAppStore).to have_received(:perform_now).with(submission:)
-          expect(client).to have_received(:unassign)
         end
       end
     end

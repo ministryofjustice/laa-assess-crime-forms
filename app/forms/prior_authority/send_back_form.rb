@@ -32,7 +32,6 @@ module PriorAuthority
       persist_form_values
       update_local_records
 
-      AppStoreClient.new.unassign(submission)
       NotifyAppStore.perform_now(submission:)
 
       true
