@@ -34,6 +34,8 @@ module SystemHelpers
       data = JSON.parse(request.body)
       submission.data = data['application']
       submission.state = data['application_state']
+      # Clear assigned_user_id when state changes to sent_back (matching store behavior)
+      submission.assigned_user_id = nil if data['application_state'] == 'sent_back'
       submission.app_store_updated_at = DateTime.current
       submission.events = data['events'].map { Event.rehydrate(_1, submission.application_type) }
       { status: 201 }
