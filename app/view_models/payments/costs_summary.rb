@@ -2,13 +2,12 @@ module Payments
   class CostsSummary
     include Routing
 
-    attr_reader :session_answers, :id
+    attr_reader :session_answers
 
     PROFIT_COSTS = 'profit_costs'.freeze
 
-    def initialize(session_answers, id = nil)
+    def initialize(session_answers)
       @session_answers = session_answers
-      @id = id
     end
 
     def heading

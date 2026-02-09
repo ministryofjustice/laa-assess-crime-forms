@@ -119,7 +119,7 @@ module Payments
       end
 
       def read_only?
-        session_answers['submission_id'].present?
+        session_answers['linked_laa_reference'].present?
       end
     end
   end

@@ -32,11 +32,13 @@ module Payments
 
     def create
       response = AppStoreClient.new.create_payment_request(request_payload)
+      persist_last_submission_token
       destroy_current_form_sessions
       @payment_confirmation = Payments::ConfirmationSummary.new(response)
 
       render :confirmation
     rescue RuntimeError => e
+      persist_last_submission_token
       destroy_current_form_sessions
 
       raise e
@@ -55,6 +57,19 @@ module Payments
 
     def request_payload
       current_multi_step_form_session.answers.merge('submitter_id' => current_user.id)
+    end
+
+    def persist_last_submission_token
+      answers = current_multi_step_form_session.answers
+
+      id = answers['id']
+      idempotency_token = answers['idempotency_token']
+      return if id.blank? || idempotency_token.blank?
+
+      session[:payments_last_submission] = {
+        'id' => id,
+        'idempotency_token' => idempotency_token
+      }
     end
 
     def authorize_caseworker
