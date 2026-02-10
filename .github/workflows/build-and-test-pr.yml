@@ -229,7 +229,7 @@ jobs:
           IMAGE_TAG="branch-${{ github.sha }}"
           echo "image-tag=${IMAGE_TAG}" >> $GITHUB_OUTPUT
 
-          ECR_IMAGE=${{ secrets.ECR_REGISTRY_URL }}/${{ vars.SUBMIT_DEV_ECR_REPOSITORY }}
+          ECR_IMAGE=${{ secrets.ECR_REGISTRY_URL }}/${{ vars.ASSESS_DEV_ECR_REPOSITORY }}
 
           docker build \
             --build-arg APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
@@ -378,7 +378,7 @@ jobs:
       id-token: write
       contents: read
     with:
-      submit-sha: ${{ needs.build.outputs.image-tag }}
+      assess-sha: ${{ needs.build.outputs.image-tag }}
 
   # ============================================================================
   # PHASE 4: Deploy to dev environment (only after all checks pass)
