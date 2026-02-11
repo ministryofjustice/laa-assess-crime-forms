@@ -155,7 +155,7 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: coverage-results-${{ matrix.test-type }}
-          path: coverage_results
+          path: coverage
           include-hidden-files: true
 
       - name: Upload Capybara screenshots (on test failure)
@@ -186,7 +186,7 @@ jobs:
         uses: actions/download-artifact@v6
         with:
           pattern: coverage-results-*
-          path: coverage_results
+          path: coverage
 
       - name: list files
         run: ls
