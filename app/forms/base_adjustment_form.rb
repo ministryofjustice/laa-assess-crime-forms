@@ -55,6 +55,16 @@ class BaseAdjustmentForm
   end
 
   # :nocov:
+  def validate_time_period_max_hours(attribute, max_hours:)
+    value = public_send(attribute)
+    return if value.blank? || value.is_a?(Hash)
+    return unless value.respond_to?(:hours)
+
+    errors.add(attribute, :max_hours, count: max_hours) if value.hours.to_i > max_hours
+  end
+  # :nocov:
+
+  # :nocov:
   def data_has_changed?
     raise 'implement in class'
   end

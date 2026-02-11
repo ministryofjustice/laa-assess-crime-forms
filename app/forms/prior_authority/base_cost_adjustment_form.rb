@@ -1,6 +1,7 @@
 module PriorAuthority
   class BaseCostAdjustmentForm < BaseAdjustmentForm
     include LaaCrimeFormsCommon::Validators
+    include NumericLimits
 
     PER_ITEM = 'per_item'.freeze
     PER_HOUR = 'per_hour'.freeze
@@ -15,11 +16,16 @@ module PriorAuthority
     with_options if: :per_item? do
       validates :items, item_type_dependant: true
       validates :cost_per_item, cost_item_type_dependant: true
+      validate :items_within_limit
+      validate :cost_per_item_within_limit
     end
 
     with_options if: :per_hour? do
       validates :period, presence: true, time_period: { allow_zero: true }
-      validates :cost_per_hour, presence: true, numericality: { greater_than: 0 }, is_a_number: true
+      validate :period_hours_within_limit
+      validates :cost_per_hour, presence: true,
+                numericality: { greater_than: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT },
+                is_a_number: true
     end
 
     validates :explanation, presence: true, if: :explanation_required?
@@ -49,6 +55,24 @@ module PriorAuthority
     # :nocov:
     def process_fields
       raise 'Implement in subclass'
+    end
+    # :nocov:
+
+    def period_hours_within_limit
+      validate_time_period_max_hours(:period, max_hours: NumericLimits::MAX_INTEGER)
+    end
+
+    # :nocov:
+    def items_within_limit
+      return if items.blank? || !items.is_a?(Numeric)
+
+      errors.add(:items, :less_than_or_equal_to, count: MAX_INTEGER) if items > MAX_INTEGER
+    end
+
+    def cost_per_item_within_limit
+      return if cost_per_item.blank? || !cost_per_item.is_a?(Numeric)
+
+      errors.add(:cost_per_item, :less_than_or_equal_to, count: MAX_FLOAT) if cost_per_item > MAX_FLOAT
     end
     # :nocov:
 

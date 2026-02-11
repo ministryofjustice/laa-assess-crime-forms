@@ -2,6 +2,8 @@ module Payments
   module Steps
     module Nsm
       class ClaimDetailForm < BasePaymentsForm
+        include NumericLimits
+
         attribute :date_received, :date
         attribute :ufn, :string
         attribute :stage_reached, :string
@@ -20,7 +22,7 @@ module Payments
                   presence: true
 
         validates :number_of_defendants, :number_of_attendances, presence: true, is_a_number: true,
-          numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+          numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }
 
         # Due to how Rails handles HTML forms with radio buttons that
         # can be blank, we can't use presence validation here

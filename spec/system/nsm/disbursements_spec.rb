@@ -77,6 +77,17 @@ RSpec.describe 'Disbursements', :stub_oauth_token, type: :system do
                              text: I18n.t("#{disbursement_form_error_message}.base.no_change"))
   end
 
+  it 'displays error when disbursement cost exceeds database limit' do
+    visit nsm_claim_disbursements_path(claim)
+    click_on 'Accountants'
+    fill_in 'Change disbursement cost', with: '9999999999'
+    fill_in 'Explain your decision', with: 'test'
+
+    click_on 'Save changes'
+
+    expect(page).to have_content('The cost must be 99999999.99 or less')
+  end
+
   context 'when claim has been assessed' do
     let(:claim) { build(:claim, state: 'granted') }
 

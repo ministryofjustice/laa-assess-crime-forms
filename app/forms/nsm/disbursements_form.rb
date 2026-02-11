@@ -1,12 +1,18 @@
 module Nsm
   class DisbursementsForm < BaseAdjustmentForm
     include LaaCrimeFormsCommon::Validators
+    include NumericLimits
 
     attribute :total_cost_without_vat, :gbp
     attribute :miles, :fully_validatable_decimal, precision: 10, scale: 3
     attribute :apply_vat, :string
 
-    validates :miles, presence: true, numericality: { greater_than_or_equal_to: 0 }, is_a_number: true, if: :mileage_based?
+    validates :miles, presence: true,
+              numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT },
+              is_a_number: true, if: :mileage_based?
+    validates :total_cost_without_vat,
+              numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT },
+              is_a_number: true, unless: :mileage_based?, allow_blank: true
 
     def mileage_based?
       !item.miles.nil?
