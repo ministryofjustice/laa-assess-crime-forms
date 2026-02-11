@@ -207,7 +207,7 @@ RSpec.describe 'Adjust additional costs', :stub_oauth_token do
 
       expect(page)
         .to have_content('Enter a valid number of hours')
-        .and have_content('less than or equal to 99999999.99')
+        .and have_content('The hourly cost must be 99999999.99 or less')
     end
 
     it 'warns me that I have not made any changes' do

@@ -17,6 +17,7 @@ en:
   shared_cost_per_hour_errors: &shared_cost_per_hour_errors
     blank: The hourly cost must be more than 0
     greater_than: The hourly cost must be more than 0
+    less_than_or_equal_to: The hourly cost must be %{count} or less
     not_a_number: The cost per hour must be a number, like 25
   shared_cost_per_item_errors: &shared_cost_per_item_errors
     blank: Enter the cost per %{item_type}
@@ -148,6 +149,11 @@ en:
             confirm_office_code:
               inclusion: Please select an option
 
+        payments/steps/submission_allowed_costs_form:
+          attributes:
+            allowed_profit_cost:
+              less_than_or_equal_to: Allowed profit costs must be %{count} or less
+
         payments/steps/date_received_form:
           attributes:
             date_received: *shared_date_errors
@@ -172,10 +178,12 @@ en:
               blank: Enter the number of defendants
               not_a_number: Number of defendants must be a number, like 25
               greater_than: Number of defendants must be greater than 0
+              less_than_or_equal_to: Number of defendants must be %{count} or less
             number_of_attendances:
               blank: Enter the number of attendances
               not_a_number: Number of attendances must be a number, like 25
               greater_than: Number of attendances must be greater than 0
+              less_than_or_equal_to: Number of attendances must be %{count} or less
             hearing_outcome_code:
               blank: Select the hearing outcome code
             matter_type:
@@ -199,18 +207,22 @@ en:
           attributes:
             claimed_profit_cost:
               greater_than_or_equal_to: Claimed profit costs must be equal or greater than 0
+              less_than_or_equal_to: Claimed profit costs must be %{count} or less
               blank: Enter claimed profit cost
               not_a_number: Claimed profit costs must be a number, like 25
             claimed_disbursement_cost:
               greater_than_or_equal_to: Claimed disbursement costs must be equal or greater than 0
+              less_than_or_equal_to: Claimed disbursement costs must be %{count} or less
               blank: Enter claimed disbursement cost
               not_a_number: Claimed disbursement costs must be a number, like 25
             claimed_travel_cost:
               greater_than_or_equal_to: Claimed travel costs must be equal or greater than 0
+              less_than_or_equal_to: Claimed travel costs must be %{count} or less
               blank: Enter claimed travel cost
               not_a_number: Claimed travel costs must be a number, like 25
             claimed_waiting_cost:
               greater_than_or_equal_to: Claimed waiting costs must be equal or greater than 0
+              less_than_or_equal_to: Claimed waiting costs must be %{count} or less
               blank: Enter claimed waiting cost
               not_a_number: Claimed waiting costs must be a number, like 25
 
@@ -218,18 +230,22 @@ en:
           attributes:
             allowed_profit_cost:
               greater_than_or_equal_to: Allowed profit costs must be equal or greater than 0
+              less_than_or_equal_to: Allowed profit costs must be %{count} or less
               blank: Enter allowed profit cost
               not_a_number: Allowed profit costs must be a number, like 25
             allowed_disbursement_cost:
               greater_than_or_equal_to: Allowed disbursement costs must be equal or greater than 0
+              less_than_or_equal_to: Allowed disbursement costs must be %{count} or less
               blank: Enter allowed disbursement cost
               not_a_number: Allowed disbursement costs must be a number, like 25
             allowed_travel_cost:
               greater_than_or_equal_to: Allowed travel costs must be equal or greater than 0
+              less_than_or_equal_to: Allowed travel costs must be %{count} or less
               blank: Enter allowed travel cost
               not_a_number: Allowed travel costs must be a number, like 25
             allowed_waiting_cost:
               greater_than_or_equal_to: Allowed waiting costs must be equal or greater than 0
+              less_than_or_equal_to: Allowed waiting costs must be %{count} or less
               blank: Enter allowed waiting cost
               not_a_number: Allowed waiting costs must be a number, like 25
 

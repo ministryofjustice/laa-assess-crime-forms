@@ -136,6 +136,7 @@ en:
               blank: Enter the number of miles to allow
               not_a_number: The number of miles must be a number
               greater_than_or_equal_to: The number of miles must be 0 or more
+              less_than_or_equal_to: The number of miles must be %{count} or less
             apply_vat:
               inclusion: Select an option
 
