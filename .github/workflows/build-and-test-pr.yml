@@ -188,9 +188,6 @@ jobs:
           pattern: coverage-results-*
           path: coverage_results
 
-      - name: list files
-        run: ls -R
-
       - name: Merge coverage results from both test types
         run: bundle exec rake simplecov:process_coverage
 
