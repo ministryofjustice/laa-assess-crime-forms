@@ -186,7 +186,7 @@ jobs:
         uses: actions/download-artifact@v6
         with:
           pattern: coverage-results-*
-          path: coverage
+          path: coverage_results
 
       - name: list files
         run: ls -R
