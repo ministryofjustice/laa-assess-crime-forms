@@ -157,6 +157,15 @@ RSpec.describe 'Adjust additional costs', :stub_oauth_token do
         .and have_content('The cost per item must be a number, like 25')
         .and have_field('Number of items', with: 'a')
         .and have_field('Cost per item', with: 'a')
+
+      fill_in 'Number of items', with: '9999999999'
+      fill_in 'Cost per item', with: '9999999999'
+      fill_in 'Explain your decision', with: 'test'
+
+      click_on 'Save changes'
+      expect(page)
+        .to have_content('The number must be 2147483647 or less')
+        .and have_content('The cost must be 99999999.99 or less')
     end
 
     it 'allows me to recalculate the time cost on the page', :javascript do
@@ -188,6 +197,17 @@ RSpec.describe 'Adjust additional costs', :stub_oauth_token do
         .and have_field('Hours', with: 'a')
         .and have_field('Minutes', with: 'b')
         .and have_field('Cost per hour', with: 'c')
+
+      fill_in 'Hours', with: '9999999999'
+      fill_in 'Minutes', with: '0'
+      fill_in 'Cost per hour', with: '9999999999'
+      fill_in 'Explain your decision', with: 'test'
+
+      click_on 'Save changes'
+
+      expect(page)
+        .to have_content('Enter a valid number of hours')
+        .and have_content('The hourly cost must be 99999999.99 or less')
     end
 
     it 'warns me that I have not made any changes' do

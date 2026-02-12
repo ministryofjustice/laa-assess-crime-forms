@@ -137,6 +137,7 @@ en:
               blank: Enter the number of letters you want to change the total to
               no_change: You cannot save changes as you have not changed anything. You can make a change and save it, or select cancel.
               greater_than_or_equal_to: The number of letters must be 0 or more
+              less_than_or_equal_to: The number of letters must be %{count} or less
               not_a_number: The number of letters must be a number
               not_an_integer: The number of letters must be a whole number
         nsm/letters_calls_form/calls:
@@ -147,6 +148,7 @@ en:
               blank: Enter the number of calls you want to change the total to
               no_change: You cannot save changes as you have not changed anything. You can make a change and save it, or select cancel.
               greater_than_or_equal_to: The number of calls must be 0 or more
+              less_than_or_equal_to: The number of calls must be %{count} or less
               not_a_number: The number of calls must be a number
               not_an_integer: The number of calls must be a whole number
 

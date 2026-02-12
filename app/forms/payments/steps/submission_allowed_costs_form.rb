@@ -1,10 +1,14 @@
 module Payments
   module Steps
     class SubmissionAllowedCostsForm < BasePaymentsForm
+      include NumericLimits
+
       attribute :allowed_profit_cost, :gbp
 
       validates :allowed_profit_cost,
-                presence: true, numericality: { greater_than_or_equal_to: 0 }, is_a_number: true
+                presence: true,
+                numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT },
+                is_a_number: true
 
       ALLOWED_COSTS = [:allowed_travel_cost,
                        :allowed_disbursement_cost,
