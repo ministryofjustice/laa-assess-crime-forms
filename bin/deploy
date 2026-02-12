@@ -25,6 +25,7 @@ deploy_branch() {
     --set-string pingdomIPs="$PINGDOM_IPS" \
     --set-string sharedIPs="$SHARED_IPS" \
     --set customErrorService.enabled=false \
+    --set branch=true
 }
 
 deploy_main() {
@@ -34,7 +35,7 @@ deploy_main() {
     --values ./helm_deploy/values-"$ENVIRONMENT".yaml \
      --set-string sharedIPs="$SHARED_IPS" \
     --set image.repository="${ECR_REPOSITORY}" \
-    --set image.tag="$IMAGE_TAG" \
+    --set image.tag="$IMAGE_TAG"
 }
 
 if [[ "$CIRCLE_BRANCH" == "main" ]]; then
