@@ -55,6 +55,8 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       stub_search(index_endpoint, search_params)
       stub_get_claim('https://appstore.example.com/v1/payment_request_claims/1234')
       choose_claim_type('Assigned counsel')
+      expect(page).to have_content('Search for the non-standard magistrates claim')
+      expect(page).to have_button('Create a new record')
       fill_in 'Find a claim', with: nsm_claim_ref
       click_button 'Search'
       click_button 'Select'
@@ -130,6 +132,19 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       fill_in id: 'counsel_costs_net', with: 'garbage'
       click_button 'Save and continue'
       expect(page).to have_content('Allowed net counsel fees must be a number, like 25')
+    end
+  end
+
+  context 'Create new record before searching' do
+    before do
+      start_new_payment_request
+      choose_claim_type('Assigned counsel')
+      click_button 'Create a new record'
+    end
+
+    it 'allows user to continue without performing a search' do
+      select_office_code
+      expect(page).to have_title('Claim Details')
     end
   end
 end

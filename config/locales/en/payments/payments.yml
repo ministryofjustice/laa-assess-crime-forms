@@ -94,16 +94,17 @@ en:
       claim_search:
         edit:
           page_title: Find a claim
-          heading: Search for the original claim
-          heading_non_standard_magistrate: Search for the linked non-standard magistrates claim
-          heading_assigned_counsel: Search for the original assigned counsel claim
+          heading_non_standard_magistrate: Search for the non-standard magistrates claim
+          heading_assigned_counsel: Search for the assigned counsel claim
+          body_line_1: Search to link this payment to a digital record.
+          body_line_2: If there is no related claim or payment request, create a new record.
+          body_line_3: If you expect to find a record but can't, try a different search.
           payment_requests: payment requests
           result: result
           new_record: Create a new record
           select: Select
           no_results_html: |
-            <p>If you expected to find a claim, check your search term and try again or search by different criteria (defendant, firm account, UFN or LAA reference).</p>
-            <p>If there is no original claim, you can create a new record.</p>
+            <p>If there are no results that match your search, try a different search.</p>
       submission_allowed_costs:
         edit:
           page_title: Amend allowed profit costs
@@ -296,7 +297,7 @@ en:
       payments_steps_date_received_form:
         date_received: For example, 17/5/2025.
       payments_steps_claim_search_form:
-        query: You can search by defendant, firm account, UFN or LAA reference
+        query: Search by defendant, firm account, UFN or LAA reference. Use a comma between search terms.
     label:
       payments_steps_claim_search_form:
         query: Find a claim
