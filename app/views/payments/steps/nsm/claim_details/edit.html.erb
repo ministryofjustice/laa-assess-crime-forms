@@ -49,8 +49,8 @@
           data: { module: 'accessible-autocomplete', autoselect: true }, width: 20,
           options: { include_blank: true }, label: { size: 's', text: t('.matter_type') } %>
 
-      <%= f.govuk_collection_select :court, LaaCrimeFormsCommon::Court.all, :name, :name,
-          data: { module: 'accessible-autocomplete', autoselect: true }, width: 20,
+      <%= suggestion_select f, :court_name, LaaCrimeFormsCommon::Court.all, :id, :name,
+          data: { autoselect: false }, width: 20,
           options: { include_blank: true }, label: { size: 's', text: t('.court') } %>
 
       <div class="govuk-form-group">
