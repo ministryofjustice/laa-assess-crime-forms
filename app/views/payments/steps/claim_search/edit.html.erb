@@ -2,6 +2,13 @@
 <% step_header(path: previous_decision_step_path) %>
 <%= govuk_error_summary(@form_object) %>
 
+<% unless @search_form.executed? %>
+  <p><%= t('.body_line_1') %></p>
+  <p><%= t('.body_line_2') %></p>
+  <p><%= t('.body_line_3') %></p>
+  <%= govuk_button_to t('.new_record'), edit_payments_steps_office_code_search_path, method: :get, secondary: true %>
+<% end %>
+
 <%= form_with(url: new_payments_steps_claim_search_path(anchor: 'search-results'), method: :get, model: @search_form) do |f| %>
   <h1 class="govuk-heading-xl"><%= page_heading %></h1>
   <div class="moj-search" style="margin-bottom: 20px;">
@@ -59,6 +66,7 @@
     <%= render 'shared/pagination', pagy: @search_form.pagy, item: t(".result") %>
   <% else %>
     <div><%= t('.no_results_html').html_safe %></div>
-    <%= govuk_button_to t('.new_record'), edit_payments_steps_office_code_search_path, method: :get, secondary: true%>
   <% end %>
+
+  <%= govuk_button_to t('.new_record'), edit_payments_steps_office_code_search_path, method: :get, secondary: true %>
 <% end %>

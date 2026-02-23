@@ -51,11 +51,7 @@ module Payments
       end
 
       def page_heading
-        if multi_step_form_session['request_type'].in?(%w[assigned_counsel non_standard_magistrate])
-          I18n.t('payments.steps.claim_search.edit.heading')
-        else
-          I18n.t("payments.steps.claim_search.edit.heading_#{linked_request_type}")
-        end
+        I18n.t("payments.steps.claim_search.edit.heading_#{linked_request_type}")
       end
     end
   end
