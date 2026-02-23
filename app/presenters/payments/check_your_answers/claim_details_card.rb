@@ -94,7 +94,7 @@ module Payments
       def court
         {
           head_key: 'court',
-          text: session_answers['court']
+          text: formatted_court_name
         }
       end
 
@@ -120,6 +120,13 @@ module Payments
 
       def read_only?
         session_answers['linked_laa_reference'].present?
+      end
+
+      private
+
+      def formatted_court_name
+        record = LaaCrimeFormsCommon::Court.all.find { |court| court.id == session_answers['court_id'] }
+        record ? record.name : "#{session_answers['court_name']} - N/A"
       end
     end
   end

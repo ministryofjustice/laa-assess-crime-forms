@@ -35,11 +35,15 @@ module Payments
         validates :date_completed, :date_received,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
 
+        # rubocop:disable Metrics/AbcSize
         def self.build(form_data, multi_step_form_session:)
-          if form_data['court_name_suggestion'].in?(LaaCrimeFormsCommon::Court.all.map(&:name))
-            record = LaaCrimeFormsCommon::Court.all.find { |court| court.name == form_data['court_name_suggestion'] }
-            form_data['court_id'] = record.id
-            form_data['court_name'] = record.short_name
+          # We need to check if the court name suggestion matches an existing court and
+          # if so, use the existing court's name and id instead of the custom values
+          # Note: We check for both the court full name and short name to account for page reloads/back button
+          court = LaaCrimeFormsCommon::Court.all.find { |court| form_data['court_name_suggestion'].downcase.in?([court.name.downcase, court.short_name.downcase]) }
+          if court
+            form_data['court_id'] = court.id
+            form_data['court_name'] = court.short_name
           else
             form_data['court_id'] = 'custom'
             form_data['court_name'] = form_data['court_name_suggestion']
@@ -47,6 +51,7 @@ module Payments
           attrs = form_data.slice(*attribute_names).merge!(multi_step_form_session:)
           new(attrs)
         end
+        # rubocop:enable Metrics/AbcSize
       end
     end
   end
