@@ -1,4 +1,5 @@
 <% title t('.page_title') %>
+<% editable = local_assigns.fetch(:editable, policy(claim).update?) %>
 
 <%= render partial: 'nsm/claims/claim_summary', locals: { claim:, claim_summary: } %>
 <%= render partial: 'nsm/claims/claim_nav', locals: { claim: claim, current_page: 'review_and_adjust' } %>
@@ -48,7 +49,7 @@
           <%= t(".#{scope}") %>
         </h3>
 
-        <%= render partial: "nsm/#{scope}/index", locals: { claim:, records:, summary:, pagy: } %>
+        <%= render partial: "nsm/#{scope}/index", locals: { claim:, records:, summary:, pagy:, editable: } %>
       </div>
     </div>
 
@@ -62,7 +63,7 @@
             <% link =
               url_for(
                 controller: "nsm/work_items",
-                action: policy(claim).update? ? :edit : :show,
+                action: editable ? :edit : :show,
                 claim_id: claim.id,
                 id: work_item.id,
                 only_path: true,

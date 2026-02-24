@@ -1,4 +1,5 @@
 <% title t('.page_title') %>
+<% editable = local_assigns.fetch(:editable, policy(claim).update?) %>
 
 <%= render partial: 'nsm/claims/claim_summary', locals: { claim:, claim_summary: } %>
 <%= render partial: 'nsm/claims/claim_nav', locals: { claim: claim, current_page: 'adjustments' } %>
@@ -9,7 +10,7 @@
         <%= t('.adjusted_costs') %>
       </h2>
 
-      <% if policy(claim).update? %>
+      <% if editable %>
         <%= govuk_button_link_to( t('.delete_all_adjustments'), confirm_deletion_nsm_claim_adjustments_path(claim), secondary: true,  data: { turbo: "false" }) %>
       <% end %>
 
@@ -35,7 +36,7 @@
           <%= t(".#{scope}") %>
         </h3>
 
-        <%= render partial: "nsm/#{scope}/adjusted", locals: { claim:, records:, pagy: } %>
+        <%= render partial: "nsm/#{scope}/adjusted", locals: { claim:, records:, pagy:, editable: } %>
       </div>
     </div>
     <%= render partial: 'shared/claim_button_group', locals: { claim: claim } %>
