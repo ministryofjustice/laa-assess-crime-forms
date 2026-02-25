@@ -14,6 +14,10 @@ module Payments
       row[:payment_request_claim][:laa_reference]
     end
 
+    def claim_type
+      row[:payment_request_claim][:claim_type]
+    end
+
     def payment_request_claim_id
       row[:payment_request_claim][:id]
     end
