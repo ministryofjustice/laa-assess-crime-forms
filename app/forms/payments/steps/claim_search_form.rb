@@ -13,6 +13,14 @@ module Payments
       def search_params
         attributes.merge(per_page: self.class::PER_PAGE).compact_blank
       end
+
+      def conduct_search
+        AppStoreClient.new.search(search_params, :linked_claim).deep_symbolize_keys
+      rescue StandardError => e
+        Sentry.capture_exception(e)
+        errors.add(:base, :search_error)
+        nil
+      end
     end
   end
 end
