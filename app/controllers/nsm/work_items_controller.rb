@@ -10,6 +10,7 @@ module Nsm
     # rubocop:disable Metrics/AbcSize
     def index
       authorize(claim, :show?)
+      editable = policy(claim).update?
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
       items = BaseViewModel.build(:work_item, claim, 'work_items')
@@ -17,17 +18,19 @@ module Nsm
       pagy, records = pagy_array(sorted_items, limit: ITEM_COUNT_OVERRIDE)
       summary = BaseViewModel.build(:work_item_summary, claim)
       scope = :work_items
-      type_changed_records = BaseViewModel.build(:work_item, claim, 'work_items').filter do |work_item|
-        work_item.work_type != work_item.original_work_type
-      end
+      type_changed_records = BaseViewModel.build(:work_item, claim, 'work_items')
+                                          .filter { _1.work_type != _1.original_work_type }
 
       render 'nsm/review_and_adjusts/show',
-             locals: { claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope:, type_changed_records: }
+             locals: {
+               claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope:, type_changed_records:, editable:
+             }
     end
     # rubocop:enable Metrics/AbcSize
 
     def adjusted
       authorize(claim, :show?)
+      editable = policy(claim).update?
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       core_cost_summary = BaseViewModel.build(:core_cost_summary, claim)
       items = BaseViewModel.build(:work_item, claim, 'work_items').filter(&:any_adjustments?)
@@ -35,7 +38,7 @@ module Nsm
       pagy, records = pagy_array(sorted_items, limit: ITEM_COUNT_OVERRIDE)
       scope = :work_items
 
-      render 'nsm/adjustments/show', locals: { claim:, records:, claim_summary:, core_cost_summary:, pagy:, scope: }
+      render 'nsm/adjustments/show', locals: { claim:, records:, claim_summary:, core_cost_summary:, pagy:, scope:, editable: }
     end
 
     def show
