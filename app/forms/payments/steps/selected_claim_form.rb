@@ -19,11 +19,11 @@ module Payments
       private
 
       def claim
-        @claim ||= if claim_type == 'Crm7SubmissionClaim'
-                     SelectedSubmissionTransformer.new(payment_request_claim_id, multi_step_form_session).transform
-                   else
-                     SelectedClaimTransformer.new(payment_request_claim_id, multi_step_form_session).transform
-                   end
+        @claim ||= transformer_class.new(payment_request_claim_id, multi_step_form_session).transform
+      end
+
+      def transformer_class
+        claim_type == 'Crm7SubmissionClaim' ? SelectedSubmissionTransformer : SelectedClaimTransformer
       end
     end
   end
