@@ -15,10 +15,11 @@ module Payments
     end
 
     def format_claim(claim)
-      claim = format_ac_claim(claim) if multi_step_form_session['request_type'].in?(%w[assigned_counsel assigned_counsel_appeal
-                                                                                       assigned_counsel_amendment])
-      claim[:id] = claim[:submission_id]
-      # claim[:laa_reference] = claim[:linked_laa_reference]
+      if multi_step_form_session['request_type'].in?(%w[assigned_counsel assigned_counsel_appeal
+                                                        assigned_counsel_amendment])
+        claim = format_ac_claim(claim)
+      end
+      claim[:submission_id] = claim[:id]
       claim.except!(*response_except_list)
     end
 
@@ -40,8 +41,7 @@ module Payments
        :assigned_counsel_claim,
        :request_type,
        :idempotency_token,
-       :date_received,
-       :submission_id]
+       :date_received]
     end
 
     def claim_amount_keys
