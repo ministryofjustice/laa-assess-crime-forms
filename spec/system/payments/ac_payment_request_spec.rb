@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Assigned counsel payment request', :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:index_endpoint) { 'https://appstore.example.com/v1/payment_requests/searches' }
+  let(:linked_claim_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
   let(:nsm_claim_ref) { 'LAA-qWRbvm' }
   let(:index_params) do
     {
@@ -52,7 +53,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
   context 'Linked NSM claim exists' do
     before do
       start_new_payment_request
-      stub_search(index_endpoint, search_params)
+      stub_search(linked_claim_endpoint, search_params)
       stub_get_claim('https://appstore.example.com/v1/payment_request_claims/1234')
       choose_claim_type('Assigned counsel')
       expect(page).to have_content('Search for the non-standard magistrates claim')
@@ -92,7 +93,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
   context 'No linked NSM claim' do
     before do
       start_new_payment_request
-      stub_search(index_endpoint, empty_search_params, [])
+      stub_search(linked_claim_endpoint, empty_search_params, [])
       stub_get_claim('https://appstore.example.com/v1/payment_request_claims/1234')
       choose_claim_type('Assigned counsel')
       fill_in 'Find a claim', with: 'garbage'

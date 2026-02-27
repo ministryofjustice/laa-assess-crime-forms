@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:endpoint)   { 'https://appstore.example.com/v1/payment_requests/searches' }
+  let(:linked_claim_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
   let(:claim_type) { "Non-Standard Magistrates' - #{type_suffix}" }
   let(:get_claim_endpoint) { 'https://appstore.example.com/v1/payment_request_claims/1234' }
 
@@ -29,7 +30,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
   before do
     allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     stub_search(endpoint, search_params)
-    stub_search(endpoint, claim_search_params)
+    stub_search(linked_claim_endpoint, claim_search_params)
     stub_get_claim(get_claim_endpoint)
     sign_in caseworker
   end
