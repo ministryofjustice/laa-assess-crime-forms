@@ -1,4 +1,5 @@
 ENV['PGGSSENCMODE'] = 'disable'
+require 'flatware/rspec'
 
 Flatware.configure do |conf|
   conf.before_fork do
