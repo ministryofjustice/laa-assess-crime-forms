@@ -5,6 +5,20 @@ RSpec.describe 'Assigned counsel payment request', :stub_oauth_token do
   let(:index_endpoint) { 'https://appstore.example.com/v1/payment_requests/searches' }
   let(:linked_claim_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
   let(:nsm_claim_ref) { 'LAA-qWRbvm' }
+  let(:linked_claim_result) do
+    [
+      {
+        id: '1234',
+        laa_reference: nsm_claim_ref,
+        solicitor_office_code: '1A123B',
+        solicitor_firm_name: 'some name',
+        ufn: '120223/001',
+        defendant_last_name: 'Doe',
+        request_type: 'non_standard_magistrate',
+        type: 'NsmClaim'
+      }
+    ]
+  end
   let(:index_params) do
     {
       page: 1,
@@ -19,7 +33,7 @@ RSpec.describe 'Assigned counsel payment request', :stub_oauth_token do
       per_page: 20,
       query: nsm_claim_ref,
       request_type: 'non_standard_magistrate',
-      sort_by: 'submitted_at',
+      sort_by: 'created_at',
       sort_direction: 'descending'
     }
   end
@@ -29,7 +43,7 @@ RSpec.describe 'Assigned counsel payment request', :stub_oauth_token do
       per_page: 20,
       query: 'garbage',
       request_type: 'non_standard_magistrate',
-      sort_by: 'submitted_at',
+      sort_by: 'created_at',
       sort_direction: 'descending'
     }
   end
@@ -53,7 +67,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
   context 'Linked NSM claim exists' do
     before do
       start_new_payment_request
-      stub_search(linked_claim_endpoint, search_params)
+      stub_search(linked_claim_endpoint, search_params, linked_claim_result)
       stub_get_claim('https://appstore.example.com/v1/payment_request_claims/1234')
       choose_claim_type('Assigned counsel')
       expect(page).to have_content('Search for the non-standard magistrates claim')

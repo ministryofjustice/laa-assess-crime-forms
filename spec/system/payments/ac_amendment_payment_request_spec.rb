@@ -5,6 +5,20 @@ RSpec.describe 'Assigned counsel amendment payment request', :stub_oauth_token d
   let(:index_endpoint) { 'https://appstore.example.com/v1/payment_requests/searches' }
   let(:linked_claim_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
   let(:ac_claim_ref) { 'LAA-kk1HAd' }
+  let(:linked_claim_result) do
+    [
+      {
+        id: '1234',
+        laa_reference: ac_claim_ref,
+        solicitor_office_code: '1A123B',
+        solicitor_firm_name: 'Firm & Sons',
+        ufn: '120223/001',
+        defendant_last_name: 'Trevors',
+        request_type: 'assigned_counsel',
+        type: 'AssignedCounselClaim'
+      }
+    ]
+  end
   let(:index_params) do
     {
       page: 1,
@@ -19,7 +33,7 @@ RSpec.describe 'Assigned counsel amendment payment request', :stub_oauth_token d
       per_page: 20,
       query: ac_claim_ref,
       request_type: 'assigned_counsel',
-      sort_by: 'submitted_at',
+      sort_by: 'created_at',
       sort_direction: 'descending'
     }
   end
@@ -29,7 +43,7 @@ RSpec.describe 'Assigned counsel amendment payment request', :stub_oauth_token d
       per_page: 20,
       query: 'garbage',
       request_type: 'assigned_counsel',
-      sort_by: 'submitted_at',
+      sort_by: 'created_at',
       sort_direction: 'descending'
     }
   end
@@ -55,7 +69,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     stub_search(index_endpoint, index_params)
     sign_in caseworker
     start_new_payment_request
-    stub_search(linked_claim_endpoint, search_params)
+    stub_search(linked_claim_endpoint, search_params, linked_claim_result)
     stub_get_ac_claim('https://appstore.example.com/v1/payment_request_claims/1234')
     choose_claim_type('Assigned counsel - amendment')
     expect(page).to have_content('Search for the assigned counsel claim')

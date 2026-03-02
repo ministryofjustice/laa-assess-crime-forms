@@ -7,6 +7,21 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
   let(:claim_type) { "Non-Standard Magistrates' - #{type_suffix}" }
   let(:get_claim_endpoint) { 'https://appstore.example.com/v1/payment_request_claims/1234' }
 
+  let(:linked_claim_result) do
+    [
+      {
+        id: '1234',
+        laa_reference: 'LAA-1004',
+        solicitor_office_code: '1A123B',
+        solicitor_firm_name: 'Firm & Sons',
+        ufn: '120223/001',
+        defendant_last_name: 'Dickens',
+        request_type: 'non_standard_magistrate',
+        type: 'NsmClaim'
+      }
+    ]
+  end
+
   let(:search_params) do
     {
       page: 1,
@@ -20,7 +35,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
     {
       page: 1,
       per_page: 20,
-      sort_by: 'submitted_at',
+      sort_by: 'created_at',
       sort_direction: 'descending',
       query: 'laa-1004',
       request_type: 'non_standard_magistrate'
@@ -30,7 +45,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
   before do
     allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     stub_search(endpoint, search_params)
-    stub_search(linked_claim_endpoint, claim_search_params)
+    stub_search(linked_claim_endpoint, claim_search_params, linked_claim_result)
     stub_get_claim(get_claim_endpoint)
     sign_in caseworker
   end
