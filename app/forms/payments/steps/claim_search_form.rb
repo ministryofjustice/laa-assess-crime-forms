@@ -3,6 +3,7 @@ module Payments
     class ClaimSearchForm < Payments::SearchForm
       attribute :query, :string
       attribute :request_type, :string
+      attribute :sort_by, :string, default: 'created_at'
 
       validates :query, presence: true
 
@@ -20,6 +21,10 @@ module Payments
         Sentry.capture_exception(e)
         errors.add(:base, :search_error)
         nil
+      end
+
+      def results
+        @search_response[:data].map { Payments::LinkedSearchResult.new(_1) }
       end
     end
   end
