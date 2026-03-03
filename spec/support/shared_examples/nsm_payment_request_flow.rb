@@ -5,6 +5,13 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
   let(:endpoint)   { 'https://appstore.example.com/v1/payment_requests/searches' }
   let(:linked_claim_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
   let(:claim_type) { "Non-Standard Magistrates' - #{type_suffix}" }
+  let(:claim_type_code) do
+    {
+      'appeal' => 'non_standard_mag_appeal',
+      'amendment' => 'non_standard_mag_amendment',
+      'supplemental' => 'non_standard_mag_supplemental'
+    }.fetch(type_suffix, 'non_standard_magistrate')
+  end
   let(:get_claim_endpoint) { 'https://appstore.example.com/v1/payment_request_claims/1234' }
 
   let(:linked_claim_result) do
@@ -38,7 +45,8 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
       sort_by: 'created_at',
       sort_direction: 'descending',
       query: 'laa-1004',
-      request_type: 'non_standard_magistrate'
+      request_type: 'non_standard_magistrate',
+      claim_type: claim_type_code
     }
   end
 
@@ -70,11 +78,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         [crm7_submission_search_result(submission_id: crm7_submission_id, laa_reference: crm7_reference.upcase)]
       end
       let(:crm7_request_type) do
-        {
-          'appeal' => 'non_standard_mag_appeal',
-          'amendment' => 'non_standard_mag_amendment',
-          'supplemental' => 'non_standard_mag_supplemental'
-        }.fetch(type_suffix, 'non_standard_magistrate')
+        claim_type_code
       end
 
       before do

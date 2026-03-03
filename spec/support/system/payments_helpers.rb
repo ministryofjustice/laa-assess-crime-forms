@@ -1,5 +1,7 @@
 # rubocop:disable Metrics/MethodLength, Metrics/ModuleLength
 module PaymentsHelpers
+  include RSpec::Mocks::ArgumentMatchers
+
   def stub_search(endpoint, body_hash, data = nil, total_results = 1)
     payload = data || begin
       [
@@ -13,8 +15,10 @@ module PaymentsHelpers
         }
       ]
     end
+    expected_body = body_hash&.deep_stringify_keys || {}
+
     stub_request(:post, endpoint)
-      .with(body: body_hash)
+      .with(body: hash_including(expected_body))
       .to_return(
         status: 201,
         body: {

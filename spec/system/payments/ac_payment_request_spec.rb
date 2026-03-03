@@ -32,6 +32,7 @@ RSpec.describe 'Assigned counsel payment request', :stub_oauth_token do
       page: 1,
       per_page: 20,
       query: nsm_claim_ref,
+      claim_type: 'assigned_counsel',
       request_type: 'non_standard_magistrate',
       sort_by: 'created_at',
       sort_direction: 'descending'
@@ -42,6 +43,7 @@ RSpec.describe 'Assigned counsel payment request', :stub_oauth_token do
       page: 1,
       per_page: 20,
       query: 'garbage',
+      claim_type: 'assigned_counsel',
       request_type: 'non_standard_magistrate',
       sort_by: 'created_at',
       sort_direction: 'descending'

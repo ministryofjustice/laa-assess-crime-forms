@@ -33,6 +33,7 @@ RSpec.describe 'Assigned counsel appeal payment request', :stub_oauth_token do
       per_page: 20,
       query: ac_claim_ref,
       request_type: 'assigned_counsel',
+      claim_type: 'assigned_counsel_appeal',
       sort_by: 'created_at',
       sort_direction: 'descending'
     }
@@ -43,6 +44,7 @@ RSpec.describe 'Assigned counsel appeal payment request', :stub_oauth_token do
       per_page: 20,
       query: 'garbage',
       request_type: 'assigned_counsel',
+      claim_type: 'assigned_counsel_appeal',
       sort_by: 'created_at',
       sort_direction: 'descending'
     }
