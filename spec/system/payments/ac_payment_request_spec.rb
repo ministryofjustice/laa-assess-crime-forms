@@ -104,6 +104,55 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     end
   end
 
+  context 'Linked CRM7 submission exists' do
+    let(:crm7_submission_id) { SecureRandom.uuid }
+    let(:crm7_reference) { 'laa-crm7001' }
+    let(:crm7_search_params) { search_params.merge(query: crm7_reference) }
+    let(:crm7_linked_claim_result) do
+      [
+        crm7_submission_search_result(
+          submission_id: crm7_submission_id,
+          laa_reference: crm7_reference.upcase
+        )
+      ]
+    end
+
+    before do
+      start_new_payment_request
+      stub_search(linked_claim_endpoint, crm7_search_params, crm7_linked_claim_result)
+      stub_crm7_submission_claim(
+        submission_id: crm7_submission_id,
+        laa_reference: crm7_reference.upcase,
+        request_type: 'assigned_counsel'
+      )
+      choose_claim_type('Assigned counsel')
+      fill_in 'Find a claim', with: crm7_reference
+      click_button 'Search'
+      click_button 'Select'
+    end
+
+    it 'allows user to complete payment journey' do
+      expect(page).to have_title('Claim Details')
+      fill_ac_claim_details(linked_claim: true)
+
+      expect(page).to have_title('Claimed costs')
+      fill_in id: 'counsel_costs_net', with: '150.40'
+      fill_in id: 'counsel_costs_vat', with: '100'
+      click_on 'Save and continue'
+
+      expect(page).to have_title('Allowed costs')
+      fill_in id: 'counsel_costs_net', with: '100'
+      fill_in id: 'counsel_costs_vat', with: '70'
+      click_on 'Save and continue'
+
+      expect(page).to have_content('Check your answers')
+      expect(page).to have_content(crm7_reference.upcase)
+      click_on 'Submit payment request'
+
+      expect(page).to have_content('Payment request complete')
+    end
+  end
+
   context 'No linked NSM claim' do
     before do
       start_new_payment_request

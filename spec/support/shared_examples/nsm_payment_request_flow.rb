@@ -60,6 +60,47 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
   end
 
   context 'Find a claim' do
+    context 'when the linked claim search returns a CRM7 submission' do
+      let(:crm7_submission_id) { SecureRandom.uuid }
+      let(:crm7_reference) { 'laa-crm7001' }
+      let(:claim_search_params) do
+        super().merge(query: crm7_reference)
+      end
+      let(:linked_claim_result) do
+        [crm7_submission_search_result(submission_id: crm7_submission_id, laa_reference: crm7_reference.upcase)]
+      end
+      let(:crm7_request_type) do
+        {
+          'appeal' => 'non_standard_mag_appeal',
+          'amendment' => 'non_standard_mag_amendment',
+          'supplemental' => 'non_standard_mag_supplemental'
+        }.fetch(type_suffix, 'non_standard_magistrate')
+      end
+
+      before do
+        stub_crm7_submission_claim(
+          submission_id: crm7_submission_id,
+          laa_reference: crm7_reference.upcase,
+          request_type: crm7_request_type
+        )
+      end
+
+      it 'allows continuing the flow with the submission-backed claim' do
+        start_new_payment_request
+        choose_claim_type(claim_type)
+        fill_in 'Find a claim', with: crm7_reference
+        click_button 'Search'
+        click_button 'Select'
+
+        fill_date_claim_received
+        fill_claimed_costs if type_suffix == 'supplemental'
+        fill_allowed_costs
+
+        expect(page).to have_title('Check your answers')
+        expect(page).to have_content(crm7_reference.upcase)
+      end
+    end
+
     describe 'fill in LAA reference' do
       it 'input laa ref' do
         start_new_payment_request

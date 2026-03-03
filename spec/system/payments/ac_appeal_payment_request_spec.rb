@@ -105,6 +105,48 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     # rubocop:enable RSpec/MultipleExpectations
   end
 
+  context 'Linked CRM7 submission exists' do
+    let(:crm7_submission_id) { SecureRandom.uuid }
+    let(:crm7_reference) { 'laa-crm7002' }
+    let(:crm7_search_params) { search_params.merge(query: crm7_reference) }
+    let(:crm7_linked_claim_result) do
+      [
+        crm7_submission_search_result(
+          submission_id: crm7_submission_id,
+          laa_reference: crm7_reference.upcase
+        )
+      ]
+    end
+
+    before do
+      stub_search(linked_claim_endpoint, crm7_search_params, crm7_linked_claim_result)
+      stub_crm7_submission_claim(
+        submission_id: crm7_submission_id,
+        laa_reference: crm7_reference.upcase,
+        request_type: 'assigned_counsel_appeal',
+        nsm_claim: { 'id' => crm7_submission_id, 'laa_reference' => crm7_reference.upcase }
+      )
+      fill_in 'Find a claim', with: crm7_reference
+      click_button 'Search'
+      click_button 'Select'
+    end
+
+    it 'allows user to complete payment journey from a submission-backed claim' do
+      fill_date_claim_received
+
+      expect(page).to have_title('Allowed costs')
+      fill_in id: 'counsel_costs_net', with: '100'
+      fill_in id: 'counsel_costs_vat', with: '70'
+      click_on 'Save and continue'
+
+      expect(page).to have_title('Check your answers')
+      expect(page).to have_content(crm7_reference.upcase)
+      click_on 'Submit payment request'
+
+      expect(page).to have_content('Payment request complete')
+    end
+  end
+
   context 'No linked assigned counsel claim found' do
     before do
       stub_search(linked_claim_endpoint, empty_search_params, [], 0)
