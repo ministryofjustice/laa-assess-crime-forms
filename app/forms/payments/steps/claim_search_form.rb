@@ -3,6 +3,7 @@ module Payments
     class ClaimSearchForm < Payments::SearchForm
       attribute :query, :string
       attribute :request_type, :string
+      attribute :claim_type, :string
       attribute :sort_by, :string, default: 'created_at'
 
       validates :query, presence: true
