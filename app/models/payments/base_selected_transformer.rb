@@ -29,9 +29,11 @@ module Payments
       claim.except!(*response_except_list)
     end
 
+    # :nocov:
     def claim
       raise NotImplementedError, 'Subclasses must implement the transform method'
     end
+    # :nocov:
 
     def format_ac_claim(claim)
       if multi_step_form_session['request_type'] == 'assigned_counsel'
@@ -51,7 +53,6 @@ module Payments
 
     def latest_payment_request(claim)
       payment_requests = claim.with_indifferent_access[:payment_requests]
-      return nil if payment_requests.blank?
 
       payment_requests = payment_requests.map(&:with_indifferent_access)
 

@@ -33,9 +33,5 @@ module Payments
     def office_code
       row[:solicitor_office_code]
     end
-
-    def request_type
-      row[:request_type]
-    end
   end
 end

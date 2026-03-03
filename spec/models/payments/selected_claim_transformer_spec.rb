@@ -74,5 +74,18 @@ RSpec.describe Payments::SelectedClaimTransformer do
         expect(result).not_to have_key(:nsm_claim)
       end
     end
+
+    context 'when the latest payment request includes other amounts' do
+      before do
+        claim_response['payment_requests'].last['random_cost'] = 999
+      end
+
+      it 'does not create original fields for unknown keys' do
+        result = transformer.transform
+
+        expect(result[:random_cost]).to eq(999)
+        expect(result).not_to have_key(:original_random_cost)
+      end
+    end
   end
 end

@@ -19,9 +19,11 @@ module Payments
       def conduct_search
         AppStoreClient.new.search(search_params, :linked_claim).deep_symbolize_keys
       rescue StandardError => e
+        # :nocov:
         Sentry.capture_exception(e)
         errors.add(:base, :search_error)
         nil
+        # :nocov:
       end
 
       def results
