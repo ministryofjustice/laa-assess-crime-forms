@@ -1,5 +1,6 @@
-PATH
-  remote: /Users/ivan.yohuno/Documents/GitHub/laa-crime-forms-common
+GIT
+  remote: https://github.com/ministryofjustice/laa-crime-forms-common.git
+  revision: 6fbbc598e3bf11b9fab088f3a95e2711f1774728
   specs:
     laa_crime_forms_common (0.12.10)
       httparty (>= 0.22.0, < 1)
