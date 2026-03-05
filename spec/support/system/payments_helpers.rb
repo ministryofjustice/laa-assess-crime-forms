@@ -1,5 +1,7 @@
 # rubocop:disable Metrics/MethodLength, Metrics/ModuleLength
 module PaymentsHelpers
+  include RSpec::Mocks::ArgumentMatchers
+
   def stub_search(endpoint, body_hash, data = nil, total_results = 1)
     payload = data || begin
       [
@@ -13,8 +15,10 @@ module PaymentsHelpers
         }
       ]
     end
+    expected_body = body_hash&.deep_stringify_keys || {}
+
     stub_request(:post, endpoint)
-      .with(body: body_hash)
+      .with(body: hash_including(expected_body))
       .to_return(
         status: 201,
         body: {
@@ -39,6 +43,65 @@ module PaymentsHelpers
         status: 200,
         body: ac_claim.to_json
       )
+  end
+
+  def crm7_submission_search_result(submission_id:, laa_reference: 'LAA-CRM7', request_type: 'crm7')
+    {
+      id: submission_id,
+      laa_reference: laa_reference,
+      solicitor_office_code: '1A123B',
+      solicitor_firm_name: 'CRM7 Firm',
+      ufn: '010124/001',
+      defendant_last_name: 'Bloggs',
+      request_type: request_type,
+      type: 'Crm7SubmissionClaim'
+    }
+  end
+
+  def stub_crm7_submission_claim(submission_id:, laa_reference: 'LAA-CRM7', request_type: 'non_standard_magistrate',
+                                 nsm_claim: nil)
+    claim_double = instance_double(Claim)
+    answers = {
+      'id' => submission_id,
+      'type' => 'Crm7SubmissionClaim',
+      'request_type' => request_type,
+      'laa_reference' => laa_reference,
+      'ufn' => '010124/001',
+      'defendant_first_name' => 'Joe',
+      'defendant_last_name' => 'Bloggs',
+      'solicitor_office_code' => '1A123B',
+      'solicitor_firm_name' => 'CRM7 Firm',
+      'stage_reached' => 'PROG',
+      'work_completed_date' => '2025-01-02',
+      'court' => 'Acton',
+      'youth_court' => true,
+      'number_of_attendances' => 1,
+      'number_of_defendants' => 1,
+      'claimed_profit_cost' => '100',
+      'allowed_profit_cost' => '80',
+      'claimed_travel_cost' => '0',
+      'allowed_travel_cost' => '0',
+      'claimed_waiting_cost' => '0',
+      'allowed_waiting_cost' => '0',
+      'claimed_disbursement_cost' => '0',
+      'allowed_disbursement_cost' => '0',
+      'claimed_total' => '100',
+      'allowed_total' => '80',
+      'payment_requests' => [
+        {
+          'id' => SecureRandom.uuid,
+          'updated_at' => Time.zone.now.to_s,
+          'claimed_total' => '100'
+        }
+      ]
+    }
+
+    answers['nsm_claim'] = nsm_claim if nsm_claim
+
+    allow(Claim).to receive(:load_from_app_store).with(submission_id).and_return(claim_double)
+    allow(BaseViewModel).to receive(:build)
+      .with(:payment_claim_details, claim_double)
+      .and_return(instance_double(Nsm::V1::PaymentClaimDetails, to_h: answers))
   end
 
   def ac_claim
