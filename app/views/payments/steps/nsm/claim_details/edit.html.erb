@@ -49,9 +49,9 @@
           data: { module: 'accessible-autocomplete', autoselect: true }, width: 20,
           options: { include_blank: true }, label: { size: 's', text: t('.matter_type') } %>
 
-      <%= f.govuk_collection_select :court, LaaCrimeFormsCommon::Court.all, :name, :name,
-          data: { module: 'accessible-autocomplete', autoselect: true }, width: 20,
-          options: { include_blank: true }, label: { size: 's', text: t('.court') } %>
+      <%= suggestion_select f, :court_name, LaaCrimeFormsCommon::Court.all, :name, :name,
+          data: { module: 'court-autocomplete', autoselect: false }, width: 20, options: { include_blank: true }, 
+          label: { size: 's', text: t('.court') } %>
 
       <div class="govuk-form-group">
         <%= f.govuk_radio_buttons_fieldset :youth_court, legend: { size: 's', text: t('.youth_court') } do %>
@@ -68,3 +68,4 @@
     <% end %>
   </div>
 </div>
+<%= javascript_include_tag 'court_autocomplete', nonce: true, type: 'module' %>

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'NSM payment request', :stub_oauth_token do
+RSpec.describe 'NSM payment request', :stub_oauth_token, :system do
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:index_endpoint) { 'https://appstore.example.com/v1/payment_requests/searches' }
   let(:search_params) do

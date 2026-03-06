@@ -155,6 +155,7 @@ Rails.application.routes.draw do
       end
       resource :search, only: %i[new show]
       resource :claim_reference, only: %i[edit]
+      resources :courts, only: [:index], format: :js
       scope ':id' do
         namespace :steps do
           namespace :ac do

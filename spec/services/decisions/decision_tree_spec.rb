@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Decisions::DecisionTree do
   # minimal form object that CustomWrapper can wrap
   before do
-    stub_const('FormObject', Struct.new(:multi_step_form_session, keyword_init: true))
+    stub_const('FormObject', Struct.new(:multi_step_form_session))
   end
 
   let(:multi_step_form_session) { {} }

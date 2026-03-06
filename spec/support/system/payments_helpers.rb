@@ -3,13 +3,15 @@ module PaymentsHelpers
   def stub_search(endpoint, body_hash, data = nil, total_results = 1)
     payload = data || begin
       [
-        id: SecureRandom.uuid,
+        {
+          id: SecureRandom.uuid,
         request_type: 'non_standard_magistrate',
         submitted_at: Time.zone.now.to_s,
         payment_request_claim: {
           id: '1234',
           laa_reference: 'LAA-1004',
           client_last_name: 'Dickens'
+        }
         }
       ]
     end
@@ -85,7 +87,8 @@ module PaymentsHelpers
       'defendant_last_name' => 'Doe',
       'stage_code' => 'PROG',
       'work_completed_date' => '2025-10-29 00:00:00 UTC',
-      'court_name' => 'Usk - C3208F',
+      'court_name' => 'Usk',
+      'court_id' => 'C3208F',
       'court_attendances' => 2,
       'no_of_defendants' => 2,
       'defendant_first_name' => 'John',
@@ -179,7 +182,7 @@ module PaymentsHelpers
     attendances_count: '2',
     hearing_outcome_code: 'CP17 - Extradition',
     matter_type: '5 - Burglary',
-    court: 'Ely - C1166A',
+    court_name: 'Acton - C2723',
     travel_required: 'Yes',
     work_completed_on: '2025-09-24'
   )
@@ -192,7 +195,7 @@ module PaymentsHelpers
     fill_in 'Number of attendances', with: attendances_count
     select hearing_outcome_code, from: 'Hearing outcome code'
     select matter_type, from: 'Matter type'
-    select court, from: 'Court'
+    fill_in 'Court', with: court_name
     choose travel_required, allow_label_click: true
     fill_in 'Date work completed', with: work_completed_on
 
