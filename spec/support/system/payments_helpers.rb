@@ -182,7 +182,7 @@ module PaymentsHelpers
     attendances_count: '2',
     hearing_outcome_code: 'CP17 - Extradition',
     matter_type: '5 - Burglary',
-    court_name: 'A Court',
+    court_name: 'Acton - C2723',
     travel_required: 'Yes',
     work_completed_on: '2025-09-24'
   )
@@ -196,7 +196,6 @@ module PaymentsHelpers
     select hearing_outcome_code, from: 'Hearing outcome code'
     select matter_type, from: 'Matter type'
     fill_in 'Court', with: court_name
-    select court_name, from: '#payments-steps-nsm-claim-detail-form-court-name-field-select'
     choose travel_required, allow_label_click: true
     fill_in 'Date work completed', with: work_completed_on
 
