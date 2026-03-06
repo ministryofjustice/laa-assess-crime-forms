@@ -40,7 +40,7 @@ module Payments
           # We need to check if the court name suggestion matches an existing court and
           # if so, use the existing court's name and id instead of the custom values
           # Note: We check for both the court full name and short name to account for page reloads/back button
-          court = LaaCrimeFormsCommon::Court.all.find { |court| form_data['court_name_suggestion']&.downcase.in?([court.name.downcase, court.short_name.downcase]) }
+          court = LaaCrimeFormsCommon::Court.all.find { |court| form_data['court_name']&.downcase == court.name.downcase }
           if court
             form_data['court_id'] = court.id
             form_data['court_name'] = court.short_name
