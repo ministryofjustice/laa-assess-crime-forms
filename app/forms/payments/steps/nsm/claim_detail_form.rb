@@ -35,7 +35,6 @@ module Payments
         validates :date_completed, :date_received,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
 
-        # rubocop:disable Metrics/AbcSize
         def self.build(form_data, multi_step_form_session:)
           # We need to check if the court name suggestion matches an existing court and
           # if so, use the existing court's name and id instead of the custom values
@@ -51,7 +50,6 @@ module Payments
           attrs = form_data.slice(*attribute_names).merge!(multi_step_form_session:)
           new(attrs)
         end
-        # rubocop:enable Metrics/AbcSize
       end
     end
   end
