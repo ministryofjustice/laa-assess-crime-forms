@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Decisions::BackDecisionTree do
   # minimal form object that wrapper delegates to
   before do
-    stub_const('FormObject', Struct.new(:multi_step_form_session, keyword_init: true))
+    stub_const('FormObject', Struct.new(:multi_step_form_session))
   end
 
   let(:multi_step_form_session) { {} }

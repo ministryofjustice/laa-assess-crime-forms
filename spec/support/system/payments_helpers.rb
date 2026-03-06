@@ -3,13 +3,15 @@ module PaymentsHelpers
   def stub_search(endpoint, body_hash, data = nil, total_results = 1)
     payload = data || begin
       [
-        id: SecureRandom.uuid,
+        {
+          id: SecureRandom.uuid,
         request_type: 'non_standard_magistrate',
         submitted_at: Time.zone.now.to_s,
         payment_request_claim: {
           id: '1234',
           laa_reference: 'LAA-1004',
           client_last_name: 'Dickens'
+        }
         }
       ]
     end
