@@ -4,7 +4,7 @@ RSpec.describe Payments::Steps::SelectedClaimForm, type: :model do
   subject(:form) { described_class.new(payment_request_claim_id:, claim_type:) }
 
   let(:payment_request_claim_id) { 'abc-123' }
-  let(:claim_type) { nil }
+  let(:claim_type) { 'NsmClaim' }
   let(:multi_step_form_session) { {} }
 
   before do
@@ -20,6 +20,18 @@ RSpec.describe Payments::Steps::SelectedClaimForm, type: :model do
 
     it 'is valid with a payment_request_claim_id' do
       expect(form.valid?).to be(true)
+    end
+
+    it 'is invalid without a claim_type' do
+      form.claim_type = nil
+      expect(form.valid?).to be(false)
+      expect(form.errors[:claim_type]).to include("can't be blank")
+    end
+
+    it 'is invalid with a non-allowed claim_type' do
+      form.claim_type = 'UnknownClaim'
+      expect(form.valid?).to be(false)
+      expect(form.errors[:claim_type]).to include('is not included in the list')
     end
   end
 

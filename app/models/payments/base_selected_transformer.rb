@@ -31,7 +31,7 @@ module Payments
 
     # :nocov:
     def claim
-      raise NotImplementedError, 'Subclasses must implement the transform method'
+      raise NotImplementedError, 'Subclasses must implement the claim method'
     end
     # :nocov:
 

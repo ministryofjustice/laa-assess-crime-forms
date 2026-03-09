@@ -5,6 +5,8 @@ module Payments
       attribute :claim_type
 
       validates :payment_request_claim_id, presence: true
+      validates :claim_type, presence: true,
+        inclusion: { in: %w[Crm7SubmissionClaim NsmClaim AssignedCounselClaim] }
 
       def save
         return false unless valid?
