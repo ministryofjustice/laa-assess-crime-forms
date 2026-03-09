@@ -2,9 +2,8 @@ module Payments
   class SelectedSubmissionTransformer < BaseSelectedTransformer
     def transform
       load_claim = claim
-      latest_payment_request = dup_original_costs_to(claim)
-      claim = format_claim(load_claim)
-      claim.merge!(latest_payment_request)
+      dup_original_costs_to(load_claim)
+      format_claim(load_claim)
     end
 
     private
@@ -19,7 +18,6 @@ module Payments
                                                         assigned_counsel_amendment])
         claim = format_ac_claim(claim)
       end
-      claim[:submission_id] = claim[:id]
       claim.except!(*response_except_list)
     end
 
