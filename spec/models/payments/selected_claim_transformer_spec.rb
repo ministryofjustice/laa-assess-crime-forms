@@ -87,5 +87,33 @@ RSpec.describe Payments::SelectedClaimTransformer do
         expect(result).not_to have_key(:original_random_cost)
       end
     end
+
+    context 'when payment_requests is empty' do
+      before do
+        claim_response['payment_requests'] = []
+      end
+
+      it 'returns the formatted claim without merging payment request values' do
+        result = transformer.transform
+
+        expect(result[:laa_reference]).to eq('LAA-qWRbvm')
+        expect(result).not_to have_key(:payment_requests)
+        expect(result).not_to have_key(:original_claimed_total)
+      end
+    end
+
+    context 'when payment_requests is missing' do
+      before do
+        claim_response.delete('payment_requests')
+      end
+
+      it 'returns the formatted claim without raising an error' do
+        result = transformer.transform
+
+        expect(result[:laa_reference]).to eq('LAA-qWRbvm')
+        expect(result).not_to have_key(:payment_requests)
+        expect(result).not_to have_key(:original_claimed_total)
+      end
+    end
   end
 end

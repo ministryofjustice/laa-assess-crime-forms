@@ -53,6 +53,7 @@ module Payments
 
     def latest_payment_request(claim)
       payment_requests = claim.with_indifferent_access[:payment_requests]
+      return {} if payment_requests.blank?
 
       payment_requests = payment_requests.map(&:with_indifferent_access)
 
