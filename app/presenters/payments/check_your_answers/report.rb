@@ -8,13 +8,14 @@ module Payments
       attr_reader :session_answers
 
       def show_groups
-        return unless linked_claim?
-
-        %w[
+        default_groups = %w[
           claim_types
           linked_claim
           claim_details
         ]
+
+        default_groups.reject! { _1 == 'linked_claim' } unless linked_claim?
+        default_groups
       end
 
       def initialize(session_answers)
