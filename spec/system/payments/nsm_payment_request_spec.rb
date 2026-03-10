@@ -45,7 +45,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
 
     it 'shows an error when no claim is selected' do
       start_new_payment_request
-      click_button 'Save and continue'
+      click_button 'Continue'
       expect(page).to have_content 'Select a payment claim type'
     end
   end

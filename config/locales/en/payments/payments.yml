@@ -278,7 +278,7 @@ en:
         allowed: Allowed
         payment_type: Payment type
     shared:
-      save_and_continue: "Save and continue"
+      continue_button: "Continue"
 
   helpers:
     hint:

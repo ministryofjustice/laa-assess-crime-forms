@@ -43,7 +43,7 @@
         <span id="total_cost"><%= "#{LaaCrimeFormsCommon::NumberTo.pounds(@form_object.claimed_total)}" %></span>
       </p>
 
-      <%= f.continue_button(primary: :save_and_continue, secondary: false, primary_opts: { id: 'costs_submit_button'}) %>
+      <%= f.continue_button(primary: :continue_button, secondary: false, primary_opts: { id: 'costs_submit_button'}) %>
     <% end %>
   </div>
 </div>

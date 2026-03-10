@@ -122,7 +122,7 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
         click_link_or_button 'Create payment request'
         click_link_or_button 'Change profit cost'
         fill_in 'payments_steps_submission_allowed_costs_form[allowed_profit_cost]', with: '200'
-        click_link_or_button 'Save and continue'
+        click_link_or_button 'Continue'
         expect(page).to have_content 'Check your answers'
       end
     end
@@ -184,7 +184,7 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
         click_link_or_button 'Create payment request'
         click_link_or_button 'Change profit cost'
         fill_in 'payments_steps_submission_allowed_costs_form[allowed_profit_cost]', with: '200'
-        click_link_or_button 'Save and continue'
+        click_link_or_button 'Continue'
         expect(page).to have_content 'Check your answers'
       end
 
@@ -192,7 +192,7 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
         click_link_or_button 'Create payment request'
         click_link_or_button 'Change profit cost'
         fill_in 'payments_steps_submission_allowed_costs_form[allowed_profit_cost]', with: 'lgtm'
-        click_link_or_button 'Save and continue'
+        click_link_or_button 'Continue'
         expect(page).to have_content 'Error: is not a number'
       end
     end

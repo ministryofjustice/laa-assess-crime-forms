@@ -16,7 +16,7 @@
         <%= f.govuk_radio_button :request_type, Payments::ClaimType::AC_APPEAL, label: { text: t('payments.requests.type.assigned_counsel_appeal' ) } %>
         <%= f.govuk_radio_button :request_type, Payments::ClaimType::AC_AMENDMENT, label: { text: t('payments.requests.type.assigned_counsel_amendment' ) } %>
       <% end %>
-      <%= f.continue_button(primary: :save_and_continue, secondary: false) %>
+      <%= f.continue_button(primary: :continue_button, secondary: false) %>
     <% end %>
   </div>
 </div>
