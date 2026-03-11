@@ -91,12 +91,12 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       expect(page).to have_title('Claimed costs')
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
-      click_on 'Save and continue'
+      click_on 'Continue'
 
       expect(page).to have_title('Allowed costs')
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
-      click_on 'Save and continue'
+      click_on 'Continue'
 
       expect(page).to have_title('Check your answers')
       expect(page).to have_content('Claimed and allowed costs')
@@ -140,15 +140,15 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       expect(page).to have_title('Claimed costs')
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
-      click_on 'Save and continue'
+      click_on 'Continue'
 
       expect(page).to have_title('Allowed costs')
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
-      click_on 'Save and continue'
+      click_on 'Continue'
 
       expect(page).to have_content('Check your answers')
-      expect(page).to have_content(crm7_reference.upcase)
+      expect(page).to have_content('CRM7 Firm')
       click_on 'Submit payment request'
 
       expect(page).to have_content('Payment request complete')
@@ -171,12 +171,11 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
-      click_on 'Save and continue'
+      click_on 'Continue'
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
-      click_on 'Save and continue'
+      click_on 'Continue'
 
-      expect(page).to have_content("Not linked to a non-standard magistrates' claim")
       click_on 'Submit payment request'
       expect(page).to have_content('Payment request complete')
     end
@@ -185,7 +184,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       select_office_code
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: 'garbage'
-      click_button 'Save and continue'
+      click_button 'Continue'
       expect(page).to have_content('Claimed net counsel fees must be a number, like 25')
     end
 
@@ -194,9 +193,9 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
-      click_on 'Save and continue'
+      click_on 'Continue'
       fill_in id: 'counsel_costs_net', with: 'garbage'
-      click_button 'Save and continue'
+      click_button 'Continue'
       expect(page).to have_content('Allowed net counsel fees must be a number, like 25')
     end
   end

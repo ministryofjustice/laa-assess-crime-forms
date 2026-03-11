@@ -38,8 +38,7 @@ RSpec.describe Decisions::BackDecisionTree do
 
     context 'from DATE_RECEIVED (leading slash removed)' do
       let(:multi_step_form_session) do
-        { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s,
-          'laa_reference_check' => true }
+        { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s }
       end
 
       it_behaves_like 'a generic decision',
@@ -55,27 +54,6 @@ RSpec.describe Decisions::BackDecisionTree do
                         from: Decisions::DecisionTree::NSM_CLAIMED_COSTS,
                         goto: { action: :edit, controller: Decisions::DecisionTree::NSM_CLAIM_DETAILS }
       end
-
-      context 'when supplemental with laa_reference_check true' do
-        let(:multi_step_form_session) do
-          { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s,
-            'laa_reference_check' => true }
-        end
-
-        it_behaves_like 'a generic decision',
-                        from: Decisions::DecisionTree::NSM_CLAIMED_COSTS,
-                        goto: { action: :edit, controller: Decisions::DecisionTree::DATE_RECEIVED }
-      end
-
-      context 'when supplemental with laa_reference_check false' do
-        let(:multi_step_form_session) do
-          { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s }
-        end
-
-        it_behaves_like 'a generic decision',
-                        from: Decisions::DecisionTree::NSM_CLAIMED_COSTS,
-                        goto: { action: :edit, controller: Decisions::DecisionTree::DATE_RECEIVED }
-      end
     end
 
     context 'from NSM_ALLOWED_COSTS' do
@@ -89,31 +67,6 @@ RSpec.describe Decisions::BackDecisionTree do
           it_behaves_like 'a generic decision',
                           from: Decisions::DecisionTree::NSM_ALLOWED_COSTS,
                           goto: { action: :edit, controller: Decisions::DecisionTree::NSM_CLAIMED_COSTS }
-        end
-      end
-
-      {
-        'NSM_APPEAL'    => Payments::ClaimType::NSM_APPEAL,
-        'NSM_AMENDMENT' => Payments::ClaimType::NSM_AMENDMENT
-      }.each do |label, request_type|
-        context "when #{label} with laa_reference_check true" do
-          let(:multi_step_form_session) do
-            { 'request_type' => request_type.to_s, 'laa_reference_check' => true }
-          end
-
-          it_behaves_like 'a generic decision',
-                          from: Decisions::DecisionTree::NSM_ALLOWED_COSTS,
-                          goto: { action: :edit, controller: Decisions::DecisionTree::DATE_RECEIVED }
-        end
-
-        context "when #{label} with laa_reference_check false" do
-          let(:multi_step_form_session) do
-            { 'request_type' => request_type.to_s }
-          end
-
-          it_behaves_like 'a generic decision',
-                          from: Decisions::DecisionTree::NSM_ALLOWED_COSTS,
-                          goto: { action: :edit, controller: Decisions::DecisionTree::DATE_RECEIVED }
         end
       end
     end

@@ -93,7 +93,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       expect(page).to have_field(id: 'counsel_costs_vat', with: '300.0')
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
-      click_on 'Save and continue'
+      click_on 'Continue'
 
       expect(page).to have_title('Check your answers')
       expect(page).to have_content('Amended allowed costs')
@@ -136,7 +136,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       expect(page).to have_title('Allowed costs')
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
-      click_on 'Save and continue'
+      click_on 'Continue'
 
       expect(page).to have_title('Check your answers')
       expect(page).to have_content('Amended allowed costs')
@@ -166,7 +166,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       expect(page).to have_content('Allowed costs')
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
-      click_on 'Save and continue'
+      click_on 'Continue'
 
       expect(page).to have_title('Check your answers')
       expect(page).to have_content('Amended allowed costs')

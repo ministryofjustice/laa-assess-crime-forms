@@ -208,12 +208,12 @@ module PaymentsHelpers
       # Click the *exact* label in this fieldset only
       find('label', text: /\A#{Regexp.escape(label_text)}\z/).click
     end
-    click_button 'Save and continue'
+    click_button 'Continue'
   end
 
   def fill_date_claim_received(date = '2025-09-24')
     fill_in 'payments-steps-date-received-form-date-received-field', with: date
-    click_button 'Save and continue'
+    click_button 'Continue'
   end
 
   def fill_in_laa_ref(laa_ref = 'laa-1004')
@@ -259,7 +259,7 @@ module PaymentsHelpers
     choose travel_required, allow_label_click: true
     fill_in 'Date work completed', with: work_completed_on
 
-    click_button 'Save and continue'
+    click_button 'Continue'
   end
   # rubocop:enable Metrics/ParameterLists
 
@@ -278,7 +278,7 @@ module PaymentsHelpers
       fill_in 'Unique file number', with: ufn
       fill_in 'Defendant last name', with: defendant_last_name
     end
-    click_button 'Save and continue'
+    click_button 'Continue'
   end
 
   def fill_costs(profit_costs: 10,
@@ -290,7 +290,7 @@ module PaymentsHelpers
     fill_in id: 'travel_costs', with: travel_costs
     fill_in id: 'waiting_costs', with: waiting_costs
 
-    click_button 'Save and continue'
+    click_button 'Continue'
   end
 
   [:fill_claimed_costs, :fill_allowed_costs].each do |name|

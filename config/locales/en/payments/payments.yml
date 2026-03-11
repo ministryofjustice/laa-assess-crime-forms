@@ -202,10 +202,6 @@ en:
             waiting_costs: Waiting costs
             calculate_cost: Calculate cost
             total_cost: Total allowed cost
-        laa_reference_check:
-          edit:
-            page_title: LAA reference check
-            laa_reference_check: Is there an LAA reference for the original claim?
     requests:
       payment_request:
         payment_request: Payment request
@@ -282,7 +278,7 @@ en:
         allowed: Allowed
         payment_type: Payment type
     shared:
-      save_and_continue: "Save and continue"
+      continue_button: "Continue"
 
   helpers:
     hint:
