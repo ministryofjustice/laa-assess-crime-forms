@@ -140,15 +140,15 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       expect(page).to have_title('Claimed costs')
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
-      click_on 'Save and continue'
+      click_on 'Continue'
 
       expect(page).to have_title('Allowed costs')
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
-      click_on 'Save and continue'
+      click_on 'Continue'
 
       expect(page).to have_content('Check your answers')
-      expect(page).to have_content(crm7_reference.upcase)
+      expect(page).to have_content('CRM7 Firm')
       click_on 'Submit payment request'
 
       expect(page).to have_content('Payment request complete')
