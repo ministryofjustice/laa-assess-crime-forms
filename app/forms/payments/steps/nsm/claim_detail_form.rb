@@ -43,7 +43,7 @@ module Payments
           if court
             self.court_id = court.id
             self.court_name = court.short_name
-          else
+          elsif attributes['court_name_suggestion'].present?
             self.court_id = 'custom'
             self.court_name = attributes['court_name_suggestion']
           end

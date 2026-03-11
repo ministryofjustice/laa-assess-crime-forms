@@ -99,24 +99,9 @@ module ApplicationHelper
     data[:module] = data_module
     data[:name] = "#{form.object_name}[#{field}_suggestion]"
 
-    value = form.object.attributes[field.to_s]
+    form.object.attributes[field.to_s]
 
-    # as the values ID can be a symbol or a string we check on both instead
-    # of converting the keys as this is easier
-    if value && !values.map(&id_field).intersect?([value, value.to_sym].compact)
-      values = values.dup.unshift(fake_record(id_field, value_field, value))
-    end
     form.govuk_collection_select(field.to_s, values, id_field, value_field, *, data:, **)
   end
   # rubocop:enable Metrics/ParameterLists
-
-  private
-
-  def fake_record(id_field, value_field, value)
-    if id_field == value_field
-      Struct.new(id_field).new(value)
-    else
-      Struct.new(id_field, value_field).new(value, value)
-    end
-  end
 end
