@@ -20,6 +20,18 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
     allow(Payments::CheckYourAnswers::Report).to receive(:new).and_return(report)
   end
 
+  describe 'GET #edit' do
+    context 'when request_type is missing' do
+      let(:request_type) { nil }
+
+      it 'redirects to your claims' do
+        get :edit, params: { id: submission_id }
+
+        expect(response).to redirect_to(your_nsm_claims_path)
+      end
+    end
+  end
+
   {
     'non_standard_magistrate' => Payments::CostsSummary,
     'non_standard_mag_supplemental' => Payments::CostsSummaryAmendedAndClaimed,
