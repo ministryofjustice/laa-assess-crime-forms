@@ -42,7 +42,7 @@ module Payments
         if ac?
           ref = session_answers['linked_nsm_ref']
         elsif nsm_addition?
-          ref = session_answers['laa_reference']
+          ref = session_answers['linked_laa_reference'] || session_answers['laa_reference']
         elsif nsm_original?
           ref = session_answers['linked_laa_reference']
         # :nocov:

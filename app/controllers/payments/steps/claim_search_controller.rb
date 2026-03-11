@@ -33,7 +33,8 @@ module Payments
       def default_params
         {
           page: params.fetch(:page, '1'),
-          request_type: linked_request_type
+          request_type: linked_request_type,
+          claim_type: multi_step_form_session['request_type']
         }
       end
 

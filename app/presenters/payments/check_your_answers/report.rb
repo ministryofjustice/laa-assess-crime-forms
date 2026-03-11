@@ -7,18 +7,23 @@ module Payments
 
       attr_reader :session_answers
 
-      GROUPS = %w[
-        claim_types
-        linked_claim
-        claim_details
-      ].freeze
+      def show_groups
+        default_groups = %w[
+          claim_types
+          linked_claim
+          claim_details
+        ]
+
+        default_groups.reject! { _1 == 'linked_claim' } unless linked_claim?
+        default_groups
+      end
 
       def initialize(session_answers)
         @session_answers = session_answers
       end
 
       def section_groups
-        GROUPS.compact.map do |group_name|
+        show_groups.compact.map do |group_name|
           section_group(public_send(:"#{group_name}_section"))
         end
       end
@@ -65,6 +70,14 @@ module Payments
       end
 
       private
+
+      def linked_claim?
+        [:non_standard_mag_supplemental,
+         :non_standard_mag_amendment,
+         :non_standard_mag_appeal,
+         :assigned_counsel_appeal,
+         :assigned_counsel_amendment].include?(session_answers['request_type'].to_sym)
+      end
 
       def actions(card)
         return [] if card.read_only?
