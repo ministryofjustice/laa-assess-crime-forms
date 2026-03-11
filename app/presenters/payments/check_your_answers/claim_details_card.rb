@@ -101,7 +101,7 @@ module Payments
       def youth_court
         {
           head_key: 'youth_court',
-          text: session_answers['youth_court']
+          text: session_answers['youth_court'] ? I18n.t('helpers.yes_option') : I18n.t('helpers.no_option')
         }
       end
 

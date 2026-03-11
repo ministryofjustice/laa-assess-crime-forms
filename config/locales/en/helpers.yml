@@ -1,6 +1,8 @@
 ---
 en:
   helpers:
+    yes_option: 'Yes'
+    no_option: 'No'
     steps:
       continue_button: "Continue"
       cancel_button: "Cancel"
