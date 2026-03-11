@@ -43,6 +43,7 @@
               <td class="govuk-table__cell">
                 <%= search_result.laa_reference %>
                 <%= f.hidden_field(:payment_request_claim_id, value: search_result.payment_request_claim_id) %>
+                <%= f.hidden_field(:claim_type, value: search_result.claim_type) %>
               </td>
               <td class="govuk-table__cell">
                 <%= search_result.office_code %>
