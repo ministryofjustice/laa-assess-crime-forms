@@ -46,6 +46,9 @@ module Payments
           elsif attributes['court_name_suggestion'].present?
             self.court_id = 'custom'
             self.court_name = attributes['court_name_suggestion']
+          else
+            self.court_id = ""
+            self.court_name = ""
           end
 
           return false unless valid?
