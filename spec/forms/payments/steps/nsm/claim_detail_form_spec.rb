@@ -61,6 +61,8 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
 
     context 'when the form is invalid' do
       let(:court_name_suggestion) { nil }
+      let(:court_id) { nil }
+      let(:court_name) { nil }
 
       it 'returns false' do
         expect(form.save).to be false
