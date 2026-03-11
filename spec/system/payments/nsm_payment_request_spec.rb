@@ -149,6 +149,18 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
     end
   end
 
+  describe 'payment request when youth court matter is No' do
+    it 'shows the correct details in the Claim details card' do
+      start_new_payment_request
+      choose_claim_type("Non-Standard Magistrates'")
+      select_office_code
+      fill_claim_details(youth_court: 'No')
+      fill_claimed_costs
+      fill_allowed_costs
+      expect(page).to have_content('Youth court matter No')
+    end
+  end
+
   describe 'appeal', :stub_oauth_token do
     it_behaves_like 'NSM payment request flow', 'appeal'
   end
