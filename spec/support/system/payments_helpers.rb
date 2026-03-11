@@ -167,7 +167,7 @@ module PaymentsHelpers
   def select_office_code(office_code = '1A123B')
     fill_in "What is the solicitor's firm account number?", with: office_code
     click_button 'Continue'
-    choose 'Yes'
+    choose 'Yes', allow_label_click: true
     click_button 'Continue'
   end
 
@@ -182,9 +182,10 @@ module PaymentsHelpers
     attendances_count: '2',
     hearing_outcome_code: 'CP17 - Extradition',
     matter_type: '5 - Burglary',
-    court_name: 'Acton - C2723',
+    court_name: 'ACTON',
     travel_required: 'Yes',
-    work_completed_on: '2025-09-24'
+    work_completed_on: '2025-09-24',
+    youth_court: 'Yes'
   )
     fill_in 'Date claim received', with: received_on
     fill_in 'Unique file number', with: ufn
@@ -193,10 +194,11 @@ module PaymentsHelpers
     fill_in 'Defendant last name', with: defendant_last_name
     fill_in 'Number of defendants', with: defendants_count
     fill_in 'Number of attendances', with: attendances_count
-    select hearing_outcome_code, from: 'Hearing outcome code'
-    select matter_type, from: 'Matter type'
     fill_in 'Court', with: court_name
+    fill_in 'Hearing outcome code', with: hearing_outcome_code
+    fill_in 'Matter type', with: matter_type
     choose travel_required, allow_label_click: true
+    choose youth_court, allow_label_click: true
     fill_in 'Date work completed', with: work_completed_on
 
     click_button 'Save and continue'

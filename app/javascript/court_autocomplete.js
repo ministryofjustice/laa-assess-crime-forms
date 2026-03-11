@@ -62,7 +62,7 @@ function initAutocomplete(elementId){
   }
 }
 
-$("document").ready(() => {
+$(function () {
   let selectElements = $("*[data-module='court-autocomplete']")
   selectElements.each((index, element) => {
     let elementId = element.id
