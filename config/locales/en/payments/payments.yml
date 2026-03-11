@@ -177,7 +177,7 @@ en:
             number_of_attendances: Number of attendances
             hearing_outcome_code: Hearing outcome code
             matter_type: Matter type
-            court: Court
+            court_name: Court
             youth_court: Is this court a youth court
             date_completed: Date work completed
             page_title: Claim details

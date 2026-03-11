@@ -63,10 +63,10 @@ function initAutocomplete(elementId){
 }
 
 $(function () {
-  let selectElements = $("*[data-module='court-autocomplete']")
+  let selectElements = $("*[data-module='court-name-autocomplete']")
   selectElements.each((index, element) => {
     let elementId = element.id
-    //enhance court-autocomplete tag
+    //enhance court-name-autocomplete tag
     initAutocomplete(elementId)
   })
 })

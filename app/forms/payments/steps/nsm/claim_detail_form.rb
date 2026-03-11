@@ -20,7 +20,7 @@ module Payments
         attribute :date_completed, :date
 
         validates :defendant_first_name, :defendant_last_name,
-                  :hearing_outcome_code, :matter_type, :court_name_suggestion,
+                  :hearing_outcome_code, :matter_type, :court_name,
                   presence: true
 
         validates :number_of_defendants, :number_of_attendances, presence: true, is_a_number: true,
