@@ -5,18 +5,18 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.213'
+gem 'aws-sdk-s3', '~> 1.215'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails', '>= 1.4.1'
 gem 'devise', '>= 4.9.4'
 gem 'faker'
-gem 'govuk-components', '5.11.1'
+gem 'govuk-components', '6.0.0'
 gem 'govuk_design_system_formbuilder'
 gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'httparty'
 gem 'jbuilder'
 gem 'jsbundling-rails', '>= 1.3.1'
-gem 'laa_crime_forms_common', '~> 0.12.9', github: 'ministryofjustice/laa-crime-forms-common'
+gem 'laa_crime_forms_common', '~> 0.12.10', github: 'ministryofjustice/laa-crime-forms-common'
 gem 'lograge'
 gem 'logstasher', '~> 3.0'
 gem 'logstash-event'
@@ -29,13 +29,13 @@ gem 'prometheus_exporter'
 gem 'propshaft'
 gem 'puma', '~> 7.2'
 gem 'pundit'
-gem 'rails', '~> 8.0.4'
+gem 'rails', '~> 8.1.2'
 gem 'redis'
-gem 'sidekiq', '~> 8.0'
+gem 'sidekiq', '~> 8.1'
 gem 'sidekiq_alive', '~> 2.4'
 # Pin connection_pool to avoid Rails/Sidekiq compatibility issues
 # See: https://github.com/rails/rails/issues/56461
-gem 'connection_pool', '~> 2.5'
+gem 'connection_pool', '~> 3.0'
 gem 'solid_cache'
 gem 'stimulus-rails'
 gem 'turbo-rails'
