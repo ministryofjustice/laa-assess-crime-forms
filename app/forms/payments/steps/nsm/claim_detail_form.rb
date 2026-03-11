@@ -35,7 +35,7 @@ module Payments
         validates :date_completed, :date_received,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
 
-        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def save
           # We need to check if the court name suggestion matches an existing court and
           # if so, use the existing court's name and id instead of the custom values
@@ -47,8 +47,8 @@ module Payments
             self.court_id = 'custom'
             self.court_name = attributes['court_name_suggestion']
           else
-            self.court_id = ""
-            self.court_name = ""
+            self.court_id = ''
+            self.court_name = ''
           end
 
           return false unless valid?
@@ -59,7 +59,7 @@ module Payments
 
           true
         end
-        # rubocop:enable Metrics/AbcSize
+        # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
       end
     end
   end
