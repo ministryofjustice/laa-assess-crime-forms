@@ -87,7 +87,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'solicitor_firm_name' => 'The Firm',
         'stage_reached' => 'PROG',
         'work_completed_date' => '2025-07-07 10:31:07 UTC',
-        'court' => 'Acton',
+        'court_id' => court_id,
+        'court_name' => court_name,
         'number_of_attendances' => 1,
         'number_of_defendants' => 2,
         'defendant_first_name' => 'Ava',
@@ -103,6 +104,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'assigned_counsel_claim' => related_claim
       }
     end
+    let(:court_name) { 'ACTON' }
+    let(:court_id) { 'A13' }
 
     before do
       allow_any_instance_of(AppStoreClient).to receive(:get_payment_request_claim)
@@ -152,7 +155,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           'Number of attendances', '1',
           'Hearing outcome code', 'CP02 - Change of solicitor',
           'Matter type', '4 - Robbery',
-          'Court', 'Acton',
+          'Court', 'ACTON - A13',
           'Youth court matter', 'Yes',
           'Date work was completed', '7 July 2025'
         ]
@@ -179,6 +182,32 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           'LAA-XYZ321', '320AB21', 'Smith', 'Assigned counsel', '14 September 2025'
         ]
       )
+    end
+
+    context 'when there is a custom court name' do 
+      let(:court_name) { 'Custom court' }
+      let(:court_id) { 'custom' }
+      it 'shows claim details tab' do
+        click_on 'Claim details'
+        expect(page).to have_selector '.govuk-heading-l', text: 'Claim details'
+        expect(all('table td, table th').map(&:text)).to eq(
+          [
+            'Claim type', "Non-standard Magistrates'",
+            'Firm office account number', '1A123B',
+            'Firm name', 'The Firm',
+            'Unique file number', '123456/101',
+            'Stage reached', 'PROG',
+            'Defendant name', 'Ava Andrews',
+            'Number of defendants', '2',
+            'Number of attendances', '1',
+            'Hearing outcome code', 'CP02 - Change of solicitor',
+            'Matter type', '4 - Robbery',
+            'Court', 'Custom court - N/A',
+            'Youth court matter', 'Yes',
+            'Date work was completed', '7 July 2025'
+          ]
+        )
+      end
     end
 
     context 'when there are many related payment requests' do
