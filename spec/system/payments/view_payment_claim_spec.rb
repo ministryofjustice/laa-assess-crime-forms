@@ -184,9 +184,10 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       )
     end
 
-    context 'when there is a custom court name' do 
+    context 'when there is a custom court name' do
       let(:court_name) { 'Custom court' }
       let(:court_id) { 'custom' }
+
       it 'shows claim details tab' do
         click_on 'Claim details'
         expect(page).to have_selector '.govuk-heading-l', text: 'Claim details'
