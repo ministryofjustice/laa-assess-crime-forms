@@ -1,6 +1,8 @@
 module Payments
   module Steps
     class BaseController < ::Steps::BaseStepController
+      include Payments::ReturnToCya
+
       before_action :authorized
 
       layout 'payments'

@@ -64,4 +64,14 @@ RSpec.describe Payments::CheckYourAnswers::ClaimDetailsCard do
       end
     end
   end
+
+  describe '#change_link_query_params' do
+    subject(:card) { described_class.new(session_answers) }
+
+    let(:session_answers) { { 'request_type' => 'non_standard_magistrate' } }
+
+    it 'returns return_to check_your_answers so Change brings user back to CYA' do
+      expect(card.change_link_query_params).to eq(return_to: 'check_your_answers')
+    end
+  end
 end

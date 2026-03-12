@@ -9,6 +9,12 @@ module Payments
         if incorrect_office?
           redirect_to edit_payments_steps_office_code_search_path(id: params[:id])
         else
+          return if update_with_return_to_cya(
+            Payments::Steps::OfficeCodeConfirmForm,
+            as: :office_code_confirm,
+            success_redirect: :decision_tree
+          )
+
           update_and_advance(Payments::Steps::OfficeCodeConfirmForm, as: :office_code_confirm)
         end
       end

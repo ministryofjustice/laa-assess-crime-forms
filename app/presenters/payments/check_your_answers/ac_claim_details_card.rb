@@ -79,6 +79,10 @@ module Payments
         end
       end
 
+      def change_link_query_params
+        { return_to: 'check_your_answers' }
+      end
+
       def read_only?
         false
       end
