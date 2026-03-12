@@ -44,7 +44,7 @@ module Payments
             self.court_id = court.id
             self.court_name = court.short_name
           elsif attributes['court_name_suggestion'].present?
-            self.court_id = 'custom'
+            self.court_id = I18n.t('laa_crime_forms_common.shared.custom')
             self.court_name = attributes['court_name_suggestion']
           else
             self.court_id = ''

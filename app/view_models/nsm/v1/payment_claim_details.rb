@@ -21,7 +21,7 @@ module Nsm
       end
 
       def court_id
-        court_item&.id || 'custom'
+        court_item&.id || I18n.t('laa_crime_forms_common.shared.custom')
       end
 
       def court_name
