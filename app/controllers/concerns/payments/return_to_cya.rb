@@ -31,7 +31,11 @@ module Payments
     #   :decision_tree (redirect to decision tree destination), or a Proc that returns a path
     # @param render_edit_options [Hash] optional options merged into render :edit (e.g. locals: { page_heading: })
     # @yield optional block run before rendering :edit on validation failure (e.g. set @search_form)
-    def update_with_return_to_cya(form_class, as:, success_redirect: :check_your_answers, render_edit_options: {}, &on_render_edit)
+    # rubocop:disable Naming/PredicateMethod -- returns handled? not a predicate
+    def update_with_return_to_cya(
+      form_class, as:, success_redirect: :check_your_answers,
+      render_edit_options: {}, &_block
+    )
       return false unless return_to_cya?
 
       hash = permitted_params(form_class).to_h
@@ -47,13 +51,14 @@ module Payments
       end
       true
     end
+    # rubocop:enable Naming/PredicateMethod
 
     def success_redirect_path(success_redirect, as)
       case success_redirect
       when :check_your_answers
         edit_payments_steps_check_your_answers_path(id: params[:id])
       when :decision_tree
-        decision_tree_class.new(@form_object, as: as).destination
+        decision_tree_class.new(@form_object, as:).destination
       when Proc
         success_redirect.call
       else
