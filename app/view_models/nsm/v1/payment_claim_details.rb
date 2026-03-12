@@ -3,7 +3,6 @@ module Nsm
     class PaymentClaimDetails < BaseViewModel
       attribute :matter_type
       attribute :youth_court
-      attribute :court
       attribute :ufn
 
       attribute :submission
@@ -19,6 +18,14 @@ module Nsm
 
       def hearing_outcome_code
         submission.data[:hearing_outcome]
+      end
+
+      def court_id
+        court_item&.id || 'custom'
+      end
+
+      def court_name
+        court_item&.short_name || submission.data[:court].delete_suffix(' - n/a')
       end
 
       def stage_reached
@@ -108,7 +115,8 @@ module Nsm
           :idempotency_token,
           :linked_laa_reference,
           :youth_court,
-          :court,
+          :court_id,
+          :court_name,
           :hearing_outcome_code,
           :stage_reached,
           :solicitor_firm_name,
@@ -144,6 +152,10 @@ module Nsm
 
       def cost_summary
         submission.totals[:cost_summary]
+      end
+
+      def court_item
+        LaaCrimeFormsCommon::Court.all.find { |c| submission.data[:court]&.downcase == c.name.downcase }
       end
     end
   end
