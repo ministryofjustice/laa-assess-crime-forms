@@ -56,4 +56,84 @@ RSpec.describe Payments::ReturnToCya, type: :controller do
       expect(multi_step_form_session['return_to']).to eq('check_your_answers')
     end
   end
+
+  describe '#update_with_return_to_cya' do
+    let(:submission_id) { SecureRandom.uuid }
+    let(:form_class) { class_double(DummyForm) }
+    let(:form_object) { instance_double(DummyForm, save: save_result) }
+    let(:params_hash) { ActionController::Parameters.new(foo: 'bar').permit! }
+    let(:save_result) { true }
+
+    before do
+      stub_const('DummyForm', Class.new)
+      allow(controller).to receive(:permitted_params).with(form_class).and_return(params_hash)
+      allow(form_class).to receive(:build).and_return(form_object)
+      allow(controller).to receive(:redirect_to)
+      allow(controller).to receive(:render)
+      get :index, params: { id: submission_id }
+    end
+
+    it 'returns false when the user is not returning from check your answers' do
+      expect(controller.send(:update_with_return_to_cya, form_class, as: :claim_search)).to be(false)
+      expect(form_class).not_to have_received(:build)
+    end
+
+    it 'saves and redirects back to check your answers when configured' do
+      multi_step_form_session['return_to'] = 'check_your_answers'
+
+      expect(
+        controller.send(
+          :update_with_return_to_cya,
+          form_class,
+          as: :date_received,
+          success_redirect: :check_your_answers
+        )
+      ).to be(true)
+
+      expect(form_class).to have_received(:build).with({ 'foo' => 'bar' }, multi_step_form_session:)
+      expect(controller).to have_received(:redirect_to).with(
+        edit_payments_steps_check_your_answers_path(id: submission_id)
+      )
+      expect(multi_step_form_session['return_to']).to be_nil
+    end
+
+    it 'saves and redirects using the decision tree when configured' do
+      multi_step_form_session['return_to'] = 'check_your_answers'
+      decision_tree = instance_double(Decisions::DecisionTree, destination: '/next-step')
+
+      allow(controller.decision_tree_class).to receive(:new).with(form_object, as: :claim_search).and_return(decision_tree)
+
+      controller.send(:update_with_return_to_cya, form_class, as: :claim_search, success_redirect: :decision_tree)
+
+      expect(controller).to have_received(:redirect_to).with('/next-step')
+      expect(multi_step_form_session['return_to']).to eq('check_your_answers')
+    end
+
+    it 'saves and redirects using a custom proc when configured' do
+      multi_step_form_session['return_to'] = 'check_your_answers'
+      redirect_proc = -> { '/custom-destination' }
+
+      controller.send(:update_with_return_to_cya, form_class, as: :office_code_search, success_redirect: redirect_proc)
+
+      expect(controller).to have_received(:redirect_to).with('/custom-destination')
+    end
+
+    it 'renders edit and yields when the form does not save' do
+      multi_step_form_session['return_to'] = 'check_your_answers'
+      allow(form_object).to receive(:save).and_return(false)
+      yielded = false
+
+      controller.send(
+        :update_with_return_to_cya,
+        form_class,
+        as: :claim_search,
+        render_edit_options: { locals: { page_heading: 'Heading' } }
+      ) do
+        yielded = true
+      end
+
+      expect(yielded).to be(true)
+      expect(controller).to have_received(:render).with(:edit, locals: { page_heading: 'Heading' })
+    end
+  end
 end

@@ -1,6 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Payments::CheckYourAnswers::AcClaimDetailsCard do
+  describe '#read_only?' do
+    subject(:card) { described_class.new(session_answers) }
+
+    let(:session_answers) { { 'request_type' => 'assigned_counsel' } }
+
+    it 'keeps claim details editable on check your answers' do
+      expect(card.read_only?).to be(false)
+    end
+  end
+
   describe '#change_link_controller_path' do
     context 'when request type is assigned_counsel' do
       subject(:card) { described_class.new(session_answers) }
