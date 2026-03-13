@@ -53,7 +53,7 @@ module Payments
 
           return false unless valid?
 
-          attributes.each do |k, v|
+          attributes.except('court_name_suggestion').each do |k, v|
             multi_step_form_session[k.to_sym] = v
           end
 
