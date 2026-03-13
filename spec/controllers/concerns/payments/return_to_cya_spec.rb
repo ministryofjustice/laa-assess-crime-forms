@@ -118,6 +118,14 @@ RSpec.describe Payments::ReturnToCya, type: :controller do
       expect(controller).to have_received(:redirect_to).with('/custom-destination')
     end
 
+    it 'raises for an unknown success redirect' do
+      multi_step_form_session['return_to'] = 'check_your_answers'
+
+      expect do
+        controller.send(:update_with_return_to_cya, form_class, as: :claim_search, success_redirect: :unknown)
+      end.to raise_error(ArgumentError, 'Unknown success_redirect: :unknown')
+    end
+
     it 'renders edit and yields when the form does not save' do
       multi_step_form_session['return_to'] = 'check_your_answers'
       allow(form_object).to receive(:save).and_return(false)

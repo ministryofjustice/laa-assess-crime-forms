@@ -33,4 +33,21 @@ RSpec.describe Payments::Steps::ClaimSearchForm, type: :model do
       expect(form.executed?).to be true
     end
   end
+
+  describe '#conduct_search' do
+    let(:client) { instance_double(AppStoreClient) }
+    let(:error) { StandardError.new('boom') }
+
+    before do
+      allow(AppStoreClient).to receive(:new).and_return(client)
+      allow(client).to receive(:search).and_raise(error)
+      allow(Sentry).to receive(:capture_exception)
+    end
+
+    it 'captures search errors and adds a base validation error' do
+      expect(form.conduct_search).to be_nil
+      expect(Sentry).to have_received(:capture_exception).with(error)
+      expect(form.errors.added?(:base, :search_error)).to be(true)
+    end
+  end
 end
