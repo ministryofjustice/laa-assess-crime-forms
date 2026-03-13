@@ -155,7 +155,7 @@ module Nsm
       end
 
       def court_item
-        LaaCrimeFormsCommon::Court.all.find { |c| submission.data[:court]&.downcase == c.name.downcase }
+        LaaCrimeFormsCommon::Court.all.find { |c| submission.data[:court].downcase == c.name.downcase }
       end
     end
   end
