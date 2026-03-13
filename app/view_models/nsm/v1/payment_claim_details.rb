@@ -21,11 +21,15 @@ module Nsm
       end
 
       def court_id
-        court_item&.id || I18n.t('laa_crime_forms_common.shared.custom')
+        custom_court? ? I18n.t('laa_crime_forms_common.shared.custom') : submission.data[:court_id]
       end
 
       def court_name
-        court_item&.short_name || submission.data[:court].delete_suffix(' - n/a')
+        if custom_court?
+          "#{submission.data[:court_name]} - #{I18n.t('laa_crime_forms_common.shared.na')}"
+        else
+          "#{submission.data[:court_name]} - #{submission.data[:court_id]}"
+        end
       end
 
       def stage_reached
@@ -154,8 +158,8 @@ module Nsm
         submission.totals[:cost_summary]
       end
 
-      def court_item
-        LaaCrimeFormsCommon::Court.all.find { |c| submission.data[:court]&.downcase == c.name.downcase }
+      def custom_court?
+        submission.data[:court_id] == I18n.t('laa_crime_forms_common.shared.custom')
       end
     end
   end

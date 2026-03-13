@@ -125,8 +125,11 @@ module Payments
       private
 
       def formatted_court_name
-        record = LaaCrimeFormsCommon::Court.all.find { |court| court.id == session_answers['court_id'] }
-        record ? record.name : "#{session_answers['court_name']} - #{I18n.t('laa_crime_forms_common.shared.na')}"
+        if session_answers['court_id'] == I18n.t('laa_crime_forms_common.shared.custom')
+          "#{session_answers['court_name']} - #{I18n.t('laa_crime_forms_common.shared.na')}"
+        else
+          "#{session_answers['court_name']} - #{session_answers['court_id']}"
+        end
       end
     end
   end
