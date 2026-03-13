@@ -20,7 +20,7 @@ module PriorAuthority
         def prison
           return if prison_id.blank?
 
-          if prison_id == 'custom'
+          if prison_id == I18n.t('laa_crime_forms_common.shared.custom')
             custom_prison_name
           else
             I18n.t("prior_authority.prisons.#{prison_id}")

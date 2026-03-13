@@ -94,14 +94,14 @@ module Payments
       def court
         {
           head_key: 'court',
-          text: session_answers['court']
+          text: formatted_court_name
         }
       end
 
       def youth_court
         {
           head_key: 'youth_court',
-          text: session_answers['youth_court']
+          text: session_answers['youth_court'] ? I18n.t('helpers.yes_option') : I18n.t('helpers.no_option')
         }
       end
 
@@ -120,6 +120,16 @@ module Payments
 
       def read_only?
         session_answers['linked_laa_reference'].present?
+      end
+
+      private
+
+      def formatted_court_name
+        if session_answers['court_id'] == I18n.t('laa_crime_forms_common.shared.custom')
+          "#{session_answers['court_name']} - #{I18n.t('laa_crime_forms_common.shared.na')}"
+        else
+          "#{session_answers['court_name']} - #{session_answers['court_id']}"
+        end
       end
     end
   end
