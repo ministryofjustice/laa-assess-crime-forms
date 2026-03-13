@@ -22,8 +22,8 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
   end
 
   let(:court_id) { 'C3208F' }
-  let(:court_name) { 'USK' }
   let(:court_name_suggestion) { 'USK' }
+  let(:court_name) { 'USK' }
   let(:session_store) { {} }
 
   describe 'validations' do
@@ -52,7 +52,6 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
           matter_type: '13',
           court_id: court_id,
           court_name: court_name,
-          court_name_suggestion: court_name_suggestion,
           youth_court: true,
           date_completed: Date.new(2026, 1, 2)
         )
@@ -81,8 +80,7 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
 
       it 'sets court_id and court_name from the suggested court' do
         form.save
-        expect(form.court_id).to eq('C3208F')
-        expect(form.court_name).to eq('USK')
+        expect(session_store).to include(court_id: 'C3208F', court_name: 'USK')
       end
     end
 
@@ -93,8 +91,7 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
 
       it 'sets court_id to custom and court_name from the suggestion' do
         form.save
-        expect(form.court_id).to eq('custom')
-        expect(form.court_name).to eq('Custom Court')
+        expect(session_store).to include(court_id: 'custom', court_name: 'Custom Court')
       end
     end
   end
