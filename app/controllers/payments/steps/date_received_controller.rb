@@ -6,6 +6,12 @@ module Payments
       end
 
       def update
+        return if update_with_return_to_cya(
+          Payments::Steps::DateReceivedForm,
+          as: :date_received,
+          success_redirect: :check_your_answers
+        )
+
         update_and_advance(Payments::Steps::DateReceivedForm, as: :date_received)
       end
     end

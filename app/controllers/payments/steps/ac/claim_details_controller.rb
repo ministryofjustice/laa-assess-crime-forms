@@ -7,6 +7,12 @@ module Payments
         end
 
         def update
+          return if update_with_return_to_cya(
+            Payments::Steps::Ac::ClaimDetailForm,
+            as: :ac_claim_details,
+            success_redirect: :check_your_answers
+          )
+
           update_and_advance(Payments::Steps::Ac::ClaimDetailForm, as: :ac_claim_details)
         end
       end

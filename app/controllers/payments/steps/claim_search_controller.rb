@@ -10,6 +10,7 @@ module Payments
       end
 
       def edit
+        store_return_to_from_params
         @form_object = Payments::Steps::SelectedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(default_params)
 
@@ -17,6 +18,15 @@ module Payments
       end
 
       def update
+        return if update_with_return_to_cya(
+          Payments::Steps::SelectedClaimForm,
+          as: :claim_search,
+          success_redirect: :decision_tree,
+          render_edit_options: { locals: { page_heading: } }
+        ) do
+          @search_form = Payments::Steps::ClaimSearchForm.new(default_params)
+        end
+
         update_and_advance(Payments::Steps::SelectedClaimForm, as: :claim_search)
       end
 
