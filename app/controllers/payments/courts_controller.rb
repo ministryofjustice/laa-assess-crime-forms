@@ -12,7 +12,7 @@ module Payments
     private
 
     def courts
-      @courts ||= Rails.cache.fetch("courts", expires_in: 5.minutes) do
+      @courts ||= Rails.cache.fetch('courts', expires_in: 5.minutes) do
         LaaCrimeFormsCommon::Court.all.map(&:as_json)
       end
     end
