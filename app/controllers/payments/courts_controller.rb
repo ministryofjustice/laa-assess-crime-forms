@@ -4,11 +4,11 @@ module Payments
     skip_after_action :verify_authorized
 
     def index
+      expires_in 5.minutes
+
       respond_to do |format|
         format.json { render json: courts }
       end
-
-      expires_in 60.minutes
     end
 
     private
