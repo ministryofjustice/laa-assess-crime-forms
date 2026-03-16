@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Payments::SelectedClaimTransformer do
-  subject(:transformer) { described_class.new(payment_request_claim_id, multi_step_form_session) }
+  subject(:transformer) { described_class.new(payable_claim_id, multi_step_form_session) }
 
-  let(:payment_request_claim_id) { 'abc-123' }
+  let(:payable_claim_id) { 'abc-123' }
   let(:multi_step_form_session) { {} }
   let(:app_store_client) { instance_double(AppStoreClient) }
 
@@ -41,8 +41,8 @@ RSpec.describe Payments::SelectedClaimTransformer do
 
   before do
     allow(AppStoreClient).to receive(:new).and_return(app_store_client)
-    allow(app_store_client).to receive(:get_payment_request_claim)
-      .with(payment_request_claim_id)
+    allow(app_store_client).to receive(:get_payable_claim)
+      .with(payable_claim_id)
       .and_return(claim_response)
   end
 

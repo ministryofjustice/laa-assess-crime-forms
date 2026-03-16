@@ -1,6 +1,6 @@
 module Payments
   class BaseSelectedTransformer
-    attr_reader :payment_request_claim_id, :multi_step_form_session
+    attr_reader :payable_claim_id, :multi_step_form_session
 
     NSM_KEYS = %w[
       stage_reached hearing_outcome_code defendant_first_name
@@ -9,9 +9,9 @@ module Payments
       submission_id
     ].freeze
 
-    def initialize(payment_request_claim_id, multi_step_form_session)
+    def initialize(payable_claim_id, multi_step_form_session)
       @multi_step_form_session = multi_step_form_session
-      @payment_request_claim_id = payment_request_claim_id
+      @payable_claim_id = payable_claim_id
     end
 
     def transform
