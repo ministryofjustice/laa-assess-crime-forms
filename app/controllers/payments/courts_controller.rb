@@ -7,14 +7,14 @@ module Payments
       respond_to do |format|
         format.json { render json: courts }
       end
+
+      expires_in 60.minutes
     end
 
     private
 
     def courts
-      @courts ||= Rails.cache.fetch("courts", expires_in: 5.minutes) do
-        LaaCrimeFormsCommon::Court.all.map(&:as_json)
-      end
+      LaaCrimeFormsCommon::Court.all.map(&:as_json)
     end
   end
 end
