@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Payments::Steps::SelectedClaimForm, type: :model do
-  subject(:form) { described_class.new(payment_request_claim_id:, claim_type:) }
+  subject(:form) { described_class.new(payable_claim_id:, claim_type:) }
 
-  let(:payment_request_claim_id) { 'abc-123' }
+  let(:payable_claim_id) { 'abc-123' }
   let(:claim_type) { 'NsmClaim' }
   let(:multi_step_form_session) { {} }
 
@@ -12,13 +12,13 @@ RSpec.describe Payments::Steps::SelectedClaimForm, type: :model do
   end
 
   describe 'validations' do
-    it 'is invalid without a payment_request_claim_id' do
-      form.payment_request_claim_id = nil
+    it 'is invalid without a payable_claim_id' do
+      form.payable_claim_id = nil
       expect(form.valid?).to be(false)
-      expect(form.errors[:payment_request_claim_id]).to include("can't be blank")
+      expect(form.errors[:payable_claim_id]).to include("can't be blank")
     end
 
-    it 'is valid with a payment_request_claim_id' do
+    it 'is valid with a payable_claim_id' do
       expect(form.valid?).to be(true)
     end
 
@@ -37,7 +37,7 @@ RSpec.describe Payments::Steps::SelectedClaimForm, type: :model do
 
   describe '#save' do
     context 'when invalid' do
-      let(:payment_request_claim_id) { nil }
+      let(:payable_claim_id) { nil }
 
       it 'returns false and does not touch the session' do
         expect(form.save).to be(false)
@@ -61,7 +61,7 @@ RSpec.describe Payments::Steps::SelectedClaimForm, type: :model do
 
       before do
         allow(Payments::SelectedClaimTransformer).to receive(:new)
-          .with(payment_request_claim_id, multi_step_form_session)
+          .with(payable_claim_id, multi_step_form_session)
           .and_return(transformer_instance)
       end
 
@@ -80,14 +80,14 @@ RSpec.describe Payments::Steps::SelectedClaimForm, type: :model do
 
       before do
         allow(Payments::SelectedSubmissionTransformer).to receive(:new)
-          .with(payment_request_claim_id, multi_step_form_session)
+          .with(payable_claim_id, multi_step_form_session)
           .and_return(submission_transformer)
       end
 
       it 'delegates to the SelectedSubmissionTransformer' do
         expect(form.save).to be(true)
         expect(Payments::SelectedSubmissionTransformer).to have_received(:new)
-          .with(payment_request_claim_id, multi_step_form_session)
+          .with(payable_claim_id, multi_step_form_session)
         expect(multi_step_form_session).to include(:submission_id)
       end
     end
@@ -97,7 +97,7 @@ RSpec.describe Payments::Steps::SelectedClaimForm, type: :model do
 
       before do
         allow(Payments::SelectedClaimTransformer).to receive(:new)
-          .with(payment_request_claim_id, multi_step_form_session)
+          .with(payable_claim_id, multi_step_form_session)
           .and_return(transformer_instance)
       end
 
