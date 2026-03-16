@@ -1,20 +1,20 @@
 module Payments
   class BaseClaimDetails
-    def initialize(payment_request_claim, related_payment_params)
-      @payment_request_claim = payment_request_claim
+    def initialize(payable_claim, related_payment_params)
+      @payable_claim = payable_claim
       @related_payment_params = related_payment_params
     end
 
     def id
-      @payment_request_claim['id']
+      @payable_claim['id']
     end
 
     def claim_type
-      I18n.t("shared.claim_type.#{@payment_request_claim['type']}")
+      I18n.t("shared.claim_type.#{@payable_claim['type']}")
     end
 
     def laa_reference
-      @payment_request_claim['laa_reference']
+      @payable_claim['laa_reference']
     end
 
     def last_updated
@@ -26,8 +26,8 @@ module Payments
     end
 
     def payment_requests
-      @payment_requests ||= @payment_request_claim['payment_requests']
-                            .map { Payments::PaymentRequestDetails.new(_1, @payment_request_claim['type']) }
+      @payment_requests ||= @payable_claim['payment_requests']
+                            .map { Payments::PaymentRequestDetails.new(_1, @payable_claim['type']) }
                             .sort_by(&:submitted_date).reverse
     end
 
@@ -36,7 +36,7 @@ module Payments
     end
 
     def related_payments
-      Payments::RelatedPayments.new(@payment_request_claim, @related_payment_params)
+      Payments::RelatedPayments.new(@payable_claim, @related_payment_params)
     end
 
     private
