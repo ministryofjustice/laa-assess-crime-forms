@@ -18,7 +18,7 @@ module Payments
     end
 
     def show
-      @claim_details = payment_request_claim
+      @claim_details = payable_claim
       @current_page = controller_params[:current_page] || 'payment_request'
       @selected_payment = selected_payment(@claim_details.payment_requests) || @claim_details.payment_requests.first
       @related_payments_pagy = Pagy.new(**related_payments_pagy_params)
@@ -113,8 +113,8 @@ module Payments
       }
     end
 
-    def payment_request_claim
-      response = AppStoreClient.new.get_payment_request_claim(controller_params[:id])
+    def payable_claim
+      response = AppStoreClient.new.get_payable_claim(controller_params[:id])
       claim_type = response['type']
       claim_details_class = nil
       if claim_type == 'NsmClaim'

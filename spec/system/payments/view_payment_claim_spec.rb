@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'View payment request', :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:id) { SecureRandom.uuid }
-  let(:endpoint) { "https://appstore.example.com/v1/payment_request_claim/#{id}" }
+  let(:endpoint) { "https://appstore.example.com/v1/payable_claim/#{id}" }
   let(:laa_reference) { 'LAA-ODJUfL' }
   let(:submission_id) { nil }
   let(:youth_court) { true }
@@ -108,7 +108,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
     let(:court_id) { 'A13' }
 
     before do
-      allow_any_instance_of(AppStoreClient).to receive(:get_payment_request_claim)
+      allow_any_instance_of(AppStoreClient).to receive(:get_payable_claim)
         .and_return(payload)
       visit "payments/requests/#{id}"
     end
@@ -368,7 +368,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
     end
 
     before do
-      allow_any_instance_of(AppStoreClient).to receive(:get_payment_request_claim)
+      allow_any_instance_of(AppStoreClient).to receive(:get_payable_claim)
         .and_return(payload)
       visit "payments/requests/#{id}"
     end
@@ -508,7 +508,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
     end
 
     before do
-      allow_any_instance_of(AppStoreClient).to receive(:get_payment_request_claim)
+      allow_any_instance_of(AppStoreClient).to receive(:get_payable_claim)
         .and_return(payload)
     end
 

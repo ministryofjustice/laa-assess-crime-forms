@@ -42,7 +42,7 @@
             <tr class="govuk-table__row app-task-list__item">
               <td class="govuk-table__cell">
                 <%= search_result.laa_reference %>
-                <%= f.hidden_field(:payment_request_claim_id, value: search_result.payment_request_claim_id) %>
+                <%= f.hidden_field(:payable_claim_id, value: search_result.payable_claim_id) %>
                 <%= f.hidden_field(:claim_type, value: search_result.claim_type) %>
               </td>
               <td class="govuk-table__cell">
