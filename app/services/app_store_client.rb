@@ -98,7 +98,7 @@ class AppStoreClient
   end
 
   def get_payable_claim(payable_claim_id)
-    response = self.class.get("#{host}/v1/payment_request_claims/#{payable_claim_id}", **options)
+    response = self.class.get("#{host}/v1/payable_claims/#{payable_claim_id}", **options)
     process_response(
       response,
       'Unexpected response from AppStore - ' \

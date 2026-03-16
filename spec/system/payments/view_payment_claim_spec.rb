@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'View payment request', :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:id) { SecureRandom.uuid }
-  let(:endpoint) { "https://appstore.example.com/v1/payable_claim/#{id}" }
+  let(:endpoint) { "https://appstore.example.com/v1/payable_claims/#{id}" }
   let(:laa_reference) { 'LAA-ODJUfL' }
   let(:submission_id) { nil }
   let(:youth_court) { true }
