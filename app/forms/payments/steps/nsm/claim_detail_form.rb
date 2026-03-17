@@ -13,12 +13,14 @@ module Payments
         attribute :number_of_attendances, :integer
         attribute :hearing_outcome_code, :string
         attribute :matter_type, :string
-        attribute :court, :string
+        attribute :court_id, :string
+        attribute :court_name, :string
+        attribute :court_name_suggestion, :string
         attribute :youth_court, :boolean
         attribute :date_completed, :date
 
         validates :defendant_first_name, :defendant_last_name,
-                  :hearing_outcome_code, :matter_type, :court,
+                  :hearing_outcome_code, :matter_type, :court_name,
                   presence: true
 
         validates :number_of_defendants, :number_of_attendances, presence: true, is_a_number: true,
@@ -32,6 +34,32 @@ module Payments
         validates :ufn, presence: true, ufn: true
         validates :date_completed, :date_received,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
+
+        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+        def save
+          # We need to check if the court name suggestion matches an existing court and
+          # if so, use the existing court's name and id instead of the custom values
+          court = LaaCrimeFormsCommon::Court.all.find { |c| attributes['court_name_suggestion']&.downcase == c.short_name.downcase }
+          if court
+            self.court_id = court.id
+            self.court_name = court.short_name
+          elsif attributes['court_name_suggestion'].present?
+            self.court_id = I18n.t('laa_crime_forms_common.shared.custom')
+            self.court_name = attributes['court_name_suggestion']
+          else
+            self.court_id = ''
+            self.court_name = ''
+          end
+
+          return false unless valid?
+
+          attributes.except('court_name_suggestion').each do |k, v|
+            multi_step_form_session[k.to_sym] = v
+          end
+
+          true
+        end
+        # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
       end
     end
   end

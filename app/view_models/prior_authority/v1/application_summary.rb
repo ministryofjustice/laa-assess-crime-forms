@@ -18,7 +18,7 @@ module PriorAuthority
       delegate :id, to: :submission
 
       def service_name
-        if service_type == 'custom'
+        if service_type == I18n.t('laa_crime_forms_common.shared.custom')
           custom_service_name
         else
           I18n.t("laa_crime_forms_common.prior_authority.service_types.#{service_type}")
@@ -26,7 +26,7 @@ module PriorAuthority
       end
 
       def main_offence
-        if main_offence_id == 'custom'
+        if main_offence_id == I18n.t('laa_crime_forms_common.shared.custom')
           custom_main_offence_name
         elsif main_offence_id
           I18n.t("prior_authority.offences.#{main_offence_id}")
