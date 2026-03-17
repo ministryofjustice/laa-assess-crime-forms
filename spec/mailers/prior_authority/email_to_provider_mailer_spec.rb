@@ -31,8 +31,8 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
     let(:feedback_template) { 'd4f3da60-4da5-423e-bc93-d9235ff01a7b' }
 
     let(:personalisation) do
-      [{ laa_case_reference:, ufn:, defendant_name:,
-       application_total:, date: }]
+      [laa_case_reference:, ufn:, defendant_name:,
+       application_total:, date:]
     end
 
     it_behaves_like 'creates a feedback mailer'
@@ -44,8 +44,8 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
     let(:feedback_template) { 'd4f3da60-4da5-423e-bc93-d9235ff01a7b' }
 
     let(:personalisation) do
-      [{ laa_case_reference:, ufn:, defendant_name:,
-       application_total:, date: }]
+      [laa_case_reference:, ufn:, defendant_name:,
+       application_total:, date:]
     end
 
     it_behaves_like 'creates a feedback mailer'
@@ -80,9 +80,9 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
     let(:caseworker_comment) { 'part granting because...' }
 
     let(:personalisation) do
-      [{ laa_case_reference:, ufn:, defendant_name:,
+      [laa_case_reference:, ufn:, defendant_name:,
        application_total:, part_grant_total:,
-       caseworker_decision_explanation:, date: }]
+       caseworker_decision_explanation:, date:]
     end
 
     it_behaves_like 'creates a feedback mailer'
@@ -95,9 +95,9 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
     let(:caseworker_decision_explanation) { caseworker_comment }
 
     let(:personalisation) do
-      [{ laa_case_reference:, ufn:, defendant_name:,
+      [laa_case_reference:, ufn:, defendant_name:,
       application_total:, caseworker_decision_explanation:,
-      date: }]
+      date:]
     end
 
     it_behaves_like 'creates a feedback mailer'
@@ -133,9 +133,9 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
     end
 
     let(:personalisation) do
-      [{ laa_case_reference:, ufn:, defendant_name:,
+      [laa_case_reference:, ufn:, defendant_name:,
        application_total:, date_to_respond_by:,
-       caseworker_information_requested:, date: }]
+       caseworker_information_requested:, date:]
     end
 
     it_behaves_like 'creates a feedback mailer'
