@@ -427,7 +427,7 @@ jobs:
       - name: Output deployment URL to PR
         run: |
           CLASS_NAME=$(grep 'className:' helm_deploy/values-dev.yaml | awk '{print $2}' | tr -d '"')
-          if [ "$CLASS_NAME" = "beta" ]; then
+          if [ "$CLASS_NAME" == "beta" ]; then
             DOMAIN_SUFFIX=".beta"
           else
             DOMAIN_SUFFIX=""
