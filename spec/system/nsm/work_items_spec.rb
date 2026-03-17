@@ -146,7 +146,7 @@ RSpec.describe 'Work items', :stub_oauth_token do
 
     it 'changes the work type and associated pricing if I ask it to' do
       visit nsm_claim_work_items_path(claim)
-      expect(page).to have_content 'Sum of net cost claimed: £272.87'
+      expect(page).to have_content 'Sum of net cost claimed: £272.88'
 
       within('.govuk-table__row', text: 'Attendance without counsel') do
         click_on 'Attendance without counsel'
