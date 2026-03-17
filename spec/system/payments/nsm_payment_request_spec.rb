@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'NSM payment request', :stub_oauth_token do
+RSpec.describe 'NSM payment request', :javascript, :stub_oauth_token do
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:index_endpoint) { 'https://appstore.example.com/v1/payment_requests/searches' }
   let(:search_params) do
@@ -71,7 +71,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       choose_claim_type("Non-Standard Magistrates'")
       fill_in "What is the solicitor's firm account number?", with: '1A123B'
       click_button 'Continue'
-      choose 'No, I need to change the number'
+      choose 'No, I need to change the number', allow_label_click: true
       click_button 'Continue'
       expect(page).to have_content("What is the solicitor's firm account number?")
     end
@@ -132,6 +132,32 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
         click_link 'Cancel payment request'
         expect(page).to have_title('Payment requests')
       end
+    end
+
+    describe 'payment request with custom court' do
+      it 'completes claim details with custom court and proceeds' do
+        start_new_payment_request
+        choose_claim_type("Non-Standard Magistrates'")
+        select_office_code
+        fill_claim_details(court_name: 'Custom court')
+        fill_claimed_costs
+        fill_allowed_costs
+        expect(page).to have_content('Custom court - N/A')
+        click_button 'Submit payment request'
+        expect(page).to have_content('Payment request complete')
+      end
+    end
+  end
+
+  describe 'payment request when youth court matter is No' do
+    it 'shows the correct details in the Claim details card' do
+      start_new_payment_request
+      choose_claim_type("Non-Standard Magistrates'")
+      select_office_code
+      fill_claim_details(youth_court: 'No')
+      fill_claimed_costs
+      fill_allowed_costs
+      expect(page).to have_content('Youth court matter No')
     end
   end
 

@@ -5,13 +5,15 @@ module PaymentsHelpers
   def stub_search(endpoint, body_hash, data = nil, total_results = 1)
     payload = data || begin
       [
-        id: SecureRandom.uuid,
+        {
+          id: SecureRandom.uuid,
         request_type: 'non_standard_magistrate',
         submitted_at: Time.zone.now.to_s,
         payment_request_claim: {
           id: '1234',
           laa_reference: 'LAA-1004',
           client_last_name: 'Dickens'
+        }
         }
       ]
     end
@@ -148,7 +150,8 @@ module PaymentsHelpers
       'defendant_last_name' => 'Doe',
       'stage_code' => 'PROG',
       'work_completed_date' => '2025-10-29 00:00:00 UTC',
-      'court_name' => 'Usk - C3208F',
+      'court_name' => 'Usk',
+      'court_id' => 'C3208F',
       'court_attendances' => 2,
       'no_of_defendants' => 2,
       'defendant_first_name' => 'John',
@@ -227,7 +230,7 @@ module PaymentsHelpers
   def select_office_code(office_code = '1A123B')
     fill_in "What is the solicitor's firm account number?", with: office_code
     click_button 'Continue'
-    choose 'Yes'
+    choose 'Yes', allow_label_click: true
     click_button 'Continue'
   end
 
@@ -242,9 +245,10 @@ module PaymentsHelpers
     attendances_count: '2',
     hearing_outcome_code: 'CP17 - Extradition',
     matter_type: '5 - Burglary',
-    court: 'Ely - C1166A',
+    court_name: 'ACTON',
     travel_required: 'Yes',
-    work_completed_on: '2025-09-24'
+    work_completed_on: '2025-09-24',
+    youth_court: 'Yes'
   )
     fill_in 'Date claim received', with: received_on
     fill_in 'Unique file number', with: ufn
@@ -253,10 +257,11 @@ module PaymentsHelpers
     fill_in 'Defendant last name', with: defendant_last_name
     fill_in 'Number of defendants', with: defendants_count
     fill_in 'Number of attendances', with: attendances_count
-    select hearing_outcome_code, from: 'Hearing outcome code'
-    select matter_type, from: 'Matter type'
-    select court, from: 'Court'
+    fill_in 'Court', with: court_name
+    fill_in 'Hearing outcome code', with: hearing_outcome_code
+    fill_in 'Matter type', with: matter_type
     choose travel_required, allow_label_click: true
+    choose youth_court, allow_label_click: true
     fill_in 'Date work completed', with: work_completed_on
 
     click_button 'Continue'

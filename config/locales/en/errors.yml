@@ -188,7 +188,7 @@ en:
               blank: Select the hearing outcome code
             matter_type:
               blank: Select the matter type
-            court:
+            court_name:
               blank: Select the court
             youth_court:
               inclusion: Select if this is a youth court
