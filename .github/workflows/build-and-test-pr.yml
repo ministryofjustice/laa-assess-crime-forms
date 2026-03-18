@@ -426,14 +426,8 @@ jobs:
 
       - name: Output deployment URL to PR
         run: |
-          CLASS_NAME=$(grep 'className:' helm_deploy/values-dev.yaml | awk '{print $2}' | tr -d '"')
-          if [ "$CLASS_NAME" == "beta" ]; then
-            DOMAIN_SUFFIX=".beta"
-          else
-            DOMAIN_SUFFIX=""
-          fi
           BRANCH_RELEASE_NAME=$(echo "${{ github.head_ref }}" | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-18 | sed 's/-$//')
-          RELEASE_HOST="${BRANCH_RELEASE_NAME}-nscc-caseworker-dev${DOMAIN_SUFFIX}.cloud-platform.service.justice.gov.uk"
+          RELEASE_HOST="${BRANCH_RELEASE_NAME}-nscc-caseworker-dev.cloud-platform.service.justice.gov.uk"
           echo "### 🚀 Feature branch deployed!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**URL:** https://${RELEASE_HOST}" >> $GITHUB_STEP_SUMMARY

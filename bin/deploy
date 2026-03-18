@@ -1,27 +1,13 @@
 #!/bin/bash
 
 ENVIRONMENT=$1
-
-# Select values file
-VALUES_FILE="helm_deploy/values-${ENVIRONMENT}.yaml"
-
-# Extract className from values file
-CLASS_NAME=$(grep 'className:' "$VALUES_FILE" | awk '{print $2}' | tr -d '"')
-
-# Set .beta only if className is beta
-if [[ "$CLASS_NAME" == "beta" ]]; then
-  DOMAIN_SUFFIX=".beta"
-else
-  DOMAIN_SUFFIX=""
-fi
-
 # Convert the branch name into a string that can be turned into a valid URL
 BRANCH_RELEASE_NAME=$(echo "$CIRCLE_BRANCH" | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-18 | sed 's/-$//')
 SHARED_IPS=$(curl -s https://raw.githubusercontent.com/ministryofjustice/laa-ip-allowlist/main/cidrs.txt | tr -d ' ' | tr '\n' ',' | sed 's/,/\\,/g' | sed 's/\\,$//')
 
 deploy_branch() {
   # Set the deployment host, this will add the prefix of the branch name e.g crm457-1062-tempor
-  RELEASE_HOST="$BRANCH_RELEASE_NAME-nscc-caseworker-dev${DOMAIN_SUFFIX}.cloud-platform.service.justice.gov.uk"
+  RELEASE_HOST="$BRANCH_RELEASE_NAME-nscc-caseworker-dev.cloud-platform.service.justice.gov.uk"
   # Set the ingress name, needs release name, namespace and -green suffix
   IDENTIFIER="$BRANCH_RELEASE_NAME-laa-assess-crime-forms-dev-green"
   echo "Deploying under release name: '$BRANCH_RELEASE_NAME' with identifier '$IDENTIFIER'..."
