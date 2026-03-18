@@ -25,7 +25,7 @@ service:
 ingress:
   enabled: true
   namespace: laa-assess-crime-forms-dev
-  className: modsec
+  className: beta
   modsec:
     ruleState: "On"
     auditState: "RelevantOnly"
