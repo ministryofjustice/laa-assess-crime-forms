@@ -3,31 +3,31 @@ module Payments
     include ActionView::Helpers::UrlHelper
 
     def firm_name
-      @payment_request_claim['counsel_firm_name']
+      @payable_claim['counsel_firm_name']
     end
 
     def defendant_last_name
-      @payment_request_claim['defendant_last_name']
+      @payable_claim['defendant_last_name']
     end
 
     def linked_claim
-      @payment_request_claim.dig('nsm_claim', 'laa_reference') || I18n.t('payments.requests.claim_details.table.no_linked_claim')
+      @payable_claim.dig('nsm_claim', 'laa_reference') || I18n.t('payments.requests.claim_details.table.no_linked_claim')
     end
 
     def solicitor_office_code
-      @payment_request_claim.dig('nsm_claim', 'solicitor_office_code') || @payment_request_claim['solicitor_office_code']
+      @payable_claim.dig('nsm_claim', 'solicitor_office_code') || @payable_claim['solicitor_office_code']
     end
 
     def solicitor_firm_name
-      @payment_request_claim.dig('nsm_claim', 'solicitor_firm_name') || @payment_request_claim['solicitor_firm_name']
+      @payable_claim.dig('nsm_claim', 'solicitor_firm_name') || @payable_claim['solicitor_firm_name']
     end
 
     def ufn
-      @payment_request_claim['ufn']
+      @payable_claim['ufn']
     end
 
     def counsel_office_code
-      @payment_request_claim['counsel_office_code']
+      @payable_claim['counsel_office_code']
     end
 
     def table_format

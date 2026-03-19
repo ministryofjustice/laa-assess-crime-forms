@@ -1,10 +1,10 @@
 module Payments
   module Steps
     class SelectedClaimForm < BasePaymentsForm
-      attribute :payment_request_claim_id
+      attribute :payable_claim_id
       attribute :claim_type
 
-      validates :payment_request_claim_id, presence: true
+      validates :payable_claim_id, presence: true
       validates :claim_type, presence: true,
         inclusion: { in: %w[Crm7SubmissionClaim NsmClaim AssignedCounselClaim] }
 
@@ -21,7 +21,7 @@ module Payments
       private
 
       def claim
-        @claim ||= transformer_class.new(payment_request_claim_id, multi_step_form_session).transform
+        @claim ||= transformer_class.new(payable_claim_id, multi_step_form_session).transform
       end
 
       def transformer_class

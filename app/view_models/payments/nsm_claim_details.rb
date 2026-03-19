@@ -3,27 +3,27 @@ module Payments
     include ActionView::Helpers::UrlHelper
 
     def solicitor_office_code
-      @payment_request_claim['solicitor_office_code']
+      @payable_claim['solicitor_office_code']
     end
 
     def firm_name
-      @payment_request_claim['solicitor_firm_name']
+      @payable_claim['solicitor_firm_name']
     end
 
     def ufn
-      @payment_request_claim['ufn']
+      @payable_claim['ufn']
     end
 
     def stage_code
-      @payment_request_claim['stage_reached']
+      @payable_claim['stage_reached']
     end
 
     def defendant_first_name
-      @payment_request_claim['defendant_first_name']
+      @payable_claim['defendant_first_name']
     end
 
     def defendant_last_name
-      @payment_request_claim['defendant_last_name']
+      @payable_claim['defendant_last_name']
     end
 
     def defendant_name
@@ -31,35 +31,35 @@ module Payments
     end
 
     def court_attendances
-      @payment_request_claim['number_of_attendances']
+      @payable_claim['number_of_attendances']
     end
 
     def no_of_defendants
-      @payment_request_claim['number_of_defendants']
+      @payable_claim['number_of_defendants']
     end
 
     def outcome_code
-      LaaCrimeFormsCommon::OutcomeCode.new(@payment_request_claim['hearing_outcome_code']).name
+      LaaCrimeFormsCommon::OutcomeCode.new(@payable_claim['hearing_outcome_code']).name
     end
 
     def matter_type
-      LaaCrimeFormsCommon::MatterType.new(@payment_request_claim['matter_type']).name
+      LaaCrimeFormsCommon::MatterType.new(@payable_claim['matter_type']).name
     end
 
     def court
-      if @payment_request_claim['court_id'] == 'custom'
-        "#{@payment_request_claim['court_name']} - N/A"
+      if @payable_claim['court_id'] == 'custom'
+        "#{@payable_claim['court_name']} - N/A"
       else
-        "#{@payment_request_claim['court_name']} - #{@payment_request_claim['court_id']}"
+        "#{@payable_claim['court_name']} - #{@payable_claim['court_id']}"
       end
     end
 
     def youth_court
-      @payment_request_claim['youth_court'] ? 'Yes' : 'No'
+      @payable_claim['youth_court'] ? 'Yes' : 'No'
     end
 
     def work_completed_date
-      DateTime.parse(@payment_request_claim['work_completed_date']).to_fs(:stamp)
+      DateTime.parse(@payable_claim['work_completed_date']).to_fs(:stamp)
     end
 
     def original_claim
@@ -100,7 +100,7 @@ module Payments
     end
 
     def submission_id
-      @payment_request_claim['submission_id']
+      @payable_claim['submission_id']
     end
 
     def original_claim_row

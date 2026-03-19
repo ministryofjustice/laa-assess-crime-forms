@@ -3,7 +3,7 @@ module Payments
     private
 
     def claim
-      @claim ||= AppStoreClient.new.get_payment_request_claim(payment_request_claim_id)
+      @claim ||= AppStoreClient.new.get_payable_claim(payable_claim_id)
                                .deep_stringify_keys.with_indifferent_access
     end
   end

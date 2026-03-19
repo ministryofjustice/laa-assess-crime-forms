@@ -9,7 +9,7 @@ module Payments
     private
 
     def claim
-      loaded_claim = Claim.load_from_app_store(payment_request_claim_id)
+      loaded_claim = Claim.load_from_app_store(payable_claim_id)
       @claim ||= BaseViewModel.build(:payment_claim_details, loaded_claim).to_h.with_indifferent_access
     end
 

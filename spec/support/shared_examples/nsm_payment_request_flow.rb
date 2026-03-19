@@ -12,7 +12,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
       'supplemental' => 'non_standard_mag_supplemental'
     }.fetch(type_suffix, 'non_standard_magistrate')
   end
-  let(:get_claim_endpoint) { 'https://appstore.example.com/v1/payment_request_claims/1234' }
+  let(:get_claim_endpoint) { 'https://appstore.example.com/v1/payable_claims/1234' }
 
   let(:linked_claim_result) do
     [

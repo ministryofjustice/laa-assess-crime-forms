@@ -70,7 +70,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     before do
       start_new_payment_request
       stub_search(linked_claim_endpoint, search_params, linked_claim_result)
-      stub_get_claim('https://appstore.example.com/v1/payment_request_claims/1234')
+      stub_get_claim('https://appstore.example.com/v1/payable_claims/1234')
       choose_claim_type('Assigned counsel')
       expect(page).to have_content('Search for the non-standard magistrates claim')
       expect(page).to have_button('Create a new record')
@@ -159,7 +159,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     before do
       start_new_payment_request
       stub_search(linked_claim_endpoint, empty_search_params, [])
-      stub_get_claim('https://appstore.example.com/v1/payment_request_claims/1234')
+      stub_get_claim('https://appstore.example.com/v1/payable_claims/1234')
       choose_claim_type('Assigned counsel')
       fill_in 'Find a claim', with: 'garbage'
       click_button 'Search'

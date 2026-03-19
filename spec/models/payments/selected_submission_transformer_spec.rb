@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Payments::SelectedSubmissionTransformer do
-  subject(:transformer) { described_class.new(payment_request_claim_id, multi_step_form_session) }
+  subject(:transformer) { described_class.new(payable_claim_id, multi_step_form_session) }
 
-  let(:payment_request_claim_id) { 'crm7-abc' }
+  let(:payable_claim_id) { 'crm7-abc' }
   let(:multi_step_form_session) { {} }
   let(:claim_record) { instance_double(Claim) }
   let(:view_model) { double('PaymentClaimDetails', to_h: view_model_hash) }
@@ -37,7 +37,7 @@ RSpec.describe Payments::SelectedSubmissionTransformer do
   let(:view_model_hash) { base_view_model_hash.deep_dup }
 
   before do
-    allow(Claim).to receive(:load_from_app_store).with(payment_request_claim_id).and_return(claim_record)
+    allow(Claim).to receive(:load_from_app_store).with(payable_claim_id).and_return(claim_record)
     allow(BaseViewModel).to receive(:build).with(:payment_claim_details, claim_record).and_return(view_model)
   end
 
@@ -60,7 +60,7 @@ RSpec.describe Payments::SelectedSubmissionTransformer do
     it 'loads the claim from the app store and payment claim details view model' do
       transformer.transform
 
-      expect(Claim).to have_received(:load_from_app_store).with(payment_request_claim_id).at_least(:once)
+      expect(Claim).to have_received(:load_from_app_store).with(payable_claim_id).at_least(:once)
       expect(BaseViewModel).to have_received(:build).with(:payment_claim_details, claim_record).at_least(:once)
     end
 
