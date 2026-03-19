@@ -47,11 +47,7 @@ module Payments
     end
 
     def court
-      if @payable_claim['court_id'] == 'custom'
-        "#{@payable_claim['court_name']} - N/A"
-      else
-        "#{@payable_claim['court_name']} - #{@payable_claim['court_id']}"
-      end
+      @payable_claim['court']
     end
 
     def youth_court
