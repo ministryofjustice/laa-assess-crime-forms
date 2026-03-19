@@ -6,7 +6,7 @@ module Payments
       @row = row
     end
 
-    def payment_request_claim_id
+    def payable_claim_id
       row[:id]
     end
 

@@ -11,15 +11,15 @@ module Payments
     end
 
     def laa_reference
-      row[:payment_request_claim][:laa_reference]
+      row[:payable_claim][:laa_reference]
     end
 
-    def payment_request_claim_id
-      row[:payment_request_claim][:id]
+    def payable_claim_id
+      row[:payable_claim][:id]
     end
 
     def defendant_last_name
-      row[:payment_request_claim][:client_last_name]
+      row[:payable_claim][:client_last_name]
     end
 
     def request_type
@@ -27,7 +27,7 @@ module Payments
     end
 
     def firm_name
-      row[:payment_request_claim][:counsel_firm_name] || row[:payment_request_claim][:solicitor_firm_name]
+      row[:payable_claim][:counsel_firm_name] || row[:payable_claim][:solicitor_firm_name]
     end
 
     def submitted_at

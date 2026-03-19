@@ -156,11 +156,11 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     end
   end
 
-  describe '#get_payment_request_claim' do
-    let(:payment_request_claim_id) { SecureRandom.uuid }
+  describe '#get_payable_claim' do
+    let(:payable_claim_id) { SecureRandom.uuid }
 
     it 'returns the data' do
-      expect(subject.get_payment_request_claim(payment_request_claim_id))
+      expect(subject.get_payable_claim(payable_claim_id))
         .to eq({ 'some' => 'data' })
     end
 
@@ -168,8 +168,8 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       let(:code) { 501 }
 
       it 'raises an error' do
-        expect { subject.get_payment_request_claim(payment_request_claim_id) }.to raise_error(
-          "Unexpected response from AppStore - status 501 for retrieval of PaymentRequestClaim: #{payment_request_claim_id}"
+        expect { subject.get_payable_claim(payable_claim_id) }.to raise_error(
+          "Unexpected response from AppStore - status 501 for retrieval of PayableClaim: #{payable_claim_id}"
         )
       end
     end
