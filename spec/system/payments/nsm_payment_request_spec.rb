@@ -108,6 +108,21 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       end
     end
 
+    describe 'change claim details link redirects to claim details' do
+      it 'completes claimed costs and proceeds' do
+        start_new_payment_request
+        choose_claim_type("Non-Standard Magistrates'")
+        select_office_code
+        fill_claim_details
+        fill_claimed_costs
+        fill_allowed_costs
+        within('li.govuk-summary-card__action', text: 'Claim details') do
+          click_link 'Change'
+        end
+        expect(page).to have_title('Claim details')
+      end
+    end
+
     describe 'submit payment success' do
       it 'submits payment and redirects to payment confirmation' do
         start_new_payment_request

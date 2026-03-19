@@ -115,7 +115,12 @@ module Payments
       end
 
       def change_link_controller_path
-        "payments/steps/nsm/#{section}"
+        case session_answers['request_type']
+        when 'non_standard_magistrate'
+          "payments/steps/nsm/#{section}"
+        else
+          'payments/steps/date_received'
+        end
       end
 
       def read_only?
