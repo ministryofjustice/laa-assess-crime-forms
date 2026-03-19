@@ -6,12 +6,14 @@ RSpec.describe Payments::SelectedClaimTransformer do
   let(:payable_claim_id) { 'abc-123' }
   let(:multi_step_form_session) { {} }
   let(:app_store_client) { instance_double(AppStoreClient) }
+  let(:court) { 'Acton - C2723' }
 
   let(:base_claim_response) do
     {
       'id' => 'abc-123',
       'type' => 'NsmClaim',
       'laa_reference' => 'LAA-qWRbvm',
+      'court' => court,
       'nsm_claim' => {
         'id' => 'nsm-456',
         'laa_reference' => 'LAA-linked'
@@ -52,6 +54,8 @@ RSpec.describe Payments::SelectedClaimTransformer do
       result = transformer.transform
 
       expect(result[:laa_reference]).to eq('LAA-qWRbvm')
+      expect(result[:court_id]).to eq('C2723')
+      expect(result[:court_name]).to eq('ACTON')
       expect(result[:claimed_profit_cost]).to eq(200)
       expect(result[:original_claimed_profit_cost]).to eq(200)
       expect(result[:claimed_travel_cost]).to eq(75)
@@ -113,6 +117,17 @@ RSpec.describe Payments::SelectedClaimTransformer do
         expect(result[:laa_reference]).to eq('LAA-qWRbvm')
         expect(result).not_to have_key(:payment_requests)
         expect(result).not_to have_key(:original_claimed_total)
+      end
+    end
+
+    context 'when the court is custom' do
+      let(:court) { 'Custom court - N/A' }
+
+      it 'returns the formatted claim with custom court values' do
+        result = transformer.transform
+
+        expect(result[:court_id]).to eq(I18n.t('laa_crime_forms_common.shared.custom'))
+        expect(result[:court_name]).to eq('Custom court')
       end
     end
   end
