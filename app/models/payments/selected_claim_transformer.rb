@@ -8,7 +8,7 @@ module Payments
 
     def raw_claim
       @raw_claim ||= AppStoreClient.new.get_payable_claim(payable_claim_id)
-                                    .deep_stringify_keys.with_indifferent_access
+                                   .deep_stringify_keys.with_indifferent_access
     end
 
     def court_item
