@@ -3,7 +3,11 @@ module Payments
     private
 
     def claim
-      @claim ||= raw_claim.merge('court_name' => court_name, 'court_id' => court_id).except('court')
+      @claim ||= if raw_claim['type' == 'NsmClaim']
+                   raw_claim.merge('court_name' => court_name, 'court_id' => court_id).except('court')
+                 else
+                   raw_claim
+                 end
     end
 
     def raw_claim
