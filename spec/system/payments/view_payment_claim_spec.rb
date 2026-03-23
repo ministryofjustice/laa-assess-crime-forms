@@ -87,7 +87,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'solicitor_firm_name' => 'The Firm',
         'stage_reached' => 'PROG',
         'work_completed_date' => '2025-07-07 10:31:07 UTC',
-        'court' => court,
+        'court_name' => court_name,
+        'court_id' => court_id,
         'number_of_attendances' => 1,
         'number_of_defendants' => 2,
         'defendant_first_name' => 'Ava',
@@ -103,7 +104,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'assigned_counsel_claim' => related_claim
       }
     end
-    let(:court) { 'Acton - C2723' }
+    let(:court_name) { 'Acton' }
+    let(:court_id) { 'C2723' }
 
     before do
       allow_any_instance_of(AppStoreClient).to receive(:get_payable_claim)
@@ -183,7 +185,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
     end
 
     context 'when there is a custom court name' do
-      let(:court) { 'Custom court - N/A' }
+      let(:court_name) { 'Custom court' }
+      let(:court_id) { 'custom' }
 
       it 'shows claim details tab' do
         click_on 'Claim details'
