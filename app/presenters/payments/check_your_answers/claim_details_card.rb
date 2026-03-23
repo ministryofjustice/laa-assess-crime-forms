@@ -115,11 +115,19 @@ module Payments
       end
 
       def change_link_controller_path
-        "payments/steps/nsm/#{section}"
+        if linked_claim?
+          'payments/steps/claim_search'
+        else
+          'payments/steps/office_code_search'
+        end
+      end
+
+      def change_link_query_params
+        { return_to: 'check_your_answers' }
       end
 
       def read_only?
-        session_answers['linked_laa_reference'].present?
+        false
       end
 
       private
@@ -129,6 +137,17 @@ module Payments
           "#{session_answers['court_name']} - #{I18n.t('laa_crime_forms_common.shared.na')}"
         else
           "#{session_answers['court_name']} - #{session_answers['court_id']}"
+        end
+      end
+
+      def linked_claim?
+        case session_answers['request_type']
+        when 'non_standard_magistrate', 'breach_of_injunction'
+          session_answers['linked_laa_reference'].present?
+        when 'non_standard_mag_supplemental', 'non_standard_mag_appeal', 'non_standard_mag_amendment'
+          session_answers['laa_reference'].present?
+        else
+          false
         end
       end
     end

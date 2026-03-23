@@ -38,6 +38,15 @@ module Decisions
     def ac_amendment
       @ac_amendment ||= claim_type == Payments::ClaimType::AC_AMENDMENT.to_s
     end
+
+    def return_to_cya?
+      multi_step_form_session['return_to'] == 'check_your_answers'
+    end
+
+    def return_to_check_your_answers!
+      multi_step_form_session['return_to'] = nil
+      Decisions::DecisionTree::CHECK_YOUR_ANSWERS
+    end
     # :nocov:
   end
 end
