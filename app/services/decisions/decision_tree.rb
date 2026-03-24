@@ -48,7 +48,7 @@ module Decisions
       .goto(edit: DATE_RECEIVED)
       .when(-> { ac })
       .goto(edit: AC_CLAIM_DETAILS)
-      .when(-> { nsm || nsm_appeal || nsm_amendment })
+      .when(-> { nsm || nsm_appeal || nsm_amendment || nsm_supplemental })
       .goto(edit: NSM_CLAIM_DETAILS)
     from(:claim_search)
       .when(-> { (ac_appeal || ac_amendment || ac) && multi_step_form_session.no_existing_ref? })
