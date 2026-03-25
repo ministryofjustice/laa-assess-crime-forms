@@ -170,6 +170,39 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
   end
 
   describe 'supplemental', :stub_oauth_token do
+    let(:linked_claim_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
+    let(:empty_search_params) do
+      {
+        page: 1,
+        per_page: 20,
+        sort_by: 'created_at',
+        sort_direction: 'descending',
+        query: 'garbage',
+        request_type: 'non_standard_magistrate',
+        claim_type: 'non_standard_mag_supplemental'
+      }
+    end
+
+    it 'goes to NSM claim details when creating a new supplemental record' do
+      start_new_payment_request
+      stub_search(linked_claim_endpoint, empty_search_params, [], 0)
+      choose_claim_type("Non-Standard Magistrates' - supplemental")
+      fill_in 'Find a claim', with: 'garbage'
+      click_button 'Search'
+      expect(page).to have_content('There are no results that match the search criteria')
+
+      click_button 'Create a new record'
+      select_office_code
+      expect(page).to have_title('Claim details')
+
+      fill_claim_details
+      expect(page).to have_title('Claimed costs')
+      fill_claimed_costs
+      expect(page).to have_title('Allowed costs')
+      fill_allowed_costs
+      expect(page).to have_title('Check your answers')
+    end
+
     it_behaves_like 'NSM payment request flow', 'supplemental'
   end
 end
