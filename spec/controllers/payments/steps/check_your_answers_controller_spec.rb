@@ -30,6 +30,16 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
         expect(response).to redirect_to(your_nsm_claims_path)
       end
     end
+
+    context 'when request_type is unknown' do
+      let(:request_type) { 'unknown_request_type' }
+
+      it 'raises an error from the cost summary lookup' do
+        expect do
+          get :edit, params: { id: submission_id }
+        end.to raise_error(StandardError, 'Unknown request type: unknown_request_type')
+      end
+    end
   end
 
   {

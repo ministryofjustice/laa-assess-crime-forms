@@ -33,4 +33,16 @@ RSpec.describe Payments::Steps::ClaimSearchForm, type: :model do
       expect(form.executed?).to be true
     end
   end
+
+  describe '#conduct_search' do
+    it 'captures errors and adds a base error when the search fails' do
+      error = StandardError.new('boom')
+      allow(AppStoreClient).to receive_message_chain(:new, :search).and_raise(error)
+      allow(Sentry).to receive(:capture_exception)
+
+      expect(form.send(:conduct_search)).to be_nil
+      expect(Sentry).to have_received(:capture_exception).with(error)
+      expect(form.errors[:base]).to include('Something went wrong trying to perform this search')
+    end
+  end
 end

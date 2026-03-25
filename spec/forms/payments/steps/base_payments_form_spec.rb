@@ -86,4 +86,10 @@ RSpec.describe Payments::Steps::BasePaymentsForm do
   describe '#to_key' do
     it { expect(subject.to_key).to be_nil }
   end
+
+  describe '#persist!' do
+    it 'raises not implemented' do
+      expect { subject.send(:persist!) }.to raise_error('Subclasses of BaseFormObject need to implement #persist!')
+    end
+  end
 end
