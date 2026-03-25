@@ -41,5 +41,17 @@ RSpec.describe Payments::CheckYourAnswers::AcClaimDetailsCard do
         expect(card.change_link_controller_path).to eq('payments/steps/office_code_search')
       end
     end
+
+    context 'when the request type is unsupported' do
+      let(:session_answers) do
+        {
+          'request_type' => 'unsupported_request_type'
+        }
+      end
+
+      it 'routes change to office code search' do
+        expect(card.change_link_controller_path).to eq('payments/steps/office_code_search')
+      end
+    end
   end
 end
