@@ -208,8 +208,7 @@ module PaymentsHelpers
 
   def choose_claim_type(label_text)
     within_fieldset('Claim type') do
-      # Click the *exact* label in this fieldset only
-      find('label', text: /\A#{Regexp.escape(label_text)}\z/).click
+      choose(label_text, allow_label_click: true)
     end
     click_button 'Continue'
   end
