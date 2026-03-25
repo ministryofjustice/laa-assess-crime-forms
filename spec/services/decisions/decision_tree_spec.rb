@@ -51,22 +51,6 @@ RSpec.describe Decisions::DecisionTree do
     end
 
     context 'from :date_received' do
-      context 'when returning from check your answers' do
-        let(:multi_step_form_session) do
-          {
-            'request_type' => Payments::ClaimType::NSM_APPEAL.to_s,
-            'return_to' => 'check_your_answers'
-          }
-        end
-
-        it 'returns to check your answers and clears the flag' do
-          destination = described_class.new(form, as: :date_received).destination
-
-          expect(destination).to eq(action: :edit, controller: Decisions::DecisionTree::CHECK_YOUR_ANSWERS)
-          expect(multi_step_form_session['return_to']).to be_nil
-        end
-      end
-
       context 'when NSM supplemental' do
         let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s } }
 
@@ -90,22 +74,6 @@ RSpec.describe Decisions::DecisionTree do
     end
 
     context 'from :nsm_claim_details' do
-      context 'when returning from check your answers' do
-        let(:multi_step_form_session) do
-          {
-            'request_type' => Payments::ClaimType::NSM.to_s,
-            'return_to' => 'check_your_answers'
-          }
-        end
-
-        it 'returns to check your answers and clears the flag' do
-          destination = described_class.new(form, as: :nsm_claim_details).destination
-
-          expect(destination).to eq(action: :edit, controller: Decisions::DecisionTree::CHECK_YOUR_ANSWERS)
-          expect(multi_step_form_session['return_to']).to be_nil
-        end
-      end
-
       {
         'NSM_APPEAL'    => Payments::ClaimType::NSM_APPEAL,
         'NSM_AMENDMENT' => Payments::ClaimType::NSM_AMENDMENT
@@ -140,22 +108,6 @@ RSpec.describe Decisions::DecisionTree do
     it_behaves_like 'a generic decision',
                     from: :nsm_allowed_costs,
                     goto: { action: :edit, controller: Decisions::DecisionTree::CHECK_YOUR_ANSWERS }
-
-    context 'from :ac_claim_details when returning from check your answers' do
-      let(:multi_step_form_session) do
-        {
-          'request_type' => Payments::ClaimType::AC.to_s,
-          'return_to' => 'check_your_answers'
-        }
-      end
-
-      it 'returns to check your answers and clears the flag' do
-        destination = described_class.new(form, as: :ac_claim_details).destination
-
-        expect(destination).to eq(action: :edit, controller: Decisions::DecisionTree::CHECK_YOUR_ANSWERS)
-        expect(multi_step_form_session['return_to']).to be_nil
-      end
-    end
 
     it_behaves_like 'a generic decision',
                     from: :check_your_answers,

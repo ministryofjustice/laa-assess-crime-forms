@@ -42,12 +42,4 @@ RSpec.describe Payments::CheckYourAnswers::AcClaimDetailsCard do
       end
     end
   end
-
-  describe '#change_link_query_params' do
-    let(:session_answers) { { 'request_type' => 'assigned_counsel' } }
-
-    it 'adds the return_to flag' do
-      expect(card.change_link_query_params).to eq(return_to: 'check_your_answers')
-    end
-  end
 end

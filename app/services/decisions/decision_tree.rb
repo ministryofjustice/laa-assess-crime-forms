@@ -30,8 +30,6 @@ module Decisions
       .goto(edit: CLAIM_SEARCH)
 
     from(:ac_claim_details)
-      .when(-> { return_to_cya? })
-      .goto(edit: -> { return_to_check_your_answers! })
       .when(-> { ac })
       .goto(edit: AC_CLAIMED_COSTS)
       .when(-> { ac_appeal || ac_amendment })
@@ -60,8 +58,6 @@ module Decisions
       .goto(edit: DATE_RECEIVED)
 
     from(:date_received)
-      .when(-> { return_to_cya? })
-      .goto(edit: -> { return_to_check_your_answers! })
       .when(-> { nsm_supplemental })
       .goto(edit: NSM_CLAIMED_COSTS)
       .when(-> { nsm_appeal || nsm_amendment })
@@ -70,8 +66,6 @@ module Decisions
       .goto(edit: AC_ALLOWED_COSTS)
 
     from(:nsm_claim_details)
-      .when(-> { return_to_cya? })
-      .goto(edit: -> { return_to_check_your_answers! })
       .when(-> { nsm_appeal || nsm_amendment })
       .goto(edit: NSM_ALLOWED_COSTS)
       .when(-> { nsm || boi || nsm_supplemental })

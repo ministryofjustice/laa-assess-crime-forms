@@ -36,17 +36,4 @@ RSpec.describe Payments::Steps::ClaimSearchController, type: :controller do
         .to raise_error(StandardError, 'Unknown request type for: unknown_type')
     end
   end
-
-  describe 'GET #edit' do
-    before do
-      allow(fake_session).to receive(:answers).and_return({})
-      allow(fake_session).to receive(:[]=)
-    end
-
-    it 'stores return_to in the multi step session when present' do
-      get :edit, params: { id: SecureRandom.uuid, return_to: 'check_your_answers' }
-
-      expect(fake_session).to have_received(:[]=).with('return_to', 'check_your_answers')
-    end
-  end
 end

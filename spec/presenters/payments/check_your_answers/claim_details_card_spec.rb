@@ -43,14 +43,6 @@ RSpec.describe Payments::CheckYourAnswers::ClaimDetailsCard do
     end
   end
 
-  describe '#change_link_query_params' do
-    let(:session_answers) { { 'request_type' => 'non_standard_magistrate' } }
-
-    it 'adds the return_to flag' do
-      expect(card.change_link_query_params).to eq(return_to: 'check_your_answers')
-    end
-  end
-
   describe '#read_only?' do
     let(:session_answers) do
       {

@@ -2,7 +2,6 @@ module Payments
   module Steps
     class OfficeCodeSearchController < BaseController
       def edit
-        store_return_to_from_params
         @form_object = Payments::Steps::OfficeCodeSearchForm.build(multi_step_form_session.answers, multi_step_form_session:)
       end
 

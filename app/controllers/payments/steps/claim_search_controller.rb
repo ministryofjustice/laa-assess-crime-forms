@@ -10,7 +10,6 @@ module Payments
       end
 
       def edit
-        store_return_to_from_params
         @form_object = Payments::Steps::SelectedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(default_params)
 

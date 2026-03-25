@@ -18,12 +18,6 @@ module Payments
                                                                          session_id: id)
       end
 
-      def store_return_to_from_params
-        return if params[:return_to].blank?
-
-        multi_step_form_session['return_to'] = params[:return_to]
-      end
-
       # :nocov:
       def parent_claim_class
         parent_scope = multi_step_form_session['request_type']
