@@ -106,6 +106,29 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
         fill_allowed_costs
         expect(page).to have_title('Check your answers')
       end
+
+      it 'returns to check your answers after changing claim details' do
+        start_new_payment_request
+        choose_claim_type("Non-Standard Magistrates'")
+        select_office_code
+        fill_claim_details
+        fill_claimed_costs
+        fill_allowed_costs
+
+        expect(page).to have_title('Check your answers')
+
+        within('.govuk-summary-card', text: 'Claim details') do
+          click_link 'Change'
+        end
+
+        expect(page).to have_content("What is the solicitor's firm account number?")
+
+        select_office_code
+        fill_claim_details(defendant_last_name: 'Rubble')
+
+        expect(page).to have_title('Check your answers')
+        expect(page).to have_content('Rubble')
+      end
     end
 
     describe 'submit payment success' do
