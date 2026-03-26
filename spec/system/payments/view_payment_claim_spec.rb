@@ -87,8 +87,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'solicitor_firm_name' => 'The Firm',
         'stage_reached' => 'PROG',
         'work_completed_date' => '2025-07-07 10:31:07 UTC',
-        'court_id' => court_id,
         'court_name' => court_name,
+        'court_id' => court_id,
         'number_of_attendances' => 1,
         'number_of_defendants' => 2,
         'defendant_first_name' => 'Ava',
@@ -104,8 +104,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'assigned_counsel_claim' => related_claim
       }
     end
-    let(:court_name) { 'ACTON' }
-    let(:court_id) { 'A13' }
+    let(:court_name) { 'Acton' }
+    let(:court_id) { 'C2723' }
 
     before do
       allow_any_instance_of(AppStoreClient).to receive(:get_payable_claim)
@@ -155,7 +155,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           'Number of attendances', '1',
           'Hearing outcome code', 'CP02 - Change of solicitor',
           'Matter type', '4 - Robbery',
-          'Court', 'ACTON - A13',
+          'Court', 'Acton - C2723',
           'Youth court matter', 'Yes',
           'Date work was completed', '7 July 2025'
         ]
