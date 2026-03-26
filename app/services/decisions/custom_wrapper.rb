@@ -41,10 +41,11 @@ module Decisions
     # :nocov:
 
     def return_to_cya?
-      m = multi_step_form_session
-      return m.return_to_cya? if m.respond_to?(:return_to_cya?)
+      decision_context[:return_to_cya].present?
+    end
 
-      m.is_a?(Hash) && m['return_to_cya'].present?
+    def decision_context
+      @decision_context || {}
     end
   end
 end

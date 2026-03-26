@@ -1,5 +1,5 @@
-RSpec.shared_examples 'a generic decision' do |from:, goto:, additional_param: nil|
-  subject { described_class.new(form, as: from) }
+RSpec.shared_examples 'a generic decision' do |from:, goto:, additional_param: nil, context: nil|
+  subject { described_class.new(form, as: from, context: context || {}) }
 
   context "when step is #{from}" do
     it "moves to #{goto.inspect}" do

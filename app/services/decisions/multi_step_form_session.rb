@@ -47,18 +47,6 @@ module Decisions
       ].any?(&:blank?)
     end
 
-    def return_to_cya?
-      data['return_to_cya'].present?
-    end
-
-    def mark_return_to_cya!
-      data['return_to_cya'] = true
-    end
-
-    def clear_return_to_cya!
-      data.delete('return_to_cya')
-    end
-
     private
 
     def create!

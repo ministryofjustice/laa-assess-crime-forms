@@ -6,6 +6,7 @@
       <%= govuk_error_summary(@form_object) %>
       <%= "use 1A123B for dev" if Rails.env.development? %>
       <%= step_form @form_object do |f| %>
+        <%= hidden_field_tag :return_to_cya, 1 if params[:return_to_cya].present? %>
         <%= f.govuk_text_field :solicitor_office_code, label: { size: 'xl', text: t('.solicitor_office_code') }, width: 20 %>
         <%= f.continue_button(secondary: false) %>
       <% end %>

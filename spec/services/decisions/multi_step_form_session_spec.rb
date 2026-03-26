@@ -50,18 +50,4 @@ RSpec.describe Decisions::MultiStepFormSession do
       expect(session.keys).to contain_exactly(key)
     end
   end
-
-  describe 'return to check your answers flag' do
-    it 'is false by default' do
-      expect(multi_step_form_session).not_to be_return_to_cya
-    end
-
-    it 'marks and clears' do
-      multi_step_form_session.mark_return_to_cya!
-      expect(multi_step_form_session).to be_return_to_cya
-
-      multi_step_form_session.clear_return_to_cya!
-      expect(multi_step_form_session).not_to be_return_to_cya
-    end
-  end
 end

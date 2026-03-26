@@ -18,6 +18,22 @@ module Payments
                                                                          session_id: id)
       end
 
+      def decision_context
+        return {} unless return_to_cya_requested?
+
+        { return_to_cya: true }
+      end
+
+      # :nocov:
+      def decorate_decision_destination(destination)
+        return destination unless return_to_cya_requested?
+        return destination unless destination[:action] == :edit
+        return destination if destination[:controller] == Decisions::DecisionTree::CHECK_YOUR_ANSWERS
+
+        destination.merge(return_to_cya: 1)
+      end
+      # :nocov:
+
       # :nocov:
       def parent_claim_class
         parent_scope = multi_step_form_session['request_type']
@@ -34,6 +50,14 @@ module Payments
       # :nocov:
       def authorized
         authorize(:payment, :update?)
+      end
+
+      def return_to_cya_requested?
+        return true if params[:return_to_cya].present?
+
+        params.to_unsafe_h.values.any? do |value|
+          value.is_a?(Hash) && value['return_to_cya'].present?
+        end
       end
     end
   end

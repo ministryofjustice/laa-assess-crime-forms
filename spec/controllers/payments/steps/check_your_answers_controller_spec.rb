@@ -14,7 +14,6 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
     allow(fake_session).to receive(:[]).with('request_type').and_return(request_type)
     allow(fake_session).to receive(:answers).and_return(current_answers)
     allow(fake_session).to receive(:answers=) { |new_answers| current_answers.replace(new_answers) }
-    allow(fake_session).to receive(:clear_return_to_cya!)
 
     allow(controller).to receive_messages(multi_step_form_session: fake_session, current_multi_step_form_session: fake_session)
     allow(Payments::Steps::CheckYourAnswersForm).to receive(:build).and_return(form_object)
@@ -22,12 +21,6 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
   end
 
   describe 'GET #edit' do
-    it 'clears the return-to-CYA flag' do
-      get :edit, params: { id: submission_id }
-
-      expect(fake_session).to have_received(:clear_return_to_cya!)
-    end
-
     context 'when request_type is missing' do
       let(:request_type) { nil }
 
@@ -52,6 +45,15 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
         expect(klass).to receive(:new).with(answers)
         get :edit, params: { id: submission_id }
       end
+    end
+  end
+
+  context 'when request_type is unknown' do
+    let(:request_type) { 'unexpected' }
+
+    it 'raises an error' do
+      expect { get :edit, params: { id: submission_id } }
+        .to raise_error(StandardError, 'Unknown request type: unexpected')
     end
   end
 

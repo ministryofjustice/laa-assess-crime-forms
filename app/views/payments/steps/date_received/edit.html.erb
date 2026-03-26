@@ -6,6 +6,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
+      <%= hidden_field_tag :return_to_cya, 1 if params[:return_to_cya].present? %>
       <div class="govuk-form-group">
         <div class="govuk-date-input__item">
           <div class="moj-datepicker" data-module="moj-date-picker">

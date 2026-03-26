@@ -42,9 +42,12 @@ RSpec.describe Payments::CheckYourAnswers::ClaimDetailsCard do
       end
     end
 
-    it 'includes return_to_cya in change link options' do
-      expect(described_class.new('request_type' => 'non_standard_magistrate').change_link_url_options)
-        .to eq({ return_to_cya: 1 })
+    context 'when request_type is unrecognized' do
+      let(:session_answers) { { 'request_type' => 'unknown' } }
+
+      it 'routes to office code search' do
+        expect(card.change_link_controller_path).to eq('payments/steps/office_code_search')
+      end
     end
   end
 
