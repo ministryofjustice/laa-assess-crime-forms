@@ -51,6 +51,16 @@ RSpec.describe Decisions::DecisionTree do
     end
 
     context 'from :date_received' do
+      context 'when returning to check your answers from claim details change' do
+        let(:multi_step_form_session) do
+          { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s, 'return_to_cya' => true }
+        end
+
+        it_behaves_like 'a generic decision',
+                        from: :date_received,
+                        goto: { action: :edit, controller: Decisions::DecisionTree::CHECK_YOUR_ANSWERS }
+      end
+
       context 'when NSM supplemental' do
         let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s } }
 
@@ -74,6 +84,16 @@ RSpec.describe Decisions::DecisionTree do
     end
 
     context 'from :nsm_claim_details' do
+      context 'when returning to check your answers from claim details change' do
+        let(:multi_step_form_session) do
+          { 'request_type' => Payments::ClaimType::NSM.to_s, 'return_to_cya' => true }
+        end
+
+        it_behaves_like 'a generic decision',
+                        from: :nsm_claim_details,
+                        goto: { action: :edit, controller: Decisions::DecisionTree::CHECK_YOUR_ANSWERS }
+      end
+
       {
         'NSM_APPEAL'    => Payments::ClaimType::NSM_APPEAL,
         'NSM_AMENDMENT' => Payments::ClaimType::NSM_AMENDMENT
@@ -97,6 +117,39 @@ RSpec.describe Decisions::DecisionTree do
           it_behaves_like 'a generic decision',
                           from: :nsm_claim_details,
                           goto: { action: :edit, controller: Decisions::DecisionTree::NSM_CLAIMED_COSTS }
+        end
+      end
+    end
+
+    context 'from :ac_claim_details' do
+      context 'when returning to check your answers from claim details change' do
+        let(:multi_step_form_session) do
+          { 'request_type' => Payments::ClaimType::AC.to_s, 'return_to_cya' => true }
+        end
+
+        it_behaves_like 'a generic decision',
+                        from: :ac_claim_details,
+                        goto: { action: :edit, controller: Decisions::DecisionTree::CHECK_YOUR_ANSWERS }
+      end
+
+      context 'when AC' do
+        let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::AC.to_s } }
+
+        it_behaves_like 'a generic decision',
+                        from: :ac_claim_details,
+                        goto: { action: :edit, controller: Decisions::DecisionTree::AC_CLAIMED_COSTS }
+      end
+
+      {
+        'AC_APPEAL'    => Payments::ClaimType::AC_APPEAL,
+        'AC_AMENDMENT' => Payments::ClaimType::AC_AMENDMENT
+      }.each do |label, request_type|
+        context "when #{label}" do
+          let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
+
+          it_behaves_like 'a generic decision',
+                          from: :ac_claim_details,
+                          goto: { action: :edit, controller: Decisions::DecisionTree::AC_ALLOWED_COSTS }
         end
       end
     end

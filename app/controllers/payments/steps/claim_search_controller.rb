@@ -10,6 +10,7 @@ module Payments
       end
 
       def edit
+        multi_step_form_session.mark_return_to_cya! if params[:return_to_cya].present?
         @form_object = Payments::Steps::SelectedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(default_params)
 

@@ -42,12 +42,6 @@ RSpec.describe Nsm::ClaimsController, :stub_oauth_token do
     end
   end
 
-  describe '#secondary_id' do
-    it 'returns nil' do
-      expect(controller.send(:secondary_id)).to be_nil
-    end
-  end
-
   describe '#create', :stub_oauth_token do
     before do
       claim

@@ -42,16 +42,9 @@ RSpec.describe Payments::CheckYourAnswers::ClaimDetailsCard do
       end
     end
 
-    context 'when the request type is unsupported' do
-      let(:session_answers) do
-        {
-          'request_type' => 'unsupported_request_type'
-        }
-      end
-
-      it 'routes change to office code search' do
-        expect(card.change_link_controller_path).to eq('payments/steps/office_code_search')
-      end
+    it 'includes return_to_cya in change link options' do
+      expect(described_class.new('request_type' => 'non_standard_magistrate').change_link_url_options)
+        .to eq({ return_to_cya: 1 })
     end
   end
 

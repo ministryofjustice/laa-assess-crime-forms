@@ -47,6 +47,10 @@ module Payments
         :edit
       end
 
+      def change_link_url_options
+        {}
+      end
+
       def read_only?
         true
       end

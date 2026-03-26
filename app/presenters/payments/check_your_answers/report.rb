@@ -86,8 +86,8 @@ module Payments
         [
           govuk_link_to(
             I18n.t('payments.steps.check_your_answers.edit.change'),
-            helper.url_for(controller: card.change_link_controller_path, action: card.change_link_controller_method,
-                           id: session_answers['id'], only_path: true)
+            helper.url_for({ controller: card.change_link_controller_path, action: card.change_link_controller_method,
+                             id: session_answers['id'], only_path: true }.merge(card.change_link_url_options))
           ),
         ]
       end

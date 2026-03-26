@@ -39,5 +39,12 @@ module Decisions
       @ac_amendment ||= claim_type == Payments::ClaimType::AC_AMENDMENT.to_s
     end
     # :nocov:
+
+    def return_to_cya?
+      m = multi_step_form_session
+      return m.return_to_cya? if m.respond_to?(:return_to_cya?)
+
+      m.is_a?(Hash) && m['return_to_cya'].present?
+    end
   end
 end

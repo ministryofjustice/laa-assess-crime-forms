@@ -122,6 +122,10 @@ module Payments
         end
       end
 
+      def change_link_url_options
+        { return_to_cya: 1 }
+      end
+
       def read_only?
         false
       end

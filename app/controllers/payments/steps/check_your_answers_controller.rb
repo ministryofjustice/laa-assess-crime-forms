@@ -7,6 +7,7 @@ module Payments
       before_action :set_form_session, only: [:edit], if: -> { params[:submission] }
 
       def edit
+        multi_step_form_session.clear_return_to_cya!
         @form_object = Payments::Steps::CheckYourAnswersForm.build(payment_details,
                                                                    multi_step_form_session:)
         redirect_to your_nsm_claims_path and return if multi_step_form_session['request_type'].blank?
