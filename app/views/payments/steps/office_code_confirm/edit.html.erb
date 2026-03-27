@@ -5,6 +5,7 @@
     <% if @form_object.office_code_details.present? %>
       <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
       <%= step_form @form_object do |f| %>
+        <%= hidden_field_tag :return_to_cya, 1 if params[:return_to_cya].present? %>
         <%= govuk_error_summary(@form_object) %>
         <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
@@ -32,6 +33,7 @@
       <% end %>
     <% else %>
       <%= step_form @form_object do |f| %>
+        <%= hidden_field_tag :return_to_cya, 1 if params[:return_to_cya].present? %>
         <%= govuk_error_summary(@form_object) %>
       <% end %>
       <h1 class="govuk-heading-xl"><%= t('.no_results_found') %></h1>

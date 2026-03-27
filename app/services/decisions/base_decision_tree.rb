@@ -15,9 +15,10 @@ module Decisions
       end
     end
 
-    attr_reader :form_object, :step_name, :rule
+    attr_reader :context, :form_object, :step_name, :rule
 
-    def initialize(form_object, as:)
+    def initialize(form_object, as:, context: {})
+      @context = context || {}
       @form_object = form_object
       @step_name = as
       @rule = self.class.rules[as]
@@ -41,7 +42,11 @@ module Decisions
     private
 
     def wrapped_form_object
-      self.class::WRAPPER_CLASS.new(form_object)
+      @wrapped_form_object ||= begin
+        wrapped = self.class::WRAPPER_CLASS.new(form_object)
+        wrapped.instance_variable_set(:@decision_context, context)
+        wrapped
+      end
     end
 
     def resolve_procs(hash_or_proc, detected)

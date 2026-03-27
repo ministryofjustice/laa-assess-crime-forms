@@ -1,6 +1,10 @@
 <% title t('.page_title') %>
 <% step_header(path: previous_decision_step_path) %>
 <%= govuk_error_summary(@form_object) %>
+<% search_url_params = { anchor: 'search-results' } %>
+<% search_url_params[:return_to_cya] = 1 if params[:return_to_cya].present? %>
+<% search_table_params = { 'controller' => controller_path, 'action' => 'edit', 'payments_claim_search_form' => @search_form.attributes } %>
+<% search_table_params['return_to_cya'] = params[:return_to_cya] if params[:return_to_cya].present? %>
 
 <h1 class="govuk-heading-xl"><%= page_heading %></h1>
 <p><%= t('.body_line_1') %></p>
@@ -8,7 +12,8 @@
 <p><%= t('.body_line_3') %></p>
 
 <div class="moj-search moj-search--inline app-claim-search govuk-!-margin-bottom-5">
-  <%= form_with(url: new_payments_steps_claim_search_path(anchor: 'search-results'), method: :get, model: @search_form) do |f| %>
+  <%= form_with(url: new_payments_steps_claim_search_path(search_url_params), method: :get, model: @search_form) do |f| %>
+    <%= hidden_field_tag :return_to_cya, 1 if params[:return_to_cya].present? %>
     <div class="govuk-form-group" role="search">
       <%= f.govuk_text_field :query, class: "govuk-input moj-search__input", type: "search", label: { size: 's' } %>
     </div>
@@ -17,7 +22,7 @@
 </div>
 
 <div class="govuk-!-margin-top-3">
-  <%= govuk_button_to t('.new_record'), edit_payments_steps_office_code_search_path, method: :get, secondary: true %>
+  <%= govuk_button_to t('.new_record'), edit_payments_steps_office_code_search_path(return_to_cya: params[:return_to_cya]), method: :get, secondary: true %>
 </div>
 
 <p></p>
@@ -30,7 +35,7 @@
           <% %i[laa_reference office_code firm_name ufn defendant_last_name].each do |key| %>
             <%= table_header_with_link(key,
                                        'shared.search.table.header',
-                                       { 'controller' => controller_path, 'action' => 'edit',  'payments_claim_search_form' => @search_form.attributes },
+                                       search_table_params,
                                        @search_form.sort_by, @search_form.sort_direction, 'payments_claim_search_form') %>
                                    <% end %>
                                    <th scope="col" class="govuk-table__header"><%= t('shared.search.table.header.actions') %></th>
@@ -44,6 +49,7 @@
                 <%= search_result.laa_reference %>
                 <%= f.hidden_field(:payable_claim_id, value: search_result.payable_claim_id) %>
                 <%= f.hidden_field(:claim_type, value: search_result.claim_type) %>
+                <%= hidden_field_tag "#{f.object_name}[return_to_cya]", 1 if params[:return_to_cya].present? %>
               </td>
               <td class="govuk-table__cell">
                 <%= search_result.office_code %>

@@ -38,7 +38,8 @@ module Steps
 
     def process_form(form_object, opts)
       if form_object.save
-        redirect_to decision_tree_class.new(form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
+        decision_tree = decision_tree_class.new(form_object, as: opts.fetch(:as), context: decision_context)
+        redirect_to decorate_decision_destination(decision_tree.destination), flash: opts[:flash]
       else
         render opts.fetch(:render, :edit)
       end
@@ -49,5 +50,15 @@ module Steps
         .fetch(form_class.model_name.singular, {})
         .permit(form_class.attribute_names)
     end
+
+    # :nocov:
+    def decision_context
+      {}
+    end
+
+    def decorate_decision_destination(destination)
+      destination
+    end
+    # :nocov:
   end
 end

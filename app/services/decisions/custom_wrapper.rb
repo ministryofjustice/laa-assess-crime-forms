@@ -39,5 +39,13 @@ module Decisions
       @ac_amendment ||= claim_type == Payments::ClaimType::AC_AMENDMENT.to_s
     end
     # :nocov:
+
+    def return_to_cya?
+      decision_context[:return_to_cya].present?
+    end
+
+    def decision_context
+      @decision_context || {}
+    end
   end
 end

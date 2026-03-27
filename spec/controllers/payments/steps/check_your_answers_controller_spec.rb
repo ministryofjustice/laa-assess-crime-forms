@@ -48,6 +48,15 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
     end
   end
 
+  context 'when request_type is unknown' do
+    let(:request_type) { 'unexpected' }
+
+    it 'raises an error' do
+      expect { get :edit, params: { id: submission_id } }
+        .to raise_error(StandardError, 'Unknown request type: unexpected')
+    end
+  end
+
   describe 'submission-backed flows' do
     let(:refreshed_answers) { { 'id' => submission_id, 'claimed_total' => '25' } }
 

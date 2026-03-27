@@ -47,6 +47,12 @@ module Payments
         :edit
       end
 
+      # :nocov:
+      def change_link_url_options
+        {}
+      end
+      # :nocov:
+
       def read_only?
         true
       end

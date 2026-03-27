@@ -51,6 +51,15 @@ RSpec.describe Decisions::DecisionTree do
     end
 
     context 'from :date_received' do
+      context 'when returning to check your answers from claim details change' do
+        let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s } }
+
+        it_behaves_like 'a generic decision',
+                        from: :date_received,
+                        goto: { action: :edit, controller: Decisions::DecisionTree::CHECK_YOUR_ANSWERS },
+                        context: { return_to_cya: true }
+      end
+
       context 'when NSM supplemental' do
         let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s } }
 
