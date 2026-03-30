@@ -104,6 +104,24 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
       expect(page).to have_content('Payment request complete')
     end
+
+    it 'sends Claim details Change to claim search from CYA' do
+      expect(page).to have_title('Claim Details')
+      fill_ac_claim_details(linked_claim: true)
+
+      fill_in id: 'counsel_costs_net', with: '150.40'
+      fill_in id: 'counsel_costs_vat', with: '100'
+      click_on 'Continue'
+      fill_in id: 'counsel_costs_net', with: '100'
+      fill_in id: 'counsel_costs_vat', with: '70'
+      click_on 'Continue'
+
+      expect(page).to have_title('Check your answers')
+      within('.govuk-summary-card', text: 'Claim details') do
+        click_link 'Change'
+      end
+      expect(page).to have_title('Find a claim')
+    end
   end
 
   context 'Linked CRM7 submission exists' do
@@ -178,6 +196,34 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
       click_on 'Submit payment request'
       expect(page).to have_content('Payment request complete')
+    end
+
+    it 'sends Claim details Change to office code search and user can return to CYA' do
+      select_office_code
+      fill_ac_claim_details
+      fill_in id: 'counsel_costs_net', with: '150.40'
+      fill_in id: 'counsel_costs_vat', with: '100'
+      click_on 'Continue'
+      fill_in id: 'counsel_costs_net', with: '100'
+      fill_in id: 'counsel_costs_vat', with: '70'
+      click_on 'Continue'
+
+      expect(page).to have_title('Check your answers')
+      within('.govuk-summary-card', text: 'Claim details') do
+        click_link 'Change'
+      end
+      expect(page).to have_title("Solicitor's firm account number")
+
+      select_office_code
+      fill_ac_claim_details
+      fill_in id: 'counsel_costs_net', with: '150.40'
+      fill_in id: 'counsel_costs_vat', with: '100'
+      click_on 'Continue'
+      fill_in id: 'counsel_costs_net', with: '100'
+      fill_in id: 'counsel_costs_vat', with: '70'
+      click_on 'Continue'
+
+      expect(page).to have_title('Check your answers')
     end
 
     it 'fails claimed payment journey when inputs invalid' do
