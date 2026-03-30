@@ -167,6 +167,21 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         fill_allowed_costs
         expect(page).to have_title('Check your answers')
       end
+
+      it 'sends Claim details Change to claim search' do
+        start_new_payment_request
+        choose_claim_type(claim_type)
+        fill_in_laa_ref
+        fill_date_claim_received
+        fill_claimed_costs if type_suffix == 'supplemental'
+        fill_allowed_costs
+        expect(page).to have_title('Check your answers')
+
+        within('.govuk-summary-card', text: 'Claim details') do
+          click_link 'Change'
+        end
+        expect(page).to have_title('Find a claim')
+      end
     end
   end
 end
