@@ -39,7 +39,7 @@ metadata:
       SecRuleUpdateTargetById 932115 "!ARGS"
       SecRuleUpdateTargetById 932380 "!ARGS"
       SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
-      SecAction "id:900110,phase:1,nolog,pass,t:none,setvar:tx.inbound_anomaly_score_threshold=30"
+      SecAction "id:900110,phase:1,nolog,pass,t:none,setvar:tx.inbound_anomaly_score_threshold=25"
     external-dns.alpha.kubernetes.io/aws-weight: "100"
   {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
