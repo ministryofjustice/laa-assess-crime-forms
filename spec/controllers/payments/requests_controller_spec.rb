@@ -73,11 +73,11 @@ RSpec.describe Payments::RequestsController, :stub_oauth_token do
       get :new
     end
 
-    it 'regenerates session[multi_step_form_id]' do
+    it 'regenerates form id at top level' do
       expect { get :new }.to(change { session[:multi_step_form_id] })
     end
 
-    it %{regenerates session["payments:#{multi_step_form_id}"])} do
+    it 'regenerates payments keys' do
       expect { get :new }.to(change { session["payments:#{multi_step_form_id}"] })
     end
   end
