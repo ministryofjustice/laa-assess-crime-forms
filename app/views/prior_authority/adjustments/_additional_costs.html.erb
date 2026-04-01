@@ -3,7 +3,7 @@
   <h2 class="govuk-heading-m"><%= t('.additional_cost', n: index + 1) %></h2>
 
   <% if additional_cost.adjustment_comment %>
-    <div class="govuk-inset-text">
+    <div class="govuk-inset-text guidance-panel">
       <%= simple_format additional_cost.adjustment_comment %>
     </div>
   <% end %>
