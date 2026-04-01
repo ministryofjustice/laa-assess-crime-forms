@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Decisions::DecisionTree do
   # minimal form object that CustomWrapper can wrap
   before do
-    stub_const('FormObject', Struct.new(:multi_step_form_session, keyword_init: true))
+    stub_const('FormObject', Struct.new(:multi_step_form_session))
   end
 
   let(:multi_step_form_session) { {} }
@@ -69,6 +69,29 @@ RSpec.describe Decisions::DecisionTree do
           it_behaves_like 'a generic decision',
                           from: :date_received,
                           goto: { action: :edit, controller: Decisions::DecisionTree::NSM_ALLOWED_COSTS }
+        end
+      end
+    end
+
+    context 'from :ac_claim_details' do
+      context 'when AC' do
+        let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::AC.to_s } }
+
+        it_behaves_like 'a generic decision',
+                        from: :ac_claim_details,
+                        goto: { action: :edit, controller: Decisions::DecisionTree::AC_CLAIMED_COSTS }
+      end
+
+      {
+        'AC_APPEAL'    => Payments::ClaimType::AC_APPEAL,
+        'AC_AMENDMENT' => Payments::ClaimType::AC_AMENDMENT
+      }.each do |label, request_type|
+        context "when #{label}" do
+          let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
+
+          it_behaves_like 'a generic decision',
+                          from: :ac_claim_details,
+                          goto: { action: :edit, controller: Decisions::DecisionTree::AC_ALLOWED_COSTS }
         end
       end
     end
