@@ -27,8 +27,7 @@ metadata:
       SecAuditEngine {{ .Values.ingress.modsec.auditState }}
       SecRuleEngine {{ .Values.ingress.modsec.ruleState }}
       SecRequestBodyNoFilesLimit 524288
-      SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-forms-team,status:423"
-      SecDefaultAction "phase:4,pass,log,tag:github_team=laa-crime-forms-team,status:423"
+      SecDefaultAction "phase:2,deny,log,status:423,tag:github_team=laa-crime-forms-team"
       SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
     external-dns.alpha.kubernetes.io/aws-weight: "100"
   {{- with .Values.ingress.annotations }}
