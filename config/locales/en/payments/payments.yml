@@ -234,11 +234,11 @@ en:
           total_allowed: Total allowed
         payment_type: Payment type
         date_claim_assessed:
-          breach_of_injunction: Date payment assessed
-          non_standard_magistrate: Date payment assessed
-          non_standard_mag_supplemental: Date supplemental payment assessed
+          breach_of_injunction: Date claim assessed
+          non_standard_magistrate: Date claim assessed
+          non_standard_mag_supplemental: Date supplemental claim assessed
           non_standard_mag_appeal: Date appeal assessed
-          non_standard_mag_amendment: Date amendment assessed
+          non_standard_mag_amendment: Date amendment received
           assigned_counsel: Date claim assessed
           assigned_counsel_appeal: Date appeal assessed
           assigned_counsel_amendment: Date amendment received
