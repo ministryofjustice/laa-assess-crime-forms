@@ -41,7 +41,7 @@
         <%= claim_summary.assigned_user&.display_name || t(".unassigned") %>
       </p>
       <p class="govuk-body-m govuk-!-margin-bottom-2">
-        <span class="govuk-!-font-weight-bold"><%= t(".date_received") %></span>
+        <span class="govuk-!-font-weight-bold"><%= t(".date_claim_assessed") %></span>
         <%= format_in_zone(claim.created_at) %>
       </p>
       <% if claim.assessed? %>

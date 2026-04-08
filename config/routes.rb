@@ -172,7 +172,7 @@ Rails.application.routes.draw do
 
           edit_step :submission_allowed_costs
           edit_step :check_your_answers
-          edit_step :date_received
+          edit_step :date_claim_assessed
           edit_step :office_code_search
           edit_step :office_code_confirm
           resource :claim_search, only: %i[new edit update],

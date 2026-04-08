@@ -154,13 +154,13 @@ en:
             allowed_profit_cost:
               less_than_or_equal_to: Allowed profit costs must be %{count} or less
 
-        payments/steps/date_received_form:
+        payments/steps/date_claim_assessed_form:
           attributes:
-            date_received: *shared_date_errors
+            date_claim_assessed: *shared_date_errors
 
         payments/steps/nsm/claim_detail_form:
           attributes:
-            date_received: *shared_date_errors
+            date_claim_assessed: *shared_date_errors
             date_completed: *shared_date_errors
             ufn:
               invalid_characters: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
@@ -251,7 +251,7 @@ en:
 
         payments/steps/ac/claim_detail_form:
           attributes:
-            date_received: *shared_date_errors
+            date_claim_assessed: *shared_date_errors
             ufn:
               invalid_characters: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
               blank: Enter the unique file number

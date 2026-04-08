@@ -39,7 +39,7 @@ module Payments
        :assigned_counsel_claim,
        :request_type,
        :idempotency_token,
-       :date_received]
+       :date_claim_assessed]
     end
 
     def claim_amount_keys

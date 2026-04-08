@@ -126,7 +126,7 @@ module PaymentsHelpers
           'submitter_id' => '3db4e107-6670-4bac-8025-cd2661e99d0c',
           'request_type' => 'assigned_counsel',
           'submitted_at' => '2025-12-16 11:51:56 UTC',
-          'date_received' => '2025-12-10 00:00:00 UTC',
+          'date_claim_assessed' => '2025-12-10 00:00:00 UTC',
           'claimed_net_assigned_counsel_cost' => '1000.0',
           'claimed_assigned_counsel_vat' => '800.0',
           'allowed_net_assigned_counsel_cost' => '900.0',
@@ -167,7 +167,7 @@ module PaymentsHelpers
         'submitter_id' => 'e061f876-3863-4bfd-9f25-ffefb942c90e',
         'request_type' => 'non_standard_magistrate',
         'submitted_at' => '2025-10-29 14:01:57 UTC',
-        'date_received' => '2025-10-29 00:00:00 UTC',
+        'date_claim_assessed' => '2025-10-29 00:00:00 UTC',
         'claimed_profit_cost' => '123.0',
         'allowed_profit_cost' => '123.0',
         'claimed_travel_cost' => '123.0',
@@ -184,7 +184,7 @@ module PaymentsHelpers
          'submitter_id' => 'e061f876-3863-4bfd-9f25-ffefb942c90e',
          'request_type' => 'non_standard_mag_amendment',
          'submitted_at' => '2025-10-29 14:07:19 UTC',
-         'date_received' => '2025-10-29 00:00:00 UTC',
+         'date_claim_assessed' => '2025-10-29 00:00:00 UTC',
          'claimed_profit_cost' => '123.0',
          'allowed_profit_cost' => '123.0',
          'claimed_travel_cost' => '123.0',
@@ -214,8 +214,8 @@ module PaymentsHelpers
     click_button 'Continue'
   end
 
-  def fill_date_claim_received(date = '2025-09-24')
-    fill_in 'payments-steps-date-received-form-date-received-field', with: date
+  def fill_date_claim_assessed(date = '2025-09-24')
+    fill_in 'payments-steps-date-claim-assessed-form-date-claim-assessed-field', with: date
     click_button 'Continue'
   end
 
@@ -276,7 +276,7 @@ module PaymentsHelpers
     counsel_name: 'Firth & Coln',
     linked_claim: false
   )
-    fill_in id: 'payments-steps-ac-claim-detail-form-date-received-field', with: received_on
+    fill_in id: 'payments-steps-ac-claim-detail-form-date-claim-assessed-field', with: received_on
     fill_in 'Counsel office account number', with: counsel_office_account_number
     fill_in 'Counsel name', with: counsel_name
     unless linked_claim

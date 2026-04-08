@@ -86,7 +86,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     end
 
     it 'allows user to complete payment journey' do
-      fill_date_claim_received
+      fill_date_claim_assessed
 
       expect(page).to have_title('Allowed costs')
       expect(page).to have_field(id: 'counsel_costs_net', with: '900.0')
@@ -131,7 +131,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     end
 
     it 'allows user to complete payment journey from a submission-backed claim' do
-      fill_date_claim_received
+      fill_date_claim_assessed
 
       expect(page).to have_title('Allowed costs')
       fill_in id: 'counsel_costs_net', with: '100'

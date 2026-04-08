@@ -28,7 +28,7 @@ en:
               claim_type: Claim type
             claim_details:
               title: Claim details
-              date_received: Date claim received
+              date_claim_assessed: Date claim received
               solicitor_office_code: Firm office account number
               solicitor_firm_name: Firm name
               ufn: Unique file number
@@ -76,11 +76,11 @@ en:
           submit_payment_request: Submit payment request
           cancel_payment_request: Cancel payment request
           change: Change
-      date_received:
+      date_claim_assessed:
         edit:
           page_title: Date received
           heading: Date received
-          date_received:
+          date_claim_assessed:
             non_standard_mag_supplemental: Date supplemental claim received
             non_standard_mag_appeal: Date appeal received
             non_standard_mag_amendment: Date claim amended
@@ -139,11 +139,11 @@ en:
             ufn: Unique file number
             ufn_hint: For example, 120223/001
             defendant_last_name: Defendant last name
-            date_received:
+            date_claim_assessed:
               assigned_counsel: Date claim received
               assigned_counsel_appeal: Date appeal received
               assigned_counsel_amendment: Date claim amended
-            date_received_hint: For example, 17/5/2025.
+            date_claim_assessed_hint: For example, 17/5/2025.
             counsel_office_code: Counsel office account number
             counsel_firm_name: Counsel name
         claimed_costs:
@@ -165,7 +165,7 @@ en:
       nsm:
         claim_details:
           edit:
-            date_received: Date claim received
+            date_claim_assessed: Date claim received
             solicitor_office_code: Firm office account number
             ufn: Unique file number
             stage_reached: Stage reached
@@ -233,7 +233,7 @@ en:
           total_claimed: Total claimed
           total_allowed: Total allowed
         payment_type: Payment type
-        date_received:
+        date_claim_assessed:
           breach_of_injunction: Date payment received
           non_standard_magistrate: Date payment received
           non_standard_mag_supplemental: Date supplemental payment received
@@ -248,7 +248,7 @@ en:
         table:
           original_claim: Original claim
           claim_type: Claim type
-          date_received: Date claim received
+          date_claim_assessed: Date claim received
           office_code: Firm office account number
           firm_name: Firm name
           solicitor_office_code: Solicitor office account number
@@ -283,15 +283,15 @@ en:
   helpers:
     hint:
       payments_steps_nsm_claim_detail_form:
-        date_received: For example, 17/5/2025
+        date_claim_assessed: For example, 17/5/2025
         office_code: Enter the office account number or firm name, or select from the suggestions that appear when you start typing.
         ufn: For example, 120223/001
         hearing_outcome_code: Start typing the hearing outcome and select one of the suggestions that appear
         matter_type: Start typing the matter type and select one of the suggestions that appear
         court: Start typing the court and select one of the suggestions that appear
         date_completed: For example, 17/5/2025
-      payments_steps_date_received_form:
-        date_received: For example, 17/5/2025.
+      payments_steps_date_claim_assessed_form:
+        date_claim_assessed: For example, 17/5/2025.
       payments_steps_claim_search_form:
         query: Search by defendant, firm account, UFN or LAA reference. Use a comma between search terms.
     label:

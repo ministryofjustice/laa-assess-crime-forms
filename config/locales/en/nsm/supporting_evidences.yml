@@ -9,7 +9,7 @@ en:
       supporting_evidence_table:
         caption: "Supporting evidence"
         file_name: "File name"
-        date_received: "Date received"
+        date_claim_assessed: "Date received"
       send_by_post:
         info: "The provider has chosen to post the evidence to:"
         address: |

@@ -20,7 +20,7 @@ en:
           change: Change risk
         assigned_to: "Assigned to:"
         unassigned: Unassigned
-        date_received: "Date received:"
+        date_claim_assessed: "Date received:"
         date_assessed: "Date assessed:"
         date_sent_back: "Date sent back to provider:"
         remove_from_list: Remove from list

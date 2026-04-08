@@ -11,7 +11,7 @@ en:
         allowed: 'Allowed:'
         service: 'Service:'
         rep_order_date: 'Representation order date:'
-        date_received: 'Date received:'
+        date_claim_assessed: 'Date received:'
         date_assessed: 'Date assessed:'
         date_sent_back: 'Date sent back to provider:'
         date_amended: 'Date amended:'

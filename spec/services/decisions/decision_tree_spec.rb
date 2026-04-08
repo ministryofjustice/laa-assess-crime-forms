@@ -45,17 +45,17 @@ RSpec.describe Decisions::DecisionTree do
 
           it_behaves_like 'a generic decision',
                           from: :claim_search,
-                          goto: { action: :edit, controller: Decisions::DecisionTree::DATE_RECEIVED }
+                          goto: { action: :edit, controller: Decisions::DecisionTree::DATE_CLAIM_ASSESSED }
         end
       end
     end
 
-    context 'from :date_received' do
+    context 'from :date_claim_assessed' do
       context 'when NSM supplemental' do
         let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s } }
 
         it_behaves_like 'a generic decision',
-                        from: :date_received,
+                        from: :date_claim_assessed,
                         goto: { action: :edit, controller: Decisions::DecisionTree::NSM_CLAIMED_COSTS }
       end
 
@@ -67,7 +67,7 @@ RSpec.describe Decisions::DecisionTree do
           let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
 
           it_behaves_like 'a generic decision',
-                          from: :date_received,
+                          from: :date_claim_assessed,
                           goto: { action: :edit, controller: Decisions::DecisionTree::NSM_ALLOWED_COSTS }
         end
       end
