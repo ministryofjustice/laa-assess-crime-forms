@@ -6,12 +6,12 @@ en:
       show:
         submission_filter_legend: Date of payment request submission
         submission_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
-        received_filter_legend: Date claim received
+        received_filter_legend: Date claim assessed
         received_filter_hint: Enter a start date, end date or both, for example, 17/5/2024
         submitted_from: Submission date from
         submitted_to: Submission date to
-        received_from: Received from
-        received_to: Received to
+        received_from: Assessed from
+        received_to: Assessed to
         page_title: Search for a payment
         filter_hint:  Enter details in at least one field to search for a payment request
         claim_type: Claim type
@@ -30,6 +30,6 @@ en:
             submitted_to:
               not_a_date: Enter a valid submission date to
             received_from:
-              not_a_date: Enter a valid received from
+              not_a_date: Enter a valid assessed from
             received_to:
-              not_a_date: Enter a valid received to
+              not_a_date: Enter a valid assessed to

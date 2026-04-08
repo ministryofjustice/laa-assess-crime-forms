@@ -250,7 +250,7 @@ module PaymentsHelpers
     work_completed_on: '2025-09-24',
     youth_court: 'Yes'
   )
-    fill_in 'Date claim received', with: received_on
+    fill_in 'Date claim assessed', with: received_on
     fill_in 'Unique file number', with: ufn
     choose prosecution_type, allow_label_click: true
     fill_in 'Defendant first name', with: defendant_first_name

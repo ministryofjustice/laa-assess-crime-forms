@@ -116,7 +116,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
     end
 
     describe 'fills in wrong reference' do
-      it 'input date received' do
+      it 'input date assessed' do
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in 'Find a claim', with: ''
@@ -125,18 +125,18 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
       end
     end
 
-    describe 'Date received' do
-      it 'input date received' do
+    describe 'Date assessed' do
+      it 'input date assessed' do
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
-        expect(page).to have_title('Date received')
+        expect(page).to have_title('Date claim assessed')
       end
     end
 
     if type_suffix == 'supplemental'
       describe 'claimed costs' do
-        it 'input date claim received' do
+        it 'input date claim assessed' do
           start_new_payment_request
           choose_claim_type(claim_type)
           fill_in_laa_ref

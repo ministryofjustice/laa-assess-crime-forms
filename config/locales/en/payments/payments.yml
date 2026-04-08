@@ -28,7 +28,7 @@ en:
               claim_type: Claim type
             claim_details:
               title: Claim details
-              date_claim_assessed: Date claim received
+              date_claim_assessed: Date claim assessed
               solicitor_office_code: Firm office account number
               solicitor_firm_name: Firm name
               ufn: Unique file number
@@ -78,13 +78,13 @@ en:
           change: Change
       date_claim_assessed:
         edit:
-          page_title: Date received
-          heading: Date received
+          page_title: Date claim assessed
+          heading: Date claim assessed
           date_claim_assessed:
-            non_standard_mag_supplemental: Date supplemental claim received
-            non_standard_mag_appeal: Date appeal received
+            non_standard_mag_supplemental: Date supplemental claim assessed
+            non_standard_mag_appeal: Date appeal assessed
             non_standard_mag_amendment: Date claim amended
-            assigned_counsel_appeal: Date appeal received
+            assigned_counsel_appeal: Date appeal assessed
             assigned_counsel_amendment: Date claim amended
       claim_types:
         edit:
@@ -140,8 +140,8 @@ en:
             ufn_hint: For example, 120223/001
             defendant_last_name: Defendant last name
             date_claim_assessed:
-              assigned_counsel: Date claim received
-              assigned_counsel_appeal: Date appeal received
+              assigned_counsel: Date claim assessed
+              assigned_counsel_appeal: Date appeal assessed
               assigned_counsel_amendment: Date claim amended
             date_claim_assessed_hint: For example, 17/5/2025.
             counsel_office_code: Counsel office account number
@@ -165,7 +165,7 @@ en:
       nsm:
         claim_details:
           edit:
-            date_claim_assessed: Date claim received
+            date_claim_assessed: Date claim assessed
             solicitor_office_code: Firm office account number
             ufn: Unique file number
             stage_reached: Stage reached
@@ -234,13 +234,13 @@ en:
           total_allowed: Total allowed
         payment_type: Payment type
         date_claim_assessed:
-          breach_of_injunction: Date payment received
-          non_standard_magistrate: Date payment received
-          non_standard_mag_supplemental: Date supplemental payment received
-          non_standard_mag_appeal: Date appeal received
-          non_standard_mag_amendment: Date amendment received
-          assigned_counsel: Date claim received
-          assigned_counsel_appeal: Date appeal received
+          breach_of_injunction: Date payment assessed
+          non_standard_magistrate: Date payment assessed
+          non_standard_mag_supplemental: Date supplemental payment assessed
+          non_standard_mag_appeal: Date appeal assessed
+          non_standard_mag_amendment: Date amendment assessed
+          assigned_counsel: Date claim assessed
+          assigned_counsel_appeal: Date appeal assessed
           assigned_counsel_amendment: Date amendment received
         caseworker: Caseworker
       claim_details:
@@ -248,7 +248,7 @@ en:
         table:
           original_claim: Original claim
           claim_type: Claim type
-          date_claim_assessed: Date claim received
+          date_claim_assessed: Date claim assessed
           office_code: Firm office account number
           firm_name: Firm name
           solicitor_office_code: Solicitor office account number
