@@ -5,7 +5,7 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "8.0.23",
-    "@ministryofjustice/frontend": "^9.0.0",
+    "@ministryofjustice/frontend": "^8.0.0",
     "@rails/request.js": "^0.0.13",
     "accessible-autocomplete": "^3.0.1",
     "decimal.js": "^10.6.0",
