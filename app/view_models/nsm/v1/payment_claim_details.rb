@@ -100,7 +100,7 @@ module Nsm
         totals[:claimed_total_inc_vat]
       end
 
-      def date_received
+      def date_claim_assessed
         Time.current.to_fs(:db)
       end
 
@@ -129,7 +129,7 @@ module Nsm
           :defendant_first_name,
           :defendant_last_name,
           :request_type,
-          :date_received,
+          :date_claim_assessed,
           :claimed_profit_cost,
           :claimed_travel_cost,
           :claimed_waiting_cost,

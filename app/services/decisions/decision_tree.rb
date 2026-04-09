@@ -16,7 +16,7 @@ module Decisions
     AC_ALLOWED_COSTS = 'payments/steps/ac/allowed_costs'.freeze
     OFFICE_CODE_SEARCH = '/payments/steps/office_code_search'.freeze
     OFFICE_CODE_CONFIRM = '/payments/steps/office_code_confirm'.freeze
-    DATE_RECEIVED = '/payments/steps/date_received'.freeze
+    DATE_CLAIM_ASSESSED = '/payments/steps/date_claim_assessed'.freeze
     CLAIM_SEARCH = '/payments/steps/claim_search'.freeze
     CHECK_YOUR_ANSWERS = '/payments/steps/check_your_answers'.freeze
     SUBMISSION_ALLOWED_COSTS = 'payments/steps/submission_allowed_costs'.freeze
@@ -45,7 +45,7 @@ module Decisions
       .when(-> { (ac_appeal || ac_amendment) && multi_step_form_session.ac_claim_details_incomplete? })
       .goto(edit: AC_CLAIM_DETAILS)
       .when(-> { ac_appeal || ac_amendment })
-      .goto(edit: DATE_RECEIVED)
+      .goto(edit: DATE_CLAIM_ASSESSED)
       .when(-> { ac })
       .goto(edit: AC_CLAIM_DETAILS)
       .when(-> { nsm || nsm_appeal || nsm_amendment || nsm_supplemental })
@@ -55,9 +55,9 @@ module Decisions
       .goto(edit: OFFICE_CODE_SEARCH)
       .when(-> { ac })
       .goto(edit: AC_CLAIM_DETAILS)
-      .goto(edit: DATE_RECEIVED)
+      .goto(edit: DATE_CLAIM_ASSESSED)
 
-    from(:date_received)
+    from(:date_claim_assessed)
       .when(-> { nsm_supplemental })
       .goto(edit: NSM_CLAIMED_COSTS)
       .when(-> { nsm_appeal || nsm_amendment })

@@ -96,16 +96,16 @@ RSpec.describe 'Search', :stub_oauth_token do
       visit new_payments_search_path
       fill_in 'Submission date from', with: '31/4/2023'
       fill_in 'Submission date to', with: '31/13/2024'
-      fill_in 'Received from', with: 'adaddddd'
-      fill_in 'Received to', with: '2024367' # the 367th day of 2024 (a leap year)
+      fill_in 'Assessed from', with: 'adaddddd'
+      fill_in 'Assessed to', with: '2024367' # the 367th day of 2024 (a leap year)
 
       within('main') { click_on 'Search' }
 
       expect(page)
         .to have_content('Enter a valid submission date from')
         .and have_content('Enter a valid submission date to')
-        .and have_content('Enter a valid received from')
-        .and have_content('Enter a valid received to')
+        .and have_content('Enter a valid assessed from')
+        .and have_content('Enter a valid assessed to')
     end
   end
 
@@ -167,8 +167,8 @@ RSpec.describe 'Search', :stub_oauth_token do
 
       fill_in 'Submission date from', with: '20/4/2023'
       fill_in 'Submission date to', with: '21/4/2023'
-      fill_in 'Received from', with: '22/4/2023'
-      fill_in 'Received to', with: '23/4/2023'
+      fill_in 'Assessed from', with: '22/4/2023'
+      fill_in 'Assessed to', with: '23/4/2023'
       within('main') { click_button 'Search' }
 
       expect(stub).to have_been_requested
