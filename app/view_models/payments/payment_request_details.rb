@@ -13,16 +13,16 @@ module Payments
       I18n.t("payments.request_types.#{@payment_request['request_type']}")
     end
 
-    def date_received_label
-      I18n.t("payments.requests.payment_details.date_received.#{@payment_request['request_type']}")
+    def date_claim_assessed_label
+      I18n.t("payments.requests.payment_details.date_claim_assessed.#{@payment_request['request_type']}")
     end
 
     def title
       I18n.t("payments.requests.payment_details.payment_heading.#{@payment_request['request_type']}")
     end
 
-    def date_received
-      DateTime.parse(@payment_request['date_received']).to_fs(:stamp)
+    def date_claim_assessed
+      DateTime.parse(@payment_request['date_claim_assessed']).to_fs(:stamp)
     end
 
     def submitted_date

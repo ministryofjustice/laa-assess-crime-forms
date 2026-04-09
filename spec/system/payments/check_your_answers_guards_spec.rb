@@ -77,7 +77,7 @@ RSpec.describe 'Payment submission safeguards', type: :system do
       'request_type' => 'non_standard_magistrate',
       'linked_laa_reference' => 'LAA-123',
       'laa_reference' => 'LAA-123',
-      'date_received' => timestamp.to_s,
+      'date_claim_assessed' => timestamp.to_s,
       'solicitor_office_code' => 'ABC123',
       'ufn' => '120223/001',
       'stage_reached' => 'Stage reached',
