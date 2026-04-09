@@ -4,7 +4,7 @@ module Payments
       class ClaimDetailForm < BasePaymentsForm
         include NumericLimits
 
-        attribute :date_received, :date
+        attribute :date_claim_assessed, :date
         attribute :ufn, :string
         attribute :stage_reached, :string
         attribute :defendant_first_name, :string
@@ -32,7 +32,7 @@ module Payments
         validates :stage_reached, inclusion: { in: %w[PROG PROM] }
 
         validates :ufn, presence: true, ufn: true
-        validates :date_completed, :date_received,
+        validates :date_completed, :date_claim_assessed,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
 
         # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

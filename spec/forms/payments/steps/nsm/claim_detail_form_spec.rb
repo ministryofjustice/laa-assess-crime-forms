@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
   subject(:form) do
     described_class.new(
-      date_received: '2026-01-01',
+      date_claim_assessed: '2026-01-01',
       ufn: '010123/001',
       stage_reached: 'PROG',
       defendant_first_name: 'John',
@@ -41,7 +41,7 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
       it 'stores claim details in session' do
         form.save
         expect(session_store).to include(
-          date_received: Date.new(2026, 1, 1),
+          date_claim_assessed: Date.new(2026, 1, 1),
           ufn: '010123/001',
           stage_reached: 'PROG',
           defendant_first_name: 'John',

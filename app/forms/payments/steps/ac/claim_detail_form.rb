@@ -2,7 +2,7 @@ module Payments
   module Steps
     module Ac
       class ClaimDetailForm < BasePaymentsForm
-        attribute :date_received, :date
+        attribute :date_claim_assessed, :date
         attribute :ufn, :string
         attribute :defendant_last_name, :string
         attribute :counsel_office_code, :string
@@ -11,7 +11,7 @@ module Payments
         validates :counsel_firm_name, :defendant_last_name, presence: true
         validates :counsel_office_code, presence: true, office_code: true
         validates :ufn, presence: true, ufn: true
-        validates :date_received,
+        validates :date_claim_assessed,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
 
         def save
