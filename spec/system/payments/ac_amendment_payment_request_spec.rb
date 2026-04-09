@@ -104,7 +104,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     end
 
     it 'sends Claim details Change to claim search and back link returns to Check your answers' do
-      fill_date_claim_received
+      fill_date_claim_assessed
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
       click_on 'Continue'
@@ -119,7 +119,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     end
 
     it 'sends Cost summary Change to allowed costs and back link returns to Check your answers' do
-      fill_date_claim_received
+      fill_date_claim_assessed
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
       click_on 'Continue'
