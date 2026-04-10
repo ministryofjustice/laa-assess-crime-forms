@@ -96,7 +96,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         click_button 'Search'
         click_button 'Select'
 
-        fill_date_claim_received
+        fill_date_claim_assessed
         fill_claimed_costs if type_suffix == 'supplemental'
         fill_allowed_costs
 
@@ -116,7 +116,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
     end
 
     describe 'fills in wrong reference' do
-      it 'input date received' do
+      it 'input date assessed' do
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in 'Find a claim', with: ''
@@ -125,22 +125,22 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
       end
     end
 
-    describe 'Date received' do
-      it 'input date received' do
+    describe 'Date assessed' do
+      it 'input date assessed' do
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
-        expect(page).to have_title('Date received')
+        expect(page).to have_title('Date claim assessed')
       end
     end
 
     if type_suffix == 'supplemental'
       describe 'claimed costs' do
-        it 'input date claim received' do
+        it 'input date claim assessed' do
           start_new_payment_request
           choose_claim_type(claim_type)
           fill_in_laa_ref
-          fill_date_claim_received
+          fill_date_claim_assessed
           expect(page).to have_title('Claimed costs')
         end
       end
@@ -151,7 +151,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
-        fill_date_claim_received
+        fill_date_claim_assessed
         fill_claimed_costs if type_suffix == 'supplemental'
         expect(page).to have_title('Allowed costs')
       end
@@ -162,17 +162,17 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
-        fill_date_claim_received
+        fill_date_claim_assessed
         fill_claimed_costs if type_suffix == 'supplemental'
         fill_allowed_costs
         expect(page).to have_title('Check your answers')
       end
 
-      it 'sends Claim details Change to claim search' do
+      it 'sends Claim details Change to claim search and back link returns to Check your answers' do
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in_laa_ref
-        fill_date_claim_received
+        fill_date_claim_assessed
         fill_claimed_costs if type_suffix == 'supplemental'
         fill_allowed_costs
         expect(page).to have_title('Check your answers')
@@ -181,6 +181,25 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
           click_link 'Change'
         end
         expect(page).to have_title('Find a claim')
+        click_link 'Back'
+        expect(page).to have_title('Check your answers')
+      end
+
+      it 'sends Cost summary Change to claimed costs and back link returns to Check your answers' do
+        start_new_payment_request
+        choose_claim_type(claim_type)
+        fill_in_laa_ref
+        fill_date_claim_assessed
+        fill_claimed_costs if type_suffix == 'supplemental'
+        fill_allowed_costs
+        expect(page).to have_title('Check your answers')
+
+        within('.govuk-summary-card', text: 'Cost summary') do
+          click_link 'Change'
+        end
+        expect(page).to have_title('Claimed costs')
+        click_link 'Back'
+        expect(page).to have_title('Check your answers')
       end
     end
   end

@@ -36,13 +36,13 @@ RSpec.describe Decisions::BackDecisionTree do
       end
     end
 
-    context 'from DATE_RECEIVED (leading slash removed)' do
+    context 'from DATE_CLAIM_ASSESSED (leading slash removed)' do
       let(:multi_step_form_session) do
         { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s }
       end
 
       it_behaves_like 'a generic decision',
-                      from: Decisions::DecisionTree::DATE_RECEIVED.sub(%r{^/}, ''),
+                      from: Decisions::DecisionTree::DATE_CLAIM_ASSESSED.sub(%r{^/}, ''),
                       goto: { action: :edit, controller: Decisions::DecisionTree::CLAIM_SEARCH.sub(%r{^/}, '') }
     end
 

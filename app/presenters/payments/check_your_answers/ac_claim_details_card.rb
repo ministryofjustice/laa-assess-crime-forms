@@ -12,7 +12,7 @@ module Payments
 
       def row_data
         [
-          date_received,
+          date_claim_assessed,
           solicitor_office_code,
           solicitor_firm_name,
           ufn,
@@ -22,10 +22,10 @@ module Payments
         ].flatten.compact
       end
 
-      def date_received
+      def date_claim_assessed
         {
-          head_key: 'date_received',
-          text: DateTime.parse(session_answers['date_received']).to_fs(:stamp)
+          head_key: 'date_claim_assessed',
+          text: DateTime.parse(session_answers['date_claim_assessed']).to_fs(:stamp)
         }
       end
 

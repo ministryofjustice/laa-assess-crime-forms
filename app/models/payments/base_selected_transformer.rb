@@ -60,7 +60,7 @@ module Payments
       payment_request = payment_requests.max_by do |pr|
         DateTime.parse(pr[:updated_at].to_s)
       end.except!(:id, :created_at, :updated_at,
-                  :date_received, :request_type,
+                  :date_claim_assessed, :request_type,
                   :submitter_id, :submitted_at)
 
       dup_original_costs_to(payment_request)
