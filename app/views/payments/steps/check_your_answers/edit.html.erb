@@ -79,6 +79,10 @@
 <div class="govuk-button-group">
   <%= form_for @form_object, url: {controller: '/payments/requests', action: :create }, method: :post do |f| %>
   <%= f.submit_button('submit_payment') %>
-  <%= govuk_link_to( t(".cancel_payment_request"), payments_requests_path) %>
+  <% if @report.session_answers['linked_laa_reference'].blank? %>
+    <%= govuk_link_to( t(".cancel_payment_request"), payments_requests_path) %>
+  <% else %>
+    <%= govuk_link_to( t(".cancel_payment_request"), nsm_claim_claim_details_path(@report.session_answers['id'])) %>
+  <% end %>
 <% end %>
 </div>
