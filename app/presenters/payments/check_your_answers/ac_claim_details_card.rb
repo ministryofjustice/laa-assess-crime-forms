@@ -1,10 +1,11 @@
 module Payments
   module CheckYourAnswers
     class AcClaimDetailsCard < BaseCard
-      attr_reader :session_answers
+      attr_reader :session_answers, :params
 
-      def initialize(session_answers)
+      def initialize(session_answers, params)
         @session_answers = session_answers
+        @params = params
 
         @section = 'claim_details'
         super()
@@ -77,6 +78,10 @@ module Payments
         else
           'payments/steps/office_code_search'
         end
+      end
+
+      def change_link_session_id
+        params['id']
       end
 
       def read_only?

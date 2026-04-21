@@ -11,7 +11,7 @@ module Payments
                                                                    multi_step_form_session:)
         redirect_to your_nsm_claims_path and return if multi_step_form_session['request_type'].blank?
 
-        @report = Payments::CheckYourAnswers::Report.new(payment_details)
+        @report = Payments::CheckYourAnswers::Report.new(payment_details, params)
         @cost_summary = cost_summary
       end
 
