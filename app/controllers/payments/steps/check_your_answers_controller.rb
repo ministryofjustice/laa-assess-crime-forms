@@ -63,9 +63,7 @@ module Payments
         redirect_to your_nsm_claims_path and return if previous_id.to_s == params[:id].to_s
         return if previous_id.blank?
 
-        session.keys.grep(/^payments:/).each do |key|
-          session.delete(key)
-        end
+        session.delete("payments:#{previous_id}")
       end
 
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
