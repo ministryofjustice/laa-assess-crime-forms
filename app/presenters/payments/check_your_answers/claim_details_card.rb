@@ -128,20 +128,19 @@ module Payments
       end
 
       def read_only?
+        return true if submission?
+
         false
       end
 
       private
 
+      def submission?
+        ActiveModel::Type::Boolean.new.cast(session_answers['submission'])
+      end
+
       def linked_claim?
-        case session_answers['request_type']
-        when 'non_standard_magistrate', 'breach_of_injunction'
-          session_answers['linked_laa_reference'].present?
-        when 'non_standard_mag_supplemental', 'non_standard_mag_appeal', 'non_standard_mag_amendment'
-          session_answers['laa_reference'].present?
-        else
-          false
-        end
+        session_answers['laa_reference'].present? || session_answers['linked_laa_reference'].present?
       end
 
       def formatted_court_name

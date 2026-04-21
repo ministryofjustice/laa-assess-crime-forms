@@ -21,6 +21,7 @@ module Payments
         @payment_details ||= begin
           if params[:submission]
             answers = refresh_answers_from_claim
+            answers['submission'] = true
             apply_persisted_submission_token!(answers)
             current_multi_step_form_session.answers = answers
           end
