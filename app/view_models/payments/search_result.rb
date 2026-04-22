@@ -23,7 +23,7 @@ module Payments
     end
 
     def request_type
-      row[:request_type]
+      I18n.t("payments.request_types.#{row[:request_type]}")
     end
 
     def firm_name
