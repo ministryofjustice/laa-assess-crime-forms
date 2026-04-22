@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Payments::CheckYourAnswers::ClaimDetailsCard do
-  subject(:card) { described_class.new(session_answers) }
+  subject(:card) { described_class.new(session_answers, params) }
+
+  let(:params) { { id: '1234' } }
 
   describe '#change_link_controller_path' do
     context 'when the claim is linked (NSM with linked LAA ref)' do
