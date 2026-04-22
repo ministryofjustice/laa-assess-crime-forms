@@ -1,6 +1,6 @@
 <% title t('.page_title') %>
 
-<% if ActiveModel::Type::Boolean.new.cast(params[:submission]) %>
+<% if ActiveModel::Type::Boolean.new.cast(@report.session_answers['submission']) %>
   <% step_header(path: nsm_claim_decision_path(@report.session_answers['id'])) %>
 <% else %>
   <% step_header(path: previous_decision_step_path) %>
@@ -79,7 +79,7 @@
 <div class="govuk-button-group">
   <%= form_for @form_object, url: {controller: '/payments/requests', action: :create }, method: :post do |f| %>
   <%= f.submit_button('submit_payment') %>
-  <% if ActiveModel::Type::Boolean.new.cast(params[:submission]) %>
+  <% if ActiveModel::Type::Boolean.new.cast(@report.session_answers['submission']) %>
     <%= govuk_link_to( t(".cancel_payment_request"), nsm_claim_claim_details_path(@report.session_answers['id'])) %>
   <% else %>
     <%= govuk_link_to( t(".cancel_payment_request"), payments_requests_path) %>
