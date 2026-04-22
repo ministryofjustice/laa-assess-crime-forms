@@ -1,10 +1,11 @@
 module Payments
   module CheckYourAnswers
     class ClaimDetailsCard < BaseCard
-      attr_reader :session_answers
+      attr_reader :session_answers, :params
 
-      def initialize(session_answers)
+      def initialize(session_answers, params)
         @session_answers = session_answers
+        @params = params
 
         @section = 'claim_details'
         super()
@@ -122,21 +123,24 @@ module Payments
         end
       end
 
+      def change_link_session_id
+        params['id']
+      end
+
       def read_only?
+        return true if submission?
+
         false
       end
 
       private
 
+      def submission?
+        ActiveModel::Type::Boolean.new.cast(session_answers['submission'])
+      end
+
       def linked_claim?
-        case session_answers['request_type']
-        when 'non_standard_magistrate', 'breach_of_injunction'
-          session_answers['linked_laa_reference'].present?
-        when 'non_standard_mag_supplemental', 'non_standard_mag_appeal', 'non_standard_mag_amendment'
-          session_answers['laa_reference'].present?
-        else
-          false
-        end
+        session_answers['laa_reference'].present? || session_answers['linked_laa_reference'].present?
       end
 
       def formatted_court_name

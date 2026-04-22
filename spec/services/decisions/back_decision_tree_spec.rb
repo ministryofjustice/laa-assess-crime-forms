@@ -76,7 +76,7 @@ RSpec.describe Decisions::BackDecisionTree do
         let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM.to_s } }
 
         it_behaves_like 'a generic decision',
-                        from: Decisions::BackDecisionTree::CHECK_YOUR_ANSWERS,
+                        from: Decisions::BackDecisionTree::CHECK_YOUR_ANSWERS.sub(%r{^/}, ''),
                         goto: { action: :edit, controller: Decisions::DecisionTree::NSM_ALLOWED_COSTS }
       end
     end
