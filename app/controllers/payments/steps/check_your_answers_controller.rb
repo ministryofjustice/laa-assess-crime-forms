@@ -11,7 +11,7 @@ module Payments
                                                                    multi_step_form_session:)
         redirect_to your_nsm_claims_path and return if multi_step_form_session['request_type'].blank?
 
-        @report = Payments::CheckYourAnswers::Report.new(payment_details)
+        @report = Payments::CheckYourAnswers::Report.new(payment_details, params)
         @cost_summary = cost_summary
       end
 
@@ -19,14 +19,19 @@ module Payments
 
       def payment_details
         @payment_details ||= begin
-          if params[:submission]
+          if submission?
             answers = refresh_answers_from_claim
+            answers['submission'] = true
             apply_persisted_submission_token!(answers)
             current_multi_step_form_session.answers = answers
           end
 
           current_multi_step_form_session.answers
         end
+      end
+
+      def submission?
+        ActiveModel::Type::Boolean.new.cast(params[:submission])
       end
 
       def refresh_answers_from_claim

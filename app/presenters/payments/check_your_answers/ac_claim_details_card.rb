@@ -1,10 +1,11 @@
 module Payments
   module CheckYourAnswers
     class AcClaimDetailsCard < BaseCard
-      attr_reader :session_answers
+      attr_reader :session_answers, :params
 
-      def initialize(session_answers)
+      def initialize(session_answers, params)
         @session_answers = session_answers
+        @params = params
 
         @section = 'claim_details'
         super()
@@ -79,6 +80,10 @@ module Payments
         end
       end
 
+      def change_link_session_id
+        params['id']
+      end
+
       def read_only?
         false
       end
@@ -86,14 +91,7 @@ module Payments
       private
 
       def linked_claim?
-        case session_answers['request_type']
-        when 'assigned_counsel'
-          session_answers['linked_nsm_ref'].present?
-        when 'assigned_counsel_appeal', 'assigned_counsel_amendment'
-          session_answers['laa_reference'].present?
-        else
-          false
-        end
+        session_answers['linked_nsm_ref'].present? || session_answers['laa_reference'].present?
       end
     end
   end
