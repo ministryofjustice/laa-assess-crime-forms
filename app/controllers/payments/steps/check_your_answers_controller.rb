@@ -19,7 +19,7 @@ module Payments
 
       def payment_details
         @payment_details ||= begin
-          if params[:submission]
+          if submission?
             answers = refresh_answers_from_claim
             answers['submission'] = true
             apply_persisted_submission_token!(answers)
@@ -28,6 +28,10 @@ module Payments
 
           current_multi_step_form_session.answers
         end
+      end
+
+      def submission?
+        ActiveModel::Type::Boolean.new.cast(params[:submission])
       end
 
       def refresh_answers_from_claim
