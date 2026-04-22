@@ -95,7 +95,7 @@
                   <%= link_to search_result.laa_reference, payments_request_path(search_result.payable_claim_id) %>
                 </td>
                 <td class="govuk-table__cell">
-                  <%= search_result.request_type %>
+                  <%= t("payments.request_types.#{search_result.request_type}") %>
                 </td>
                 <td class="govuk-table__cell">
                   <%= search_result.defendant_last_name %>
