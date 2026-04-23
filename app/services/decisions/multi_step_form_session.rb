@@ -17,11 +17,9 @@ module Decisions
       data['answers'] = claim_hash
     end
 
-    def reset_answers(persist_type: false)
-      request_type = self['request_type']
+    def reset_answers
       data['answers'] = { 'id' => id,
         'idempotency_token' => SecureRandom.uuid }
-      data['answers']['request_type'] = request_type if persist_type
     end
 
     def [](hash_key)
