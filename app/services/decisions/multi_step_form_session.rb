@@ -37,7 +37,7 @@ module Decisions
     end
 
     def no_existing_ref?
-      answers['laa_reference'].blank? && answers['linked_nsm_ref'].blank?
+      answers['laa_reference'].blank? && answers['linked_nsm_ref'].blank? && answers['nsm_claim_id'].blank?
     end
 
     def ac_claim_details_incomplete?
