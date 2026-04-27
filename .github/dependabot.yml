@@ -3,10 +3,13 @@ updates:
 - package-ecosystem: bundler
   directory: "/"
   schedule:
-    interval: weekly
-    day: wednesday
+    interval: daily
     time: "03:00"
     timezone: Europe/London
+  cooldown:
+    semver-major-days: 14
+    semver-minor-days: 7
+    semver-patch-days: 2
   ignore:
     - dependency-name: "govuk-components" # TODO: CRM457-2751: Remove when this is done
   groups:
@@ -17,10 +20,13 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   schedule:
-    interval: weekly
-    day: wednesday
+    interval: daily
     time: "03:00"
     timezone: Europe/London
+  cooldown:
+    semver-major-days: 14
+    semver-minor-days: 7
+    semver-patch-days: 2
   ignore:
     - dependency-name: "govuk-frontend" # Need to ignore for now until we're ready for the banner deprecation
   groups:
