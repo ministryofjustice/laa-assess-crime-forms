@@ -38,12 +38,6 @@ module Decisions
     from(DecisionTree::AC_CLAIMED_COSTS)
       .goto(edit: DecisionTree::AC_CLAIM_DETAILS)
     from(DecisionTree::AC_ALLOWED_COSTS)
-      .when(-> { multi_step_form_session.no_existing_ref? && (ac_appeal || ac_amendment) })
-      .goto(edit: DecisionTree::AC_CLAIM_DETAILS)
-      .when(-> { multi_step_form_session.no_existing_ref? })
-      .goto(edit: DecisionTree::AC_CLAIMED_COSTS)
-      .when(-> { ac_appeal || ac_amendment })
-      .goto(edit: DecisionTree::DATE_CLAIM_ASSESSED)
       .goto(edit: DecisionTree::AC_CLAIMED_COSTS)
 
     from(DecisionTree::OFFICE_CODE_SEARCH.sub(%r{^/}, ''))
