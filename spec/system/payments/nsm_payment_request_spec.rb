@@ -225,7 +225,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       click_button 'Search'
       expect(page).to have_content('There are no results that match the search criteria')
 
-      click_button 'Create a new record'
+      click_on 'Create a new record'
       select_office_code
       expect(page).to have_title('Claim details')
 

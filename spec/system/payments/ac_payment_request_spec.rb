@@ -250,7 +250,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     before do
       start_new_payment_request
       choose_claim_type('Assigned counsel')
-      click_button 'Create a new record'
+      click_on 'Create a new record'
     end
 
     it 'allows user to continue without performing a search' do

@@ -191,7 +191,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     end
 
     it 'allows user to complete payment journey' do
-      click_button 'Create a new record'
+      click_on 'Create a new record'
       select_office_code
       fill_ac_claim_details
 
