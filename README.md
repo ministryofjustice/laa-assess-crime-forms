@@ -18,6 +18,10 @@ The instructions assume you have [Homebrew](https://brew.sh) installed in your m
 * `gem install bundler`
 * `bundle install`
 
+#### Install Prek for the pre-commit hooks to work
+* `brew install prek`
+* execute `prek install` in the repository to install the pre-commit hooks
+
 ### 2. Configuration
 
 * Copy `.env.development` to `.env.development.local` and modify with suitable values for your local machine
@@ -44,32 +48,7 @@ After you've defined your DB configuration in the above files, run the following
 
 #### Seed data
 
-To reduce the overhead and complexity of creating and updating seed data to rake
-task have been added which can be used to either load the existing see data into
-the system, or export data that has been generated via the Provide/App Store route.
-
-#### Loading data
-
-```
-rails custom_seeds:load
-```
-
-This reads the folders in db/seeds and loads the claim and the latest version data.
-Any existing data for that claim will automatically be deleted during the import
-process.
-
-By default all folders are processed during the load.
-
-#### Storing data
-
-```
-rake custom_seeds:store[<claim_id>]
-```
-
-Records are stored based off of the claim ID and need to be processed one at a time.
-It is expected that records will be generated in the Provider app and sent across
-as opposed to being manually generated to avoid creating invalid data records.
-
+Use the standard `rails db:seed` command to seed your database with basic test users and the correct autogrant limits.
 
 #### Adding users
 

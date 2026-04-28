@@ -86,7 +86,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     end
 
     it 'allows user to complete payment journey' do
-      fill_date_claim_received
+      fill_date_claim_assessed
 
       expect(page).to have_title('Allowed costs')
       expect(page).to have_field(id: 'counsel_costs_net', with: '900.0')
@@ -101,6 +101,36 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       click_on 'Submit payment request'
 
       expect(page).to have_content('Payment request complete')
+    end
+
+    it 'sends Claim details Change to claim search and back link returns to Check your answers' do
+      fill_date_claim_assessed
+      fill_in id: 'counsel_costs_net', with: '100'
+      fill_in id: 'counsel_costs_vat', with: '70'
+      click_on 'Continue'
+      expect(page).to have_title('Check your answers')
+
+      within('.govuk-summary-card', text: 'Claim details') do
+        click_link 'Change'
+      end
+      expect(page).to have_title('Find a claim')
+      click_link 'Back'
+      expect(page).to have_title('Check your answers')
+    end
+
+    it 'sends Cost summary Change to allowed costs and back link returns to Check your answers' do
+      fill_date_claim_assessed
+      fill_in id: 'counsel_costs_net', with: '100'
+      fill_in id: 'counsel_costs_vat', with: '70'
+      click_on 'Continue'
+      expect(page).to have_title('Check your answers')
+
+      within('.govuk-summary-card', text: 'Cost summary') do
+        click_link 'Change'
+      end
+      expect(page).to have_title('Allowed costs')
+      click_link 'Back'
+      expect(page).to have_title('Check your answers')
     end
   end
 
@@ -131,7 +161,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     end
 
     it 'allows user to complete payment journey from a submission-backed claim' do
-      fill_date_claim_received
+      fill_date_claim_assessed
 
       expect(page).to have_title('Allowed costs')
       fill_in id: 'counsel_costs_net', with: '100'
@@ -159,7 +189,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     end
 
     it 'allows user to complete payment journey' do
-      click_button 'Create a new record'
+      click_on 'Create a new record'
       select_office_code
       fill_ac_claim_details
 

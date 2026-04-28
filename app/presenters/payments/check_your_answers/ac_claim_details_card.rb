@@ -1,10 +1,11 @@
 module Payments
   module CheckYourAnswers
     class AcClaimDetailsCard < BaseCard
-      attr_reader :session_answers
+      attr_reader :session_answers, :params
 
-      def initialize(session_answers)
+      def initialize(session_answers, params)
         @session_answers = session_answers
+        @params = params
 
         @section = 'claim_details'
         super()
@@ -12,7 +13,7 @@ module Payments
 
       def row_data
         [
-          date_received,
+          date_claim_assessed,
           solicitor_office_code,
           solicitor_firm_name,
           ufn,
@@ -22,10 +23,10 @@ module Payments
         ].flatten.compact
       end
 
-      def date_received
+      def date_claim_assessed
         {
-          head_key: 'date_received',
-          text: DateTime.parse(session_answers['date_received']).to_fs(:stamp)
+          head_key: 'date_claim_assessed',
+          text: DateTime.parse(session_answers['date_claim_assessed']).to_fs(:stamp)
         }
       end
 
@@ -72,11 +73,15 @@ module Payments
       end
 
       def change_link_controller_path
-        if linked_ac?
-          'payments/steps/date_received'
+        if linked_claim?
+          'payments/steps/claim_search'
         else
-          "payments/steps/ac/#{section}"
+          'payments/steps/office_code_search'
         end
+      end
+
+      def change_link_session_id
+        params['id']
       end
 
       def read_only?
@@ -85,9 +90,8 @@ module Payments
 
       private
 
-      def linked_ac?
-        session_answers['laa_reference'].present? && session_answers['request_type'].in?(%w[assigned_counsel_appeal
-                                                                                            assigned_counsel_amendment])
+      def linked_claim?
+        session_answers['linked_nsm_ref'].present? || session_answers['laa_reference'].present?
       end
     end
   end

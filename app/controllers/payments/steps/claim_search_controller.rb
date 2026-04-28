@@ -1,6 +1,8 @@
 module Payments
   module Steps
     class ClaimSearchController < BaseController
+      before_action :clear_session_payment, only: [:update], if: -> { params[:new_record].present? }
+
       def new
         @form_object = Payments::Steps::SelectedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(search_params)
@@ -17,7 +19,12 @@ module Payments
       end
 
       def update
-        update_and_advance(Payments::Steps::SelectedClaimForm, as: :claim_search)
+        if params[:new_record].present?
+          clear_session_payment
+          redirect_to edit_payments_steps_office_code_search_path
+        else
+          update_and_advance(Payments::Steps::SelectedClaimForm, as: :claim_search)
+        end
       end
 
       private
@@ -53,6 +60,12 @@ module Payments
 
       def page_heading
         I18n.t("payments.steps.claim_search.edit.heading_#{linked_request_type}")
+      end
+
+      def clear_session_payment
+        request_type = multi_step_form_session['request_type']
+        multi_step_form_session.reset_answers
+        multi_step_form_session['request_type'] = request_type
       end
     end
   end

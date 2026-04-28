@@ -49,6 +49,9 @@ coverage/
 app/assets/builds/*
 !/app/assets/builds/.keep
 
+
+.github/copilot-instructions.md
+
 .vscode
 .idea
 .DS_Store

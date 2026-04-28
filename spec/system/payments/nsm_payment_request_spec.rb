@@ -106,6 +106,40 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
         fill_allowed_costs
         expect(page).to have_title('Check your answers')
       end
+
+      it 'sends Claim details Change to office code search and back link returns to Check your answers' do
+        start_new_payment_request
+        choose_claim_type("Non-Standard Magistrates'")
+        select_office_code
+        fill_claim_details
+        fill_claimed_costs
+        fill_allowed_costs
+        expect(page).to have_title('Check your answers')
+
+        within('.govuk-summary-card', text: 'Claim details') do
+          click_link 'Change'
+        end
+        expect(page).to have_title("Solicitor's firm account number")
+        click_link 'Back'
+        expect(page).to have_title('Check your answers')
+      end
+
+      it 'sends Cost summary Change to allowed costs and back link returns to Check your answers' do
+        start_new_payment_request
+        choose_claim_type("Non-Standard Magistrates'")
+        select_office_code
+        fill_claim_details
+        fill_claimed_costs
+        fill_allowed_costs
+        expect(page).to have_title('Check your answers')
+
+        within('.govuk-summary-card', text: 'Cost summary') do
+          click_link 'Change'
+        end
+        expect(page).to have_title('Claimed costs')
+        click_link 'Back'
+        expect(page).to have_title('Check your answers')
+      end
     end
 
     describe 'submit payment success' do
@@ -191,7 +225,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       click_button 'Search'
       expect(page).to have_content('There are no results that match the search criteria')
 
-      click_button 'Create a new record'
+      click_on 'Create a new record'
       select_office_code
       expect(page).to have_title('Claim details')
 

@@ -22,7 +22,7 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
       let(:data) { build(:nsm_data, solicitor:) }
       let(:feedback_template) { '80c0dcd2-597b-4c82-8c94-f6e26af71a40' }
       let(:personalisation) do
-        [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:]
+        [{ laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date: }]
       end
 
       it_behaves_like 'creates a feedback mailer'
@@ -55,7 +55,7 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
 
       let(:feedback_template) { '80c0dcd2-597b-4c82-8c94-f6e26af71a40' }
       let(:personalisation) do
-        [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date:]
+        [{ laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:, date: }]
       end
 
       it_behaves_like 'creates a feedback mailer'
@@ -69,9 +69,9 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
     let(:part_grant_total) { '£359.76' }
     let(:caseworker_decision_explanation) { '' }
     let(:personalisation) do
-      [laa_case_reference:, ufn:, main_defendant_name:,
+      [{ laa_case_reference:, ufn:, main_defendant_name:,
        defendant_reference:, claim_total:, part_grant_total:, caseworker_decision_explanation:,
-       date:]
+       date: }]
     end
 
     it_behaves_like 'creates a feedback mailer'
@@ -83,8 +83,8 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
     let(:feedback_template) { '7e807120-b661-452c-95a6-1ae46f411cfe' }
     let(:caseworker_decision_explanation) { '' }
     let(:personalisation) do
-      [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:,
-       caseworker_decision_explanation:, date:]
+      [{ laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:, claim_total:,
+       caseworker_decision_explanation:, date: }]
     end
 
     it_behaves_like 'creates a feedback mailer'
@@ -97,9 +97,9 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
     let(:date_to_respond_by) { 7.days.from_now.to_fs(:stamp) }
     let(:caseworker_information_requested) { '' }
     let(:personalisation) do
-      [laa_case_reference:, ufn:, main_defendant_name:,
+      [{ laa_case_reference:, ufn:, main_defendant_name:,
        defendant_reference:, claim_total:, date_to_respond_by:,
-       caseworker_information_requested:, date:]
+       caseworker_information_requested:, date: }]
     end
 
     it_behaves_like 'creates a feedback mailer'
@@ -112,9 +112,9 @@ RSpec.describe Nsm::EmailToProviderMailer, type: :mailer do
     let(:date_to_respond_by) { 7.days.from_now.to_fs(:stamp) }
     let(:caseworker_information_requested) { '' }
     let(:personalisation) do
-      [laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:,
+      [{ laa_case_reference:, ufn:, main_defendant_name:, defendant_reference:,
        claim_total:, date_to_respond_by:, caseworker_information_requested:,
-       date:]
+       date: }]
     end
 
     it_behaves_like 'creates a feedback mailer'

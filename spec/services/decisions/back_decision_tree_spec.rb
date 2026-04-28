@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Decisions::BackDecisionTree do
   # minimal form object that wrapper delegates to
   before do
-    stub_const('FormObject', Struct.new(:multi_step_form_session, keyword_init: true))
+    stub_const('FormObject', Struct.new(:multi_step_form_session))
   end
 
   let(:multi_step_form_session) { {} }
@@ -36,13 +36,13 @@ RSpec.describe Decisions::BackDecisionTree do
       end
     end
 
-    context 'from DATE_RECEIVED (leading slash removed)' do
+    context 'from DATE_CLAIM_ASSESSED (leading slash removed)' do
       let(:multi_step_form_session) do
         { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s }
       end
 
       it_behaves_like 'a generic decision',
-                      from: Decisions::DecisionTree::DATE_RECEIVED.sub(%r{^/}, ''),
+                      from: Decisions::DecisionTree::DATE_CLAIM_ASSESSED.sub(%r{^/}, ''),
                       goto: { action: :edit, controller: Decisions::DecisionTree::CLAIM_SEARCH.sub(%r{^/}, '') }
     end
 
@@ -76,7 +76,7 @@ RSpec.describe Decisions::BackDecisionTree do
         let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM.to_s } }
 
         it_behaves_like 'a generic decision',
-                        from: Decisions::BackDecisionTree::CHECK_YOUR_ANSWERS,
+                        from: Decisions::BackDecisionTree::CHECK_YOUR_ANSWERS.sub(%r{^/}, ''),
                         goto: { action: :edit, controller: Decisions::DecisionTree::NSM_ALLOWED_COSTS }
       end
     end

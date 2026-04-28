@@ -5,7 +5,7 @@ module Payments
       include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
 
-      attr_reader :session_answers
+      attr_reader :session_answers, :params
 
       def show_groups
         default_groups = %w[
@@ -18,8 +18,9 @@ module Payments
         default_groups
       end
 
-      def initialize(session_answers)
+      def initialize(session_answers, params)
         @session_answers = session_answers
+        @params = params
       end
 
       def section_groups
@@ -55,9 +56,9 @@ module Payments
         case session_answers['request_type'].to_sym
         when :breach_of_injunction, :non_standard_magistrate, :non_standard_mag_supplemental,
              :non_standard_mag_amendment, :non_standard_mag_appeal
-          [ClaimDetailsCard.new(session_answers)]
+          [ClaimDetailsCard.new(session_answers, params)]
         when :assigned_counsel, :assigned_counsel_appeal, :assigned_counsel_amendment
-          [AcClaimDetailsCard.new(session_answers)]
+          [AcClaimDetailsCard.new(session_answers, params)]
         # :nocov:
         else
           false
@@ -75,6 +76,7 @@ module Payments
         [:non_standard_mag_supplemental,
          :non_standard_mag_amendment,
          :non_standard_mag_appeal,
+         :assigned_counsel,
          :assigned_counsel_appeal,
          :assigned_counsel_amendment].include?(session_answers['request_type'].to_sym)
       end
@@ -87,7 +89,7 @@ module Payments
           govuk_link_to(
             I18n.t('payments.steps.check_your_answers.edit.change'),
             helper.url_for(controller: card.change_link_controller_path, action: card.change_link_controller_method,
-                           id: session_answers['id'], only_path: true)
+                           id: card.change_link_session_id, only_path: true)
           ),
         ]
       end

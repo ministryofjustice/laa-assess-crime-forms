@@ -1,10 +1,11 @@
 module Payments
   module CheckYourAnswers
     class ClaimDetailsCard < BaseCard
-      attr_reader :session_answers
+      attr_reader :session_answers, :params
 
-      def initialize(session_answers)
+      def initialize(session_answers, params)
         @session_answers = session_answers
+        @params = params
 
         @section = 'claim_details'
         super()
@@ -12,7 +13,7 @@ module Payments
 
       def row_data
         [
-          date_received, solicitor_office_code,
+          date_claim_assessed, solicitor_office_code,
           ufn, stage_reached, defendant_first_name,
           defendant_last_name, number_of_attendances,
           number_of_defendants, hearing_outcome_code,
@@ -21,10 +22,10 @@ module Payments
         ].flatten.compact
       end
 
-      def date_received
+      def date_claim_assessed
         {
-          head_key: 'date_received',
-          text: DateTime.parse(session_answers['date_received']).to_fs(:stamp)
+          head_key: 'date_claim_assessed',
+          text: DateTime.parse(session_answers['date_claim_assessed']).to_fs(:stamp)
         }
       end
 
@@ -115,14 +116,32 @@ module Payments
       end
 
       def change_link_controller_path
-        "payments/steps/nsm/#{section}"
+        if linked_claim?
+          'payments/steps/claim_search'
+        else
+          'payments/steps/office_code_search'
+        end
+      end
+
+      def change_link_session_id
+        params['id']
       end
 
       def read_only?
-        session_answers['linked_laa_reference'].present?
+        return true if submission?
+
+        false
       end
 
       private
+
+      def submission?
+        ActiveModel::Type::Boolean.new.cast(session_answers['submission'])
+      end
+
+      def linked_claim?
+        session_answers['laa_reference'].present? || session_answers['linked_laa_reference'].present?
+      end
 
       def formatted_court_name
         if session_answers['court_id'] == I18n.t('laa_crime_forms_common.shared.custom')
