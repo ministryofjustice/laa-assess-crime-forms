@@ -17,7 +17,6 @@ gem 'httparty'
 gem 'jbuilder'
 gem 'jsbundling-rails', '>= 1.3.1'
 gem 'laa_crime_forms_common', '~> 0.13.0', github: 'ministryofjustice/laa-crime-forms-common'
-ain
 gem 'lograge'
 gem 'logstasher', '~> 3.0'
 gem 'logstash-event'
