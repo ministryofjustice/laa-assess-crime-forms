@@ -2,7 +2,6 @@ module Payments
   module Steps
     class ClaimSearchController < BaseController
       def new
-        multi_step_form_session.reset_answers
         @form_object = Payments::Steps::SelectedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(search_params)
         @search_form.execute if @search_form.valid?
@@ -11,7 +10,6 @@ module Payments
       end
 
       def edit
-        multi_step_form_session.reset_answers
         @form_object = Payments::Steps::SelectedClaimForm.build(multi_step_form_session.answers, multi_step_form_session:)
         @search_form = Payments::Steps::ClaimSearchForm.new(default_params)
 
