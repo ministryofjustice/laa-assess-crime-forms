@@ -18,8 +18,7 @@ module Decisions
     end
 
     def reset_answers
-      data['answers'] = { 'id' => id,
-        'idempotency_token' => SecureRandom.uuid }
+      data['answers'] = { 'id' => id, 'idempotency_token' => SecureRandom.uuid }
     end
 
     def [](hash_key)

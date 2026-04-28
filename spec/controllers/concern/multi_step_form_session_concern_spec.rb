@@ -49,4 +49,39 @@ RSpec.describe Payments::MultiStepFormSessionConcern, type: :controller do
         .with(process: 'payments', session: session_store, session_id: uuid)
     end
   end
+
+  describe '#enforce_single_payment_session!' do
+    before do
+      session_store['payments:keep-this'] = { some: 'data' }
+      session_store['payments:drop-this'] = { other: 'data' }
+      controller.enforce_single_payment_session!('keep-this')
+    end
+
+    it 'keeps only the current payments:* session key' do
+      expect(session_store).to have_key('payments:keep-this')
+      expect(session_store).not_to have_key('payments:drop-this')
+    end
+  end
+
+  describe '#create_new_form_session' do
+    let(:new_uuid) { 'new-session-id' }
+    let(:mock_session_object) { instance_double(Decisions::MultiStepFormSession) }
+
+    before do
+      allow(SecureRandom).to receive(:uuid).and_return(new_uuid)
+      allow(Decisions::MultiStepFormSession)
+        .to receive(:new)
+        .with(process: 'payments', session: session_store, session_id: new_uuid)
+        .and_return(mock_session_object)
+    end
+
+    it 'removes other stale payments:* session keys when creating a new session' do
+      session_store['payments:stale-id'] = { stale: 'data' }
+
+      controller.create_new_form_session
+
+      expect(session_store).not_to have_key('payments:stale-id')
+      expect(session_store['multi_step_form_id']).to eq(new_uuid)
+    end
+  end
 end
