@@ -75,7 +75,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     stub_get_ac_claim('https://appstore.example.com/v1/payable_claims/1234')
     choose_claim_type('Assigned counsel - amendment')
     expect(page).to have_content('Search for the assigned counsel claim')
-    expect(page).to have_link('Create a new record')
+    expect(page).to have_button('Create a new record')
   end
 
   context 'Linked assigned counsel claim exists' do

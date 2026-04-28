@@ -111,7 +111,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         choose_claim_type(claim_type)
         expect(page).to have_title('Find a claim')
         expect(page).to have_content('Search for the non-standard magistrates claim')
-        expect(page).to have_link('Create a new record')
+        expect(page).to have_button('Create a new record')
       end
     end
 
