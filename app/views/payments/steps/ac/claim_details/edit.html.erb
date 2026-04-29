@@ -14,7 +14,7 @@
             hint: { size: 's', text: t('.date_claim_assessed_hint') }, class: 'moj-js-datepicker-input' %>
         </div>
       </div>
-      <% unless @form_object.linked_claim? %>
+      <% unless @form_object.nsm_linked? %>
         <%= f.govuk_text_field :ufn, label: { size: 's', text: t('.ufn') }, hint: { size: 's', text: t('.ufn_hint') }, width: 20 %>
         <%= f.govuk_text_field :defendant_last_name, label: { size: 's', text: t('.defendant_last_name') }, width: 20 %>
       <% end %>
