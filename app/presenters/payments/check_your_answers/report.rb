@@ -14,7 +14,7 @@ module Payments
           claim_details
         ]
 
-        default_groups.reject! { _1 == 'linked_claim' } unless linked_claim?
+        default_groups.reject! { _1 == 'linked_claim' } unless linked_claim_applicable?
         default_groups
       end
 
@@ -72,7 +72,7 @@ module Payments
 
       private
 
-      def linked_claim?
+      def linked_claim_applicable?
         [:non_standard_mag_supplemental,
          :non_standard_mag_amendment,
          :non_standard_mag_appeal,
