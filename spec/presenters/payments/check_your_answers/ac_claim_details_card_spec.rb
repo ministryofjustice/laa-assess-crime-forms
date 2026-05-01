@@ -10,7 +10,7 @@ RSpec.describe Payments::CheckYourAnswers::AcClaimDetailsCard do
       let(:session_answers) do
         {
           'request_type' => 'assigned_counsel',
-          'linked_nsm_ref' => 'LAA-NSM-123'
+          'linked_nsm_reference' => 'LAA-NSM-123'
         }
       end
 

@@ -8,7 +8,7 @@ RSpec.describe Payments::CheckYourAnswers::LinkedClaimCard do
       {
         'request_type' => 'assigned_counsel_amendment',
         'laa_reference' => 'LAA-AC-123',
-        'linked_nsm_ref' => 'LAA-NSM-999'
+        'linked_nsm_reference' => 'LAA-NSM-999'
       }
     end
 
