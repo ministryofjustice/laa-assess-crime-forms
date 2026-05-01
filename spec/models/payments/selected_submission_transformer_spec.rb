@@ -71,7 +71,7 @@ RSpec.describe Payments::SelectedSubmissionTransformer do
         result = transformer.transform
 
         expect(result[:nsm_claim_id]).to eq('crm7-abc')
-        expect(result[:linked_nsm_ref]).to eq('LAA-CRM7')
+        expect(result[:linked_nsm_reference]).to eq('LAA-CRM7')
         expect(result[:laa_reference]).to be_nil
       end
     end
@@ -83,7 +83,7 @@ RSpec.describe Payments::SelectedSubmissionTransformer do
         result = transformer.transform
 
         expect(result[:nsm_claim_id]).to eq('nsm-123')
-        expect(result[:linked_nsm_ref]).to eq('LAA-NSM')
+        expect(result[:linked_nsm_reference]).to eq('LAA-NSM')
       end
     end
   end
