@@ -34,6 +34,7 @@ module Payments
       [:payment_requests,
        :created_at,
        :updated_at,
+       :id,
        :type,
        :nsm_claim,
        :assigned_counsel_claim,
