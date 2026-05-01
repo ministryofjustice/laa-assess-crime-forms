@@ -70,7 +70,7 @@ RSpec.describe Payments::SelectedClaimTransformer do
         result = transformer.transform
 
         expect(result[:nsm_claim_id]).to eq('nsm-456')
-        expect(result[:linked_nsm_ref]).to eq('LAA-linked')
+        expect(result[:linked_nsm_reference]).to eq('LAA-linked')
         expect(result).not_to have_key(:nsm_claim)
       end
     end

@@ -91,7 +91,7 @@ module Payments
       private
 
       def linked_claim?
-        session_answers['linked_nsm_ref'].present? || session_answers['laa_reference'].present?
+        session_answers['linked_nsm_reference'].present? || session_answers['laa_reference'].present?
       end
     end
   end
