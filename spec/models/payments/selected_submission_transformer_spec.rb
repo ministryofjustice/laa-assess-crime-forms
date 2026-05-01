@@ -46,11 +46,12 @@ RSpec.describe Payments::SelectedSubmissionTransformer do
     it 'returns sanitized claim data with duplicated costs and submission id' do
       result = transformer.transform
 
-      expect(result[:id]).to eq('crm7-abc')
+      expect(result[:submission_id]).to eq('crm7-abc')
       expect(result[:claimed_total]).to eq(150)
       expect(result[:original_claimed_total]).to eq(150)
       expect(result[:claimed_profit_cost]).to eq(80)
       expect(result[:original_claimed_profit_cost]).to eq(80)
+      expect(result).not_to have_key(:id)
       expect(result).not_to have_key(:payment_requests)
       expect(result).not_to have_key(:type)
       expect(result).not_to have_key(:assigned_counsel_claim)
