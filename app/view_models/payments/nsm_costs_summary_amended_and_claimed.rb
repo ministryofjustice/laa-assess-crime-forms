@@ -12,9 +12,5 @@ module Payments
     def change_link
       url_helpers.edit_payments_steps_nsm_claimed_costs_path(session_answers['id'])
     end
-
-    def id
-      nil
-    end
   end
 end
