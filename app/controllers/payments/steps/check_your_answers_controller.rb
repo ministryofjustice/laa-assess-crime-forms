@@ -77,7 +77,7 @@ module Payments
         when :non_standard_magistrate, :breach_of_injunction
           Payments::NsmCostsSummary.new(multi_step_form_session.answers)
         when :non_standard_mag_supplemental
-          if multi_step_form_session['laa_reference'].present?
+          if multi_step_form_session['laa_reference'].present? || multi_step_form_session['linked_laa_reference'].present?
             Payments::NsmCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers)
           else
             Payments::NsmCostsSummary.new(multi_step_form_session.answers)
