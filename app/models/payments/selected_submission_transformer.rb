@@ -18,7 +18,7 @@ module Payments
                                                         assigned_counsel_amendment])
         claim = format_ac_claim(claim)
       end
-      claim.except!(*response_except_list)
+      claim.merge(submission_id: claim[:id]).except!(*response_except_list)
     end
 
     def dup_original_costs_to(hash)
