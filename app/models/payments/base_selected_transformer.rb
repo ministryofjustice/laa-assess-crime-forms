@@ -40,13 +40,13 @@ module Payments
         claim.merge!(
           {
             nsm_claim_id: claim['id'],
-            linked_nsm_ref: claim['laa_reference'],
+            linked_nsm_reference: claim['laa_reference'],
             laa_reference: nil
           }
         )
       else
         claim[:nsm_claim_id] = claim.dig('nsm_claim', 'id')
-        claim[:linked_nsm_ref] = claim.dig('nsm_claim', 'laa_reference')
+        claim[:linked_nsm_reference] = claim.dig('nsm_claim', 'laa_reference')
       end
       claim.except!(*NSM_KEYS)
     end
