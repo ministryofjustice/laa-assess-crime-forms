@@ -40,7 +40,7 @@ module Payments
       def linked_ref
         ref = nil
         if ac?
-          ref = session_answers['linked_nsm_ref']
+          ref = session_answers['linked_nsm_reference']
         elsif nsm_addition?
           ref = session_answers['linked_laa_reference'] || session_answers['laa_reference']
         elsif nsm_original?

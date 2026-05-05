@@ -170,7 +170,6 @@ Rails.application.routes.draw do
             edit_step :claim_details
           end
 
-          edit_step :submission_allowed_costs
           edit_step :check_your_answers
           edit_step :date_claim_assessed
           edit_step :office_code_search

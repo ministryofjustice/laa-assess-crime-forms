@@ -3,6 +3,8 @@ require 'rails_helper'
 
 RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
   let(:submission_id) { SecureRandom.uuid }
+  let(:laa_reference) { nil }
+  let(:linked_laa_reference) { nil }
   let(:request_type) { 'non_standard_magistrate' }
   let(:current_answers) { { 'id' => submission_id } }
   let(:fake_session) { instance_double(Decisions::MultiStepFormSession) }
@@ -12,6 +14,8 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
 
   before do
     allow(fake_session).to receive(:[]).with('request_type').and_return(request_type)
+    allow(fake_session).to receive(:[]).with('laa_reference').and_return(laa_reference)
+    allow(fake_session).to receive(:[]).with('linked_laa_reference').and_return(linked_laa_reference)
     allow(fake_session).to receive(:answers).and_return(current_answers)
     allow(fake_session).to receive(:answers=) { |new_answers| current_answers.replace(new_answers) }
 
@@ -34,7 +38,6 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
 
   {
     'non_standard_magistrate' => Payments::CostsSummary,
-    'non_standard_mag_supplemental' => Payments::CostsSummaryAmendedAndClaimed,
     'non_standard_mag_amendment' => Payments::CostsSummaryAmended,
     'non_standard_mag_appeal' => Payments::CostsSummaryAmended
   }.each do |type, klass|
@@ -44,6 +47,33 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
       it "initializes #{klass} with answers" do
         expect(klass).to receive(:new).with(answers)
         get :edit, params: { id: submission_id }
+      end
+    end
+
+    context 'when request type is non_standard_mag_supplemental' do
+      let(:request_type) { 'non_standard_mag_supplemental' }
+
+      it 'initializes NsmCostSummary class with answers' do
+        expect(Payments::NsmCostsSummary).to receive(:new).with(answers)
+        get :edit, params: { id: submission_id }
+      end
+
+      context 'when laa_reference is present' do
+        let(:laa_reference) { 'LAA123' }
+
+        it 'initializes NsmCostSummaryAmendedAndClaimed class with answers' do
+          expect(Payments::NsmCostsSummaryAmendedAndClaimed).to receive(:new).with(answers)
+          get :edit, params: { id: submission_id }
+        end
+      end
+
+      context 'when linked_laa_reference is present' do
+        let(:linked_laa_reference) { 'LAA456' }
+
+        it 'initializes NsmCostSummaryAmendedAndClaimed class with answers' do
+          expect(Payments::NsmCostsSummaryAmendedAndClaimed).to receive(:new).with(answers)
+          get :edit, params: { id: submission_id }
+        end
       end
     end
   end
