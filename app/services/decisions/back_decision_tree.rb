@@ -23,8 +23,6 @@ module Decisions
       .goto(edit: DecisionTree::NSM_CLAIMED_COSTS)
       .when(-> { nsm_appeal || nsm_amendment })
       .goto(edit: DecisionTree::DATE_CLAIM_ASSESSED)
-    from(DecisionTree::SUBMISSION_ALLOWED_COSTS)
-      .goto(edit: CHECK_YOUR_ANSWERS)
     from(CHECK_YOUR_ANSWERS.sub(%r{^/}, ''))
       .when(-> { ac || ac_appeal || ac_amendment })
       .goto(edit: DecisionTree::AC_ALLOWED_COSTS)
