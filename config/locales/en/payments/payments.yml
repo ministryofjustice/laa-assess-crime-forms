@@ -18,7 +18,6 @@ en:
         edit:
           page_title: Check your answers
           heading: Check your answers
-          change_profit:  Change profit costs
           headers:
             costs: costs
             total: totals
