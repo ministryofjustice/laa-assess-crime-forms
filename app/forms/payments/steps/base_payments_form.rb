@@ -55,6 +55,10 @@ module Payments
         raise 'Subclasses of BaseFormObject need to implement #persist!'
       end
       # :nocov:
+
+      def not_amendment?
+        !request_type.end_with?('amendment')
+      end
     end
   end
 end

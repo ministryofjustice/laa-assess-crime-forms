@@ -23,12 +23,6 @@ module Payments
 
           true
         end
-
-        private
-
-        def not_amendment?
-          multi_step_form_session['request_type'] != 'assigned_counsel_amendment'
-        end
       end
     end
   end

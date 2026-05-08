@@ -31,12 +31,6 @@ module Payments
 
           true
         end
-
-        private
-
-        def not_amendment?
-          multi_step_form_session['request_type'] != 'non_standard_mag_amendment'
-        end
       end
     end
   end
