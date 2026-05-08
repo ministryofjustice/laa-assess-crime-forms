@@ -56,8 +56,8 @@ module Payments
       end
       # :nocov:
 
-      def not_amendment?
-        !request_type.end_with?('amendment')
+      def amendment?
+        request_type.end_with?('amendment')
       end
     end
   end
