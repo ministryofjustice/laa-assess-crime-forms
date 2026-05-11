@@ -17,8 +17,13 @@ RSpec.describe Payments::Steps::Nsm::AllowedCostsForm, type: :model do
   let(:disbursement) { BigDecimal('50.0') }
   let(:travel)      { BigDecimal('25.0') }
   let(:waiting)     { BigDecimal('10.0') }
+  let(:request_type) { 'non_standard_magistrate' }
 
   describe 'validations' do
+    before do
+      allow(form).to receive(:request_type).and_return(request_type)
+    end
+
     it 'is valid with all costs present and non-negative' do
       expect(form).to be_valid
     end
@@ -52,9 +57,22 @@ RSpec.describe Payments::Steps::Nsm::AllowedCostsForm, type: :model do
       expect(form).not_to be_valid
       expect(form.errors[:allowed_profit_cost]).to include('Allowed profit costs must be equal or greater than 0')
     end
+
+    context 'request type is non_standard_mag_amendment' do
+      let(:request_type) { 'non_standard_mag_amendment' }
+
+      it 'allows negative allowed cost values' do
+        form.allowed_profit_cost = -1
+        expect(form).to be_valid
+      end
+    end
   end
 
   describe '#save' do
+    before do
+      allow(form).to receive(:request_type).and_return(request_type)
+    end
+
     context 'with valid attributes' do
       it 'returns true' do
         expect(form.save).to be true
