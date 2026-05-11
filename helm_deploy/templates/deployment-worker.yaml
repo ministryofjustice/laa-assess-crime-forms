@@ -190,6 +190,8 @@ spec:
                 configMapKeyRef:
                   name: {{ include "laa-assess-crime-forms.fullname" . }}
                   key: MAINTENANCE_MODE
+            - name: SENTRY_TRACE_SAMPLE_RATE
+              value: '{{ .Values.variables.sentryTraceSampleRate }}'
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
