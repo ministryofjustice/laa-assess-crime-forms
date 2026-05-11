@@ -133,3 +133,5 @@ metabase:
 
 customErrorService:
   enabled: true
+
+sentryTraceSampleRate: 0.05
