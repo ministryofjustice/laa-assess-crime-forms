@@ -80,17 +80,26 @@ module ApplicationHelper
   end
 
   def infer_claim_section
-    claim_id = params.fetch(:claim_id, params.fetch(:id, nil))
-    return unless claim_id
+    current_claim = current_claim_for_section
+    return unless current_claim
 
-    current_claim = Claim.load_from_app_store(claim_id)
     if current_claim.closed?
       :closed
-    elsif current_claim.assigned_user == current_user
+    elsif current_claim.assigned_user_id == current_user.id
       :your
     else
       :open
     end
+  end
+
+  def current_claim_for_section
+    claim_id = params.fetch(:claim_id, params.fetch(:id, nil))
+    return unless claim_id
+
+    preloaded_claim = controller.view_assigns['claim']
+    return preloaded_claim if preloaded_claim&.id.to_s == claim_id.to_s
+
+    Claim.load_from_app_store(claim_id)
   end
 
   # rubocop:disable Metrics/ParameterLists

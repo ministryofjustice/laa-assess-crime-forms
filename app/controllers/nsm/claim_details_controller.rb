@@ -4,8 +4,9 @@ module Nsm
       authorize(claim)
       claim_summary = BaseViewModel.build(:claim_summary, claim)
       claim_details = ClaimDetails::Table.new(claim)
+      payment_request_eligible = claim.assessed? && claim.eligible_for_payment_request?
 
-      render locals: { claim:, claim_summary:, claim_details:, provider_updates: }
+      render locals: { claim:, claim_summary:, claim_details:, provider_updates:, payment_request_eligible: }
     end
 
     private
