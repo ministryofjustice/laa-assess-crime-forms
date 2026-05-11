@@ -2,13 +2,19 @@ module Payments
   module Steps
     module Ac
       class AllowedCostsForm < BasePaymentsForm
+        include NumericLimits
+
         attribute :allowed_net_assigned_counsel_cost, :gbp
         attribute :allowed_assigned_counsel_vat, :gbp
         attribute :allowed_total, :gbp
 
         validates :allowed_net_assigned_counsel_cost, :allowed_assigned_counsel_vat,
-                  presence: true, numericality: { greater_than_or_equal_to: 0 }, is_a_number: true
-
+                  presence: true, numericality: {
+                    less_than_or_equal_to: NumericLimits::MAX_FLOAT,
+                    greater_than_or_equal_to: -NumericLimits::MAX_FLOAT
+                  }, is_a_number: true
+        validates :allowed_net_assigned_counsel_cost, :allowed_assigned_counsel_vat,
+                  numericality: { greater_than_or_equal_to: 0 }, unless: -> { amendment? }
         def save
           return false unless valid?
 
