@@ -18,11 +18,11 @@
         <p><strong><%= t(".provider_updated", date: format_in_zone(claim.data['updated_at'])) %></strong></p>
         <%= govuk_link_to t('.further_information'), '#further-info' %>
       </div>
-    <% elsif claim.assessed? && (claim_summary.assessment_comment.present? || claim.eligible_for_payment_request?) %>
+    <% elsif claim.assessed? && (claim_summary.assessment_comment.present? || payment_request_eligible) %>
       <div class="govuk-inset-text">
         <p><strong><%= t(".assessed_statuses.#{claim.state}") %></strong></p>
         <%= simple_format claim_summary.assessment_comment %>
-        <% if claim.eligible_for_payment_request? %>
+        <% if payment_request_eligible %>
           <div class="govuk-button-group">
             <%= govuk_link_to(t('.create_payment_request'),
                               edit_payments_steps_check_your_answers_path(claim.id, submission: true),
