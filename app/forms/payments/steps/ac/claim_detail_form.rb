@@ -15,7 +15,7 @@ module Payments
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
 
         def save
-          if linked_claim?
+          if nsm_linked?
             self.ufn = multi_step_form_session[:ufn]
             self.defendant_last_name = multi_step_form_session[:defendant_last_name]
           end
@@ -23,7 +23,7 @@ module Payments
           super
         end
 
-        def linked_claim?
+        def nsm_linked?
           multi_step_form_session[:nsm_claim_id].present?
         end
       end

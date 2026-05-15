@@ -84,6 +84,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       expect(page).not_to have_field('Unique file number', with: '120223/001')
     end
 
+    # rubocop:disable RSpec/MultipleExpectations
     it 'allows user to complete payment journey' do
       expect(page).to have_title('Claim Details')
       fill_ac_claim_details(linked_claim: true)
@@ -100,10 +101,14 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
       expect(page).to have_title('Check your answers')
       expect(page).to have_content('Claimed and allowed costs')
+      total_row = find('tfoot.govuk-table__foot')
+      expect(total_row).to have_text('£250.40')
+      expect(total_row).to have_text('£170.00')
       click_on 'Submit payment request'
 
       expect(page).to have_content('Payment request complete')
     end
+    # rubocop:enable RSpec/MultipleExpectations
 
     it 'sends Claim details Change to claim search from CYA' do
       expect(page).to have_title('Claim Details')

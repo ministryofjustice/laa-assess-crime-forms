@@ -47,7 +47,7 @@ module Payments
       private
 
       def calculated_costs
-        attribute_names.grep(/_cost$/).sum { |attr| public_send(attr).to_d }
+        attribute_names.grep(/(_cost|_vat)$/).sum { |attr| public_send(attr).to_d }
       end
 
       # :nocov:
@@ -55,6 +55,10 @@ module Payments
         raise 'Subclasses of BaseFormObject need to implement #persist!'
       end
       # :nocov:
+
+      def amendment?
+        request_type.end_with?('amendment')
+      end
     end
   end
 end

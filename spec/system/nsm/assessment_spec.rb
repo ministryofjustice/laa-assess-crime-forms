@@ -114,14 +114,16 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
 
       it 'clicking "create payment request" takes user check answers page' do
         click_link_or_button 'Create payment request'
-        click_link_or_button 'Change profit cost'
-        expect(page).to have_content 'Amend allowed profit costs'
+        click_link_or_button 'Change'
+        expect(page).to have_content 'Claimed costs'
       end
 
-      it 'allows profit cost to be amended' do
+      it 'allows costs to be amended' do
         click_link_or_button 'Create payment request'
-        click_link_or_button 'Change profit cost'
-        fill_in 'payments_steps_submission_allowed_costs_form[allowed_profit_cost]', with: '200'
+        click_link_or_button 'Change'
+        fill_in 'payments_steps_nsm_claimed_costs_form[claimed_profit_cost]', with: '200'
+        click_link_or_button 'Continue'
+        fill_in 'payments_steps_nsm_allowed_costs_form[allowed_profit_cost]', with: '50'
         click_link_or_button 'Continue'
         expect(page).to have_content 'Check your answers'
       end
@@ -176,24 +178,26 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
 
       it 'clicking "create payment request" takes user check answers page' do
         click_link_or_button 'Create payment request'
-        click_link_or_button 'Change profit cost'
-        expect(page).to have_content 'Amend allowed profit costs'
+        click_link_or_button 'Change'
+        expect(page).to have_content 'Claimed costs'
       end
 
       it 'allows profit cost to be amended' do
         click_link_or_button 'Create payment request'
-        click_link_or_button 'Change profit cost'
-        fill_in 'payments_steps_submission_allowed_costs_form[allowed_profit_cost]', with: '200'
+        click_link_or_button 'Change'
+        fill_in 'payments_steps_nsm_claimed_costs_form[claimed_profit_cost]', with: '200'
+        click_link_or_button 'Continue'
+        fill_in 'payments_steps_nsm_allowed_costs_form[allowed_profit_cost]', with: '50'
         click_link_or_button 'Continue'
         expect(page).to have_content 'Check your answers'
       end
 
       it 'profit costs changes only allows numeric' do
         click_link_or_button 'Create payment request'
-        click_link_or_button 'Change profit cost'
-        fill_in 'payments_steps_submission_allowed_costs_form[allowed_profit_cost]', with: 'lgtm'
+        click_link_or_button 'Change'
+        fill_in 'payments_steps_nsm_claimed_costs_form[claimed_profit_cost]', with: 'lgtm'
         click_link_or_button 'Continue'
-        expect(page).to have_content 'Error: is not a number'
+        expect(page).to have_content 'Error: Claimed profit costs must be a number'
       end
     end
 

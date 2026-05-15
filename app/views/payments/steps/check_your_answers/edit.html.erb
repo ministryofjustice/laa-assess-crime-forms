@@ -47,11 +47,7 @@
     <h2 class="govuk-summary-card__title"><%= t('.cost_summary') %></h2>
     <ul class="govuk-summary-card__actions">
       <li class="govuk-summary-card__action">
-        <% if @report.session_answers['linked_laa_reference'].present? %>
-          <%= link_to t('.change_profit'), edit_payments_steps_submission_allowed_costs_path %>
-        <% else %>
-          <%= link_to t('.change'), @cost_summary.change_link %>
-        <% end %>
+        <%= link_to t('.change'), @cost_summary.change_link %>
         <span class="govuk-visually-hidden"><%= t('.cost_summary') %></span>
       </li>
     </ul>

@@ -13,8 +13,15 @@ module Payments
         validates :allowed_profit_cost, :allowed_disbursement_cost,
                   :allowed_travel_cost, :allowed_waiting_cost,
                   presence: true,
-                  numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_FLOAT },
+                  numericality: {
+                    less_than_or_equal_to: NumericLimits::MAX_FLOAT,
+                    greater_than_or_equal_to: -NumericLimits::MAX_FLOAT
+                  },
                   is_a_number: true
+
+        validates :allowed_profit_cost, :allowed_disbursement_cost,
+                  :allowed_travel_cost, :allowed_waiting_cost,
+                  numericality: { greater_than_or_equal_to: 0 }, unless: -> { amendment? }
 
         def save
           return false unless valid?

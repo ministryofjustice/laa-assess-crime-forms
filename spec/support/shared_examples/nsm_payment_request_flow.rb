@@ -185,21 +185,39 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         expect(page).to have_title('Check your answers')
       end
 
-      it 'sends Cost summary Change to claimed costs and back link returns to Check your answers' do
-        start_new_payment_request
-        choose_claim_type(claim_type)
-        fill_in_laa_ref
-        fill_date_claim_assessed
-        fill_claimed_costs if type_suffix == 'supplemental'
-        fill_allowed_costs
-        expect(page).to have_title('Check your answers')
+      if type_suffix.in?(%w[amendment appeal])
+        it 'sends Cost summary Change to allowed costs and back link returns to Check your answers' do
+          start_new_payment_request
+          choose_claim_type(claim_type)
+          fill_in_laa_ref
+          fill_date_claim_assessed
+          fill_allowed_costs
+          expect(page).to have_title('Check your answers')
 
-        within('.govuk-summary-card', text: 'Cost summary') do
-          click_link 'Change'
+          within('.govuk-summary-card', text: 'Cost summary') do
+            click_link 'Change'
+          end
+          expect(page).to have_title('Allowed costs')
+          click_link 'Back'
+          expect(page).to have_title('Check your answers')
         end
-        expect(page).to have_title('Claimed costs')
-        click_link 'Back'
-        expect(page).to have_title('Check your answers')
+      else
+        it 'sends Cost summary Change to claimed costs and back link returns to Check your answers' do
+          start_new_payment_request
+          choose_claim_type(claim_type)
+          fill_in_laa_ref
+          fill_date_claim_assessed
+          fill_claimed_costs if type_suffix == 'supplemental'
+          fill_allowed_costs
+          expect(page).to have_title('Check your answers')
+
+          within('.govuk-summary-card', text: 'Cost summary') do
+            click_link 'Change'
+          end
+          expect(page).to have_title('Claimed costs')
+          click_link 'Back'
+          expect(page).to have_title('Check your answers')
+        end
       end
     end
   end
