@@ -26,15 +26,7 @@ RSpec.describe Nsm::ClaimDetailsController do
       get :show, params: { claim_id: }
 
       expect(controller).to have_received(:render)
-        .with(
-          locals: {
-            claim: claim,
-            claim_summary: claim_summary,
-            claim_details: claim_details,
-            provider_updates: provider_updates,
-            payment_request_eligible: false
-          }
-        )
+        .with(locals: { claim:, claim_summary:, claim_details:, provider_updates: })
       expect(response).to be_successful
     end
 

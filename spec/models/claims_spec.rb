@@ -69,4 +69,20 @@ RSpec.describe Claim do
       end
     end
   end
+
+  describe '#eligible_for_payment_request?' do
+    before do
+      allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
+    end
+
+    let(:search_form) do
+      instance_double(Payments::SearchForm, execute: { metadata: { total_results: 1 } })
+    end
+
+    it 'memoizes the payment request search result' do
+      expect(Payments::SearchForm).to receive(:new).with(submission_id: claim.id).once.and_return(search_form)
+
+      2.times { expect(claim.eligible_for_payment_request?).to be false }
+    end
+  end
 end
