@@ -141,7 +141,6 @@ data:
                 </div>
             </div>
           </footer>
-          <script type="module" src="/javascripts/application-example-c1523c2b5e17dfe3bf4942b2c70ecb6d.js"></script>
       </body>
     </html>
 
@@ -279,7 +278,6 @@ data:
                 </div>
             </div>
           </footer>
-          <script type="module" src="/javascripts/application-example-c1523c2b5e17dfe3bf4942b2c70ecb6d.js"></script>
       </body>
     </html>
 {{ end }}
