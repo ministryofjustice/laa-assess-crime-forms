@@ -5,15 +5,15 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "8.0.23",
-    "@ministryofjustice/frontend": "^8.0.0",
+    "@ministryofjustice/frontend": "^9.0.0",
     "@rails/request.js": "^0.0.13",
     "accessible-autocomplete": "^3.0.1",
     "decimal.js": "^10.6.0",
-    "esbuild": "^0.27.4",
+    "esbuild": "^0.28.0",
     "govuk-frontend": "^5.10.2",
     "jquery": "^4.0.0",
     "laa-crime-forms-common": "^1.0.6",
-    "sass": "^1.98.0"
+    "sass": "^1.99.0"
   },
   "resolutions": {
     "braces": "^3.0.3",
