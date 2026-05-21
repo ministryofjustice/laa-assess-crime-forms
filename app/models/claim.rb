@@ -118,14 +118,20 @@ class Claim < Submission
   end
 
   def eligible_for_payment_request?
+    return @eligible_for_payment_request if defined?(@eligible_for_payment_request)
+
+    @eligible_for_payment_request = calculate_payment_request_eligibility?
+  end
+
+  private
+
+  def calculate_payment_request_eligibility?
     return false unless FeatureFlags.payments.enabled?
     return false if data['supplemental_claim'] == 'yes'
     return false unless part_grant? || granted?
 
     Payments::SearchForm.new(submission_id: id).execute[:metadata][:total_results].zero?
   end
-
-  private
 
   def youth_court_fee_claimed
     data['include_youth_court_fee_original'].nil? ? data['include_youth_court_fee'] : data['include_youth_court_fee_original']
