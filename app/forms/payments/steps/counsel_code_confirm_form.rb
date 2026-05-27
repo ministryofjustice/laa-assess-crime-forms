@@ -25,7 +25,10 @@ module Payments
       end
 
       def office_code_details
-        ProviderData::ProviderDataClient.new.office_details(searched_code)
+        data = ProviderData::ProviderDataClient.new.office_details(searched_code)
+        return nil if data.blank?
+
+        data['firm']['firmType'].downcase == 'advocate' ? data : nil
       end
     end
   end
