@@ -14,6 +14,8 @@ module Decisions
     AC_CLAIM_DETAILS = '/payments/steps/ac/claim_details'.freeze
     AC_CLAIMED_COSTS = 'payments/steps/ac/claimed_costs'.freeze
     AC_ALLOWED_COSTS = 'payments/steps/ac/allowed_costs'.freeze
+    COUNSEL_CODE_SEARCH = '/payments/steps/counsel_code_search'.freeze
+    COUNSEL_CODE_CONFIRM = '/payments/steps/counsel_code_confirm'.freeze
     OFFICE_CODE_SEARCH = '/payments/steps/office_code_search'.freeze
     OFFICE_CODE_CONFIRM = '/payments/steps/office_code_confirm'.freeze
     DATE_CLAIM_ASSESSED = '/payments/steps/date_claim_assessed'.freeze
@@ -40,27 +42,33 @@ module Decisions
 
     from(:office_code_search)
       .goto(edit: OFFICE_CODE_CONFIRM)
+    from(:counsel_code_search)
+      .goto(edit: COUNSEL_CODE_CONFIRM)
     from(:office_code_confirm)
       .when(-> { (ac_appeal || ac_amendment) && multi_step_form_session.ac_claim_details_incomplete? })
-      .goto(edit: AC_CLAIM_DETAILS)
+      .goto(edit: COUNSEL_CODE_SEARCH)
       .when(-> { ac_appeal || ac_amendment })
       .goto(edit: DATE_CLAIM_ASSESSED)
       .when(-> { ac })
-      .goto(edit: AC_CLAIM_DETAILS)
+      .goto(edit: COUNSEL_CODE_SEARCH)
       .when(-> { nsm || nsm_appeal || nsm_amendment || nsm_supplemental })
       .goto(edit: NSM_CLAIM_DETAILS)
+    from(:counsel_code_confirm)
+      .when(-> { (ac || ac_appeal || ac_amendment) && multi_step_form_session.ac_claim_details_incomplete? })
+      .goto(edit: AC_CLAIM_DETAILS)
+      .goto(edit: DATE_CLAIM_ASSESSED)
     from(:claim_search)
       .when(-> { (ac_appeal || ac_amendment || ac) && multi_step_form_session.no_existing_ref? })
       .goto(edit: OFFICE_CODE_SEARCH)
-      .when(-> { ac })
-      .goto(edit: AC_CLAIM_DETAILS)
-      .goto(edit: DATE_CLAIM_ASSESSED)
+      .goto(edit: COUNSEL_CODE_SEARCH)
 
     from(:date_claim_assessed)
       .when(-> { nsm_supplemental })
       .goto(edit: NSM_CLAIMED_COSTS)
       .when(-> { nsm_appeal || nsm_amendment })
       .goto(edit: NSM_ALLOWED_COSTS)
+      .when(-> { ac })
+      .goto(edit: AC_CLAIMED_COSTS)
       .when(-> { ac_appeal || ac_amendment })
       .goto(edit: AC_ALLOWED_COSTS)
 

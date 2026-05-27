@@ -8,6 +8,8 @@ module Decisions
     from(DecisionTree::NSM_CLAIM_DETAILS)
       .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)
     from(DecisionTree::DATE_CLAIM_ASSESSED.sub(%r{^/}, ''))
+      .when(-> { ac || ac_appeal || ac_amendment })
+      .goto(edit: DecisionTree::COUNSEL_CODE_CONFIRM)
       .goto(edit: DecisionTree::CLAIM_SEARCH.sub(%r{^/}, ''))
     from(DecisionTree::CLAIM_SEARCH.sub(%r{^/}, ''))
       .goto(edit: DecisionTree::CLAIM_TYPE)
@@ -30,9 +32,7 @@ module Decisions
       .goto(edit: DecisionTree::NSM_ALLOWED_COSTS)
 
     from(DecisionTree::AC_CLAIM_DETAILS.sub(%r{^/}, ''))
-      .when(-> { multi_step_form_session.no_existing_ref? })
-      .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)
-      .goto(edit: DecisionTree::CLAIM_SEARCH)
+      .goto(edit: DecisionTree::COUNSEL_CODE_CONFIRM)
     from(DecisionTree::AC_CLAIMED_COSTS)
       .goto(edit: DecisionTree::AC_CLAIM_DETAILS)
     from(DecisionTree::AC_ALLOWED_COSTS)
@@ -44,7 +44,10 @@ module Decisions
       .goto(edit: DecisionTree::CLAIM_SEARCH)
     from(DecisionTree::OFFICE_CODE_CONFIRM.sub(%r{^/}, ''))
       .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)
-
+    from(DecisionTree::COUNSEL_CODE_SEARCH.sub(%r{^/}, ''))
+      .goto(edit: DecisionTree::OFFICE_CODE_CONFIRM)
+    from(DecisionTree::COUNSEL_CODE_CONFIRM.sub(%r{^/}, ''))
+      .goto(edit: DecisionTree::COUNSEL_CODE_SEARCH)
     from(CHANGE_YOUR_ANSWERS)
       .goto(edit: CHECK_YOUR_ANSWERS)
   end
