@@ -12,9 +12,9 @@ RSpec.describe ProviderData::LocalDataClient do
           {
             'firmOfficeId' => 1,
             'ccmsFirmOfficeId' => 1,
-            'firmOfficeCode' => '1A123C',
+            'firmOfficeCode' => '1A123B',
             'officeName' => 'Firm & Sons',
-            'officeCodeAlt' => '1A123C',
+            'officeCodeAlt' => '1A123B',
             'type' => 'Solicitor'
           }
         )
