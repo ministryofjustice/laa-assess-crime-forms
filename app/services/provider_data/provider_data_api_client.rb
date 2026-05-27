@@ -8,6 +8,17 @@ module ProviderData
 
     class << self
       def office_details(office_code)
+        query(
+          :get,
+          "/provider-offices/#{office_code}",
+          {
+            200 => ->(data) { { 'office' => data['office'], 'firm' => data['firm'] } },
+            204 => nil
+          }
+        )
+      end
+
+      def contracted_office_details(office_code)
         # :nocov: Querying an external API
         params = {
           'areaOfLaw' => 'CRIME LOWER'

@@ -1,20 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe ProviderData::LocalDataClient do
-  describe '#office_details' do
+  describe '#contracted_office_details' do
     let(:office_code) { nil }
 
-    context 'when office code is 1A123B' do
-      let(:office_code) { '1A123B' }
+    context 'when office code is 1A123C' do
+      let(:office_code) { '1A123C' }
 
       it 'returns the correct office details' do
-        expect(described_class.new.office_details(office_code)).to eq(
+        expect(described_class.new.contracted_office_details(office_code)).to eq(
           {
             'firmOfficeId' => 1,
             'ccmsFirmOfficeId' => 1,
-            'firmOfficeCode' => '1A123B',
+            'firmOfficeCode' => '1A123C',
             'officeName' => 'Firm & Sons',
-            'officeCodeAlt' => '1A123B',
+            'officeCodeAlt' => '1A123C',
             'type' => 'Solicitor'
           }
         )
@@ -25,7 +25,7 @@ RSpec.describe ProviderData::LocalDataClient do
       let(:office_code) { 'XYZ789' }
 
       it 'returns nil' do
-        expect(described_class.new.office_details(office_code)).to be_nil
+        expect(described_class.new.contracted_office_details(office_code)).to be_nil
       end
     end
   end

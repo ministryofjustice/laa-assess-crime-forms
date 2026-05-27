@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ProviderData::ProviderDataApiClient do
-  describe '#office_details' do
+  describe '#contracted_office_details' do
     let(:office_code) { '1A123B' }
     let(:api_response) { nil }
     let(:api_url) { "https://provider-api.example.com/provider-offices/#{office_code}/schedules?areaOfLaw=CRIME%20LOWER" }
@@ -30,7 +30,7 @@ RSpec.describe ProviderData::ProviderDataApiClient do
       end
 
       it 'returns the correct office details' do
-        expect(described_class.office_details(office_code)).to eq(
+        expect(described_class.contracted_office_details(office_code)).to eq(
           {
             'firmOfficeId' => 1,
             'ccmsFirmOfficeId' => 1,
@@ -48,7 +48,7 @@ RSpec.describe ProviderData::ProviderDataApiClient do
       let(:body) { {}.to_json }
 
       it 'returns nil' do
-        expect(described_class.office_details(office_code)).to be_nil
+        expect(described_class.contracted_office_details(office_code)).to be_nil
       end
     end
 
@@ -57,7 +57,9 @@ RSpec.describe ProviderData::ProviderDataApiClient do
       let(:body) { {}.to_json }
 
       it 'raises an error' do
-        expect { described_class.office_details(office_code) }.to raise_error(StandardError, /Unexpected status code 500/)
+        expect do
+          described_class.contracted_office_details(office_code)
+        end.to raise_error(StandardError, /Unexpected status code 500/)
       end
     end
   end
