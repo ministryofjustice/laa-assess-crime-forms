@@ -285,6 +285,13 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       click_button 'Continue'
       expect(page).to have_text('What is the assigned counsel account number?')
     end
+
+    it 'Shows error if counsel code is empty' do
+      select_office_code
+      fill_in 'What is the assigned counsel account number?', with: ''
+      click_button 'Continue'
+      expect(page).to have_content('Enter the assigned counsel account number')
+    end
   end
 
   context 'Create new record before searching' do

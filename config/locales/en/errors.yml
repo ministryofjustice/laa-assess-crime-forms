@@ -148,6 +148,10 @@ en:
           attributes:
             confirm_office_code:
               inclusion: Please select an option
+        payments/steps/counsel_code_confirm_form:
+          attributes:
+            confirm_counsel_code:
+              inclusion: Please select an option
 
         payments/steps/date_claim_assessed_form:
           attributes:
@@ -197,6 +201,10 @@ en:
           attributes:
             solicitor_office_code:
               blank: Enter the office code
+        payments/steps/counsel_code_search_form:
+          attributes:
+            counsel_office_code:
+              blank: Enter the assigned counsel account number
 
         payments/steps/nsm/claimed_costs_form:
           attributes:
@@ -252,11 +260,6 @@ en:
               blank: Enter the unique file number
             defendant_last_name:
               blank: Enter the defendant last name
-            counsel_office_code:
-              blank: Enter the counsel office code
-            counsel_firm_name:
-              blank: Enter the counsel firm name
-
 
         payments/steps/ac/claimed_costs_form:
           attributes:
