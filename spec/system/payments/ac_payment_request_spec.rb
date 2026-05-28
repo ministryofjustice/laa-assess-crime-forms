@@ -276,6 +276,15 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       click_button 'Continue'
       expect(page).to have_content('Allowed net counsel fees must be a number, like 25')
     end
+
+    it 'Allows for counsel code to be re-selected' do
+      select_office_code
+      fill_in 'What is the assigned counsel account number?', with: '1A123C'
+      click_button 'Continue'
+      choose 'No, I need to change the number', allow_label_click: true
+      click_button 'Continue'
+      expect(page).to have_text('What is the assigned counsel account number?')
+    end
   end
 
   context 'Create new record before searching' do
