@@ -8,8 +8,6 @@ module Decisions
     from(DecisionTree::NSM_CLAIM_DETAILS)
       .goto(edit: DecisionTree::OFFICE_CODE_SEARCH)
     from(DecisionTree::DATE_CLAIM_ASSESSED.sub(%r{^/}, ''))
-      .when(-> { ac || ac_appeal || ac_amendment })
-      .goto(edit: DecisionTree::COUNSEL_CODE_CONFIRM)
       .goto(edit: DecisionTree::CLAIM_SEARCH.sub(%r{^/}, ''))
     from(DecisionTree::CLAIM_SEARCH.sub(%r{^/}, ''))
       .goto(edit: DecisionTree::CLAIM_TYPE)
