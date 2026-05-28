@@ -35,17 +35,56 @@ RSpec.describe Decisions::DecisionTree do
     end
 
     context 'from :claim_search' do
-      {
-        'NSM_SUPPLEMENTAL' => Payments::ClaimType::NSM_SUPPLEMENTAL,
-        'NSM_APPEAL'       => Payments::ClaimType::NSM_APPEAL,
-        'NSM_AMENDMENT'    => Payments::ClaimType::NSM_AMENDMENT
-      }.each do |label, request_type|
-        context "when #{label}" do
-          let(:multi_step_form_session) { { 'request_type' => request_type.to_s } }
+      context 'when unlinked claim' do
+        let(:multi_step_form_session) { instance_double(Decisions::MultiStepFormSession, no_existing_ref?: true) }
+
+        {
+          'NSM_SUPPLEMENTAL' => Payments::ClaimType::NSM_SUPPLEMENTAL,
+          'NSM_APPEAL'       => Payments::ClaimType::NSM_APPEAL,
+          'NSM_AMENDMENT'    => Payments::ClaimType::NSM_AMENDMENT,
+          'AC'               => Payments::ClaimType::AC,
+          'AC_APPEAL'        => Payments::ClaimType::AC_APPEAL,
+          'AC_AMENDMENT'     => Payments::ClaimType::AC_AMENDMENT
+        }.each do |label, request_type|
+          context "when #{label}" do
+            before do
+              allow(multi_step_form_session).to receive(:[]).with('request_type').and_return(request_type.to_s)
+            end
+
+            it_behaves_like 'a generic decision',
+                            from: :claim_search,
+                            goto: { action: :edit, controller: Decisions::DecisionTree::OFFICE_CODE_SEARCH }
+          end
+        end
+      end
+
+      context 'when linked claim' do
+        let(:multi_step_form_session) { instance_double(Decisions::MultiStepFormSession, no_existing_ref?: false) }
+
+        context 'when AC' do
+          before do
+            allow(multi_step_form_session).to receive(:[]).with('request_type').and_return(Payments::ClaimType::AC.to_s)
+          end
 
           it_behaves_like 'a generic decision',
                           from: :claim_search,
-                          goto: { action: :edit, controller: Decisions::DecisionTree::DATE_CLAIM_ASSESSED }
+                          goto: { action: :edit, controller: Decisions::DecisionTree::COUNSEL_CODE_SEARCH }
+        end
+
+        {
+          'NSM_SUPPLEMENTAL' => Payments::ClaimType::NSM_SUPPLEMENTAL,
+          'NSM_APPEAL'       => Payments::ClaimType::NSM_APPEAL,
+          'NSM_AMENDMENT'    => Payments::ClaimType::NSM_AMENDMENT
+        }.each do |label, request_type|
+          context "when #{label}" do
+            before do
+              allow(multi_step_form_session).to receive(:[]).with('request_type').and_return(request_type.to_s)
+            end
+
+            it_behaves_like 'a generic decision',
+                            from: :claim_search,
+                            goto: { action: :edit, controller: Decisions::DecisionTree::DATE_CLAIM_ASSESSED }
+          end
         end
       end
     end

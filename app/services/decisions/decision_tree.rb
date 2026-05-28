@@ -56,7 +56,6 @@ module Decisions
     from(:counsel_code_confirm)
       .when(-> { (ac || ac_appeal || ac_amendment) && multi_step_form_session.no_existing_ref? })
       .goto(edit: AC_CLAIM_DETAILS)
-      .goto(edit: DATE_CLAIM_ASSESSED)
     from(:claim_search)
       .when(-> { nsm || boi })
       .goto(edit: OFFICE_CODE_SEARCH)
