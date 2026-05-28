@@ -234,6 +234,13 @@ module PaymentsHelpers
     click_button 'Continue'
   end
 
+  def select_counsel_code(counsel_code = '1A123C')
+    fill_in 'What is the assigned counsel account number?', with: counsel_code
+    click_button 'Continue'
+    choose 'Yes', allow_label_click: true
+    click_button 'Continue'
+  end
+
   # rubocop:disable Metrics/ParameterLists
   def fill_claim_details(
     received_on: '2025-09-24',
@@ -272,13 +279,9 @@ module PaymentsHelpers
     received_on: '2025-09-24',
     ufn: '120223/001',
     defendant_last_name: 'Fred',
-    counsel_office_account_number: '1A123B',
-    counsel_name: 'Firth & Coln',
     linked_claim: false
   )
     fill_in id: 'payments-steps-ac-claim-detail-form-date-claim-assessed-field', with: received_on
-    fill_in 'Counsel office account number', with: counsel_office_account_number
-    fill_in 'Counsel name', with: counsel_name
     unless linked_claim
       fill_in 'Unique file number', with: ufn
       fill_in 'Defendant last name', with: defendant_last_name

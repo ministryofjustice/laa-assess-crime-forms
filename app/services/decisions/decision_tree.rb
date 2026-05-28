@@ -54,7 +54,7 @@ module Decisions
       .when(-> { nsm || nsm_appeal || nsm_amendment || nsm_supplemental })
       .goto(edit: NSM_CLAIM_DETAILS)
     from(:counsel_code_confirm)
-      .when(-> { (ac || ac_appeal || ac_amendment) && multi_step_form_session.ac_claim_details_incomplete? })
+      .when(-> { (ac || ac_appeal || ac_amendment) && multi_step_form_session.no_existing_ref? })
       .goto(edit: AC_CLAIM_DETAILS)
       .goto(edit: DATE_CLAIM_ASSESSED)
     from(:claim_search)

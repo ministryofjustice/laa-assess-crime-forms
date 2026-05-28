@@ -77,6 +77,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       fill_in 'Find a claim', with: nsm_claim_ref
       click_button 'Search'
       click_button 'Select'
+      select_counsel_code
     end
 
     it 'does not show linked claim details in form' do
@@ -86,8 +87,8 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
     # rubocop:disable RSpec/MultipleExpectations
     it 'allows user to complete payment journey' do
-      expect(page).to have_title('Claim Details')
-      fill_ac_claim_details(linked_claim: true)
+      expect(page).to have_title('Date claim assessed')
+      fill_date_claim_assessed
 
       expect(page).to have_title('Claimed costs')
       fill_in id: 'counsel_costs_net', with: '150.40'
@@ -111,8 +112,8 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     # rubocop:enable RSpec/MultipleExpectations
 
     it 'sends Claim details Change to claim search from CYA' do
-      expect(page).to have_title('Claim Details')
-      fill_ac_claim_details(linked_claim: true)
+      expect(page).to have_title('Date claim assessed')
+      fill_date_claim_assessed
 
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
@@ -154,11 +155,12 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       fill_in 'Find a claim', with: crm7_reference
       click_button 'Search'
       click_button 'Select'
+      select_counsel_code
     end
 
     it 'allows user to complete payment journey' do
-      expect(page).to have_title('Claim Details')
-      fill_ac_claim_details(linked_claim: true)
+      expect(page).to have_title('Date claim assessed')
+      fill_date_claim_assessed
 
       expect(page).to have_title('Claimed costs')
       fill_in id: 'counsel_costs_net', with: '150.40'
@@ -191,6 +193,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
     it 'allows user to complete payment journey' do
       select_office_code
+      select_counsel_code
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
@@ -205,6 +208,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
     it 'sends Claim details Change to office code search and user can return to CYA' do
       select_office_code
+      select_counsel_code
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
@@ -220,6 +224,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       expect(page).to have_title("Solicitor's firm account number")
 
       select_office_code
+      select_counsel_code
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
@@ -233,6 +238,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
     it 'fails claimed payment journey when inputs invalid' do
       select_office_code
+      select_counsel_code
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: 'garbage'
       click_button 'Continue'
@@ -241,6 +247,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
     it 'fails allowed payment journey when inputs invalid' do
       select_office_code
+      select_counsel_code
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
@@ -260,6 +267,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
     it 'allows user to continue without performing a search' do
       select_office_code
+      select_counsel_code
       expect(page).to have_title('Claim Details')
     end
   end
