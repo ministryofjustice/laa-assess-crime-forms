@@ -277,6 +277,13 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       expect(page).to have_content('Allowed net counsel fees must be a number, like 25')
     end
 
+    it 'Does not allow selecting non advocate office code' do
+      select_office_code
+      fill_in 'What is the assigned counsel account number?', with: '1A123D'
+      click_button 'Continue'
+      expect(page).to have_content('Account not found')
+    end
+
     it 'Allows for counsel code to be re-selected' do
       select_office_code
       fill_in 'What is the assigned counsel account number?', with: '1A123C'
