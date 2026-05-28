@@ -150,7 +150,7 @@ en:
               inclusion: Please select an option
         payments/steps/counsel_code_confirm_form:
           attributes:
-            confirm_counsel_code:
+            confirm_office_code:
               inclusion: Please select an option
 
         payments/steps/date_claim_assessed_form:
