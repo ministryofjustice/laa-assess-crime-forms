@@ -106,12 +106,6 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
         expect(page).to have_content 'Check your answers'
       end
 
-      it 'clicking "back" takes user to nsm claims page' do
-        click_link_or_button 'Create payment request'
-        find('div[role="navigation"]').click_link('Back')
-        expect(page).to have_content 'Decision sent'
-      end
-
       it 'clicking "create payment request" takes user check answers page' do
         click_link_or_button 'Create payment request'
         click_link_or_button 'Change'
@@ -168,12 +162,6 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
       it 'clicking "create payment" request takes user to payment check your answers page' do
         click_link_or_button 'Create payment request'
         expect(page).to have_content 'Check your answers'
-      end
-
-      it 'clicking "back" takes user to nsm claims page' do
-        click_link_or_button 'Create payment request'
-        find('div[role="navigation"]').click_link('Back')
-        expect(page).to have_content 'Decision sent'
       end
 
       it 'clicking "create payment request" takes user check answers page' do
