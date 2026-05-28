@@ -271,4 +271,12 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       expect(page).to have_title('Claim Details')
     end
   end
+
+  describe 'appeal', :stub_oauth_token do
+    it_behaves_like 'AC payment request flow', 'appeal'
+  end
+
+  describe 'amendment', :stub_oauth_token do
+    it_behaves_like 'AC payment request flow', 'amendment'
+  end
 end
