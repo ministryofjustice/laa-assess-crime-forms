@@ -71,12 +71,36 @@ RSpec.describe Decisions::BackDecisionTree do
       end
     end
 
+    context 'from COUNSEL_CODE_CONFIRM' do
+      it_behaves_like 'a generic decision',
+                      from: Decisions::DecisionTree::COUNSEL_CODE_CONFIRM.sub(%r{^/}, ''),
+                      goto: { action: :edit, controller: Decisions::DecisionTree::COUNSEL_CODE_SEARCH }
+    end
+
+    context 'from COUNSEL_CODE_SEARCH' do
+      context 'when no existing ref' do
+        let(:multi_step_form_session) { instance_double(Decisions::MultiStepFormSession, no_existing_ref?: true) }
+
+        it_behaves_like 'a generic decision',
+                        from: Decisions::DecisionTree::COUNSEL_CODE_SEARCH.sub(%r{^/}, ''),
+                        goto: { action: :edit, controller: Decisions::DecisionTree::OFFICE_CODE_CONFIRM }
+      end
+
+      context 'when existing ref' do
+        let(:multi_step_form_session) { instance_double(Decisions::MultiStepFormSession, no_existing_ref?: false) }
+
+        it_behaves_like 'a generic decision',
+                        from: Decisions::DecisionTree::COUNSEL_CODE_SEARCH.sub(%r{^/}, ''),
+                        goto: { action: :edit, controller: Decisions::DecisionTree::CLAIM_SEARCH.sub(%r{^/}, '') }
+      end
+    end
+
     context 'from CHECK_YOUR_ANSWERS' do
       context 'when NSM' do
         let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM.to_s } }
 
         it_behaves_like 'a generic decision',
-                        from: Decisions::BackDecisionTree::CHECK_YOUR_ANSWERS.sub(%r{^/}, ''),
+                        from: Decisions::DecisionTree::CHECK_YOUR_ANSWERS.sub(%r{^/}, ''),
                         goto: { action: :edit, controller: Decisions::DecisionTree::NSM_ALLOWED_COSTS }
       end
     end
