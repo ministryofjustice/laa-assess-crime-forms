@@ -1,6 +1,63 @@
 require 'rails_helper'
 
 RSpec.describe ProviderData::ProviderDataApiClient do
+  describe '#office_details' do
+    let(:office_code) { '1A123C' }
+    let(:api_response) { nil }
+    let(:api_url) { "https://provider-api.example.com/provider-offices/#{office_code}" }
+    let(:response) { double(:response, code:, body:) }
+    let(:code) { nil }
+    let(:body) { nil }
+
+    before do
+      allow(ENV).to receive(:fetch).and_call_original
+      stub_request(:get, api_url).to_return(status: code, body: body)
+    end
+
+    context 'when there are office details returned' do
+      let(:code) { 200 }
+      let(:body) do
+        {
+          'office' => {
+            'firmOfficeId' => 1,
+            'ccmsFirmOfficeId' => 1,
+            'firmOfficeCode' => '1A123C',
+            'officeName' => 'Smith & Co',
+            'officeCodeAlt' => '1A123C',
+            'type' => 'Solicitor'
+          },
+          'firm' => {
+            'firmId' => 1,
+            'ccmsFirmId' => 1,
+            'firmName' => 'Smith & Co',
+            'sraNumber' => '12345678'
+          }
+        }.to_json
+      end
+
+      it 'returns the correct office and firm details' do
+        expect(described_class.office_details(office_code)).to eq(
+          {
+            'office' => {
+              'firmOfficeId' => 1,
+              'ccmsFirmOfficeId' => 1,
+              'firmOfficeCode' => '1A123C',
+              'officeName' => 'Smith & Co',
+              'officeCodeAlt' => '1A123C',
+              'type' => 'Solicitor'
+            },
+            'firm' => {
+              'firmId' => 1,
+              'ccmsFirmId' => 1,
+              'firmName' => 'Smith & Co',
+              'sraNumber' => '12345678'
+            }
+          }
+        )
+      end
+    end
+  end
+
   describe '#contracted_office_details' do
     let(:office_code) { '1A123B' }
     let(:api_response) { nil }
