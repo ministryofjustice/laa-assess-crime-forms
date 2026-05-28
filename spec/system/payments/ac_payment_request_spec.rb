@@ -66,6 +66,26 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     sign_in caseworker
   end
 
+  context 'Incorrect counsel code input' do
+    before do
+      start_new_payment_request
+      stub_search(linked_claim_endpoint, search_params, linked_claim_result)
+      stub_get_claim('https://appstore.example.com/v1/payable_claims/1234')
+      choose_claim_type('Assigned counsel')
+      expect(page).to have_content('Search for the non-standard magistrates claim')
+      expect(page).to have_button('Create a new record')
+      fill_in 'Find a claim', with: nsm_claim_ref
+      click_button 'Search'
+      click_button 'Select'
+      fill_in 'What is the assigned counsel account number?', with: 'garbage'
+      click_button 'Continue'
+    end
+
+    it 'shows that counsel could not be found' do
+      expect(page).to have_content('Account not found')
+    end
+  end
+
   context 'Linked NSM claim exists' do
     before do
       start_new_payment_request
