@@ -74,8 +74,8 @@ RSpec.describe ProviderData::LocalDataClient do
   describe '#contracted_office_details' do
     let(:office_code) { nil }
 
-    context 'when office code is 1A123C' do
-      let(:office_code) { '1A123C' }
+    context 'when office code is 1A123B' do
+      let(:office_code) { '1A123B' }
 
       it 'returns the correct office details' do
         expect(described_class.new.contracted_office_details(office_code)).to eq(
