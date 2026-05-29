@@ -18,7 +18,7 @@ module PriorAuthority
         end
 
         def information_request
-          simple_format(@incorrect_information['information_requested'])
+          safer_simple_format(@incorrect_information['information_requested'])
         end
 
         def provider_response

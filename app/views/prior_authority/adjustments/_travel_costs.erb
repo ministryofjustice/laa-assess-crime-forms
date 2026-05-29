@@ -4,13 +4,13 @@
 
 <% if quote.travel_adjustment_comment %>
   <div class="govuk-inset-text">
-    <%= simple_format quote.travel_adjustment_comment %>
+    <%= safer_simple_format quote.travel_adjustment_comment %>
   </div>
 <% end %>
 
 <% if quote.travel_cost_reason %>
   <p><%= t(".cost_description") %></p>
-  <%= simple_format quote.travel_cost_reason %>
+  <%= safer_simple_format quote.travel_cost_reason %>
 <% end %>
 
 <%= govuk_table(id: 'travel_costs') do |table|

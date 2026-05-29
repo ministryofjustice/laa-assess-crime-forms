@@ -43,7 +43,7 @@ module PriorAuthority
         end
 
         def travel_cost_reason
-          simple_format(quote.travel_cost_reason) if quote.travel_cost_reason.present?
+          safer_simple_format(quote.travel_cost_reason) if quote.travel_cost_reason.present?
         end
 
         def service_label

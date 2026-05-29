@@ -35,7 +35,7 @@ module PriorAuthority
         def psychiatric_liaison_reason_not
           return if application_details.psychiatric_liaison_reason_not.blank?
 
-          simple_format(application_details.psychiatric_liaison_reason_not)
+          safer_simple_format(application_details.psychiatric_liaison_reason_not)
         end
       end
     end

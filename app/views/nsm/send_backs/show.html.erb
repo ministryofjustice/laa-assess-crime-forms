@@ -23,7 +23,7 @@
           <%= t('.further_information') %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= simple_format @claim.data['assessment_comment'] %>
+          <%= safer_simple_format @claim.data['assessment_comment'] %>
         </dd>
       </div>
     </dl>

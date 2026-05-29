@@ -60,6 +60,10 @@ module ApplicationHelper
     sanitize(string.gsub("\n", '<br>'), tags: %w[br])
   end
 
+  def safer_simple_format(string)
+    simple_format(string, {}, sanitize_options: { tags: %w[br p] })
+  end
+
   def govuk_error_summary(form_object)
     return if form_object.try(:errors).blank?
 

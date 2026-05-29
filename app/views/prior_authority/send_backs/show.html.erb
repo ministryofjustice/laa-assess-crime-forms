@@ -28,7 +28,7 @@
               <%= t('.further_information') %>
             </dt>
             <dd class="govuk-summary-list__value">
-              <%= simple_format @model.further_information_explanation %>
+              <%= safer_simple_format @model.further_information_explanation %>
             </dd>
           </div>
         <% end %>
@@ -39,7 +39,7 @@
               <%= t('.incorrect_information') %>
             </dt>
             <dd class="govuk-summary-list__value">
-              <%= simple_format @model.incorrect_information_explanation %>
+              <%= safer_simple_format @model.incorrect_information_explanation %>
             </dd>
           </div>
         <% end %>

@@ -4,7 +4,7 @@
 
 <% if service_cost.adjustment_comment %>
   <div class="govuk-inset-text">
-    <%= simple_format service_cost.adjustment_comment %>
+    <%= safer_simple_format service_cost.adjustment_comment %>
   </div>
 <% end %>
 

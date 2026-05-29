@@ -12,7 +12,7 @@
     <% if @summary.assessed? && @details.assessment_comment.present? %>
       <div class="govuk-inset-text">
         <p><strong><%= t(".assessed_statuses.#{@details.submission.state}") %></strong></p>
-        <p> <%= simple_format @details.assessment_comment %></p>
+        <p> <%= safer_simple_format @details.assessment_comment %></p>
         <% if @details.submission.part_grant? %>
           <p> <%= link_to t('.review_adjustments'), prior_authority_application_adjustments_path(@summary.id) %></p>
         <% end %>
@@ -22,11 +22,11 @@
         <p><strong><%= t(".sent_back", date: @summary.date_updated_str) %></strong></p>
         <% if @details.further_information_requested? %>
           <p><%= t('.further_information') %></p>
-          <%= simple_format @details.further_information_explanation %>
+          <%= safer_simple_format @details.further_information_explanation %>
         <% end %>
         <% if @details.corrections_requested? %>
           <p><%= t('.incorrect_information') %></p>
-          <%= simple_format @details.incorrect_information_explanation %>
+          <%= safer_simple_format @details.incorrect_information_explanation %>
         <% end %>
       </div>
     <% elsif @summary.provider_updated? %>

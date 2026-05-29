@@ -18,12 +18,12 @@ module PriorAuthority
         end
 
         def information_request
-          simple_format(@further_information['information_requested'])
+          safer_simple_format(@further_information['information_requested'])
         end
 
         def provider_response
           safe_join(
-            [simple_format(@further_information['information_supplied'])] +
+            [safer_simple_format(@further_information['information_supplied'])] +
              documents.flat_map { [tag.br, document_link(_1)] }
           )
         end

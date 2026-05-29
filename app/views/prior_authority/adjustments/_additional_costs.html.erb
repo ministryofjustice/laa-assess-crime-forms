@@ -4,12 +4,12 @@
 
   <% if additional_cost.adjustment_comment %>
     <div class="govuk-inset-text">
-      <%= simple_format additional_cost.adjustment_comment %>
+      <%= safer_simple_format additional_cost.adjustment_comment %>
     </div>
   <% end %>
 
   <p><%= t(".cost_description", name: additional_cost.name) %></p>
-  <%= simple_format additional_cost.description %>
+  <%= safer_simple_format additional_cost.description %>
 
   <%= govuk_table(id: "additional_cost_#{index + 1}") do |table|
         table.with_head do |head|

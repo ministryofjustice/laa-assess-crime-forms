@@ -11,7 +11,7 @@
       <div class="govuk-inset-text">
         <p><strong><%= t(".sent_back", date: claim_summary.sent_back_on.to_fs(:stamp)) %></strong></p>
         <%= t(".further_information_request") %>
-        <%= simple_format claim_summary.assessment_comment %>
+        <%= safer_simple_format claim_summary.assessment_comment %>
       </div>
     <% elsif claim.provider_updated? %>
       <div class="govuk-inset-text">
@@ -21,7 +21,7 @@
     <% elsif claim.assessed? && (claim_summary.assessment_comment.present? || claim.eligible_for_payment_request?) %>
       <div class="govuk-inset-text">
         <p><strong><%= t(".assessed_statuses.#{claim.state}") %></strong></p>
-        <%= simple_format claim_summary.assessment_comment %>
+        <%= safer_simple_format claim_summary.assessment_comment %>
         <% if claim.eligible_for_payment_request? %>
           <div class="govuk-button-group">
             <%= govuk_link_to(t('.create_payment_request'),
