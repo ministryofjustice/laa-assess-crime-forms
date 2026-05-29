@@ -1,10 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe 'Assigned counsel appeal payment request', :stub_oauth_token do
+RSpec.shared_examples 'AC payment request flow' do |type_suffix|
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:index_endpoint) { 'https://appstore.example.com/v1/payment_requests/searches' }
   let(:linked_claim_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
   let(:ac_claim_ref) { 'LAA-kk1HAd' }
+  let(:claim_type) { "Assigned counsel - #{type_suffix}" }
+  let(:claim_type_code) do
+    {
+      'appeal' => 'assigned_counsel_appeal',
+      'amendment' => 'assigned_counsel_amendment',
+    }.fetch(type_suffix, 'assigned_counsel')
+  end
   let(:linked_claim_result) do
     [
       {
@@ -33,7 +40,7 @@ RSpec.describe 'Assigned counsel appeal payment request', :stub_oauth_token do
       per_page: 20,
       query: ac_claim_ref,
       request_type: 'assigned_counsel',
-      claim_type: 'assigned_counsel_appeal',
+      claim_type: claim_type_code,
       sort_by: 'created_at',
       sort_direction: 'descending'
     }
@@ -44,7 +51,7 @@ RSpec.describe 'Assigned counsel appeal payment request', :stub_oauth_token do
       per_page: 20,
       query: 'garbage',
       request_type: 'assigned_counsel',
-      claim_type: 'assigned_counsel_appeal',
+      claim_type: claim_type_code,
       sort_by: 'created_at',
       sort_direction: 'descending'
     }
@@ -61,7 +68,7 @@ RSpec.describe 'Assigned counsel appeal payment request', :stub_oauth_token do
     stub_request(:post, create_endpoint).to_return(
       status: 201,
       body: { claim: { laa_reference: '1234-abc' },
-payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigned_counsel_appeal' } }.to_json
+payment_request: { claimed_total: 100, allowed_total: 10, request_type: claim_type_code } }.to_json
     )
   end
 
@@ -73,7 +80,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     start_new_payment_request
     stub_search(linked_claim_endpoint, search_params, linked_claim_result)
     stub_get_ac_claim('https://appstore.example.com/v1/payable_claims/1234')
-    choose_claim_type('Assigned counsel - appeal')
+    choose_claim_type(claim_type)
     expect(page).to have_content('Search for the assigned counsel claim')
     expect(page).to have_button('Create a new record')
   end
@@ -97,7 +104,11 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       click_on 'Continue'
 
       expect(page).to have_title('Check your answers')
-      expect(page).to have_content('Allowed costs')
+      if type_suffix == 'amendment'
+        expect(page).to have_content('Previously allowed')
+      elsif type_suffix == 'appeal'
+        expect(page).to have_content('Allowed costs')
+      end
       expect(page).to have_content('Previously allowed')
       expect(page).to have_content('Total allowed')
       click_on 'Submit payment request'
@@ -155,7 +166,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       stub_crm7_submission_claim(
         submission_id: crm7_submission_id,
         laa_reference: crm7_reference.upcase,
-        request_type: 'assigned_counsel_appeal',
+        request_type: claim_type_code,
         nsm_claim: { 'id' => crm7_submission_id, 'laa_reference' => crm7_reference.upcase }
       )
       fill_in 'Find a claim', with: crm7_reference
@@ -193,6 +204,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     it 'allows user to complete payment journey' do
       click_on 'Create a new record'
       select_office_code
+      select_counsel_code
       fill_ac_claim_details
 
       expect(page).to have_content('Allowed costs')
@@ -201,7 +213,11 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       click_on 'Continue'
 
       expect(page).to have_title('Check your answers')
-      expect(page).to have_content('Allowed costs')
+      if type_suffix == 'amendment'
+        expect(page).to have_content('Amended allowed costs')
+      elsif type_suffix == 'appeal'
+        expect(page).to have_content('Allowed costs')
+      end
       click_on 'Submit payment request'
       expect(page).to have_content('Payment request complete')
     end

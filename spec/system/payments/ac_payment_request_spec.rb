@@ -66,6 +66,26 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     sign_in caseworker
   end
 
+  context 'Incorrect counsel code input' do
+    before do
+      start_new_payment_request
+      stub_search(linked_claim_endpoint, search_params, linked_claim_result)
+      stub_get_claim('https://appstore.example.com/v1/payable_claims/1234')
+      choose_claim_type('Assigned counsel')
+      expect(page).to have_content('Search for the non-standard magistrates claim')
+      expect(page).to have_button('Create a new record')
+      fill_in 'Find a claim', with: nsm_claim_ref
+      click_button 'Search'
+      click_button 'Select'
+      fill_in 'What is the assigned counsel account number?', with: 'garbage'
+      click_button 'Continue'
+    end
+
+    it 'shows that counsel could not be found' do
+      expect(page).to have_content('Account not found')
+    end
+  end
+
   context 'Linked NSM claim exists' do
     before do
       start_new_payment_request
@@ -77,6 +97,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       fill_in 'Find a claim', with: nsm_claim_ref
       click_button 'Search'
       click_button 'Select'
+      select_counsel_code
     end
 
     it 'does not show linked claim details in form' do
@@ -86,8 +107,8 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
     # rubocop:disable RSpec/MultipleExpectations
     it 'allows user to complete payment journey' do
-      expect(page).to have_title('Claim Details')
-      fill_ac_claim_details(linked_claim: true)
+      expect(page).to have_title('Date claim assessed')
+      fill_date_claim_assessed
 
       expect(page).to have_title('Claimed costs')
       fill_in id: 'counsel_costs_net', with: '150.40'
@@ -111,8 +132,8 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
     # rubocop:enable RSpec/MultipleExpectations
 
     it 'sends Claim details Change to claim search from CYA' do
-      expect(page).to have_title('Claim Details')
-      fill_ac_claim_details(linked_claim: true)
+      expect(page).to have_title('Date claim assessed')
+      fill_date_claim_assessed
 
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
@@ -154,11 +175,12 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       fill_in 'Find a claim', with: crm7_reference
       click_button 'Search'
       click_button 'Select'
+      select_counsel_code
     end
 
     it 'allows user to complete payment journey' do
-      expect(page).to have_title('Claim Details')
-      fill_ac_claim_details(linked_claim: true)
+      expect(page).to have_title('Date claim assessed')
+      fill_date_claim_assessed
 
       expect(page).to have_title('Claimed costs')
       fill_in id: 'counsel_costs_net', with: '150.40'
@@ -191,6 +213,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
     it 'allows user to complete payment journey' do
       select_office_code
+      select_counsel_code
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
@@ -205,6 +228,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
     it 'sends Claim details Change to office code search and user can return to CYA' do
       select_office_code
+      select_counsel_code
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
@@ -220,6 +244,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       expect(page).to have_title("Solicitor's firm account number")
 
       select_office_code
+      select_counsel_code
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
@@ -233,6 +258,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
     it 'fails claimed payment journey when inputs invalid' do
       select_office_code
+      select_counsel_code
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: 'garbage'
       click_button 'Continue'
@@ -241,6 +267,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
     it 'fails allowed payment journey when inputs invalid' do
       select_office_code
+      select_counsel_code
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
@@ -248,6 +275,37 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
       fill_in id: 'counsel_costs_net', with: 'garbage'
       click_button 'Continue'
       expect(page).to have_content('Allowed net counsel fees must be a number, like 25')
+    end
+
+    it 'Requires user to select option for confirming counsel code' do
+      select_office_code
+      fill_in 'What is the assigned counsel account number?', with: '1A123C'
+      click_button 'Continue'
+      click_button 'Continue'
+      expect(page).to have_content('Please select an option')
+    end
+
+    it 'Does not allow selecting non advocate office code' do
+      select_office_code
+      fill_in 'What is the assigned counsel account number?', with: '1A123D'
+      click_button 'Continue'
+      expect(page).to have_content('Account not found')
+    end
+
+    it 'Allows for counsel code to be re-selected' do
+      select_office_code
+      fill_in 'What is the assigned counsel account number?', with: '1A123C'
+      click_button 'Continue'
+      choose 'No, I need to change the number', allow_label_click: true
+      click_button 'Continue'
+      expect(page).to have_text('What is the assigned counsel account number?')
+    end
+
+    it 'Shows error if counsel code is empty' do
+      select_office_code
+      fill_in 'What is the assigned counsel account number?', with: ''
+      click_button 'Continue'
+      expect(page).to have_content('Enter the assigned counsel account number')
     end
   end
 
@@ -260,7 +318,16 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'assigne
 
     it 'allows user to continue without performing a search' do
       select_office_code
+      select_counsel_code
       expect(page).to have_title('Claim Details')
     end
+  end
+
+  describe 'appeal', :stub_oauth_token do
+    it_behaves_like 'AC payment request flow', 'appeal'
+  end
+
+  describe 'amendment', :stub_oauth_token do
+    it_behaves_like 'AC payment request flow', 'amendment'
   end
 end

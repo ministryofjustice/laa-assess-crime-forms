@@ -25,7 +25,7 @@ module Payments
       end
 
       def office_code_details
-        ProviderData::ProviderDataClient.new.office_details(searched_code)
+        ProviderData::ProviderDataClient.new.contracted_office_details(searched_code)
       end
     end
   end
