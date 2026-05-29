@@ -16,10 +16,10 @@ module Payments
           date_claim_assessed,
           solicitor_office_code,
           solicitor_firm_name,
-          ufn,
-          defendant_last_name,
           counsel_office_code,
-          counsel_firm_name
+          counsel_firm_name,
+          ufn,
+          defendant_last_name
         ].flatten.compact
       end
 
