@@ -63,6 +63,7 @@ variables:
   enableSyncTriggerEndpoint: 'false'
   allowIndexing: 'false'
   providerApiHost: https://laa-provider-details-api-preprod.apps.live.cloud-platform.service.justice.gov.uk
+  providerApiEffectiveDate: 01-01-2025
 
 service_account:
   name: laa-assess-crime-forms-uat-irsa
