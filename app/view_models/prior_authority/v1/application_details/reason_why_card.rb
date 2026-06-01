@@ -7,7 +7,7 @@ module PriorAuthority
         delegate :supporting_documents, to: :application_details
 
         def reason_why
-          simple_format(application_details.reason_why)
+          safer_simple_format(application_details.reason_why)
         end
 
         def supporting_document_string

@@ -51,7 +51,7 @@
                     </strong>
                     <% if event.comment? %>
                       <br>
-                      <%= simple_format event.comment %>
+                      <%= safer_simple_format event.comment %>
                     <% end %>
                   </td>
                 </tr>

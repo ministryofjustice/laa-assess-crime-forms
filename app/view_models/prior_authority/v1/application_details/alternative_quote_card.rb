@@ -23,7 +23,7 @@ module PriorAuthority
         def additional_items
           return I18n.t('prior_authority.application_details.none') if additional_cost_list.blank?
 
-          simple_format(additional_cost_list)
+          safer_simple_format(additional_cost_list)
         end
 
         def additional_label

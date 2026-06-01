@@ -55,7 +55,7 @@ class BaseViewModel
 
   private
 
-  delegate :sanitize, :format_in_zone, :format_period, :multiline_text,
+  delegate :sanitize, :format_in_zone, :format_period, :multiline_text, :safer_simple_format,
            to: :helpers
 
   def helpers

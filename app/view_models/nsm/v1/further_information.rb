@@ -38,7 +38,7 @@ module Nsm
       end
 
       def provider_response
-        response_content = [simple_format(information_supplied)]
+        response_content = [safer_simple_format(information_supplied)]
         response_content.concat(uploaded_documents.flat_map { [tag.br, document_link(_1)] })
         safe_join(response_content)
       end
