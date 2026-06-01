@@ -8,7 +8,7 @@ RSpec.describe ProviderData::ProviderDataClient do
       end
 
       it 'uses ProviderDataApiClient' do
-        expect(described_class.new.instance_variable_get(:@client)).to be_a(ProviderData::ProviderDataApiClient)
+        expect(described_class.new.instance_variable_get(:@client)).to eq(ProviderData::ProviderDataApiClient)
       end
     end
 
