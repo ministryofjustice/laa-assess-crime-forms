@@ -230,6 +230,8 @@ spec:
                   key: MAINTENANCE_MODE
             - name: SENTRY_TRACE_SAMPLE_RATE
               value: {{ .Values.variables.sentryTraceSampleRate }}
+            - name: PROVIDER_API_EFFECTIVE_DATE_PARAM
+              value: '{{ .Values.variables.providerApiEffectiveDate }}'
 
       {{- with .Values.nodeSelector }}
       nodeSelector:
