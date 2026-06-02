@@ -31,7 +31,7 @@ module ProviderData
         # :nocov:
 
         query(
-          :head,
+          :get,
           "/provider-offices/#{office_code}/schedules?#{URI.encode_www_form(params)}",
           {
             200 => ->(data) { data['office'] },
