@@ -68,7 +68,7 @@ RSpec.describe ProviderData::ProviderDataApiClient do
 
     before do
       allow(ENV).to receive(:fetch).and_call_original
-      stub_request(:head, api_url).to_return(status: code, body: body)
+      stub_request(:get, api_url).to_return(status: code, body: body)
     end
 
     context 'when running locally' do
@@ -144,12 +144,12 @@ RSpec.describe ProviderData::ProviderDataApiClient do
 
       before do
         allow(HostEnv).to receive(:uat?).and_return(true)
-        stub_request(:head, api_url).to_return(status: code, body: body)
+        stub_request(:get, api_url).to_return(status: code, body: body)
       end
 
-      it 'returns the correct office details' do
+      it 'requests the correct URL with effective date' do
         described_class.contracted_office_details(office_code)
-        expect(WebMock).to have_requested(:head, api_url)
+        expect(WebMock).to have_requested(:get, api_url)
       end
     end
   end
