@@ -34,7 +34,7 @@ module ProviderData
           :get,
           "/provider-offices/#{office_code}/schedules?#{URI.encode_www_form(params)}",
           {
-            200 => ->(data) { data['office'] },
+            200 => ->(data) { data['office'].merge('firm' => data['firm']) },
             204 => nil
           }
         )

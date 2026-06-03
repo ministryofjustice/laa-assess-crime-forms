@@ -87,6 +87,12 @@ RSpec.describe ProviderData::ProviderDataApiClient do
               'officeName' => 'Firm & Sons',
               'officeCodeAlt' => '1A123B',
               'type' => 'Solicitor'
+            },
+            'firm' => {
+              'firmId' => 1,
+              'ccmsFirmId' => 1,
+              'firmName' => 'Correct Firm Name',
+              'sraNumber' => '12345678'
             }
           }.to_json
         end
@@ -99,7 +105,13 @@ RSpec.describe ProviderData::ProviderDataApiClient do
               'firmOfficeCode' => '1A123B',
               'officeName' => 'Firm & Sons',
               'officeCodeAlt' => '1A123B',
-              'type' => 'Solicitor'
+              'type' => 'Solicitor',
+              'firm' => {
+                'firmId' => 1,
+                'ccmsFirmId' => 1,
+                'firmName' => 'Correct Firm Name',
+                'sraNumber' => '12345678'
+              }
             }
           )
         end
@@ -138,6 +150,12 @@ RSpec.describe ProviderData::ProviderDataApiClient do
             'officeName' => 'Firm & Sons',
             'officeCodeAlt' => '1A123B',
             'type' => 'Solicitor'
+          },
+          'firm' => {
+            'firmId' => 1,
+            'ccmsFirmId' => 1,
+            'firmName' => 'Correct Firm Name',
+            'sraNumber' => '12345678'
           }
         }.to_json
       end
