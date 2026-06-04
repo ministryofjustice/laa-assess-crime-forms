@@ -20,7 +20,7 @@
             <%= t('.solicitor_firm_name') %>
           </dt>
           <dd class="govuk-summary-list__value">
-            <%= @form_object.office_code_details['officeName'] %>
+            <%= @form_object.office_code_details.dig('firm', 'firmName') %>
           </dd>
         </div>
       </dl>
