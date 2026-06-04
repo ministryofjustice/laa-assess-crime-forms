@@ -6,6 +6,8 @@ module ProviderData
     headers 'X-Authorization' => ENV.fetch('PROVIDER_API_KEY')
     format :json
 
+    PROVIDER_API_EFFECTIVE_DATE_PARAM = ENV.fetch('PROVIDER_API_EFFECTIVE_DATE_PARAM', '01-01-2025').freeze
+
     class << self
       def office_details(office_code)
         query(
@@ -19,17 +21,20 @@ module ProviderData
       end
 
       def contracted_office_details(office_code)
+        # effective_date only used in UAT environment
+        effective_date = HostEnv.uat? ? PROVIDER_API_EFFECTIVE_DATE_PARAM : nil
         # :nocov: Querying an external API
         params = {
-          'areaOfLaw' => 'CRIME LOWER'
-        }
+          'areaOfLaw' => 'CRIME LOWER',
+          'effectiveDate' => effective_date
+        }.compact
         # :nocov:
 
         query(
-          :head,
+          :get,
           "/provider-offices/#{office_code}/schedules?#{URI.encode_www_form(params)}",
           {
-            200 => ->(data) { data['office'] },
+            200 => ->(data) { data['office'].merge('firm' => data['firm']) },
             204 => nil
           }
         )
