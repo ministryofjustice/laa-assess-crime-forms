@@ -13,7 +13,7 @@ module Payments
 
       def row_data
         [
-          date_claim_assessed, solicitor_office_code,
+          original_submission_date, date_claim_assessed, solicitor_office_code,
           ufn, stage_reached, defendant_first_name,
           defendant_last_name, number_of_attendances,
           number_of_defendants, hearing_outcome_code,
@@ -115,6 +115,15 @@ module Payments
         }
       end
 
+      def original_submission_date
+        return unless submission_date_needed?
+
+        {
+          head_key: 'original_submission_date',
+          text: "#{original_submission_month_name} #{session_answers['original_submission_year']}"
+        }
+      end
+
       def change_link_controller_path
         if linked_claim?
           'payments/steps/claim_search'
@@ -134,6 +143,17 @@ module Payments
       end
 
       private
+
+      def submission_date_needed?
+        session_answers['request_type'].in?(
+          %w[non_standard_mag_supplemental non_standard_mag_appeal non_standard_mag_amendment]
+        )
+      end
+
+      def original_submission_month_name
+        date = Date.new(session_answers['original_submission_year'].to_i, session_answers['original_submission_month'].to_i)
+        date.strftime('%b')
+      end
 
       def submission?
         ActiveModel::Type::Boolean.new.cast(session_answers['submission'])
