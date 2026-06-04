@@ -5,6 +5,8 @@ module Payments
         include NumericLimits
 
         attribute :date_claim_assessed, :date
+        attribute :original_submission_year, :integer
+        attribute :original_submission_month, :integer
         attribute :ufn, :string
         attribute :stage_reached, :string
         attribute :defendant_first_name, :string
@@ -34,6 +36,8 @@ module Payments
         validates :ufn, presence: true, ufn: true
         validates :date_completed, :date_claim_assessed,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
+        validate :submission_date_must_be_present, :submission_date_must_be_valid, :submission_date_must_be_in_past,
+                 if: :submission_date_needed?
 
         # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def save
@@ -60,6 +64,42 @@ module Payments
           true
         end
         # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+        def submission_date_needed?
+          multi_step_form_session[:request_type].in?(
+            %w[non_standard_mag_supplemental non_standard_mag_appeal non_standard_mag_amendment]
+          )
+        end
+
+        def original_submission_date
+          Date.new(original_submission_year, original_submission_month, 1) if valid_date?
+        end
+
+        private
+
+        def valid_date?
+          Date.valid_date?(original_submission_year, original_submission_month, 1)
+        end
+
+        def submission_date_must_be_present
+          return unless original_submission_year.blank? || original_submission_month.blank?
+
+          errors.add(:original_submission_date, :blank)
+        end
+
+        def submission_date_must_be_valid
+          errors.add(:original_submission_date, :invalid) unless valid_date?
+        end
+
+        def submission_date_must_be_in_past
+          return unless original_submission_date.present? && original_submission_date > first_day_of_current_month
+
+          errors.add(:original_submission_date, :must_be_in_past)
+        end
+
+        def first_day_of_current_month
+          Date.new(Date.current.year, Date.current.month, 1)
+        end
       end
     end
   end

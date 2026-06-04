@@ -186,6 +186,8 @@ en:
       nsm:
         claim_details:
           edit:
+            original_submission_date: Month original claim submitted
+            original_submission_date_hint: For example, 5 2025
             date_claim_assessed: Date claim assessed
             solicitor_office_code: Firm office account number
             ufn: Unique file number
