@@ -39,8 +39,33 @@ module Payments
         validate :submission_date_must_be_present, :submission_date_must_be_valid, :submission_date_must_be_in_past,
                  if: :submission_date_needed?
 
-        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def save
+          handle_court_details
+          handle_original_submission_date
+
+          return false unless valid?
+
+          attributes.except('court_name_suggestion').each do |k, v|
+            multi_step_form_session[k.to_sym] = v
+          end
+
+          true
+        end
+
+        def submission_date_needed?
+          multi_step_form_session[:request_type].in?(
+            %w[non_standard_mag_supplemental non_standard_mag_appeal non_standard_mag_amendment]
+          )
+        end
+
+        def original_submission_date
+          Date.new(original_submission_year, original_submission_month, 1) if valid_date?
+        end
+
+        private
+
+        # rubocop:disable Metrics/AbcSize
+        def handle_court_details
           # We need to check if the court name suggestion matches an existing court and
           # if so, use the existing court's name and id instead of the custom values
           court = LaaCrimeFormsCommon::Court.all.find { |c| attributes['court_name_suggestion']&.downcase == c.short_name.downcase }
@@ -54,28 +79,15 @@ module Payments
             self.court_id = ''
             self.court_name = ''
           end
-
-          return false unless valid?
-
-          attributes.except('court_name_suggestion').each do |k, v|
-            multi_step_form_session[k.to_sym] = v
-          end
-
-          true
         end
-        # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+        # rubocop:enable Metrics/AbcSize
 
-        def submission_date_needed?
-          multi_step_form_session[:request_type].in?(
-            %w[non_standard_mag_supplemental non_standard_mag_appeal non_standard_mag_amendment]
-          )
+        def handle_original_submission_date
+          return if submission_date_needed?
+
+          self.original_submission_year = Date.current.year
+          self.original_submission_month = Date.current.month
         end
-
-        def original_submission_date
-          Date.new(original_submission_year, original_submission_month, 1) if valid_date?
-        end
-
-        private
 
         def valid_date?
           Date.valid_date?(original_submission_year, original_submission_month, 1)

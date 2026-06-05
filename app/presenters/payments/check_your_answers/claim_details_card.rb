@@ -1,6 +1,8 @@
 module Payments
   module CheckYourAnswers
     class ClaimDetailsCard < BaseCard
+      include PaymentsHelper
+
       attr_reader :session_answers, :params
 
       def initialize(session_answers, params)
@@ -13,8 +15,8 @@ module Payments
 
       def row_data
         [
-          original_submission_date, date_claim_assessed, solicitor_office_code,
-          ufn, stage_reached, defendant_first_name,
+          date_claim_assessed, solicitor_office_code, solicitor_firm_name,
+          original_submission_month, ufn, stage_reached, defendant_first_name,
           defendant_last_name, number_of_attendances,
           number_of_defendants, hearing_outcome_code,
           matter_type, court, youth_court,
@@ -26,6 +28,13 @@ module Payments
         {
           head_key: 'date_claim_assessed',
           text: DateTime.parse(session_answers['date_claim_assessed']).to_fs(:stamp)
+        }
+      end
+
+      def solicitor_firm_name
+        {
+          head_key: 'solicitor_firm_name',
+          text: session_answers['solicitor_firm_name']
         }
       end
 
@@ -115,12 +124,10 @@ module Payments
         }
       end
 
-      def original_submission_date
-        return unless submission_date_needed?
-
+      def original_submission_month
         {
           head_key: 'original_submission_date',
-          text: "#{original_submission_month_name} #{session_answers['original_submission_year']}"
+          text: month_name(original_submission_date)
         }
       end
 
@@ -144,15 +151,8 @@ module Payments
 
       private
 
-      def submission_date_needed?
-        session_answers['request_type'].in?(
-          %w[non_standard_mag_supplemental non_standard_mag_appeal non_standard_mag_amendment]
-        )
-      end
-
-      def original_submission_month_name
-        date = Date.new(session_answers['original_submission_year'].to_i, session_answers['original_submission_month'].to_i)
-        date.strftime('%b')
+      def original_submission_date
+        Date.new(session_answers['original_submission_year'].to_i, session_answers['original_submission_month'].to_i)
       end
 
       def submission?

@@ -272,11 +272,11 @@ en:
         table:
           original_claim: Original claim
           claim_type: Claim type
+          original_submission_date: Month original claim submitted
           date_claim_assessed: Date claim assessed
           office_code: Firm office account number
-          firm_name: Firm name
-          solicitor_office_code: Solicitor office account number
-          solicitor_firm_name: Solicitor firm name
+          solicitor_office_code: Firm account number
+          solicitor_firm_name: Firm name
           ufn: Unique file number
           stage_code: Stage reached
           defendant_name: Defendant name
