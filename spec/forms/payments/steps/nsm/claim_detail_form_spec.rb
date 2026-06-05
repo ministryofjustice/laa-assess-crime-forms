@@ -26,8 +26,8 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
   let(:court_id) { 'C3208F' }
   let(:court_name_suggestion) { 'USK' }
   let(:court_name) { 'USK' }
-  let(:original_submission_year) { 2026 }
-  let(:original_submission_month) { 3 }
+  let(:original_submission_year) { nil }
+  let(:original_submission_month) { nil }
   let(:session_store) { {} }
 
   describe 'validations' do
@@ -57,8 +57,8 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
           court_id: court_id,
           court_name: court_name,
           youth_court: true,
-          original_submission_year: 2026,
-          original_submission_month: 3,
+          original_submission_year: Date.current.year,
+          original_submission_month: Date.current.month,
           date_completed: Date.new(2026, 1, 2)
         )
       end
