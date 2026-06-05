@@ -378,7 +378,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
     end
 
     it 'shows the correct top level details' do
-      expect(page).to have_content 'Solicitor Firm'
+      expect(page).to have_content 'Counsel Firm'
       expect(page).to have_content 'LAA-XYZ321'
       expect(page).to have_content 'Allowed: £150.00'
       expect(page).to have_content 'Claim type: Assigned counsel'
