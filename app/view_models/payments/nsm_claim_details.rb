@@ -7,7 +7,7 @@ module Payments
       @payable_claim['solicitor_office_code']
     end
 
-    def solicitor_firm_name
+    def firm_name
       @payable_claim['solicitor_firm_name']
     end
 
