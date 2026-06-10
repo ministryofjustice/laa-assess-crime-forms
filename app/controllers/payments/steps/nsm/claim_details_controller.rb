@@ -22,7 +22,6 @@ module Payments
 
           params[form_key]['original_submission_year'] = submission_year
           params[form_key]['original_submission_month'] = submission_month
-          params[form_key]['original_submission_date'] = 1
         end
 
         def submission_date_present?
