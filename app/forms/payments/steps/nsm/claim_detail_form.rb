@@ -91,6 +91,7 @@ module Payments
         end
 
         def valid_date?
+          return false unless original_submission_year.present? && original_submission_month.present?
           return false unless original_submission_year > DateLimits::EARLIEST_YEAR
 
           Date.valid_date?(original_submission_year, original_submission_month, 1)
