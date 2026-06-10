@@ -3,6 +3,7 @@ module Payments
     module Nsm
       class ClaimDetailForm < BasePaymentsForm
         include NumericLimits
+        include DateLimits
 
         attribute :date_claim_assessed, :date
         attribute :original_submission_year, :integer
@@ -90,6 +91,8 @@ module Payments
         end
 
         def valid_date?
+          return false unless original_submission_year > DateLimits::EARLIEST_YEAR
+
           Date.valid_date?(original_submission_year, original_submission_month, 1)
         end
 
