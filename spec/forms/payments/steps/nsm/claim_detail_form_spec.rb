@@ -139,6 +139,18 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
           )
         end
       end
+
+      context 'when original submission year is before earliest year' do
+        let(:original_submission_year) { 1899 }
+        let(:original_submission_month) { 12 }
+
+        it 'is not valid' do
+          expect(form).not_to be_valid
+          expect(form.errors[:original_submission_date]).to include(
+            'Enter a valid month and year of original submission, for example 5 2025'
+          )
+        end
+      end
     end
   end
 end
