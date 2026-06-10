@@ -38,7 +38,7 @@ module Payments
         validates :date_completed, :date_claim_assessed,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
         validate :submission_date_must_be_present, :submission_date_must_be_valid, :submission_date_must_be_in_past,
-                 if: :submission_date_needed?
+                 if: :new_submission_date_needed?
 
         def save
           handle_court_details
@@ -53,7 +53,7 @@ module Payments
           true
         end
 
-        def submission_date_needed?
+        def new_submission_date_needed?
           multi_step_form_session[:request_type].in?(
             %w[non_standard_mag_supplemental non_standard_mag_appeal non_standard_mag_amendment]
           )
@@ -84,7 +84,7 @@ module Payments
         # rubocop:enable Metrics/AbcSize
 
         def handle_original_submission_date
-          return if submission_date_needed?
+          return if new_submission_date_needed?
 
           self.original_submission_year = Date.current.year
           self.original_submission_month = Date.current.month
