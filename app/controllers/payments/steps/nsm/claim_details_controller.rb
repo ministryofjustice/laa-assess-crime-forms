@@ -28,13 +28,13 @@ module Payments
           submission_year.present? && submission_month.present?
         end
 
-def submission_year
-  params.dig(form_key, 'original_submission_date(1i)')
-end
+        def submission_year
+          params.dig(form_key, 'original_submission_date(1i)')
+        end
 
-def submission_month
-  params.dig(form_key, 'original_submission_date(2i)')
-end
+        def submission_month
+          params.dig(form_key, 'original_submission_date(2i)')
+        end
       end
     end
   end
