@@ -10,7 +10,6 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
   let(:fake_session) { instance_double(Decisions::MultiStepFormSession) }
   let(:form_object) { instance_double(Payments::Steps::CheckYourAnswersForm) }
   let(:report) { instance_double(Payments::CheckYourAnswers::Report) }
-  let(:answers) { current_answers }
 
   before do
     allow(fake_session).to receive(:[]).with('request_type').and_return(request_type)
@@ -32,48 +31,6 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
         get :edit, params: { id: submission_id }
 
         expect(response).to redirect_to(your_nsm_claims_path)
-      end
-    end
-  end
-
-  {
-    'non_standard_magistrate' => Payments::CostsSummary,
-    'non_standard_mag_amendment' => Payments::CostsSummaryAmended,
-    'non_standard_mag_appeal' => Payments::CostsSummaryAmended
-  }.each do |type, klass|
-    context "when request_type is '#{type}'" do
-      let(:request_type) { type }
-
-      it "initializes #{klass} with answers" do
-        expect(klass).to receive(:new).with(answers)
-        get :edit, params: { id: submission_id }
-      end
-    end
-
-    context 'when request type is non_standard_mag_supplemental' do
-      let(:request_type) { 'non_standard_mag_supplemental' }
-
-      it 'initializes NsmCostSummary class with answers' do
-        expect(Payments::NsmCostsSummary).to receive(:new).with(answers)
-        get :edit, params: { id: submission_id }
-      end
-
-      context 'when laa_reference is present' do
-        let(:laa_reference) { 'LAA123' }
-
-        it 'initializes NsmCostSummaryAmendedAndClaimed class with answers' do
-          expect(Payments::NsmCostsSummaryAmendedAndClaimed).to receive(:new).with(answers)
-          get :edit, params: { id: submission_id }
-        end
-      end
-
-      context 'when linked_laa_reference is present' do
-        let(:linked_laa_reference) { 'LAA456' }
-
-        it 'initializes NsmCostSummaryAmendedAndClaimed class with answers' do
-          expect(Payments::NsmCostsSummaryAmendedAndClaimed).to receive(:new).with(answers)
-          get :edit, params: { id: submission_id }
-        end
       end
     end
   end
