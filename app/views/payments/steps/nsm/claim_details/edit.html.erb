@@ -15,7 +15,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>
       <% if @form_object.submission_date_needed? %>
-        <%= f.govuk_date_field :original_submission_date, legend: { size: 's', text: t('.original_submission_date') }, width: 20, omit_day: true %>
+        <%= f.govuk_date_field :original_submission_date, hint: { text: t('.original_submission_date_hint') }, legend: { size: 's', text: t('.original_submission_date') }, width: 20, omit_day: true %>
       <% end %>
       <div class="moj-datepicker" data-module="moj-date-picker">
         <div class="govuk-form-group">
