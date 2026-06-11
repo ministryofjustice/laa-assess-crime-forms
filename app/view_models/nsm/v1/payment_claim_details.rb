@@ -8,6 +8,14 @@ module Nsm
       attribute :submission
       delegate :id, to: :submission
 
+      def original_submission_month
+        Date.current.month
+      end
+
+      def original_submission_year
+        Date.current.year
+      end
+
       def linked_laa_reference
         submission.data[:laa_reference]
       end
@@ -121,6 +129,8 @@ module Nsm
           :stage_reached,
           :solicitor_firm_name,
           :solicitor_office_code,
+          :original_submission_month,
+          :original_submission_year,
           :date_completed,
           :matter_type,
           :ufn,
