@@ -70,6 +70,33 @@ module Payments
         [LinkedClaimCard.new(session_answers)]
       end
 
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+      def cost_summary
+        case session_answers['request_type'].to_sym
+        when :non_standard_magistrate, :breach_of_injunction
+          Payments::NsmCostsSummary.new(session_answers)
+        when :non_standard_mag_supplemental
+          if session_answers['laa_reference'].present? || session_answers['linked_laa_reference'].present?
+            Payments::NsmCostsSummaryAmendedAndClaimed.new(session_answers)
+          else
+            Payments::NsmCostsSummary.new(session_answers)
+          end
+        when :non_standard_mag_amendment, :non_standard_mag_appeal
+          Payments::NsmCostsSummaryAmended.new(session_answers)
+        when :assigned_counsel
+          Payments::AcCostsSummary.new(session_answers)
+        when :assigned_counsel_appeal
+          Payments::AcCostsSummaryAppealed.new(session_answers)
+        when :assigned_counsel_amendment
+          Payments::AcCostsSummaryAmended.new(session_answers)
+          # :nocov:
+        else
+          raise StandardError, "Unknown request type: #{session_answers['request_type']}"
+        end
+        # :nocov:
+      end
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+
       private
 
       def linked_claim_applicable?
