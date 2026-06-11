@@ -229,7 +229,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       select_office_code
       expect(page).to have_title('Claim details')
 
-      fill_claim_details
+      fill_claim_details(fill_original_submission_date: true)
       expect(page).to have_title('Claimed costs')
       fill_claimed_costs
       expect(page).to have_title('Allowed costs')

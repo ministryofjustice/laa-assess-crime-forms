@@ -1,6 +1,7 @@
 module Payments
   class NsmClaimDetails < BaseClaimDetails
     include ActionView::Helpers::UrlHelper
+    include PaymentsHelper
 
     def solicitor_office_code
       @payable_claim['solicitor_office_code']
@@ -76,8 +77,9 @@ module Payments
       [
         original_claim_row,
         [table_heading('claim_type'), { text: claim_type, numeric: false }],
-        [table_heading('office_code'), { text: solicitor_office_code, numeric: false }],
-        [table_heading('firm_name'), { text: firm_name, numeric: false }],
+        [table_heading('solicitor_office_code'), { text: solicitor_office_code, numeric: false }],
+        [table_heading('solicitor_firm_name'), { text: firm_name, numeric: false }],
+        [table_heading('original_submission_date'), { text: month_name(original_submission_date), numeric: false }],
         [table_heading('ufn'), { text: ufn, numeric: false }],
         [table_heading('stage_code'), { text: stage_code, numeric: false }],
         [table_heading('defendant_name'), { text: defendant_name, numeric: false }],
@@ -105,6 +107,10 @@ module Payments
 
     def original_claim_row
       original_claim ? [table_heading('original_claim'), { text: original_claim, numeric: false }] : nil
+    end
+
+    def original_submission_date
+      Date.new(@payable_claim['original_submission_year'].to_i, @payable_claim['original_submission_month'].to_i)
     end
   end
 end

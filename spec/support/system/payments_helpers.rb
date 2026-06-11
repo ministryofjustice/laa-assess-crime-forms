@@ -79,6 +79,8 @@ module PaymentsHelpers
       'youth_court' => true,
       'number_of_attendances' => 1,
       'number_of_defendants' => 1,
+      'original_submission_month' => 10,
+      'original_submission_year' => 2025,
       'claimed_profit_cost' => '100',
       'allowed_profit_cost' => '80',
       'claimed_travel_cost' => '0',
@@ -148,6 +150,8 @@ module PaymentsHelpers
       'solicitor_office_code' => '1A123B',
       'solicitor_firm_name' => 'some name',
       'defendant_last_name' => 'Doe',
+      'original_submission_month' => 10,
+      'original_submission_year' => 2025,
       'stage_code' => 'PROG',
       'work_completed_date' => '2025-10-29 00:00:00 UTC',
       'court_id' => 'C3208F',
@@ -255,9 +259,16 @@ module PaymentsHelpers
     court_name: 'ACTON',
     travel_required: 'Yes',
     work_completed_on: '2025-09-24',
-    youth_court: 'Yes'
+    youth_court: 'Yes',
+    original_submission_month: 4,
+    original_submission_year: 2025,
+    fill_original_submission_date: false
   )
     fill_in 'Date claim assessed', with: received_on
+    if fill_original_submission_date
+      fill_in id: 'payments_steps_nsm_claim_detail_form_original_submission_date_2i', with: original_submission_month
+      fill_in id: 'payments_steps_nsm_claim_detail_form_original_submission_date_1i', with: original_submission_year
+    end
     fill_in 'Unique file number', with: ufn
     choose prosecution_type, allow_label_click: true
     fill_in 'Defendant first name', with: defendant_first_name

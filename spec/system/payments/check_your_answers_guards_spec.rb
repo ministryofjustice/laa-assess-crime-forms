@@ -63,7 +63,10 @@ RSpec.describe 'Payment submission safeguards', type: :system do
     claim_double = instance_double(Claim)
     allow(Claim).to receive(:load_from_app_store).with(id).and_return(claim_double)
 
-    answers = submission_answers(id)
+    answers = submission_answers(id).merge({
+                                             'original_submission_year' => Date.current.year,
+      'original_submission_month' => Date.current.month
+                                           })
     allow(BaseViewModel).to receive(:build)
       .with(:payment_claim_details, claim_double)
       .and_return(instance_double(Nsm::V1::PaymentClaimDetails, to_h: answers))
