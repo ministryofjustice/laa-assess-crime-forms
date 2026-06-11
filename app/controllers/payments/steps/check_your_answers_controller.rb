@@ -12,7 +12,6 @@ module Payments
         redirect_to your_nsm_claims_path and return if multi_step_form_session['request_type'].blank?
 
         @report = Payments::CheckYourAnswers::Report.new(payment_details, params)
-        @cost_summary = cost_summary
       end
 
       private
@@ -70,33 +69,6 @@ module Payments
 
         session.delete("payments:#{previous_id}")
       end
-
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
-      def cost_summary
-        case multi_step_form_session['request_type'].to_sym
-        when :non_standard_magistrate, :breach_of_injunction
-          Payments::NsmCostsSummary.new(multi_step_form_session.answers)
-        when :non_standard_mag_supplemental
-          if multi_step_form_session['laa_reference'].present? || multi_step_form_session['linked_laa_reference'].present?
-            Payments::NsmCostsSummaryAmendedAndClaimed.new(multi_step_form_session.answers)
-          else
-            Payments::NsmCostsSummary.new(multi_step_form_session.answers)
-          end
-        when :non_standard_mag_amendment, :non_standard_mag_appeal
-          Payments::NsmCostsSummaryAmended.new(multi_step_form_session.answers)
-        when :assigned_counsel
-          Payments::AcCostsSummary.new(multi_step_form_session.answers)
-        when :assigned_counsel_appeal
-          Payments::AcCostsSummaryAppealed.new(multi_step_form_session.answers)
-        when :assigned_counsel_amendment
-          Payments::AcCostsSummaryAmended.new(multi_step_form_session.answers)
-        # :nocov:
-        else
-          raise StandardError, "Unknown request type: #{multi_step_form_session['request_type']}"
-        end
-        # :nocov:
-      end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
     end
   end
 end
