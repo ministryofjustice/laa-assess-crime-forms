@@ -37,18 +37,32 @@ RSpec.describe Decisions::BackDecisionTree do
     end
 
     context 'from DATE_CLAIM_ASSESSED (leading slash removed)' do
-      let(:multi_step_form_session) do
-        { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s }
-      end
+      context 'when NSM_SUPPLEMENTAL with a reference' do
+        let(:multi_step_form_session) do
+          { 'request_type' => Payments::ClaimType::NSM_SUPPLEMENTAL.to_s, 'laa_reference' => 'some_reference' }
+        end
 
-      it_behaves_like 'a generic decision',
-                      from: Decisions::DecisionTree::DATE_CLAIM_ASSESSED.sub(%r{^/}, ''),
-                      goto: { action: :edit, controller: Decisions::DecisionTree::CLAIM_SEARCH.sub(%r{^/}, '') }
+        it_behaves_like 'a generic decision',
+                        from: Decisions::DecisionTree::DATE_CLAIM_ASSESSED.sub(%r{^/}, ''),
+                        goto: { action: :edit, controller: Decisions::DecisionTree::CLAIM_SEARCH.sub(%r{^/}, '') }
+      end
     end
 
     context 'from NSM_CLAIMED_COSTS' do
       context 'when NSM' do
         let(:multi_step_form_session) { { 'request_type' => Payments::ClaimType::NSM.to_s } }
+
+        it_behaves_like 'a generic decision',
+                        from: Decisions::DecisionTree::NSM_CLAIMED_COSTS,
+                        goto: { action: :edit, controller: Decisions::DecisionTree::NSM_CLAIM_DETAILS }
+      end
+
+      context 'when NSM_SUPPLEMENTAL with no existing ref' do
+        let(:multi_step_form_session) do
+          instance_double(Decisions::MultiStepFormSession, no_existing_ref?: true).tap do |session|
+            allow(session).to receive(:[]).with('request_type').and_return(Payments::ClaimType::NSM_SUPPLEMENTAL.to_s)
+          end
+        end
 
         it_behaves_like 'a generic decision',
                         from: Decisions::DecisionTree::NSM_CLAIMED_COSTS,
@@ -68,6 +82,18 @@ RSpec.describe Decisions::BackDecisionTree do
                           from: Decisions::DecisionTree::NSM_ALLOWED_COSTS,
                           goto: { action: :edit, controller: Decisions::DecisionTree::NSM_CLAIMED_COSTS }
         end
+      end
+
+      context 'when NSM_APPEAL with no existing ref' do
+        let(:multi_step_form_session) do
+          instance_double(Decisions::MultiStepFormSession, no_existing_ref?: true).tap do |session|
+            allow(session).to receive(:[]).with('request_type').and_return(Payments::ClaimType::NSM_APPEAL.to_s)
+          end
+        end
+
+        it_behaves_like 'a generic decision',
+                        from: Decisions::DecisionTree::NSM_ALLOWED_COSTS,
+                        goto: { action: :edit, controller: Decisions::DecisionTree::NSM_CLAIM_DETAILS }
       end
     end
 

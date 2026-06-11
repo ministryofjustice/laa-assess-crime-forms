@@ -1,6 +1,8 @@
 module Payments
   module CheckYourAnswers
     class ClaimDetailsCard < BaseCard
+      include PaymentsHelper
+
       attr_reader :session_answers, :params
 
       def initialize(session_answers, params)
@@ -13,8 +15,8 @@ module Payments
 
       def row_data
         [
-          date_claim_assessed, solicitor_office_code,
-          ufn, stage_reached, defendant_first_name,
+          date_claim_assessed, solicitor_office_code, solicitor_firm_name,
+          original_submission_month, ufn, stage_reached, defendant_first_name,
           defendant_last_name, number_of_attendances,
           number_of_defendants, hearing_outcome_code,
           matter_type, court, youth_court,
@@ -26,6 +28,13 @@ module Payments
         {
           head_key: 'date_claim_assessed',
           text: DateTime.parse(session_answers['date_claim_assessed']).to_fs(:stamp)
+        }
+      end
+
+      def solicitor_firm_name
+        {
+          head_key: 'solicitor_firm_name',
+          text: session_answers['solicitor_firm_name']
         }
       end
 
@@ -115,6 +124,13 @@ module Payments
         }
       end
 
+      def original_submission_month
+        {
+          head_key: 'original_submission_date',
+          text: month_name(original_submission_date)
+        }
+      end
+
       def change_link_controller_path
         if linked_claim?
           'payments/steps/claim_search'
@@ -134,6 +150,10 @@ module Payments
       end
 
       private
+
+      def original_submission_date
+        Date.new(session_answers['original_submission_year'].to_i, session_answers['original_submission_month'].to_i)
+      end
 
       def submission?
         ActiveModel::Type::Boolean.new.cast(session_answers['submission'])
