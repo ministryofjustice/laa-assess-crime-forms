@@ -29,6 +29,8 @@ metadata:
       SecRequestBodyNoFilesLimit 524288
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-forms-team,status:423"
       SecDefaultAction "phase:4,pass,log,tag:github_team=laa-crime-forms-team,status:423"
+      SecRule ARGS_NAMES "@rx ^(?:nsm_search_form\[query\]|prior_authority_search_form\[query\]|search_form\[query\]|payments_search_form\[query\]|payments_steps_claim_search_form\[query\]|payments_claim_search_form\[query\])$" "id:1001101,phase:1,pass,nolog,t:none,ctl:auditEngine=Off"
+      SecRule REQUEST_BODY "@rx ." "id:1001102,phase:2,pass,nolog,ctl:auditEngine=Off"
       SecRuleRemoveById 920120
       SecRuleRemoveById 921110
       SecRuleRemoveById 933210
