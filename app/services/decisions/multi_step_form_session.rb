@@ -37,15 +37,6 @@ module Decisions
       answers['laa_reference'].blank? && answers['linked_nsm_reference'].blank? && answers['linked_laa_reference'].blank?
     end
 
-    def ac_claim_details_incomplete?
-      [
-        answers['ufn'],
-        answers['defendant_last_name'],
-        answers['counsel_office_code'],
-        answers['counsel_firm_name']
-      ].any?(&:blank?)
-    end
-
     private
 
     def create!
