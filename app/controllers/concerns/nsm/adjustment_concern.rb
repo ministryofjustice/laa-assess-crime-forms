@@ -43,7 +43,7 @@ module Nsm
 
     def resource_klass
       return :letter_and_call if json_search_field == 'letters_and_calls'
-      return params[:id].to_sym if additional_fee?
+      return params.expect(:id).to_sym if additional_fee?
 
       @resource_klass ||= controller_name.singularize.to_sym
     end
