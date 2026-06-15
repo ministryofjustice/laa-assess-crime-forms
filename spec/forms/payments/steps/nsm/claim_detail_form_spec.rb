@@ -114,7 +114,7 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
 
         it 'is not valid' do
           expect(form).not_to be_valid
-          expect(form.errors[:original_submission_date]).to include('Enter the month and year of original submission')
+          expect(form.errors[:original_submission_date]).to include('Enter the month and year of original claim assessment')
         end
       end
 
@@ -124,7 +124,7 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
 
         it 'is not valid' do
           expect(form).not_to be_valid
-          expect(form.errors[:original_submission_date]).to include('Original submission date cannot be in the future')
+          expect(form.errors[:original_submission_date]).to include('Original claim assessment date cannot be in the future')
         end
       end
 
@@ -135,7 +135,7 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
         it 'is not valid' do
           expect(form).not_to be_valid
           expect(form.errors[:original_submission_date]).to include(
-            'Enter a valid month and year of original submission assessment, for example 5 2025'
+            'Enter a valid month and year of original claim assessment, for example 5 2025'
           )
         end
       end
@@ -147,7 +147,7 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
         it 'is not valid' do
           expect(form).not_to be_valid
           expect(form.errors[:original_submission_date]).to include(
-            'Enter a valid month and year of original submission assessment, for example 5 2025'
+            'Enter a valid month and year of original claim assessment, for example 5 2025'
           )
         end
       end
