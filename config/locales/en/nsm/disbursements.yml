@@ -51,11 +51,11 @@ en:
           net_cost: Net cost
         miles: Miles
         mileage: Change number of miles
-        mileage_hint: For example, 2.5 miles
+        mileage_hint: For example, 2.5 miles.
         apply_vat: Change the VAT rate
         apply_vat_no: 0%
         total_cost_without_vat: Change disbursement cost
-        total_cost_without_vat_hint: Enter the cost, not including VAT, for example £301.55
+        total_cost_without_vat_hint: Enter the cost, not including VAT, for example £301.55.
         calculate_button_text: Calculate my changes
         explain: Explain your decision
         explain_hint: For example, why you made adjustments to this disbursement. We'll share this explanation with the provider.
