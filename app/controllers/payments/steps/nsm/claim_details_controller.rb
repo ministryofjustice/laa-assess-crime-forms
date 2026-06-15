@@ -20,8 +20,10 @@ module Payments
         def store_submission_date
           return unless submission_date_present?
 
+          # rubocop:disable Rails/StrongParametersExpect
           params[form_key]['original_submission_year'] = submission_year
           params[form_key]['original_submission_month'] = submission_month
+          # rubocop:enable Rails/StrongParametersExpect
         end
 
         def submission_date_present?

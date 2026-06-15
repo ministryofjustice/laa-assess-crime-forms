@@ -5,13 +5,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.219'
+gem 'aws-sdk-s3', '~> 1.225'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails', '>= 1.4.1'
 gem 'devise', '>= 4.9.4'
 gem 'faker'
 gem 'govuk-components', '6.2.0'
-gem 'govuk_design_system_formbuilder'
+gem 'govuk_design_system_formbuilder', '6.1.0'
 gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'httparty'
 gem 'jbuilder'
