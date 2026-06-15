@@ -20,8 +20,8 @@ module Payments
         def store_submission_date
           return unless submission_date_present?
 
-          params[form_key]['original_submission_year'] = submission_year
-          params[form_key]['original_submission_month'] = submission_month
+          params.expect(form_key)['original_submission_year'] = submission_year
+          params.expect(form_key)['original_submission_month'] = submission_month
         end
 
         def submission_date_present?
