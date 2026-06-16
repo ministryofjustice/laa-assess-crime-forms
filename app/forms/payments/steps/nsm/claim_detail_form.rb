@@ -129,10 +129,6 @@ module Payments
           errors.add(:original_submission_date, :invalid_month)
         end
 
-        def submission_date_must_be_valid
-          errors.add(:original_submission_date, :invalid) unless valid_date?
-        end
-
         def submission_date_must_be_in_past
           return unless original_submission_date.present? && original_submission_date > first_day_of_current_month
 
