@@ -37,8 +37,9 @@ module Payments
         validates :ufn, presence: true, ufn: true
         validates :date_completed, :date_claim_assessed,
                   presence: true, multiparam_date: { allow_past: true, allow_future: false }
-        validate :submission_date_must_be_present, :submission_date_must_be_valid, :submission_date_must_be_in_past,
-                 if: :new_submission_date_needed?
+        validate  :submission_year_must_be_present, :submission_month_must_be_present, :submission_date_must_be_present,
+                  :submission_year_must_be_valid, :submission_month_must_be_valid, :submission_date_must_be_in_past,
+                  if: :new_submission_date_needed?
 
         def save
           handle_court_details
@@ -83,6 +84,20 @@ module Payments
         end
         # rubocop:enable Metrics/AbcSize
 
+        def submission_year_must_be_present
+          return unless original_submission_year.blank? && submission_date_partially_present?
+
+          errors.add(:original_submission_date,
+                     :year_blank)
+        end
+
+        def submission_month_must_be_present
+          return unless original_submission_month.blank? && submission_date_partially_present?
+
+          errors.add(:original_submission_date,
+                     :month_blank)
+        end
+
         def handle_original_submission_date
           return if new_submission_date_needed?
 
@@ -92,7 +107,6 @@ module Payments
 
         def valid_date?
           return false unless original_submission_year.present? && original_submission_month.present?
-          return false unless original_submission_year > DateLimits::EARLIEST_YEAR
 
           Date.valid_date?(original_submission_year, original_submission_month, 1)
         end
@@ -101,6 +115,18 @@ module Payments
           return unless original_submission_year.blank? || original_submission_month.blank?
 
           errors.add(:original_submission_date, :blank)
+        end
+
+        def submission_year_must_be_valid
+          return if original_submission_year.present? && original_submission_year > DateLimits::EARLIEST_YEAR
+
+          errors.add(:original_submission_date, :invalid_year)
+        end
+
+        def submission_month_must_be_valid
+          return if original_submission_month.present? && original_submission_month.between?(1, 12)
+
+          errors.add(:original_submission_date, :invalid_month)
         end
 
         def submission_date_must_be_valid
@@ -115,6 +141,10 @@ module Payments
 
         def first_day_of_current_month
           Date.new(Date.current.year, Date.current.month, 1)
+        end
+
+        def submission_date_partially_present?
+          original_submission_year.present? || original_submission_month.present?
         end
       end
     end
