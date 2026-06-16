@@ -67,4 +67,30 @@ RSpec.describe Payments::CheckYourAnswers::ClaimDetailsCard do
       expect(card.read_only?).to be(false)
     end
   end
+
+  describe 'original submission month' do
+    context 'when request_type is non_standard_magistrate' do
+      let(:session_answers) do
+        { 'request_type' => 'non_standard_magistrate' }
+      end
+
+      it 'returns nil' do
+        expect(card.original_submission_month).to be_nil
+      end
+    end
+
+    context 'when request_type is non_standard_mag_supplemental' do
+      let(:session_answers) do
+        {
+          'request_type' => 'non_standard_mag_supplemental',
+          'original_submission_year' => '2023',
+          'original_submission_month' => '5'
+        }
+      end
+
+      it 'returns the formatted month name' do
+        expect(card.original_submission_month[:text]).to eq('May 2023')
+      end
+    end
+  end
 end
