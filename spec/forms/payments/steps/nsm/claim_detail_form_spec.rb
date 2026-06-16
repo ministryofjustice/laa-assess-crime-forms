@@ -114,7 +114,7 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
 
         it 'is not valid' do
           expect(form).not_to be_valid
-          expect(form.errors[:original_submission_date]).to include('Enter the month and year of original claim assessment')
+          expect(form.errors[:original_submission_date]).to include('Enter the month and year the original claim was assessed')
         end
       end
 
@@ -124,30 +124,54 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
 
         it 'is not valid' do
           expect(form).not_to be_valid
-          expect(form.errors[:original_submission_date]).to include('Original claim assessment date cannot be in the future')
+          expect(form.errors[:original_submission_date]).to include('The original claim assessed date cannot be in the future')
         end
       end
 
-      context 'when original submission date is invalid' do
-        let(:original_submission_year) { 2026 }
+      context 'when original submission date year is blank' do
+        let(:original_submission_year) { nil }
+        let(:original_submission_month) { 12 }
+
+        it 'is not valid' do
+          expect(form).not_to be_valid
+          expect(form.errors[:original_submission_date]).to include(
+            'The original claim assessed date must include a year'
+          )
+        end
+      end
+
+      context 'when original submission date month is blank' do
+        let(:original_submission_year) { 2025 }
+        let(:original_submission_month) { nil }
+
+        it 'is not valid' do
+          expect(form).not_to be_valid
+          expect(form.errors[:original_submission_date]).to include(
+            'The original claim assessed date must include a month'
+          )
+        end
+      end
+
+      context 'when original submission month is invalid' do
+        let(:original_submission_year) { 2025 }
         let(:original_submission_month) { 13 }
 
         it 'is not valid' do
           expect(form).not_to be_valid
           expect(form.errors[:original_submission_date]).to include(
-            'Enter a valid month and year of original claim assessment, for example 5 2025'
+            'Enter a month between 1 and 12'
           )
         end
       end
 
-      context 'when original submission year is before earliest year' do
+      context 'when original submission year is invalid' do
         let(:original_submission_year) { 1899 }
         let(:original_submission_month) { 12 }
 
         it 'is not valid' do
           expect(form).not_to be_valid
           expect(form.errors[:original_submission_date]).to include(
-            'Enter a valid month and year of original claim assessment, for example 5 2025'
+            'Enter a year as 4 numbers, for example 2025'
           )
         end
       end
