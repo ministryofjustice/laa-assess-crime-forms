@@ -110,7 +110,7 @@ module Payments
     end
 
     def original_submission_date
-      Date.new(@payable_claim['original_submission_year'].to_i, @payable_claim['original_submission_month'].to_i)
+      Date.parse(@payable_claim['original_submission_date'])
     end
   end
 end
