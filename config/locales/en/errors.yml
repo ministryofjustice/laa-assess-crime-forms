@@ -192,9 +192,13 @@ en:
             youth_court:
               inclusion: Select if this is a youth court
             original_submission_date:
-              blank: Enter the month and year of original submission
-              invalid: Enter a valid month and year of original submission, for example 5 2025
-              must_be_in_past: Original submission date cannot be in the future
+              blank: Enter the month and year the original claim was assessed
+              year_blank: The original claim assessed date must include a year
+              month_blank: The original claim assessed date must include a month
+              invalid: Enter a valid month and year of original claim assessment, for example 5 2025
+              invalid_year: Enter a year as 4 numbers, for example 2025
+              invalid_month: Enter a month between 1 and 12
+              must_be_in_past: The original claim assessed date cannot be in the future
 
         payments/steps/claim_type_form:
           attributes:

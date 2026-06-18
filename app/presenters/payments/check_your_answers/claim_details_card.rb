@@ -125,6 +125,8 @@ module Payments
       end
 
       def original_submission_month
+        return if session_answers['request_type'] == 'non_standard_magistrate'
+
         {
           head_key: 'original_submission_date',
           text: month_name(original_submission_date)

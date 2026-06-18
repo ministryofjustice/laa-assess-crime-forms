@@ -6,10 +6,10 @@ en:
         which_updates: What updates to the application are needed?
         which_updates_hint: This information will be shown to the provider. Select all options that are relevant to the application.
         further_information: Further information
-        further_information_hint: For example, if further clarification is needed
+        further_information_hint: For example, if further clarification is needed.
         further_information_explanation: Tell the provider what information they need to add
         incorrect_information: Amendment
-        incorrect_information_hint: For example, if the UFN, client name or representation order date need amending
+        incorrect_information_hint: For example, if the UFN, client name or representation order date need amending.
         incorrect_information_explanation: Tell the provider what information they need to amend
         submit: Submit
         save_and_exit: Save and come back later

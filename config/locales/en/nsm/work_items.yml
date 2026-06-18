@@ -61,7 +61,7 @@ en:
         vat: VAT
         laa_adjustments: Allowed
         calculate_button_text: Calculate my changes
-        work_type_hint: '%{value} per hour'
+        work_type_hint: '%{value} per hour.'
         claim_cost_table:
           title: "Allowed cost"
           header_one: Net cost claimed
