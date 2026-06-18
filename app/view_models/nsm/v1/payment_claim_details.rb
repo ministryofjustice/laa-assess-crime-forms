@@ -184,6 +184,7 @@ module Nsm
 
       def decision_date
         grant_event = submission.events.detect { |e| e.event_type == 'Event::Decision' }
+
         raise "No decision event found for submission: #{submission.id}" if grant_event.blank?
 
         grant_event.created_at

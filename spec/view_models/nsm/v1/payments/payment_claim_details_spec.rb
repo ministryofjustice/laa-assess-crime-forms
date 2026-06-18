@@ -4,7 +4,7 @@ RSpec.describe Nsm::V1::PaymentClaimDetails do
   subject do
     described_class.new(
       submission: instance_double(Submission,
-                                  data: { court: }, events: events)
+                                  id: SecureRandom.uuid, data: { court: }, events: events)
     )
   end
 
@@ -41,8 +41,14 @@ RSpec.describe Nsm::V1::PaymentClaimDetails do
 
   describe '#original_submission_month' do
     context 'when there is no decision event' do
-      it 'returns the current month' do
-        expect(subject.original_submission_month).to eq(Date.current.month)
+      let(:events) { [instance_double(Event, event_type: 'Event::NewVersion', created_at: Date.new(2023, 5, 15))] }
+
+      before do
+        allow(subject).to receive(:request_type).and_return('non_standard_mag_appeal')
+      end
+
+      it 'raises an error' do
+        expect { subject.original_submission_month }.to raise_error RuntimeError
       end
     end
 
