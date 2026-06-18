@@ -9,11 +9,11 @@ module Nsm
       delegate :id, to: :submission
 
       def original_submission_month
-        Date.current.month
+        original_submission_date.month
       end
 
       def original_submission_year
-        Date.current.year
+        original_submission_date.year
       end
 
       def linked_laa_reference
@@ -166,6 +166,24 @@ module Nsm
 
       def court_item
         LaaCrimeFormsCommon::Court.all.find { |c| submission.data[:court].downcase == c.name.downcase }
+      end
+
+      def original_submission_date
+        if request_type.in?(
+          %w[
+            non_standard_mag_appeal
+            non_standard_mag_amendment
+            non_standard_mag_supplemental
+          ]
+        )
+          decision_date
+        else
+          Date.current
+        end
+      end
+
+      def decision_date
+        submission.events.detect { |e| e.event_type == 'Event::Decision' }&.created_at
       end
     end
   end
