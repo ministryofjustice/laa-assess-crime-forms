@@ -40,25 +40,33 @@ RSpec.describe Nsm::V1::PaymentClaimDetails do
   end
 
   describe '#original_submission_month' do
-    let(:events) { [instance_double(Event, event_type: 'Event::Decision', created_at: Date.new(2023, 5, 15))] }
-
-    context 'when request_type is non_standard_mag_appeal' do
-      before do
-        allow(subject).to receive(:request_type).and_return('non_standard_mag_appeal')
-      end
-
-      it 'returns the month of the original submission date' do
-        expect(subject.original_submission_month).to eq(5)
+    context 'when there is no decision event' do
+      it 'returns the current month' do
+        expect(subject.original_submission_month).to eq(Date.current.month)
       end
     end
 
-    context 'when request_type is not non_standard_magistrate' do
-      before do
-        allow(subject).to receive(:request_type).and_return('non_standard_magistrate')
+    context 'when there is a decision event' do
+      let(:events) { [instance_double(Event, event_type: 'Event::Decision', created_at: Date.new(2023, 5, 15))] }
+
+      context 'when request_type is non_standard_mag_appeal' do
+        before do
+          allow(subject).to receive(:request_type).and_return('non_standard_mag_appeal')
+        end
+
+        it 'returns the month of the original submission date' do
+          expect(subject.original_submission_month).to eq(5)
+        end
       end
 
-      it 'returns the current month' do
-        expect(subject.original_submission_month).to eq(Date.current.month)
+      context 'when request_type is not non_standard_magistrate' do
+        before do
+          allow(subject).to receive(:request_type).and_return('non_standard_magistrate')
+        end
+
+        it 'returns the current month' do
+          expect(subject.original_submission_month).to eq(Date.current.month)
+        end
       end
     end
   end
