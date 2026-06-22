@@ -77,7 +77,7 @@ redis:
   enabled: false
 
 metabase:
-  priorAuthorityDashboardIds: '46,45,33'
+  priorAuthorityDashboardIds: '48'
   nsmDashboardIds: '44'
   siteUrl: 'https://uat.crime-forms-metabase.service.justice.gov.uk'
 
