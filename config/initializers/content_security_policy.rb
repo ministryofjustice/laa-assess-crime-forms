@@ -6,7 +6,7 @@
 
 Rails.application.configure do
   config.content_security_policy do |policy|
-    policy.default_src ENV.fetch('METABASE_SITE_URL', nil), :self, :https
+    policy.default_src :self, :https
     policy.font_src    :self, :https, :data
     policy.img_src     :self, :https, :data
     policy.object_src  :none
