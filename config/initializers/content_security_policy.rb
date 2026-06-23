@@ -3,7 +3,6 @@
 # Define an application-wide content security policy.
 # See the Securing Rails Applications Guide for more information:
 # https://guides.rubyonrails.org/security.html#content-security-policy-header
-METABASE_URL = ENV.fetch('METABASE_SITE_URL', nil)
 
 Rails.application.configure do
   config.content_security_policy do |policy|
@@ -22,7 +21,7 @@ Rails.application.configure do
     # Sentry creates workers from "blobs" in order to report on errors, so we allow that
     policy.worker_src :blob
 
-    policy.frame_src "blob:#{METABASE_URL}", METABASE_URL
+    policy.frame_src :blob, ENV.fetch('METABASE_SITE_URL', nil)
   end
 
   # Generate session nonces for permitted importmap and inline scripts
