@@ -6,7 +6,7 @@
 
 Rails.application.configure do
   config.content_security_policy do |policy|
-    policy.default_src :self, :https
+    policy.default_src ENV.fetch('METABASE_SITE_URL', nil), :self, :https
     policy.font_src    :self, :https, :data
     policy.img_src     :self, :https, :data
     policy.object_src  :none
@@ -21,7 +21,7 @@ Rails.application.configure do
     # Sentry creates workers from "blobs" in order to report on errors, so we allow that
     policy.worker_src :blob
 
-    policy.frame_src :blob, ENV.fetch('METABASE_SITE_URL', nil)
+    policy.frame_src ENV.fetch('METABASE_SITE_URL', nil)
   end
 
   # Generate session nonces for permitted importmap and inline scripts
