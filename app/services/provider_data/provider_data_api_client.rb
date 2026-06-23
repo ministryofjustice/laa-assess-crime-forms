@@ -7,6 +7,8 @@ module ProviderData
     format :json
 
     PROVIDER_API_EFFECTIVE_DATE_PARAM = ENV.fetch('PROVIDER_API_EFFECTIVE_DATE_PARAM', '01-01-2025').freeze
+    class ProviderUnavailableError < StandardError
+    end
 
     class << self
       def office_details(office_code)
@@ -45,11 +47,14 @@ module ProviderData
       def query(method, endpoint, handlers)
         response = send(method, endpoint)
         unless handlers.key?(response.code)
-          raise StandardError, "Unexpected status code #{response.code} when querying provider API endpoint #{endpoint}"
+          raise ProviderUnavailableError,
+                "Unexpected status code #{response.code} when querying provider API endpoint #{endpoint}"
         end
 
         handler = handlers[response.code]
         handler.respond_to?(:call) ? handler.call(response.parsed_response) : handler
+      rescue HTTParty::Error, Net::OpenTimeout, Net::ReadTimeout, SocketError, Errno::ECONNREFUSED => e
+        raise ProviderUnavailableError, "Error querying provider API endpoint #{endpoint}: #{e.message}"
       end
     end
   end

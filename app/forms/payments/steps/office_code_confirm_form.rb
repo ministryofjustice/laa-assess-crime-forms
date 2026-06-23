@@ -8,9 +8,11 @@ module Payments
       def save
         return false unless valid?
 
+        details = office_code_details
+
         if confirm_office_code
-          multi_step_form_session[:solicitor_office_code] = office_code_details['firmOfficeCode']
-          multi_step_form_session[:solicitor_firm_name] = office_code_details.dig('firm', 'firmName')
+          multi_step_form_session[:solicitor_office_code] = details['firmOfficeCode']
+          multi_step_form_session[:solicitor_firm_name] = details.dig('firm', 'firmName')
         # :nocov:
         else
           false

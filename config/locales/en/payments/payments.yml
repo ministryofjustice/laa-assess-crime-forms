@@ -136,6 +136,8 @@ en:
         edit:
           page_title: Solicitor's firm account number
           solicitor_office_code: What is the solicitor's firm account number?
+          provider_unavailable_heading: There was a problem.
+          provider_unavailable_body: We cannot check the account number at the moment. This is a temporary issue with PDA. Try again later.
       office_code_confirm:
         edit:
           page_title: Check solicitor details
