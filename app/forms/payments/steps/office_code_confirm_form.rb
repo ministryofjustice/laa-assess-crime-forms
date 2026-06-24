@@ -26,8 +26,17 @@ module Payments
         multi_step_form_session[:solicitor_office_code]
       end
 
+      def solicitor_firm_name
+        multi_step_form_session[:solicitor_firm_name]
+      end
+
       def office_code_details
-        ProviderData::ProviderDataClient.new.contracted_office_details(searched_code)
+        return nil if searched_code.blank? || solicitor_firm_name.blank?
+
+        {
+          'firmOfficeCode' => searched_code,
+          'firm' => { 'firmName' => solicitor_firm_name }
+        }
       end
     end
   end

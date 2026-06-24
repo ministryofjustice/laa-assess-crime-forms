@@ -50,10 +50,23 @@ RSpec.describe Payments::Steps::OfficeCodeSearchForm, type: :model do
     end
 
     context 'when PDA is available' do
-      it 'persists only the office code' do
+      it 'persists office code and firm name' do
         expect(form.save).to be(true)
         expect(multi_step_form_session[:solicitor_office_code]).to eq('1A123B')
+        expect(multi_step_form_session[:solicitor_firm_name]).to eq('Correct Firm Name')
         expect(multi_step_form_session[:solicitor_office_code_details]).to be_nil
+      end
+    end
+
+    context 'when PDA returns no office details' do
+      before do
+        allow(provider_data_client).to receive(:contracted_office_details).with('1A123B').and_return(nil)
+      end
+
+      it 'persists office code and clears firm name' do
+        expect(form.save).to be(true)
+        expect(multi_step_form_session[:solicitor_office_code]).to eq('1A123B')
+        expect(multi_step_form_session[:solicitor_firm_name]).to eq('')
       end
     end
   end

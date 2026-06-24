@@ -10,14 +10,17 @@ module Payments
         return false unless provider_available?
 
         multi_step_form_session[:solicitor_office_code] = solicitor_office_code
+        multi_step_form_session[:solicitor_firm_name] = office_code_details&.dig('firm', 'firmName')
 
         true
       end
 
       private
 
+      attr_reader :office_code_details
+
       def provider_available?
-        ProviderData::ProviderDataClient.new.contracted_office_details(solicitor_office_code)
+        @office_code_details = ProviderData::ProviderDataClient.new.contracted_office_details(solicitor_office_code)
         true
       rescue ProviderData::ProviderDataApiClient::ProviderUnavailableError => e
         Sentry.capture_exception(e)
