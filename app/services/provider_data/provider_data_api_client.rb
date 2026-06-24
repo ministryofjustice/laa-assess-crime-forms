@@ -43,7 +43,7 @@ module ProviderData
       private
 
       def query(method, endpoint, handlers)
-        response = send(method, endpoint)
+        response = send(method, endpoint, headers: OutboundRequestId.headers)
         unless handlers.key?(response.code)
           raise StandardError, "Unexpected status code #{response.code} when querying provider API endpoint #{endpoint}"
         end

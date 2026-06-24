@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
+  before_action :store_outbound_request_id
   before_action :check_maintenance_mode
   before_action :check_controller_params
   before_action :authenticate_user!
@@ -21,6 +22,10 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
+
+  def store_outbound_request_id
+    OutboundRequestId.set(request.request_id)
+  end
 
   def user_not_authorized
     flash[:alert] = t('errors.unauthorised')
