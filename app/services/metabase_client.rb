@@ -12,7 +12,7 @@ class MetabaseClient
     process_response(
       response,
       "Unexpected response from Metabase - status #{response.code} for '#{url}'",
-      200 => ->(body) { body },
+      200 => ->(body) { body }
     )
   end
 
@@ -58,16 +58,18 @@ class MetabaseClient
     ENV.fetch('METABASE_SITE_URL', 'http://localhost:8000')
   end
 
-  def process_response(response, error_message, response_maps)
-    outcome = response_maps.detect { _1[0] == response.code || (_1[0].is_a?(Range) && _1[0].include?(response.code)) }&.last
+  def process_response(response, _error_message, _response_maps)
+    body = JSON.parse(response.body)
+    Sentry.capture_message(body) if response.code != 200
+    # outcome = response_maps.detect { _1[0] == response.code || (_1[0].is_a?(Range) && _1[0].include?(response.code)) }&.last
 
-    raise error_message unless outcome
+    # raise error_message unless outcome
 
-    if outcome.respond_to?(:call)
-      outcome.call(response.body)
-    else
-      outcome
-    end
+    # if outcome.respond_to?(:call)
+    #   outcome.call(response.body)
+    # else
+    #   outcome
+    # end
   end
   # :nocov:
 end
