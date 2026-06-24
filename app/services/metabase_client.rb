@@ -59,8 +59,7 @@ class MetabaseClient
   end
 
   def process_response(response, _error_message, _response_maps)
-    body = JSON.parse(response.body)
-    Sentry.capture_message(body) if response.code != 200
+    Rails.logger.info response.body if response.code != 200
     # outcome = response_maps.detect { _1[0] == response.code || (_1[0].is_a?(Range) && _1[0].include?(response.code)) }&.last
 
     # raise error_message unless outcome
