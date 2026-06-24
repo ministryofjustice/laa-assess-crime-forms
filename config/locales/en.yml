@@ -3,6 +3,14 @@ en:
     name: Assess a crime form
   nsm:
     service_name: Assess a non-standard magistrates’ court payment
+  metabases:
+    show:
+      title: Metabase
+      explainer_html: |
+        <b>You can download csv files by adding query params to this page URL:</b><br>
+        card_id: This is the question ID that you want to export in Metabase. Currently CRM7 Assessments = 278 and CRM Re-Assessments = 279<br>
+        start_date: The start date of the date filter for the submission date. Format: YYYY-MM-DD<br>
+        end_date: The end date of the date filter for the submission date. Format: YYYY-MM-DD<br>
 
   flash:
     success:

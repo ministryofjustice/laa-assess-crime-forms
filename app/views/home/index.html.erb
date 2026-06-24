@@ -33,8 +33,10 @@
                 <%= link_to t('.user_management'), users_path, class: 'govuk-link--no-visited-state' %>
             </p>
         <% end %>
-        <p>
-            <%= link_to t('.metabase'), metabase_path, class: 'govuk-link--no-visited-state' %>
-        </p>
+         <% if policy(:metabase).show? && FeatureFlags.insights.enabled? %>
+            <p>
+                <%= link_to t('.metabase'), metabase_path, class: 'govuk-link--no-visited-state' %>
+            </p>
+        <% end %>
     </div>
 </div>
