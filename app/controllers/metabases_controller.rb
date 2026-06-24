@@ -1,4 +1,4 @@
-class MetabaseController < ApplicationController
+class MetabasesController < ApplicationController
   # :nocov:
   def show
     dashboard_ids = [47]
