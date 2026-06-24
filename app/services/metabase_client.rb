@@ -59,6 +59,7 @@ class MetabaseClient
   end
 
   def process_response(response, error_message, response_maps)
+    Rails.logger.info(response)
     outcome = response_maps.detect { _1[0] == response.code || (_1[0].is_a?(Range) && _1[0].include?(response.code)) }&.last
 
     raise error_message unless outcome
