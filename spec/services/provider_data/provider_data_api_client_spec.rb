@@ -130,7 +130,7 @@ RSpec.describe ProviderData::ProviderDataApiClient do
         let(:code) { 500 }
         let(:body) { {}.to_json }
 
-        it 'raises an error' do
+        it 'raises a provider unavailable error' do
           expect do
             described_class.contracted_office_details(office_code)
           end.to raise_error(ProviderData::ProviderDataApiClient::ProviderUnavailableError, /Unexpected status code 500/)
