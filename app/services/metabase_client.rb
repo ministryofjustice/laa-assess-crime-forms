@@ -55,7 +55,7 @@ class MetabaseClient
   end
 
   def host
-    ENV.fetch('METABASE_SITE_URL', 'http://localhost:8000')
+    ENV.fetch('METABASE_PRIVATE_URL', 'http://localhost:8000')
   end
 
   def process_response(response, error_message, response_maps)
