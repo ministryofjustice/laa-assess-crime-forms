@@ -221,11 +221,6 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: metabase_secret_key
-            - name: METABASE_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: metabase_api_key
             - name: METABASE_SITE_URL
               value: '{{ .Values.metabase.siteUrl}}'
             - name: MAINTENANCE_MODE
