@@ -39,8 +39,3 @@ feature_flags:
     development: false
     uat: true
     production: true
-  metabase_test:
-    local: <%= ENV.fetch("METABASE_TEST", false) %>
-    development: true
-    uat: true
-    production: false
