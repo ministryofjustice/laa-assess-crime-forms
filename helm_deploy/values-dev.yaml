@@ -129,7 +129,7 @@ redis:
 metabase:
   priorAuthorityDashboardIds: '48'
   nsmDashboardIds: '44'
-  siteUrl: 'https://uat.crime-forms-metabase.service.justice.gov.uk'
+  siteUrl: 'http://laa-crime-application-store-app-metabase.laa-crime-application-store-uat.svc.cluster.local'
 
 customErrorService:
   enabled: true
