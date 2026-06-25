@@ -193,7 +193,9 @@ Rails.application.routes.draw do
   get 'robots.txt', to: 'robots#index'
 
   resource :dashboard, only: %i[new show]
-  resource :metabase, only: %i[show]
+  constraints ->(_req) { FeatureFlags.metabase_test.enabled? } do
+    resource :metabase, only: %i[show]
+  end
   resources :users
 end
 # rubocop:enable Metrics/BlockLength
