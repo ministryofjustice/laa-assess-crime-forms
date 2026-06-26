@@ -153,6 +153,7 @@ Rails.application.routes.draw do
           get :confirmation
         end
       end
+      resources :download, only: %i[show index]
       resource :search, only: %i[new show]
       resource :claim_reference, only: %i[edit]
       resources :courts, only: [:index], format: :js
