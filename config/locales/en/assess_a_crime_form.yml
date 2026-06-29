@@ -9,4 +9,4 @@ en:
       analytics: Analytics dashboard
       user_management: User management
       payments: Payments
-      payment_downloads: Download payments
+      payment_downloads: CSV Download

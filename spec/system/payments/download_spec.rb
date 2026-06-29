@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Payments download', :stub_oauth_token do
+RSpec.describe 'CSV Download', :stub_oauth_token do
   let(:caseworker) { create(:caseworker) }
 
   before do
@@ -11,7 +11,8 @@ RSpec.describe 'Payments download', :stub_oauth_token do
   # rubocop:disable RSpec/MultipleExpectations
   it 'shows monthly download links for the current month and previous 11 months under each heading' do
     travel_to Time.zone.local(2026, 6, 15, 12) do
-      visit payments_download_index_path
+      visit root_path
+      click_on 'CSV Download'
     end
 
     expect(page).to have_current_path(payments_download_index_path)
