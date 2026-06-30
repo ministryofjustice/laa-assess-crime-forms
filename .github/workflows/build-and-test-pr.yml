@@ -96,7 +96,7 @@ jobs:
           version: '3.7.2'
       - name: Lint Helm chart templates for branch overrides
         run: |
-          helm lint helm_deploy --values helm_deploy/branch-overrides.yaml \
+          helm lint --set-file helm_deploy/branch-overrides.yaml \
             --skip-schema-validation
 
   test:
