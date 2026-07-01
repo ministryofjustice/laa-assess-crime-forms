@@ -4,7 +4,7 @@ module Nsm
       attribute :matter_type
       attribute :youth_court
       attribute :ufn
-      attrinbute :request_type
+      attribute :request_type
 
       attribute :submission
       delegate :id, to: :submission
