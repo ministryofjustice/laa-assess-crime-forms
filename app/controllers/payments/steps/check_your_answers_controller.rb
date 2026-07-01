@@ -34,9 +34,9 @@ module Payments
       end
 
       def refresh_answers_from_claim
-        @claim ||= BaseViewModel.build(:payment_claim_details, claim)
-        @claim.request_type = 'non_standard_magistrate'
-        @claim.to_h.with_indifferent_access
+        data = BaseViewModel.build(:payment_claim_details, claim)
+        data.request_type = 'non_standard_magistrate'
+        data.to_h.with_indifferent_access
       end
 
       def apply_persisted_submission_token!(answers)
