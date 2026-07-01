@@ -4,6 +4,7 @@ module Nsm
       attribute :matter_type
       attribute :youth_court
       attribute :ufn
+      attrinbute :request_type
 
       attribute :submission
       delegate :id, to: :submission
@@ -62,10 +63,6 @@ module Nsm
 
       def number_of_defendants
         submission.data[:defendants].size
-      end
-
-      def request_type
-        submission.data[:claim_type]
       end
 
       def claimed_profit_cost
