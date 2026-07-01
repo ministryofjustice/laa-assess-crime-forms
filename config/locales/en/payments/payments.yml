@@ -114,7 +114,7 @@ en:
       counsel_code_search:
         edit:
           page_title: Assigned counsel's office account number
-          counsel_office_code: What is the assigned counsel account number? 
+          counsel_office_code: What is the assigned counsel account number?
       counsel_code_confirm:
         edit:
           page_title: Check assigned counsel details
@@ -301,8 +301,12 @@ en:
         last_updated: Last updated
         allowed: Allowed
         payment_type: Payment type
+    download:
+      index:
+        page_title: Download
     shared:
       continue_button: "Continue"
+
 
   helpers:
     hint:
