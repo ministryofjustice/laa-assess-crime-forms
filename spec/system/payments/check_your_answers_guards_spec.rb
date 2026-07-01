@@ -59,18 +59,22 @@ RSpec.describe 'Payment submission safeguards', type: :system do
     expect(page).to have_title('Check your answers')
   end
 
+  # rubocop:disable Metrics/AbcSize
   def stub_submission_claim(id)
     claim_double = instance_double(Claim)
+    view_model_double = instance_double(Nsm::V1::PaymentClaimDetails, to_h: submission_answers(id))
     allow(Claim).to receive(:load_from_app_store).with(id).and_return(claim_double)
 
-    answers = submission_answers(id).merge({
-                                             'original_submission_year' => Date.current.year,
+    submission_answers(id).merge({
+                                   'original_submission_year' => Date.current.year,
       'original_submission_month' => Date.current.month
-                                           })
+                                 })
     allow(BaseViewModel).to receive(:build)
       .with(:payment_claim_details, claim_double)
-      .and_return(instance_double(Nsm::V1::PaymentClaimDetails, to_h: answers))
+      .and_return(view_model_double)
+    allow(view_model_double).to receive(:request_type=).and_return(true)
   end
+  # rubocop:enable Metrics/AbcSize
 
   # rubocop:disable Metrics/MethodLength
   def submission_answers(id)
