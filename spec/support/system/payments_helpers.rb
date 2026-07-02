@@ -60,6 +60,7 @@ module PaymentsHelpers
     }
   end
 
+  # rubocop:disable Metrics/AbcSize
   def stub_crm7_submission_claim(submission_id:, laa_reference: 'LAA-CRM7', request_type: 'non_standard_magistrate',
                                  nsm_claim: nil)
     claim_double = instance_double(Claim)
@@ -101,12 +102,15 @@ module PaymentsHelpers
     }
 
     answers['nsm_claim'] = nsm_claim if nsm_claim
+    view_model_double = instance_double(Nsm::V1::PaymentClaimDetails, to_h: answers)
 
     allow(Claim).to receive(:load_from_app_store).with(submission_id).and_return(claim_double)
     allow(BaseViewModel).to receive(:build)
       .with(:payment_claim_details, claim_double)
-      .and_return(instance_double(Nsm::V1::PaymentClaimDetails, to_h: answers))
+      .and_return(view_model_double)
+    allow(view_model_double).to receive(:request_type=).and_return(true)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def ac_claim
     {
