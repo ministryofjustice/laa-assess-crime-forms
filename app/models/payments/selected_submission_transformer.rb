@@ -10,7 +10,9 @@ module Payments
 
     def claim
       loaded_claim = Claim.load_from_app_store(payable_claim_id)
-      @claim ||= BaseViewModel.build(:payment_claim_details, loaded_claim).to_h.with_indifferent_access
+      @claim ||= BaseViewModel.build(:payment_claim_details, loaded_claim)
+      @claim.request_type = multi_step_form_session['request_type']
+      @claim.to_h.with_indifferent_access
     end
 
     def format_claim(claim)

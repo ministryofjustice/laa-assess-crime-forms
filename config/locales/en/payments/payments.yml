@@ -5,7 +5,6 @@ en:
       non_standard_magistrate: Non-standard magistrates'
       assigned_counsel: Assigned counsel
     request_types:
-      breach_of_injunction: Breach of injunction
       non_standard_magistrate: Non-standard magistrates'
       non_standard_mag_supplemental: Non-standard magistrates' - supplemental
       non_standard_mag_appeal: Non-standard magistrates' - appeal
@@ -236,7 +235,6 @@ en:
         no_payments: There are no related payment requests for this claim
       payment_details:
         payment_heading:
-          breach_of_injunction: Breach of injunction
           non_standard_magistrate: Claimed and allowed costs
           non_standard_mag_supplemental: Allowed costs after supplemental payment
           non_standard_mag_appeal: Allowed costs after appeal
