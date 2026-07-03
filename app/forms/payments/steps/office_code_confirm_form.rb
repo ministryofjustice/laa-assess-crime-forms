@@ -8,9 +8,11 @@ module Payments
       def save
         return false unless valid?
 
+        details = office_code_details
+
         if confirm_office_code
-          multi_step_form_session[:solicitor_office_code] = office_code_details['firmOfficeCode']
-          multi_step_form_session[:solicitor_firm_name] = office_code_details.dig('firm', 'firmName')
+          multi_step_form_session[:solicitor_office_code] = details['firmOfficeCode']
+          multi_step_form_session[:solicitor_firm_name] = details.dig('firm', 'firmName')
         # :nocov:
         else
           false
@@ -24,8 +26,17 @@ module Payments
         multi_step_form_session[:solicitor_office_code]
       end
 
+      def solicitor_firm_name
+        multi_step_form_session[:solicitor_firm_name]
+      end
+
       def office_code_details
-        ProviderData::ProviderDataClient.new.contracted_office_details(searched_code)
+        return nil if searched_code.blank? || solicitor_firm_name.blank?
+
+        {
+          'firmOfficeCode' => searched_code,
+          'firm' => { 'firmName' => solicitor_firm_name }
+        }
       end
     end
   end

@@ -207,6 +207,8 @@ en:
 
         payments/steps/office_code_search_form:
           attributes:
+            base:
+              provider_unavailable: We cannot check the account number at the moment. This is a temporary issue with PDA. Try again later.
             solicitor_office_code:
               blank: Enter the office code
         payments/steps/counsel_code_search_form:

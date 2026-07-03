@@ -1,5 +1,11 @@
 <% title t('.page_title') %>
 <% step_header(path: previous_decision_step_path) %>
+<% if @form_object.errors.of_kind?(:base, :provider_unavailable) %>
+  <%= render 'shared/alert',
+             type: :error,
+             heading: t('.provider_unavailable_heading'),
+             msg: t('.provider_unavailable_body') %>
+<% end %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>

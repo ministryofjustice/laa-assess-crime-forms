@@ -147,10 +147,25 @@ RSpec.describe ProviderData::ProviderDataApiClient do
         let(:code) { 500 }
         let(:body) { {}.to_json }
 
-        it 'raises an error' do
+        it 'raises a provider unavailable error' do
           expect do
             described_class.contracted_office_details(office_code)
-          end.to raise_error(StandardError, /Unexpected status code 500/)
+          end.to raise_error(ProviderData::ProviderDataApiClient::ProviderUnavailableError, /Unexpected status code 500/)
+        end
+      end
+
+      context 'when the provider API request raises a network error' do
+        before do
+          allow(described_class).to receive(:get).and_raise(Net::OpenTimeout.new('execution expired'))
+        end
+
+        it 'raises a provider unavailable error' do
+          expect do
+            described_class.contracted_office_details(office_code)
+          end.to raise_error(
+            ProviderData::ProviderDataApiClient::ProviderUnavailableError,
+            /Error querying provider API endpoint/
+          )
         end
       end
     end

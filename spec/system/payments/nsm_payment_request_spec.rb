@@ -66,6 +66,25 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       expect(page).to have_content('Enter the office code')
     end
 
+    it 'shows an outage alert when PDA is unavailable and stays on office code page' do
+      provider_data_client = instance_double(ProviderData::ProviderDataClient)
+      allow(ProviderData::ProviderDataClient).to receive(:new).and_return(provider_data_client)
+      allow(provider_data_client).to receive(:contracted_office_details).with('1A123B').and_raise(
+        ProviderData::ProviderDataApiClient::ProviderUnavailableError, 'PDA unavailable'
+      )
+
+      start_new_payment_request
+      choose_claim_type("Non-Standard Magistrates'")
+      fill_in "What is the solicitor's firm account number?", with: '1A123B'
+      click_button 'Continue'
+
+      expect(page).to have_title("Solicitor's firm account number")
+      expect(page).to have_css('.moj-alert.moj-alert--error', text: 'There was a problem.')
+      expect(page).to have_content(
+        'We cannot check the account number at the moment. This is a temporary issue with PDA. Try again later.'
+      )
+    end
+
     it 'returns to office code selection when office code is not selected' do
       start_new_payment_request
       choose_claim_type("Non-Standard Magistrates'")
