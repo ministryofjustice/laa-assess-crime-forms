@@ -39,6 +39,7 @@ RSpec.describe Payments::SelectedSubmissionTransformer do
   before do
     allow(Claim).to receive(:load_from_app_store).with(payable_claim_id).and_return(claim_record)
     allow(BaseViewModel).to receive(:build).with(:payment_claim_details, claim_record).and_return(view_model)
+    allow(view_model).to receive(:request_type=).and_return(true)
   end
 
   describe '#transform' do

@@ -1,6 +1,13 @@
 require 'rails_helper'
+require 'request_store'
 
 RSpec.describe ProviderData::ProviderDataApiClient do
+  let(:request_id) { 'rails-request-id' }
+
+  before { OutboundRequestId.set(request_id) }
+
+  after { RequestStore.clear! }
+
   describe '#office_details' do
     let(:office_code) { '1A123C' }
     let(:api_response) { nil }
@@ -55,6 +62,16 @@ RSpec.describe ProviderData::ProviderDataApiClient do
           }
         )
       end
+    end
+
+    it 'sends a request-id header' do
+      api_request = stub_request(:get, api_url)
+                    .with(headers: { 'request-id' => request_id })
+                    .to_return(status: 204)
+
+      described_class.office_details(office_code)
+
+      expect(api_request).to have_been_requested
     end
   end
 
@@ -184,6 +201,17 @@ RSpec.describe ProviderData::ProviderDataApiClient do
         described_class.contracted_office_details(office_code)
         expect(WebMock).to have_requested(:get, api_url)
       end
+    end
+
+    it 'sends a request-id header' do
+      allow(HostEnv).to receive(:uat?).and_return(false)
+      api_request = stub_request(:get, api_url)
+                    .with(headers: { 'request-id' => request_id })
+                    .to_return(status: 204)
+
+      described_class.contracted_office_details(office_code)
+
+      expect(api_request).to have_been_requested
     end
   end
 end
