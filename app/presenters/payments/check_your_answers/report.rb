@@ -8,14 +8,10 @@ module Payments
       attr_reader :session_answers, :params
 
       def show_groups
-        default_groups = %w[
+        %w[
           claim_types
-          linked_claim
           claim_details
         ]
-
-        default_groups.reject! { _1 == 'linked_claim' } unless linked_claim_applicable?
-        default_groups
       end
 
       def initialize(session_answers, params)
@@ -56,7 +52,7 @@ module Payments
         case session_answers['request_type'].to_sym
         when :breach_of_injunction, :non_standard_magistrate, :non_standard_mag_supplemental,
              :non_standard_mag_amendment, :non_standard_mag_appeal
-          [ClaimDetailsCard.new(session_answers, params)]
+          [NsmClaimDetailsCard.new(session_answers, params)]
         when :assigned_counsel, :assigned_counsel_appeal, :assigned_counsel_amendment
           [AcClaimDetailsCard.new(session_answers, params)]
         # :nocov:
@@ -64,10 +60,6 @@ module Payments
           false
         end
         # :nocov:
-      end
-
-      def linked_claim_section
-        [LinkedClaimCard.new(session_answers)]
       end
 
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity

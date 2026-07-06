@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Payments::CheckYourAnswers::ClaimDetailsCard do
+RSpec.describe Payments::CheckYourAnswers::NsmClaimDetailsCard do
   subject(:card) { described_class.new(session_answers, params) }
 
   let(:params) { { id: '1234' } }

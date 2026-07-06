@@ -26,6 +26,10 @@ en:
               claim_type: Claim type
             claim_details:
               title: Claim details
+              linked_assigned_counsel: Linked assigned counsel claim
+              linked_non_standard_magistrate: Linked non-standard claim
+              no_linked_crm7: Not linked to a non-standard magistrates' claim
+              no_linked_crm8: Not linked to an assigned counsel claim
               original_submission_date: Month original claim assessed
               date_claim_assessed: Date claim assessed
               solicitor_office_code: Firm office account number
@@ -44,12 +48,6 @@ en:
               linked_claim: Linked non-standard claim
               counsel_office_code: Counsel account number
               counsel_firm_name: Counsel name
-            linked_claim:
-              title: Linked claims
-              non_standard_magistrate: Non standard magistrates
-              assigned_counsel: Assigned counsel
-              no_linked_crm7: Not linked to a non-standard magistrates' claim
-              no_linked_crm8: Not linked to an assigned counsel claim
           cost_summary: Cost summary
           original_claim: Original claim
           linked_laa_reference: Linked LAA reference
@@ -113,7 +111,7 @@ en:
       counsel_code_search:
         edit:
           page_title: Assigned counsel's office account number
-          counsel_office_code: What is the assigned counsel account number? 
+          counsel_office_code: What is the assigned counsel account number?
       counsel_code_confirm:
         edit:
           page_title: Check assigned counsel details
