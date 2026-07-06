@@ -54,4 +54,46 @@ RSpec.describe Payments::CheckYourAnswers::AcClaimDetailsCard do
       end
     end
   end
+
+  describe '#row_data' do
+    let(:session_answers) do
+      {
+        'request_type' => 'assigned_counsel_amendment',
+        'laa_reference' => 'LAA-AC-123',
+        'linked_nsm_reference' => 'LAA-NSM-999',
+        'date_claim_assessed' => '2024-06-01T12:00:00Z'
+      }
+    end
+
+    it 'returns both non-standard magistrate and assigned counsel rows' do
+      expect(card.row_data).to include(
+        hash_including(head_key: 'linked_non_standard_magistrate', text: 'LAA-NSM-999'),
+        hash_including(head_key: 'linked_assigned_counsel', text: 'LAA-AC-123')
+      )
+    end
+  end
+
+  describe '#linked_assigned_counsel' do
+    context 'when the request type is an assigned counsel variant' do
+      let(:session_answers) do
+        {
+          'request_type' => 'assigned_counsel_appeal'
+        }
+      end
+
+      it 'falls back to the CRM8 translation when no reference is stored' do
+        expect(card.linked_assigned_counsel[:text]).to eq(
+          I18n.t('payments.steps.check_your_answers.edit.sections.claim_details.no_linked_crm8')
+        )
+      end
+    end
+
+    context 'when the request type is not assigned counsel' do
+      let(:session_answers) { { 'request_type' => 'non_standard_mag_amendment' } }
+
+      it 'returns nil' do
+        expect(card.linked_assigned_counsel).to be_nil
+      end
+    end
+  end
 end

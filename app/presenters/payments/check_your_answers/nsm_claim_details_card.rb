@@ -21,13 +21,6 @@ module Payments
         }
       end
 
-      def date_claim_assessed
-        {
-          head_key: 'date_claim_assessed',
-          text: DateTime.parse(session_answers['date_claim_assessed']).to_fs(:stamp)
-        }
-      end
-
       def solicitor_firm_name
         {
           head_key: 'solicitor_firm_name',

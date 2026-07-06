@@ -13,6 +13,13 @@ module Payments
         super()
       end
 
+      def date_claim_assessed
+        {
+          head_key: 'date_claim_assessed',
+          text: DateTime.parse(session_answers['date_claim_assessed']).to_fs(:stamp)
+        }
+      end
+
       def linked_non_standard_magistrate
         {
           head_key: 'linked_non_standard_magistrate',
