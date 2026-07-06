@@ -91,15 +91,6 @@ module Payments
 
       private
 
-      def linked_claim_applicable?
-        [:non_standard_mag_supplemental,
-         :non_standard_mag_amendment,
-         :non_standard_mag_appeal,
-         :assigned_counsel,
-         :assigned_counsel_appeal,
-         :assigned_counsel_amendment].include?(session_answers['request_type'].to_sym)
-      end
-
       def actions(card)
         return [] if card.read_only?
 
