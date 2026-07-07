@@ -5,10 +5,16 @@ RSpec.describe OutboundRequestId do
   after { RequestStore.clear! }
 
   describe '.current' do
-    it 'returns the request id stored for the current request' do
+    it 'returns the stored request id prefixed with the service slug' do
       described_class.set('rails-request-id')
 
-      expect(described_class.current).to eq('rails-request-id')
+      expect(described_class.current).to eq('nscc-assess-rails-request-id')
+    end
+
+    it 'does not add the service slug twice' do
+      described_class.set('nscc-assess-rails-request-id')
+
+      expect(described_class.current).to eq('nscc-assess-rails-request-id')
     end
 
     it 'generates a unique NSCC Assess id when no request id is stored' do
@@ -23,7 +29,7 @@ RSpec.describe OutboundRequestId do
     it 'returns a request-id header' do
       described_class.set('rails-request-id')
 
-      expect(described_class.headers).to eq('request-id' => 'rails-request-id')
+      expect(described_class.headers).to eq('request-id' => 'nscc-assess-rails-request-id')
     end
   end
 end
