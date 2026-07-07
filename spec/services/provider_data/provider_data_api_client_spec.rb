@@ -3,6 +3,7 @@ require 'request_store'
 
 RSpec.describe ProviderData::ProviderDataApiClient do
   let(:request_id) { 'rails-request-id' }
+  let(:outbound_request_id) { 'nscc-assess-rails-request-id' }
 
   before { OutboundRequestId.set(request_id) }
 
@@ -66,7 +67,7 @@ RSpec.describe ProviderData::ProviderDataApiClient do
 
     it 'sends a request-id header' do
       api_request = stub_request(:get, api_url)
-                    .with(headers: { 'request-id' => request_id })
+                    .with(headers: { 'request-id' => outbound_request_id })
                     .to_return(status: 204)
 
       described_class.office_details(office_code)
@@ -206,7 +207,7 @@ RSpec.describe ProviderData::ProviderDataApiClient do
     it 'sends a request-id header' do
       allow(HostEnv).to receive(:uat?).and_return(false)
       api_request = stub_request(:get, api_url)
-                    .with(headers: { 'request-id' => request_id })
+                    .with(headers: { 'request-id' => outbound_request_id })
                     .to_return(status: 204)
 
       described_class.contracted_office_details(office_code)

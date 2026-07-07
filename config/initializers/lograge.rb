@@ -13,7 +13,8 @@ Rails.application.configure do
   # `ApplicationController` but instead a `BareApplicationController`
   config.lograge.custom_payload do |controller|
     {
-      caseworker_id: controller.current_user.to_param
+      caseworker_id: controller.current_user.to_param,
+      request_id: OutboundRequestId.current
     }
   end
 end
