@@ -3,6 +3,7 @@ require 'request_store'
 
 RSpec.describe AppStoreClient, :stub_oauth_token do
   let(:request_id) { 'rails-request-id' }
+  let(:outbound_request_id) { 'nscc-assess-rails-request-id' }
   let(:response) { double(:response, code:, body:) }
   let(:code) { 200 }
   let(:body) { { some: :data }.to_json }
@@ -40,7 +41,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
         expect(described_class).to receive(:put).with("http://some.url/v1/application/#{application_id}",
                                                       body: message.to_json,
                                                       headers: { :authorization => 'Bearer test-bearer-token',
-                                                                 'request-id' => request_id })
+                                                                 'request-id' => outbound_request_id })
 
         subject.update_submission(message)
       end
@@ -54,7 +55,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
           expect(described_class).to receive(:put).with("http://some.url/v1/application/#{application_id}",
                                                         body: message.to_json,
                                                         headers: { :'X-Client-Type' => 'caseworker',
-                                                                   'request-id' => request_id })
+                                                                   'request-id' => outbound_request_id })
 
           subject.update_submission(message)
         end
@@ -66,7 +67,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
         expect(described_class).to receive(:put).with("https://appstore.example.com/v1/application/#{application_id}",
                                                       body: message.to_json,
                                                       headers: { :authorization => 'Bearer test-bearer-token',
-                                                                 'request-id' => request_id })
+                                                                 'request-id' => outbound_request_id })
 
         subject.update_submission(message)
       end
@@ -120,7 +121,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
       expect(described_class).to receive(:post).with("https://appstore.example.com/v1/submissions/#{application_id}/events",
                                                      body: message.to_json,
                                                      headers: { :authorization => 'Bearer test-bearer-token',
-                                                                'request-id' => request_id })
+                                                                'request-id' => outbound_request_id })
 
       subject.create_events(application_id, message)
     end
@@ -155,14 +156,14 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
     it 'delegates search context to submissions' do
       expect(described_class).to receive(:post).with('http://some.url/v1/submissions/searches',
                                                      headers: { :authorization => 'Bearer test-bearer-token',
-                                                                'request-id' => request_id })
+                                                                'request-id' => outbound_request_id })
       subject.search(nil, :submissions)
     end
 
     it 'delegates search context to payments' do
       expect(described_class).to receive(:post).with('http://some.url/v1/payment_requests/searches',
                                                      headers: { :authorization => 'Bearer test-bearer-token',
-                                                                'request-id' => request_id })
+                                                                'request-id' => outbound_request_id })
       subject.search(nil, :payment_requests)
     end
   end
@@ -203,7 +204,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
         expect(described_class).to receive(:post).with(
           'https://appstore.example.com/v1/payment_requests',
           body: payload.to_json,
-          headers: { :authorization => 'Bearer test-bearer-token', 'request-id' => request_id }
+          headers: { :authorization => 'Bearer test-bearer-token', 'request-id' => outbound_request_id }
         ).and_return(response)
 
         described_class.new.create_payment_request(payload)
@@ -242,7 +243,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
         expect(described_class).to receive(:post).with(
           'http://some.url/v1/payment_requests',
           body: payload.to_json,
-          headers: { :authorization => 'Bearer test-bearer-token', 'request-id' => request_id }
+          headers: { :authorization => 'Bearer test-bearer-token', 'request-id' => outbound_request_id }
         ).and_return(response)
 
         described_class.new.create_payment_request(payload)
