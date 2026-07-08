@@ -10,11 +10,20 @@ class OutboundRequestId
     end
 
     def current
-      RequestStore.store[STORE_KEY].presence || "#{SERVICE_PREFIX}-#{SecureRandom.uuid}"
+      with_service_prefix(RequestStore.store[STORE_KEY].presence || SecureRandom.uuid)
     end
 
     def headers
       { 'request-id' => current }
+    end
+
+    private
+
+    def with_service_prefix(request_id)
+      request_id = request_id.to_s
+      return request_id if request_id.start_with?("#{SERVICE_PREFIX}-")
+
+      "#{SERVICE_PREFIX}-#{request_id}"
     end
   end
 end

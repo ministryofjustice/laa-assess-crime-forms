@@ -21,6 +21,6 @@ RSpec.describe ApplicationController, type: :controller do
   it 'stores the Rails request id for downstream service calls' do
     get :index
 
-    expect(response.body).to eq('rails-request-id')
+    expect(response.body).to eq('nscc-assess-rails-request-id')
   end
 end
