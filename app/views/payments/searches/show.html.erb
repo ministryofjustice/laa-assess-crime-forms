@@ -80,7 +80,7 @@
                 <%= table_header_with_link(key,
                                            'shared.search.table.header',
                                            { 'controller' => controller_path, 'action' => 'show',  'payments_search_form' => @search_form.attributes },
-                                           @search_form.sort_by, @search_form.sort_direction, 'payments_search_form') %>
+                                           @search_form.sort_by, @search_form.sort_direction, :payments_search_form) %>
                 <% end %>
             </tr>
           </thead>
