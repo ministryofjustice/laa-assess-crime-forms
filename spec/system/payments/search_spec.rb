@@ -156,7 +156,41 @@ RSpec.describe 'Search', :stub_oauth_token do
     let(:stub) do
       stub_request(:post, endpoint).with(body: payload).to_return(
         status: 201,
-        body: { metadata: { total_results: 0 }, data: [] }.to_json
+        body: {
+          metadata: { total_results: 3 },
+          data: [
+            {
+              id: 'payreq-1001',
+              request_type: 'non_standard_magistrate',
+              submitted_at: '2024-07-23T10:15:00Z',
+              payable_claim: {
+                id: 'claim-1001',
+                laa_reference: 'LAA-1001',
+                client_last_name: 'Dickens'
+              }
+            },
+            {
+              id: 'payreq-1002',
+              request_type: 'assigned_counsel',
+              submitted_at: '2024-06-23T09:45:00Z',
+              payable_claim: {
+                id: 'claim-1002',
+                laa_reference: 'LAA-1002',
+                client_last_name: 'Austen'
+              }
+            },
+            {
+              id: 'payreq-1003',
+              request_type: 'non_standard_mag_appeal',
+              submitted_at: '2024-05-22T16:30:00Z',
+              payable_claim: {
+                id: 'claim-1003',
+                laa_reference: 'LAA-1003',
+                client_last_name: 'Bronte'
+              }
+            }
+          ]
+        }.to_json
       )
     end
 
@@ -172,6 +206,23 @@ RSpec.describe 'Search', :stub_oauth_token do
       within('main') { click_button 'Search' }
 
       expect(stub).to have_been_requested
+    end
+
+    it 'retains the search criteria in the form when sorting' do
+      visit new_payments_search_path
+
+      fill_in 'Submission date from', with: '20/4/2023'
+      fill_in 'Submission date to', with: '21/4/2023'
+      fill_in 'Assessed from', with: '22/4/2023'
+      fill_in 'Assessed to', with: '23/4/2023'
+      within('main') { click_button 'Search' }
+
+      within('table') { click_button 'Submitted at' }
+
+      expect(page).to have_field('Submission date from', with: '20/4/2023')
+        .and have_field('Submission date to', with: '21/4/2023')
+        .and have_field('Assessed from', with: '22/4/2023')
+        .and have_field('Assessed to', with: '23/4/2023')
     end
   end
 end
