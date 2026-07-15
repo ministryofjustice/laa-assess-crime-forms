@@ -30,6 +30,10 @@ module Payments
       row[:payable_claim][:counsel_firm_name] || row[:payable_claim][:solicitor_firm_name]
     end
 
+    def firm_account
+      row[:payable_claim][:counsel_office_code] || row[:payable_claim][:solicitor_office_code]
+    end
+
     def submitted_at
       Time.zone.parse(row[:submitted_at]).to_fs(:stamp)
     end
