@@ -79,8 +79,8 @@ module LaaAssessNonStandardMagistrateFee
                            "#{protocol}://:#{password}@#{host}:6379"
                          end
 
-    config.x.nsm.feedback_url = 'https://www.smartsurvey.co.uk/s/62ZC6B/'
-    config.x.prior_authority.feedback_url = 'https://www.smartsurvey.co.uk/s/UPNBDF/'
+    config.x.nsm.feedback_url = 'https://www.smartsurvey.co.uk/s/CRM4Apply/'
+    config.x.prior_authority.feedback_url = 'https://www.smartsurvey.co.uk/s/CRM7Apply/'
     config.x.contact.feedback_url = 'tbc'
   end
 end
