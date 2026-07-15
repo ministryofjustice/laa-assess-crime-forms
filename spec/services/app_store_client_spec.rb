@@ -2,8 +2,8 @@ require 'rails_helper'
 require 'request_store'
 
 RSpec.describe AppStoreClient, :stub_oauth_token do
-  let(:request_id) { 'rails-request-id' }
-  let(:outbound_request_id) { 'nscc-assess-rails-request-id' }
+  let(:request_id) { 'A8B0EB88-EA9A-DCAB-8902-CD521F2D5F51' }
+  let(:outbound_request_id) { 'nscc-assess-a8b0eb88ea9adcab8902cd521f2d5f51' }
   let(:response) { double(:response, code:, body:) }
   let(:code) { 200 }
   let(:body) { { some: :data }.to_json }
@@ -11,7 +11,7 @@ RSpec.describe AppStoreClient, :stub_oauth_token do
   let(:claim) { instance_double(Claim, id: SecureRandom.uuid) }
 
   before do
-    RequestStore.store[:outbound_request_id] = request_id
+    OutboundRequestId.set(request_id)
     allow(ENV).to receive(:fetch).and_call_original
     allow(described_class).to receive(:get)
       .and_return(response)
