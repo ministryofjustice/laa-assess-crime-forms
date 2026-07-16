@@ -6,10 +6,6 @@ module Payments
       @row = row
     end
 
-    def payment_request_id
-      row[:id]
-    end
-
     def laa_reference
       row[:payable_claim][:laa_reference]
     end
