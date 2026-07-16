@@ -27,6 +27,9 @@
             <p>
                 <%= link_to(t('.payments'), payments_requests_path, class: 'govuk-link--no-visited-state') %>
             </p>
+            <p>
+                <%= link_to(t('.payment_downloads'), payments_download_index_path, class: 'govuk-link--no-visited-state') %>
+            </p>
         <% end %>
         <% if policy(:user_management).show?  %>
             <p>
