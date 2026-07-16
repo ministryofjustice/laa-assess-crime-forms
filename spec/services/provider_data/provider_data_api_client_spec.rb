@@ -2,8 +2,8 @@ require 'rails_helper'
 require 'request_store'
 
 RSpec.describe ProviderData::ProviderDataApiClient do
-  let(:request_id) { 'rails-request-id' }
-  let(:outbound_request_id) { 'nscc-assess-rails-request-id' }
+  let(:request_id) { 'A8B0EB88-EA9A-DCAB-8902-CD521F2D5F51' }
+  let(:outbound_request_id) { 'nscc-assess-a8b0eb88ea9adcab8902cd521f2d5f51' }
 
   before { OutboundRequestId.set(request_id) }
 
