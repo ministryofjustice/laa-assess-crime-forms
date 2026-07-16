@@ -1,18 +1,10 @@
 module Payments
   module CheckYourAnswers
-    class AcClaimDetailsCard < BaseCard
-      attr_reader :session_answers, :params
-
-      def initialize(session_answers, params)
-        @session_answers = session_answers
-        @params = params
-
-        @section = 'claim_details'
-        super()
-      end
-
+    class AcClaimDetailsCard < ClaimDetailsCard
       def row_data
         [
+          linked_assigned_counsel,
+          linked_non_standard_magistrate,
           date_claim_assessed,
           solicitor_office_code,
           solicitor_firm_name,
@@ -23,10 +15,13 @@ module Payments
         ].flatten.compact
       end
 
-      def date_claim_assessed
+      def linked_assigned_counsel
+        return unless session_answers['request_type'].in?(%w[assigned_counsel_appeal assigned_counsel_amendment])
+
         {
-          head_key: 'date_claim_assessed',
-          text: DateTime.parse(session_answers['date_claim_assessed']).to_fs(:stamp)
+          head_key: 'linked_assigned_counsel',
+          text: session_answers['laa_reference'] ||
+            I18n.t('payments.steps.check_your_answers.edit.sections.claim_details.no_linked_crm8')
         }
       end
 

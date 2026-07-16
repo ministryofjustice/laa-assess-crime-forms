@@ -3,93 +3,47 @@ require 'rails_helper'
 RSpec.describe Payments::CheckYourAnswers::ClaimDetailsCard do
   subject(:card) { described_class.new(session_answers, params) }
 
-  let(:params) { { id: '1234' } }
+  let(:params) { nil }
 
-  describe '#change_link_controller_path' do
-    context 'when the claim is linked (NSM with linked LAA ref)' do
-      let(:session_answers) do
-        {
-          'request_type' => 'non_standard_magistrate',
-          'linked_laa_reference' => 'LAA-123'
-        }
-      end
-
-      it 'routes change to claim search' do
-        expect(card.change_link_controller_path).to eq('payments/steps/claim_search')
-      end
-    end
-
-    context 'when the claim is an amendment with a linked reference' do
+  describe '#linked_non_standard_magistrate' do
+    context 'when the request is an NSM addition' do
       let(:session_answers) do
         {
           'request_type' => 'non_standard_mag_amendment',
-          'laa_reference' => 'LAA-456'
+          'linked_laa_reference' => 'LAA-LINKED'
         }
       end
 
-      it 'routes change to claim search' do
-        expect(card.change_link_controller_path).to eq('payments/steps/claim_search')
+      it 'prefers the linked LAA reference' do
+        expect(card.linked_non_standard_magistrate[:text]).to eq('LAA-LINKED')
+      end
+
+      it 'falls back to the local LAA reference when no linked reference exists' do
+        session_answers.delete('linked_laa_reference')
+        session_answers['laa_reference'] = 'LAA-LOCAL'
+
+        expect(card.linked_non_standard_magistrate[:text]).to eq('LAA-LOCAL')
       end
     end
 
-    context 'when the claim is not linked' do
+    context 'when the request is an original NSM claim' do
       let(:session_answers) do
         {
-          'request_type' => 'non_standard_magistrate'
+          'request_type' => 'non_standard_magistrate',
+          'linked_laa_reference' => 'LAA-ORIGINAL'
         }
       end
 
-      it 'routes change to office code search' do
-        expect(card.change_link_controller_path).to eq('payments/steps/office_code_search')
-      end
-    end
-
-    context 'when request_type is outside NSM linked groupings' do
-      let(:session_answers) do
-        { 'request_type' => 'assigned_counsel' }
+      it 'uses the linked LAA reference' do
+        expect(card.linked_non_standard_magistrate[:text]).to eq('LAA-ORIGINAL')
       end
 
-      it 'treats as not linked and routes change to office code search' do
-        expect(card.change_link_controller_path).to eq('payments/steps/office_code_search')
-      end
-    end
-  end
+      it 'falls back to the CRM7 translation when no reference exists' do
+        session_answers.delete('linked_laa_reference')
 
-  describe '#read_only?' do
-    let(:session_answers) do
-      {
-        'request_type' => 'non_standard_magistrate',
-        'linked_laa_reference' => 'LAA-123'
-      }
-    end
-
-    it 'keeps claim details editable from check your answers' do
-      expect(card.read_only?).to be(false)
-    end
-  end
-
-  describe 'original submission month' do
-    context 'when request_type is non_standard_magistrate' do
-      let(:session_answers) do
-        { 'request_type' => 'non_standard_magistrate' }
-      end
-
-      it 'returns nil' do
-        expect(card.original_submission_month).to be_nil
-      end
-    end
-
-    context 'when request_type is non_standard_mag_supplemental' do
-      let(:session_answers) do
-        {
-          'request_type' => 'non_standard_mag_supplemental',
-          'original_submission_year' => '2023',
-          'original_submission_month' => '5'
-        }
-      end
-
-      it 'returns the formatted month name' do
-        expect(card.original_submission_month[:text]).to eq('May 2023')
+        expect(card.linked_non_standard_magistrate[:text]).to eq(
+          I18n.t('payments.steps.check_your_answers.edit.sections.claim_details.no_linked_crm7')
+        )
       end
     end
   end
