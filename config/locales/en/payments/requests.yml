@@ -5,10 +5,10 @@ en:
         assigned_counsel: Assigned counsel
         assigned_counsel_amendment: Assigned counsel - amendment
         assigned_counsel_appeal: Assigned counsel - appeal
-        non_standard_magistrate: Non-Standard Magistrates'
-        non_standard_mag_appeal: Non-Standard Magistrates' - appeal
-        non_standard_mag_supplemental: Non-Standard Magistrates' - supplemental
-        non_standard_mag_amendment: Non-Standard Magistrates' - amendment
+        non_standard_magistrate: Non-standard magistrates
+        non_standard_mag_appeal: Non-standard magistrates - appeal
+        non_standard_mag_supplemental: Non-standard magistrates - supplemental
+        non_standard_mag_amendment: Non-standard magistrates - amendment
       index:
         page_title: Payment requests
         payment_requests: payment requests

@@ -129,7 +129,7 @@ en:
       title: Select service
       all: All
       pa: PA - Prior Authority
-      nsm: NSM - Non-Standard Magistrates' court payment
+      nsm: NSM - Non-standard magistrates court payment
     form:
       page_title: User details
       field:

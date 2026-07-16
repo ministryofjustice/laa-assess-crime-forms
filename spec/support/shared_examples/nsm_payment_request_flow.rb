@@ -4,7 +4,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
   let(:caseworker) { create(:caseworker, first_name: 'John', last_name: 'Everyman') }
   let(:endpoint)   { 'https://appstore.example.com/v1/payment_requests/searches' }
   let(:linked_claim_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
-  let(:claim_type) { "Non-Standard Magistrates' - #{type_suffix}" }
+  let(:claim_type) { "Non-standard magistrates - #{type_suffix}" }
   let(:claim_type_code) do
     {
       'appeal' => 'non_standard_mag_appeal',
