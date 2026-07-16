@@ -317,7 +317,7 @@ jobs:
       contents: read
     with:
       assess-image-name: ${{ needs.build.outputs.image-tag }}
-      e2e-tests-ref: 'c06ab158ff2a2b2ed3bd40938968e71083327ac9'
+      e2e-tests-ref: '439d17a6ed42d0cad9323767cc0988c0040db7cb'
 
   # ============================================================================
   # PHASE 4: Deploy to dev environment (only after all checks pass)
