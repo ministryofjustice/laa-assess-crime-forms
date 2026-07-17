@@ -3,7 +3,7 @@ en:
   nsm:
     claim_details:
       show:
-        page_title: Assess a non-standard magistrates’ court payment
+        page_title: Assess a non-standard magistrates court payment
         overview: Overview
         sent_back: Sent back to provider on %{date}
         further_information_request: 'Further information request:'

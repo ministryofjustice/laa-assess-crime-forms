@@ -119,7 +119,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       expect(page).to have_content 'The Firm'
       expect(page).to have_content 'LAA-ODJUfL'
       expect(page).to have_content 'Allowed: £306.80'
-      expect(page).to have_content "Claim type: Non-standard Magistrates'"
+      expect(page).to have_content 'Claim type: Non-standard magistrates'
       expect(page).to have_content 'Last updated: 7 October 2025'
     end
 
@@ -147,7 +147,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       expect(page).to have_selector '.govuk-heading-l', text: 'Claim details'
       expect(all('table td, table th').map(&:text)).to eq(
         [
-          'Claim type', "Non-standard Magistrates'",
+          'Claim type', 'Non-standard magistrates',
           'Firm account number', '1A123B',
           'Firm name', 'The Firm',
           'Month original claim assessed', 'October 2025',
