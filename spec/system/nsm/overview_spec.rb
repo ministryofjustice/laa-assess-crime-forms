@@ -73,7 +73,7 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
       expect(page).to have_content('Assigned counselNo')
       expect(page).to have_content('Unassigned counselYes')
       expect(page).to have_content('Instructed agentNo')
-      expect(page).to have_content("Case remitted from Crown Court to magistrates' courtNo")
+      expect(page).to have_content('Case remitted from Crown Court to magistrates courtNo')
     end
 
     it 'shows expected fields within Case disposal section' do

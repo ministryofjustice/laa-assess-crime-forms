@@ -30,7 +30,7 @@ RSpec.describe Nsm::V1::ClaimJustification do
       expect(subject.data).to eq(
         [
           {
-            title: "Why are you claiming a non-standard magistrates' payment?",
+            title: 'Why are you claiming a non-standard magistrates payment?',
             value: 'Enhanced rates claimed<br>Counsel or agent assigned'
           }
         ]
@@ -52,11 +52,11 @@ RSpec.describe Nsm::V1::ClaimJustification do
         expect(subject.data).to eq(
           [
             {
-              title: "Why are you claiming a non-standard magistrates' payment?",
+              title: 'Why are you claiming a non-standard magistrates payment?',
               value: 'Enhanced rates claimed<br>Other'
             },
             {
-              title: "Other details about why a non-standard magistrates' court paymentis being claimed",
+              title: 'Other details about why a non-standard magistrates court paymentis being claimed',
               value: 'Other reasons for test'
             }
           ]

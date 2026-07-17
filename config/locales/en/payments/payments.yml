@@ -2,13 +2,13 @@ en:
   payments:
     service_name: Request a payment
     claim_types:
-      non_standard_magistrate: Non-standard magistrates'
+      non_standard_magistrate: Non-standard magistrates
       assigned_counsel: Assigned counsel
     request_types:
-      non_standard_magistrate: Non-standard magistrates'
-      non_standard_mag_supplemental: Non-standard magistrates' - supplemental
-      non_standard_mag_appeal: Non-standard magistrates' - appeal
-      non_standard_mag_amendment: Non-standard magistrates' - amendment
+      non_standard_magistrate: Non-standard magistrates
+      non_standard_mag_supplemental: Non-standard magistrates - supplemental
+      non_standard_mag_appeal: Non-standard magistrates - appeal
+      non_standard_mag_amendment: Non-standard magistrates - amendment
       assigned_counsel: Assigned counsel
       assigned_counsel_appeal: Assigned counsel - appeal
       assigned_counsel_amendment: Assigned counsel - amendment
@@ -28,7 +28,7 @@ en:
               title: Claim details
               linked_assigned_counsel: Linked assigned counsel claim
               linked_non_standard_magistrate: Linked non-standard claim
-              no_linked_crm7: Not linked to a non-standard magistrates' claim
+              no_linked_crm7: Not linked to a non-standard magistrates claim
               no_linked_crm8: Not linked to an assigned counsel claim
               original_submission_date: Month original claim assessed
               date_claim_assessed: Date claim assessed
@@ -286,7 +286,7 @@ en:
           youth_court: Youth court matter
           work_completed_date: Date work was completed
           linked_claim: Linked claim
-          no_linked_claim: Not linked to a non-standard magistrates' claim
+          no_linked_claim: Not linked to a non-standard magistrates claim
           defendant_last_name: Defendant name
           counsel_office_code: Counsel account number
           counsel_firm_name: Counsel name

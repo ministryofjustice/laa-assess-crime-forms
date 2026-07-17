@@ -406,7 +406,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       expect(all('table td, table th').map(&:text)).to eq(
         [
           'Claim type', 'Assigned counsel',
-          'Linked claim', "Not linked to a non-standard magistrates' claim",
+          'Linked claim', 'Not linked to a non-standard magistrates claim',
           'Firm account number', 'AB2034',
           'Firm name', 'Solicitor Firm',
           'Unique file number', '01112025/001',
@@ -494,8 +494,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         expect(all('table td, table th').map(&:text)).to eq(
           [
             'LAA reference', 'Firm name', 'Defendant', 'Payment type', 'Submitted',
-            'LAA-ABZ321', 'A3211B', 'Andrews', "Non-standard magistrates'", '12 September 2025',
-            'LAA-ABZ321', 'A3211B', 'Andrews', "Non-standard magistrates' - amendment", '13 September 2025'
+            'LAA-ABZ321', 'A3211B', 'Andrews', 'Non-standard magistrates', '12 September 2025',
+            'LAA-ABZ321', 'A3211B', 'Andrews', 'Non-standard magistrates - amendment', '13 September 2025'
           ]
         )
         expect(page).to have_content 'Showing 2 of 2 payment requests'

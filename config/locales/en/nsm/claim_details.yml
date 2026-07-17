@@ -46,7 +46,7 @@ en:
         assigned_counsel: Assigned counsel
         unassigned_counsel: Unassigned counsel
         agent_instructed: Instructed agent
-        remitted_to_magistrate: Case remitted from Crown Court to magistrates' court
+        remitted_to_magistrate: Case remitted from Crown Court to magistrates court
         remitted_to_magistrate_date: Remittal date
         main_offence_type: Offence type
         summary_only: Summary only
@@ -57,8 +57,8 @@ en:
         title: Case disposal
       claim_justification:
         title: Claim justification
-        reasons_for_claim: Why are you claiming a non-standard magistrates' payment?
-        other_details: Other details about why a non-standard magistrates' court paymentis being claimed
+        reasons_for_claim: Why are you claiming a non-standard magistrates payment?
+        other_details: Other details about why a non-standard magistrates court paymentis being claimed
       hearing_details:
         title: Hearing details
         first_hearing_date: Date of first hearing
