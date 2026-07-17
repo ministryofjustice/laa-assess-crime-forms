@@ -81,7 +81,7 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
     end
 
     it 'shows expected fields within Claim justification section' do
-      expect(page).to have_content("Why are you claiming a non-standard magistrates' payment?Counsel or agent assigned")
+      expect(page).to have_content('Why are you claiming a non-standard magistrates payment?Counsel or agent assigned')
     end
 
     it 'shows expected fields within Claim details section' do
