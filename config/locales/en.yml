@@ -2,7 +2,7 @@ en:
   service:
     name: Assess a crime form
   nsm:
-    service_name: Assess a non-standard magistrates’ court payment
+    service_name: Assess a non-standard magistrates court payment
 
   flash:
     success:
@@ -36,8 +36,8 @@ en:
 
   shared:
     application_type:
-      crm4: "Prior authority"
-      crm7: "Non-standard magistrates"
+      crm4: Prior authority
+      crm7: Non-standard magistrates
     submission_noun:
       crm4: "application"
       crm7: "claim"
