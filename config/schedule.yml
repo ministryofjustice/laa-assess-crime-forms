@@ -1,0 +1,4 @@
+payments_finance_reports:
+  cron: "15 00 * * *"
+  class: "Payments::ScheduleFinanceReports"
+  queue: "pooling"

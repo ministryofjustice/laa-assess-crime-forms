@@ -33,6 +33,7 @@ gem 'rails', '~> 8.1.3'
 gem 'redis'
 gem 'sidekiq', '~> 8.1'
 gem 'sidekiq_alive', '~> 2.4'
+gem 'sidekiq-cron'
 # Pin connection_pool to avoid Rails/Sidekiq compatibility issues
 # See: https://github.com/rails/rails/issues/56461
 gem 'connection_pool', '~> 3.0'
