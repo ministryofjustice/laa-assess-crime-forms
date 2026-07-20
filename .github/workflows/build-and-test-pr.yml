@@ -307,17 +307,16 @@ jobs:
           image: ${{ env.ECR_IMAGE }}
           command: monitor
 
-  # e2e-test:
-  #   name: Run E2E Tests
-  #   uses: ministryofjustice/nsm-e2e-test/.github/workflows/run-e2e-tests.yml@c06ab158ff2a2b2ed3bd40938968e71083327ac9
-  #   needs: build
-  #   secrets: inherit
-  #   permissions:
-  #     id-token: write
-  #     contents: read
-  #   with:
-  #     assess-image-name: ${{ needs.build.outputs.image-tag }}
-  #     e2e-tests-ref: '439d17a6ed42d0cad9323767cc0988c0040db7cb'
+  e2e-test:
+    name: Run E2E Tests
+    uses: ministryofjustice/nsm-e2e-test/.github/workflows/run-e2e-tests.yml@34d6d5a9990396308abbfb80c6e17295aab64629
+    needs: build
+    secrets: inherit
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      assess-image-name: ${{ needs.build.outputs.image-tag }}
 
   # ============================================================================
   # PHASE 4: Deploy to dev environment (only after all checks pass)
