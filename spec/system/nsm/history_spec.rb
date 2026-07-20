@@ -106,7 +106,7 @@ RSpec.describe 'History events', :stub_oauth_token do
     it 'lets me add a note' do
       travel_to(fixed_arbitrary_date)
       visit nsm_claim_history_path(claim)
-      fill_in 'Note', with: 'Here is a note'
+      fill_in 'Add a note to the claim history (optional)', with: 'Here is a note'
       click_on 'Add to claim history'
       expect(page).to have_content "01 Feb 202309:00am#{caseworker.display_name}\nCaseworker note\nHere is a note"
     end

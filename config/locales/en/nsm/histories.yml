@@ -11,7 +11,7 @@ en:
         add-note: Add to claim history
         table_info_item: "events"
 
-  helpers/:
+  helpers:
     label:
       nsm_claim_note_form:
         note: Add a note to the claim history (optional)
