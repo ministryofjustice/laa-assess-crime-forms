@@ -150,61 +150,61 @@ jobs:
           bundle exec rails db:setup
           bundle exec flatware fan rails db:test:prepare
 
-  #     - name: Run RSpec ${{ matrix.test-type }} tests
-  #       env:
-  #         RUBYOPT: -W:no-deprecated
-  #         INCLUDE_ACCESSIBILITY_SPECS: true
-  #       run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format progress
+      - name: Run RSpec ${{ matrix.test-type }} tests
+        env:
+          RUBYOPT: -W:no-deprecated
+          INCLUDE_ACCESSIBILITY_SPECS: true
+        run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format progress
 
-  #     - name: Upload code coverage results
-  #       if: always()
-  #       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-  #       with:
-  #         name: coverage-results-${{ matrix.test-type }}
-  #         path: coverage
-  #         include-hidden-files: true
+      - name: Upload code coverage results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: coverage-results-${{ matrix.test-type }}
+          path: coverage
+          include-hidden-files: true
 
-  #     - name: Upload Capybara screenshots (on test failure)
-  #       if: failure() && matrix.needs-chrome == true
-  #       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-  #       with:
-  #         name: capybara-screenshots
-  #         path: tmp/capybara
+      - name: Upload Capybara screenshots (on test failure)
+        if: failure() && matrix.needs-chrome == true
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: capybara-screenshots
+          path: tmp/capybara
 
-  # coverage:
-  #   name: Verify code coverage
-  #   runs-on: ubuntu-latest
-  #   needs: test
-  #   permissions:
-  #     contents: read
-  #     checks: write
-  #     pull-requests: write
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-  #       with:
-  #         persist-credentials: false
+  coverage:
+    name: Verify code coverage
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: false
 
-  #     - name: Set up Ruby and install gems
-  #       uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9
-  #       with:
-  #         bundler-cache: true
+      - name: Set up Ruby and install gems
+        uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9
+        with:
+          bundler-cache: true
 
-  #     - name: Download coverage results from all test types
-  #       uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-  #       with:
-  #         pattern: coverage-results-*
-  #         path: coverage_results
+      - name: Download coverage results from all test types
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          pattern: coverage-results-*
+          path: coverage_results
 
-  #     - name: Merge coverage results from both test types
-  #       run: bundle exec rake simplecov:process_coverage
+      - name: Merge coverage results from both test types
+        run: bundle exec rake simplecov:process_coverage
 
-  #     - name: Upload final coverage artifact
-  #       if: always()
-  #       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-  #       with:
-  #         name: coverage-final
-  #         path: coverage
+      - name: Upload final coverage artifact
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: coverage-final
+          path: coverage
 
   # ============================================================================
   # PHASE 2: Build Docker image (depends on tests passing)
