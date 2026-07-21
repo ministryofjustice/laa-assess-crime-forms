@@ -1,4 +1,4 @@
-class MetabaseClient
+class MetabaseApiClient
   # :nocov:
   include HTTParty
 
