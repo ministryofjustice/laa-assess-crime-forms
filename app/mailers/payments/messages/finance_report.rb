@@ -22,7 +22,7 @@ module Payments
       def contents
         filename = "finance_report_#{@start_date}_to_#{@end_date}.csv"
         File.open(filename, 'w') do |file|
-          file.write(MetabaseApiClient.new.get_finance_report_csv(@start_date, @end_date))
+          file.write(MetabaseApiClient.new.download_question(278, @start_date, @end_date))
           {
             start_date: @start_date,
             end_date: @end_date,
