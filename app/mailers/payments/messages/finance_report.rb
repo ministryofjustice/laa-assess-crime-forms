@@ -4,8 +4,12 @@ module Payments
   module Messages
     class FinanceReport
       def initialize(start_date, end_date)
-        raise 'start_date must be a Date' unless start_date.is_a?(Date)
-        raise 'end_date must be a Date' unless end_date.is_a?(Date)
+        begin
+          start_date = Date.parse(start_date)
+          end_date = Date.parse(end_date)
+        rescue ArgumentError
+          raise 'start_date and end_date must be valid dates in YYYY-MM-DD format'
+        end
 
         @start_date = start_date
         @end_date = end_date
