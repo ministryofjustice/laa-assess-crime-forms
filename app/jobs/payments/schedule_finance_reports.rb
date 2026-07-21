@@ -4,7 +4,7 @@ module Payments
 
     def perform
       Rails.logger.info "Running Payments::ScheduleFinanceReports at #{Time.zone.now}"
-      EmailToFinanceMailer.notify('start_date', 'end_date').deliver_now
+      EmailToFinanceMailer.notify('2026-01-01', '2026-08-01').deliver_now
     end
   end
 end

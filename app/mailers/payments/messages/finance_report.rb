@@ -4,6 +4,9 @@ module Payments
   module Messages
     class FinanceReport
       def initialize(start_date, end_date)
+        raise 'start_date must be a Date' unless start_date.is_a?(Date)
+        raise 'end_date must be a Date' unless end_date.is_a?(Date)
+
         @start_date = start_date
         @end_date = end_date
       end
@@ -13,10 +16,15 @@ module Payments
       end
 
       def contents
-        {
-          start_date: @start_date,
-          end_date: @end_date,
-        }
+        filename = "finance_report_#{@start_date}_to_#{@end_date}.csv"
+        File.open(filename, 'w') do |file|
+          file.write(MetabaseApiClient.new.get_finance_report_csv(@start_date, @end_date))
+          {
+            start_date: @start_date,
+            end_date: @end_date,
+            link_to_file: Notifications.prepare_upload(file, filename:)
+          }
+        end
       end
 
       def recipient
