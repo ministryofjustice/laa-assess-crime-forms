@@ -20,9 +20,8 @@ module Payments
       end
 
       def contents
-        file_path = Rails.root.join('tmp/uploaded/').to_s
         filename = "finance_report_#{@start_date}_to_#{@end_date}.csv"
-        File.open(File.join(file_path, filename), 'w') do |file|
+        File.open(File.join('tmp/uploaded', filename), 'w') do |file|
           file.write(MetabaseApiClient.new.download_question(278, @start_date, @end_date))
           {
             start_date: @start_date,
