@@ -239,6 +239,11 @@ spec:
               value: {{ .Values.variables.sentryTraceSampleRate }}
             - name: PROVIDER_API_EFFECTIVE_DATE_PARAM
               value: '{{ .Values.variables.providerApiEffectiveDate }}'
+            - name: FINANCE_EMAIL_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: finance_email_address
 
       {{- with .Values.nodeSelector }}
       nodeSelector:
