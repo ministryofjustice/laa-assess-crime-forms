@@ -21,7 +21,8 @@ RSpec.describe 'Payment Requests', :stub_oauth_token do
             id: SecureRandom.uuid,
             laa_reference: 'LAA-BBBBBB',
             client_last_name: 'Joe Client',
-            counsel_firm_name: 'B Firm'
+            counsel_firm_name: 'C Firm',
+            solicitor_firm_name: 'B Firm'
           }
       }]
     end

@@ -43,7 +43,7 @@ RSpec.describe ApplicationHelper, type: :helper do
           helper.title(value)
         end
 
-        it { expect(title).to eq('Test page - Assess a non-standard magistrates’ court payment - GOV.UK') }
+        it { expect(title).to eq('Test page - Assess a non-standard magistrates court payment - GOV.UK') }
       end
 
       context 'when current_layout is oa' do

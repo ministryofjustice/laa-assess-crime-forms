@@ -6,10 +6,6 @@ module Payments
       @row = row
     end
 
-    def payment_request_id
-      row[:id]
-    end
-
     def laa_reference
       row[:payable_claim][:laa_reference]
     end
@@ -27,7 +23,11 @@ module Payments
     end
 
     def firm_name
-      row[:payable_claim][:counsel_firm_name] || row[:payable_claim][:solicitor_firm_name]
+      row[:payable_claim][:solicitor_firm_name]
+    end
+
+    def firm_account
+      row[:payable_claim][:solicitor_office_code]
     end
 
     def submitted_at

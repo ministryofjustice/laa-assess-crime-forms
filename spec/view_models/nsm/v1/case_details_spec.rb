@@ -52,7 +52,7 @@ RSpec.describe Nsm::V1::CaseDetails do
                                      { title: 'Assigned counsel', value: 'Yes' },
                                      { title: 'Unassigned counsel', value: 'No' },
                                      { title: 'Instructed agent', value: 'Yes' },
-                                     { title: "Case remitted from Crown Court to magistrates' court", value: 'Yes' },
+                                     { title: 'Case remitted from Crown Court to magistrates court', value: 'Yes' },
                                      { title: 'Remittal date', value: '1 February 2023' },
                                    ])
       end
@@ -82,7 +82,7 @@ RSpec.describe Nsm::V1::CaseDetails do
                                      { title: 'Assigned counsel', value: 'Yes' },
                                      { title: 'Unassigned counsel', value: 'No' },
                                      { title: 'Instructed agent', value: 'Yes' },
-                                     { title: "Case remitted from Crown Court to magistrates' court", value: 'No' },
+                                     { title: 'Case remitted from Crown Court to magistrates court', value: 'No' },
                                    ])
       end
     end

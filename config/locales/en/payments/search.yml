@@ -14,7 +14,7 @@ en:
         received_to: Assessed to
         page_title: Search for a payment
         filter_hint:  Enter details in at least one field to search for a payment request
-        claim_type: Claim type
+        claim_type: Payment type
         search_results: Search results
         result: Result
         query:

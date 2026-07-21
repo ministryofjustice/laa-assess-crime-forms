@@ -40,7 +40,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
 
       expect(page)
         .to have_title('Claim type')
-        .and have_content('Non-Standard Magistrates')
+        .and have_content('Non-standard magistrates')
     end
 
     it 'shows an error when no claim is selected' do
@@ -53,7 +53,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
   describe 'claim details' do
     it 'completes claim details and proceeds' do
       start_new_payment_request
-      choose_claim_type("Non-Standard Magistrates'")
+      choose_claim_type('Non-standard magistrates')
       select_office_code
       fill_claim_details
       expect(page).to have_title('Claimed costs')
@@ -61,7 +61,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
 
     it 'shows error when no office code entered' do
       start_new_payment_request
-      choose_claim_type("Non-Standard Magistrates'")
+      choose_claim_type('Non-standard magistrates')
       click_button 'Continue'
       expect(page).to have_content('Enter the office code')
     end
@@ -74,7 +74,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
       )
 
       start_new_payment_request
-      choose_claim_type("Non-Standard Magistrates'")
+      choose_claim_type('Non-standard magistrates')
       fill_in "What is the solicitor's firm account number?", with: '1A123B'
       click_button 'Continue'
 
@@ -87,7 +87,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
 
     it 'returns to office code selection when office code is not selected' do
       start_new_payment_request
-      choose_claim_type("Non-Standard Magistrates'")
+      choose_claim_type('Non-standard magistrates')
       fill_in "What is the solicitor's firm account number?", with: '1A123B'
       click_button 'Continue'
       choose 'No, I need to change the number', allow_label_click: true
@@ -97,7 +97,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
 
     it 'shows an error when no field is selected on office code confirmation' do
       start_new_payment_request
-      choose_claim_type("Non-Standard Magistrates'")
+      choose_claim_type('Non-standard magistrates')
       fill_in "What is the solicitor's firm account number?", with: '1A123B'
       click_button 'Continue'
       click_button 'Continue'
@@ -107,7 +107,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
     describe 'claimed costs' do
       it 'completes claimed costs and proceeds' do
         start_new_payment_request
-        choose_claim_type("Non-Standard Magistrates'")
+        choose_claim_type('Non-standard magistrates')
         select_office_code
         fill_claim_details
         fill_claimed_costs
@@ -118,7 +118,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
     describe 'allowed costs' do
       it 'completes claimed costs and proceeds' do
         start_new_payment_request
-        choose_claim_type("Non-Standard Magistrates'")
+        choose_claim_type('Non-standard magistrates')
         select_office_code
         fill_claim_details
         fill_claimed_costs
@@ -128,7 +128,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
 
       it 'sends Claim details Change to office code search and back link returns to Check your answers' do
         start_new_payment_request
-        choose_claim_type("Non-Standard Magistrates'")
+        choose_claim_type('Non-standard magistrates')
         select_office_code
         fill_claim_details
         fill_claimed_costs
@@ -145,7 +145,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
 
       it 'sends Cost summary Change to allowed costs and back link returns to Check your answers' do
         start_new_payment_request
-        choose_claim_type("Non-Standard Magistrates'")
+        choose_claim_type('Non-standard magistrates')
         select_office_code
         fill_claim_details
         fill_claimed_costs
@@ -164,7 +164,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
     describe 'submit payment success' do
       it 'submits payment and redirects to payment confirmation' do
         start_new_payment_request
-        choose_claim_type("Non-Standard Magistrates'")
+        choose_claim_type('Non-standard magistrates')
         select_office_code
         fill_claim_details
         fill_claimed_costs
@@ -177,7 +177,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
     describe 'cancel payment request' do
       it 'submits payment and redirects to payment confirmation' do
         start_new_payment_request
-        choose_claim_type("Non-Standard Magistrates'")
+        choose_claim_type('Non-standard magistrates')
         select_office_code
         fill_claim_details
         fill_claimed_costs
@@ -190,7 +190,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
     describe 'payment request with custom court' do
       it 'completes claim details with custom court and proceeds' do
         start_new_payment_request
-        choose_claim_type("Non-Standard Magistrates'")
+        choose_claim_type('Non-standard magistrates')
         select_office_code
         fill_claim_details(court_name: 'Custom court')
         fill_claimed_costs
@@ -205,7 +205,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
   describe 'payment request when youth court matter is No' do
     it 'shows the correct details in the Claim details card' do
       start_new_payment_request
-      choose_claim_type("Non-Standard Magistrates'")
+      choose_claim_type('Non-standard magistrates')
       select_office_code
       fill_claim_details(youth_court: 'No')
       fill_claimed_costs
@@ -239,7 +239,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
     it 'goes to NSM claim details when creating a new supplemental record' do
       start_new_payment_request
       stub_search(linked_claim_endpoint, empty_search_params, [], 0)
-      choose_claim_type("Non-Standard Magistrates' - supplemental")
+      choose_claim_type('Non-standard magistrates - supplemental')
       fill_in 'Find a claim', with: 'garbage'
       click_button 'Search'
       expect(page).to have_content('There are no results that match the search criteria')
