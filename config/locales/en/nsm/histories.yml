@@ -3,7 +3,7 @@ en:
   nsm:
     histories:
       show:
-        page_title: Assess a non-standard magistrates’ court payment
+        page_title: Assess a non-standard magistrates court payment
         history: Claim history
         when: Date
         caseworker: Caseworker

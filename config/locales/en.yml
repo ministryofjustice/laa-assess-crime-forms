@@ -2,7 +2,7 @@ en:
   service:
     name: Assess a crime form
   nsm:
-    service_name: Assess a non-standard magistrates’ court payment
+    service_name: Assess a non-standard magistrates court payment
 
   flash:
     success:
@@ -36,8 +36,8 @@ en:
 
   shared:
     application_type:
-      crm4: "Prior authority"
-      crm7: "Non-standard magistrates"
+      crm4: Prior authority
+      crm7: Non-standard magistrates
     submission_noun:
       crm4: "application"
       crm7: "claim"
@@ -51,13 +51,13 @@ en:
       send_back: Send back to provider
       save_and_come_back: Save and come back later
     claim_type:
-      NsmClaim: Non-standard Magistrates'
+      NsmClaim: Non-standard magistrates
       AssignedCounselClaim: Assigned counsel
     payment_type:
-      non_standard_magistrate: Non-standard Magistrates'
-      non_standard_mag_appeal: Non-standard Magistrates' appeal
-      non_standard_mag_supplemental: Non-standard Magistrates' supplemental
-      non_standard_mag_amendment: Non-standard Magistrates' amendment
+      non_standard_magistrate: Non-standard magistrates
+      non_standard_mag_appeal: Non-standard magistrates appeal
+      non_standard_mag_supplemental: Non-standard magistrates supplemental
+      non_standard_mag_amendment: Non-standard magistrates amendment
       assigned_counsel: Assigned Counsel
       assigned_counsel_appeal: Assigned Counsel appeal
       assigned_counsel_amendment: Assigned Counsel amendment
@@ -95,12 +95,13 @@ en:
         header:
           laa_reference: LAA reference
           firm_name: Firm name
+          firm_account: Firm account
           client_name: Client
           caseworker: Caseworker
           last_updated: Last updated
           status_with_assignment: Status
           submitted_at: Submitted at
-          request_type: Payment request type
+          request_type: Payment type
           defendant_last_name: Defendant
           payment_request_id: Payment request id
           office_code: Firm account
@@ -128,7 +129,7 @@ en:
       title: Select service
       all: All
       pa: PA - Prior Authority
-      nsm: NSM - Non-Standard Magistrates' court payment
+      nsm: NSM - Non-standard magistrates court payment
     form:
       page_title: User details
       field:

@@ -535,7 +535,7 @@ FactoryBot.define do
       end
       claim_type do
         {
-          'en' => "Non-standard magistrates' court payment",
+          'en' => 'Non-standard magistrates court payment',
           'value' => 'non_standard_magistrate'
         }
       end
