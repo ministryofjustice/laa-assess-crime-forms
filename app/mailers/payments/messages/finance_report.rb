@@ -42,8 +42,7 @@ module Payments
       def prepare_file(filename)
         file_path = File.join(@directory_path, filename)
         csv_download = MetabaseApiClient.new.download_question(278, @start_date, @end_date)
-        csv_content = csv_download.body
-        File.binwrite(file_path, csv_content)
+        File.binwrite(file_path, csv_download)
         file_path
       end
     end
