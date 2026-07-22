@@ -51,11 +51,11 @@ class MetabaseApiClient
   end
 
   def headers
-    { 'X-API-Key': ENV.fetch('METABASE_API_KEY', 'default_api_key') }
+    { 'X-API-Key': ENV.fetch('METABASE_API_KEY') }
   end
 
   def host
-    ENV.fetch('METABASE_PRIVATE_URL', 'http://localhost:8000')
+    ENV.fetch('METABASE_PRIVATE_URL')
   end
 
   def process_response(response, error_message, response_maps)
