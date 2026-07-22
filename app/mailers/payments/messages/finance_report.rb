@@ -23,8 +23,8 @@ module Payments
 
       def contents
         filename = "finance_report_#{@start_date}_to_#{@end_date}.txt"
-        File.open(File.join(@directory_path, filename), 'w') do |file|
-          file.write("Finance Report from #{@start_date} to #{@end_date}\n")
+        file_path = prepare_file(filename)
+        File.open(file_path, 'rb') do |file|
           {
             start_date: @start_date,
             end_date: @end_date,
@@ -35,6 +35,14 @@ module Payments
 
       def recipient
         ENV.fetch('FINANCE_EMAIL_ADDRESS', nil)
+      end
+
+      private
+
+      def prepare_file(filename)
+        file_path = File.join(@directory_path, filename)
+        File.write(file_path, "Finance Report from #{@start_date} to #{@end_date}\n")
+        file_path
       end
     end
   end
