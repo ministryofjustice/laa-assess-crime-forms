@@ -1,23 +1,19 @@
 class PaymentPolicy < ApplicationPolicy
   def show?
-    service_access? && user_access?
+    permitted?
   end
 
   def index?
-    service_access? && user_access?
+    permitted?
   end
 
   def update?
-    service_access? && user_access?
+    permitted?
   end
 
   private
 
-  def service_access?
-    user.nsm_access? || user.pa_access?
-  end
-
-  def user_access?
-    user.caseworker? || user.supervisor?
+  def permitted?
+    user.supervisor? || (user.caseworker? && user.nsm_access?)
   end
 end
