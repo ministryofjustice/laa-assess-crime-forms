@@ -6,7 +6,7 @@ module Payments
       message = instantiate_message(start_date, end_date)
       set_template(message.template)
       tmpfile = construct_file(start_date, end_date)
-      set_personalisation(**message.contents(tmpfile))
+      set_personalisation(**message.contents(file))
       mail(to: message.recipient)
       tmpfile.unlink
     end
