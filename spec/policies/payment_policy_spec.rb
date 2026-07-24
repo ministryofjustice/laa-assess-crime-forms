@@ -48,4 +48,32 @@ RSpec.describe PaymentPolicy do
 
     it_behaves_like 'denies payments access'
   end
+
+  context 'when user has mixed roles of caseworker PA and viewer NSM' do
+    let(:user) do
+      create(
+        :caseworker,
+        roles: [
+          build(:role, :caseworker, service: 'pa'),
+          build(:role, :viewer, service: 'nsm')
+        ]
+      )
+    end
+
+    it_behaves_like 'denies payments access'
+  end
+
+  context 'when user has mixed roles of caseworker PA and caseworker NSM' do
+    let(:user) do
+      create(
+        :caseworker,
+        roles: [
+          build(:role, :caseworker, service: 'pa'),
+          build(:role, :caseworker, service: 'nsm')
+        ]
+      )
+    end
+
+    it_behaves_like 'permits payments access'
+  end
 end

@@ -14,6 +14,14 @@ class PaymentPolicy < ApplicationPolicy
   private
 
   def permitted?
-    user.supervisor? || (user.caseworker? && user.nsm_access?)
+    supervisor_role? || caseworker_payments_role?
+  end
+
+  def supervisor_role?
+    user.roles.supervisor.exists?
+  end
+
+  def caseworker_payments_role?
+    user.roles.exists?(role_type: Role::CASEWORKER, service: %w[nsm all])
   end
 end
