@@ -41,6 +41,7 @@ module Payments
         csv_download = MetabaseApiClient.new.download_question(278, @start_date, @end_date)
         Tempfile.new(filename, binmode: true).tap do |file|
           file.write(csv_download)
+          file.rewind
         end
       end
     end
