@@ -13,7 +13,7 @@ module Payments
 
         @start_date = start_date
         @end_date = end_date
-        @directory_path = Rails.root.join('tmp/uploaded/').to_s
+        @directory_path = Rails.root.join('tmp/uploaded/reports').to_s
         FileUtils.mkdir_p(@directory_path) unless File.directory?(@directory_path)
       end
 
