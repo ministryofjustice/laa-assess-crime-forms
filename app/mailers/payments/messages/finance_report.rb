@@ -21,8 +21,8 @@ module Payments
 
       def contents
         filename = "finance_report_#{@start_date}_to_#{@end_date}.csv"
-        prepare_file(filename)
-        Tempfile.open(filename, binmode: true) do |file|
+        file = prepare_file(filename)
+        file.open do |file|
           {
             start_date: @start_date,
             end_date: @end_date,
