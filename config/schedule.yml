@@ -1,4 +1,4 @@
-payments_finance_reports:
-  cron: "14 2 * * *"
-  class: "Payments::ScheduleFinanceReports"
+payments_nsm_reports:
+  cron: "*/5 * * * *"
+  class: "Payments::ScheduleNsmReports"
   queue: "mailers"
