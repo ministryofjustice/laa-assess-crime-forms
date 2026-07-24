@@ -23,8 +23,8 @@ module Payments
 
       def contents
         filename = "finance_report_#{@start_date}_to_#{@end_date}.csv"
-        file = prepare_file(filename)
-        file.open do |file|
+        file_path = prepare_file(filename)
+        File.open(file_path, 'rb') do |file|
           {
             start_date: @start_date,
             end_date: @end_date,
@@ -43,6 +43,7 @@ module Payments
         file_path = File.join(@directory_path, filename)
         csv_download = MetabaseApiClient.new.download_question(278, @start_date, @end_date)
         File.binwrite(file_path, csv_download)
+        file_path
       end
     end
   end
