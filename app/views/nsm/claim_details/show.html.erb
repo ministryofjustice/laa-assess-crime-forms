@@ -22,7 +22,7 @@
       <div class="govuk-inset-text">
         <p><strong><%= t(".assessed_statuses.#{claim.state}") %></strong></p>
         <%= safer_simple_format claim_summary.assessment_comment %>
-        <% if claim.eligible_for_payment_request? %>
+        <% if claim.eligible_for_payment_request? && policy(:payment).show? %>
           <div class="govuk-button-group">
             <%= govuk_link_to(t('.create_payment_request'),
                               edit_payments_steps_check_your_answers_path(claim.id, submission: true),

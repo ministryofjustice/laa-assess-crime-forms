@@ -45,6 +45,28 @@ RSpec.describe 'Viewers', :stub_oauth_token do
         expect(page).to have_no_content 'Remove from list'
       end
     end
+
+    context 'when payments are enabled and claim is eligible for payment requests' do
+      let(:claim) { build(:claim, state: 'granted') }
+
+      before do
+        allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
+        stub_request(:post, 'https://appstore.example.com/v1/payment_requests/searches').to_return(
+          status: 201,
+          body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
+        )
+      end
+
+      it 'does not show create payment request on claim details' do
+        visit nsm_claim_claim_details_path(claim)
+        expect(page).to have_no_content 'Create payment request'
+      end
+
+      it 'does not show create payment request on the decision page' do
+        visit nsm_claim_decision_path(claim)
+        expect(page).to have_no_content 'Create payment request'
+      end
+    end
   end
 
   context 'when viewing Prior Authority' do
