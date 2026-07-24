@@ -84,4 +84,50 @@ RSpec.describe 'Payments access control', :stub_oauth_token do
       expect(page).to have_current_path(root_path)
     end
   end
+
+  context 'when signed in as a user with mixed roles of caseworker PA and viewer NSM' do
+    let(:user) do
+      create(
+        :caseworker,
+        roles: [
+          build(:role, :caseworker, service: 'pa'),
+          build(:role, :viewer, service: 'nsm')
+        ]
+      )
+    end
+
+    before { sign_in user }
+
+    it 'does not allow access to payments' do
+      visit root_path
+      expect(page).to have_no_link(I18n.t('home.index.payments'))
+
+      visit payments_requests_path
+      expect(page).to have_content(I18n.t('errors.unauthorised'))
+      expect(page).to have_current_path(root_path)
+    end
+  end
+
+  context 'when signed in as a user with mixed roles of caseworker PA and caseworker NSM' do
+    let(:user) do
+      create(
+        :caseworker,
+        roles: [
+          build(:role, :caseworker, service: 'pa'),
+          build(:role, :caseworker, service: 'nsm')
+        ]
+      )
+    end
+
+    before { sign_in user }
+
+    it 'allows access to payments' do
+      visit root_path
+      expect(page).to have_link(I18n.t('home.index.payments'))
+
+      visit payments_requests_path
+      expect(page).to have_content('Payment requests')
+      expect(page).to have_link('Create payment request')
+    end
+  end
 end
