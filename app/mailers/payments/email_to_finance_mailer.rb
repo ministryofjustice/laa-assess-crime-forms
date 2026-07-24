@@ -5,12 +5,8 @@ module Payments
     def notify(start_date, end_date)
       message = instantiate_message(start_date, end_date)
       set_template(message.template)
-      file = Tempfile.new(['finance_report', '.csv'])
-      file.write(MetabaseApiClient.new.download_question(278, @start_date, @end_date))
-      file.close
-      set_personalisation(**message.contents(file))
+      set_personalisation(**message.contents)
       mail(to: message.recipient)
-      file.unlink
     end
 
     private
