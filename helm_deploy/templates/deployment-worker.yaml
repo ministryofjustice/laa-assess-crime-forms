@@ -194,6 +194,18 @@ spec:
               value: {{ .Values.variables.sentryTraceSampleRate }}
             - name: PROVIDER_API_EFFECTIVE_DATE_PARAM
               value: '{{ .Values.variables.providerApiEffectiveDate }}'
+            - name: METABASE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: metabase_api_key
+            - name: METABASE_PRIVATE_URL
+              value: '{{ .Values.metabase.privateUrl}}'
+            - name: NSM_REPORT_EMAIL_ADDRESSES
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: nsm_report_email_addresses
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

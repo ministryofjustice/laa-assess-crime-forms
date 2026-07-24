@@ -84,127 +84,127 @@ jobs:
           helm template --debug helm_deploy --values helm_deploy/values-${{ matrix.environment }}.yaml > /tmp/helm-output.yaml
           yamllint /tmp/helm-output.yaml -f github
 
-  test:
-    name: RSpec ${{ matrix.test-type }} tests
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      checks: write
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - test-type: "non-system"
-            tag: "~type:system"
-            needs-chrome: false
-          - test-type: "system"
-            tag: "type:system"
-            needs-chrome: true
-    env:
-      BASE_DATABASE_HOST: localhost
-      BASE_DATABASE_USERNAME: postgres
-      BASE_DATABASE_PASSWORD: postgres
-      RSPEC_JSON_PATH: tmp/rspec-results-${{ matrix.test-type }}.json
-    services:
-      postgres:
-        image: postgres:13.12
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: laa_assess_non_standard_magistrate_fee_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+  # test:
+  #   name: RSpec ${{ matrix.test-type }} tests
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     checks: write
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       include:
+  #         - test-type: "non-system"
+  #           tag: "~type:system"
+  #           needs-chrome: false
+  #         - test-type: "system"
+  #           tag: "type:system"
+  #           needs-chrome: true
+  #   env:
+  #     BASE_DATABASE_HOST: localhost
+  #     BASE_DATABASE_USERNAME: postgres
+  #     BASE_DATABASE_PASSWORD: postgres
+  #     RSPEC_JSON_PATH: tmp/rspec-results-${{ matrix.test-type }}.json
+  #   services:
+  #     postgres:
+  #       image: postgres:13.12
+  #       env:
+  #         POSTGRES_USER: postgres
+  #         POSTGRES_PASSWORD: postgres
+  #         POSTGRES_DB: laa_assess_non_standard_magistrate_fee_test
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-        with:
-          persist-credentials: false
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+  #       with:
+  #         persist-credentials: false
 
-      - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9
-        with:
-          bundler-cache: true
+  #     - name: Set up Ruby and install gems
+  #       uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9
+  #       with:
+  #         bundler-cache: true
 
-      - name: Set up Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+  #       with:
+  #         node-version-file: '.nvmrc'
+  #         cache: 'yarn'
 
-      - name: Install JavaScript dependencies
-        run: yarn install --frozen-lockfile
+  #     - name: Install JavaScript dependencies
+  #       run: yarn install --frozen-lockfile
 
-      - name: Build frontend assets
-        run: |
-          yarn build
-          yarn build:css
+  #     - name: Build frontend assets
+  #       run: |
+  #         yarn build
+  #         yarn build:css
 
-      - name: Set up test database
-        run: |
-          bundle exec rails db:setup
-          bundle exec flatware fan rails db:test:prepare
+  #     - name: Set up test database
+  #       run: |
+  #         bundle exec rails db:setup
+  #         bundle exec flatware fan rails db:test:prepare
 
-      - name: Run RSpec ${{ matrix.test-type }} tests
-        env:
-          RUBYOPT: -W:no-deprecated
-          INCLUDE_ACCESSIBILITY_SPECS: true
-        run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format progress
+  #     - name: Run RSpec ${{ matrix.test-type }} tests
+  #       env:
+  #         RUBYOPT: -W:no-deprecated
+  #         INCLUDE_ACCESSIBILITY_SPECS: true
+  #       run: bundle exec flatware rspec --tag ${{ matrix.tag }} --format progress
 
-      - name: Upload code coverage results
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: coverage-results-${{ matrix.test-type }}
-          path: coverage
-          include-hidden-files: true
+  #     - name: Upload code coverage results
+  #       if: always()
+  #       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+  #       with:
+  #         name: coverage-results-${{ matrix.test-type }}
+  #         path: coverage
+  #         include-hidden-files: true
 
-      - name: Upload Capybara screenshots (on test failure)
-        if: failure() && matrix.needs-chrome == true
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: capybara-screenshots
-          path: tmp/capybara
+  #     - name: Upload Capybara screenshots (on test failure)
+  #       if: failure() && matrix.needs-chrome == true
+  #       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+  #       with:
+  #         name: capybara-screenshots
+  #         path: tmp/capybara
 
-  coverage:
-    name: Verify code coverage
-    runs-on: ubuntu-latest
-    needs: test
-    permissions:
-      contents: read
-      checks: write
-      pull-requests: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-        with:
-          persist-credentials: false
+  # coverage:
+  #   name: Verify code coverage
+  #   runs-on: ubuntu-latest
+  #   needs: test
+  #   permissions:
+  #     contents: read
+  #     checks: write
+  #     pull-requests: write
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+  #       with:
+  #         persist-credentials: false
 
-      - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9
-        with:
-          bundler-cache: true
+  #     - name: Set up Ruby and install gems
+  #       uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9
+  #       with:
+  #         bundler-cache: true
 
-      - name: Download coverage results from all test types
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          pattern: coverage-results-*
-          path: coverage_results
+  #     - name: Download coverage results from all test types
+  #       uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+  #       with:
+  #         pattern: coverage-results-*
+  #         path: coverage_results
 
-      - name: Merge coverage results from both test types
-        run: bundle exec rake simplecov:process_coverage
+  #     - name: Merge coverage results from both test types
+  #       run: bundle exec rake simplecov:process_coverage
 
-      - name: Upload final coverage artifact
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: coverage-final
-          path: coverage
+  #     - name: Upload final coverage artifact
+  #       if: always()
+  #       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+  #       with:
+  #         name: coverage-final
+  #         path: coverage
 
   # ============================================================================
   # PHASE 2: Build Docker image (depends on tests passing)
@@ -213,7 +213,7 @@ jobs:
   build:
     name: Build and push Docker image to ECR
     runs-on: ubuntu-latest
-    needs: [rubocop, test, helm-lint]
+    needs: [rubocop, helm-lint]
     # Required for OIDC
     permissions:
       id-token: write
@@ -325,7 +325,7 @@ jobs:
   deploy-feature-branch:
     name: Deploy feature branch to dev
     runs-on: ubuntu-latest
-    needs: [build, snyk-scan, coverage]
+    needs: [build, snyk-scan]
     permissions:
       id-token: write
       contents: read

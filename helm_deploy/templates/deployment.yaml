@@ -221,8 +221,15 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: metabase_secret_key
-            - name: METABASE_SITE_URL
-              value: '{{ .Values.metabase.siteUrl}}'
+            - name: METABASE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: metabase_api_key
+            - name: METABASE_PUBLIC_URL
+              value: '{{ .Values.metabase.publicUrl}}'
+            - name: METABASE_PRIVATE_URL
+              value: '{{ .Values.metabase.privateUrl}}'
             - name: MAINTENANCE_MODE
               valueFrom:
                 configMapKeyRef:
@@ -232,6 +239,11 @@ spec:
               value: {{ .Values.variables.sentryTraceSampleRate }}
             - name: PROVIDER_API_EFFECTIVE_DATE_PARAM
               value: '{{ .Values.variables.providerApiEffectiveDate }}'
+            - name: NSM_REPORT_EMAIL_ADDRESSES
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: nsm_report_email_addresses
 
       {{- with .Values.nodeSelector }}
       nodeSelector:
