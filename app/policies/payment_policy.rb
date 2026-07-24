@@ -1,23 +1,27 @@
 class PaymentPolicy < ApplicationPolicy
   def show?
-    service_access? && user_access?
+    permitted?
   end
 
   def index?
-    service_access? && user_access?
+    permitted?
   end
 
   def update?
-    service_access? && user_access?
+    permitted?
   end
 
   private
 
-  def service_access?
-    user.nsm_access? || user.pa_access?
+  def permitted?
+    supervisor_role? || caseworker_payments_role?
   end
 
-  def user_access?
-    user.caseworker? || user.supervisor?
+  def supervisor_role?
+    user.roles.supervisor.exists?
+  end
+
+  def caseworker_payments_role?
+    user.roles.exists?(role_type: Role::CASEWORKER, service: %w[nsm all])
   end
 end
