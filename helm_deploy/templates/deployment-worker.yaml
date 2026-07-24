@@ -201,11 +201,11 @@ spec:
                   key: metabase_api_key
             - name: METABASE_PRIVATE_URL
               value: '{{ .Values.metabase.privateUrl}}'
-            - name: FINANCE_EMAIL_ADDRESS
+            - name: NSM_REPORT_EMAIL_ADDRESSES
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
-                  key: finance_email_address
+                  key: nsm_report_email_addresses
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -2,7 +2,7 @@
 
 module Payments
   module Messages
-    class FinanceReport
+    class Base
       def initialize(start_date, end_date)
         begin
           start_date = Date.parse(start_date)
@@ -18,12 +18,21 @@ module Payments
       end
 
       def template
-        '29db3a67-a5c0-454c-bdc4-0a8b0b9958a8'
+        raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
+      end
+
+      def report_name
+        raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
+      end
+
+      def metabase_question_id
+        raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
       end
 
       def contents
-        filename = "finance_report_#{@start_date}_to_#{@end_date}.csv"
-        file_path = prepare_file(filename)
+        filename = "#{report_name}_#{@start_date}_to_#{@end_date}.csv"
+        file_path = File.join(@directory_path, filename)
+        prepare_file(filename) unless File.exist?(file_path)
         File.open(file_path, 'rb') do |file|
           {
             start_date: @start_date,
@@ -33,15 +42,11 @@ module Payments
         end
       end
 
-      def recipient
-        ENV.fetch('FINANCE_EMAIL_ADDRESS', nil)
-      end
-
       private
 
       def prepare_file(filename)
         file_path = File.join(@directory_path, filename)
-        csv_download = MetabaseApiClient.new.download_question(278, @start_date, @end_date)
+        csv_download = MetabaseApiClient.new.download_question(metabase_question_id, @start_date, @end_date)
         File.binwrite(file_path, csv_download)
         file_path
       end
