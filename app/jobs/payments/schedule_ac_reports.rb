@@ -6,7 +6,6 @@ module Payments
     def perform
       end_date = (DateTime.now - 1).strftime('%Y-%m-%d')
       start_date = (DateTime.now - 15).strftime('%Y-%m-%d')
-
       Rails.logger.info "Running Payments::ScheduleAcReports at #{Time.zone.now}"
       recipients.each do |recipient|
         AcReportMailer.notify(start_date, end_date, recipient).deliver_now
