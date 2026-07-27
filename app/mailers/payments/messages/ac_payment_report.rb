@@ -12,7 +12,7 @@ module Payments
       end
 
       def metabase_question_id
-        0
+        ENV.fetch('METABASE_AC_PAYMENT_DASHBOARD_ID', nil)
       end
     end
   end
