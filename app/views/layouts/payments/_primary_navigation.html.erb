@@ -8,9 +8,6 @@
 
           <nav class="govuk-service-navigation__wrapper" aria-label="Main service navigation">
         <ul id="navigation" class="govuk-service-navigation__list">
-          <li class="govuk-service-navigation__item <%= 'govuk-service-navigation__item--active' if @current == :requests %>">
-            <%= link_to t('layouts.primary_navigation.payment_requests'), payments_requests_path, class: 'govuk-service-navigation__link', 'aria-current': ('page' if @current == :requests) %>
-          </li>
           <li class="govuk-service-navigation__item <%= 'govuk-service-navigation__item--active' if @current == :search %>">
               <%= link_to t('layouts.primary_navigation.search'), new_payments_search_path, class: 'govuk-service-navigation__link', 'aria-current': ('page' if @current == :search) %>
           </li>
