@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Payments::Messages::Base do
+  subject { described_class.new('2023-01-01', '2023-01-31') }
+
   describe '#template' do
     it 'throws a not implemented exception' do
       expect { subject.template }.to raise_error(NotImplementedError)
