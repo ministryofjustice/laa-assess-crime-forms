@@ -1,5 +1,5 @@
 module Payments
-  class ScheduleNsmReports < ApplicationJob
+  class ScheduleNsmReports < Payments::ScheduleReportBase
     def start_date
       '2000-01-01'
     end
