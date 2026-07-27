@@ -37,7 +37,7 @@ module Payments
           {
             start_date: @start_date,
             end_date: @end_date,
-            link_to_file: Notifications.prepare_upload(file, filename:)
+            link_to_file: Notifications.prepare_upload(file, filename: filename, retention_period: '1 week')
           }
         end
       end
