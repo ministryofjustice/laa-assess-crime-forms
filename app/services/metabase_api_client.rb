@@ -1,9 +1,4 @@
-class MetabaseApiClient
-  # :nocov:
-  include HTTParty
-
-  headers 'Content-Type' => 'application/json'
-
+class MetabaseApiClient < HttpClient
   def download_question(card_id, start_date, end_date)
     url = "/api/card/#{card_id}/query/csv"
     payload = search_params(start_date, end_date)
@@ -14,6 +9,14 @@ class MetabaseApiClient
       "Unexpected response from Metabase - status #{response.code} for '#{url}'",
       200 => ->(body) { body }
     )
+  end
+
+  def headers
+    { 'X-API-Key': ENV.fetch('METABASE_API_KEY') }
+  end
+
+  def host
+    ENV.fetch('METABASE_PRIVATE_URL')
   end
 
   private
@@ -44,30 +47,4 @@ class MetabaseApiClient
     }
   end
   # rubocop:enable Metrics/MethodLength
-
-  def options(payload = nil)
-    options = payload ? { body: payload.to_json } : {}
-    options.merge(headers:)
-  end
-
-  def headers
-    { 'X-API-Key': ENV.fetch('METABASE_API_KEY') }
-  end
-
-  def host
-    ENV.fetch('METABASE_PRIVATE_URL')
-  end
-
-  def process_response(response, error_message, response_maps)
-    outcome = response_maps.detect { _1[0] == response.code || (_1[0].is_a?(Range) && _1[0].include?(response.code)) }&.last
-
-    raise error_message unless outcome
-
-    if outcome.respond_to?(:call)
-      outcome.call(response.body)
-    else
-      outcome
-    end
-  end
-  # :nocov:
 end
