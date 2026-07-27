@@ -2,3 +2,7 @@ payments_nsm_reports:
   cron: "14 2 * * *"
   class: "Payments::ScheduleNsmReports"
   queue: "mailers"
+payments_ac_reports:
+  cron: "14 2 * * *"
+  class: "Payments::ScheduleAcReports"
+  queue: "mailers"
