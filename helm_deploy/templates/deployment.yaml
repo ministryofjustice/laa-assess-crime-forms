@@ -253,6 +253,16 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: ac_report_email_addresses
+            - name: AC_REPORT_EMAIL_TEMPLATE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: ac_report_email_template_id
+            - name: NSM_REPORT_EMAIL_TEMPLATE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: nsm_report_email_template_id
 
       {{- with .Values.nodeSelector }}
       nodeSelector:

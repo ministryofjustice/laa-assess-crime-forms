@@ -10,8 +10,10 @@ RSpec.describe Payments::Messages::NsmPaymentReport do
   let(:attach_link) { 'https://example.com/uploaded_file.csv' }
   let(:filename) { "nsm_payment_report_#{start_date}_to_#{end_date}.csv" }
   let(:file_path) { Rails.root.join('tmp/uploaded/reports', filename).to_s }
+  let(:template_id) { 'template_id' }
 
   before do
+    allow(ENV).to receive(:fetch).with('NSM_REPORT_EMAIL_TEMPLATE_ID', nil).and_return(template_id)
     allow(MetabaseApiClient).to receive(:new).and_return(double(download_question: 'csv_data'))
     allow(ENV).to receive(:fetch).with('METABASE_NSM_PAYMENT_DASHBOARD_ID', nil).and_return(report_id)
     allow(Notifications).to receive(:prepare_upload)
@@ -21,6 +23,12 @@ RSpec.describe Payments::Messages::NsmPaymentReport do
 
   after do
     FileUtils.rm_f(file_path)
+  end
+
+  describe '#template' do
+    it 'returns the correct template ID' do
+      expect(subject.template).to eq(template_id)
+    end
   end
 
   describe '#contents' do
