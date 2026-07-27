@@ -31,11 +31,11 @@ RSpec.describe Payments::Messages::Base do
       expect do
         described_class.new('invalid_date',
                             end_date)
-      end.to raise_error(RuntimeError, 'start_date and end_date must be valid dates in YYYY-MM-DD format')
+      end.to raise_error(ArgumentError, 'start_date and end_date must be valid dates in YYYY-MM-DD format')
       expect do
         described_class.new(start_date,
                             'invalid_date')
-      end.to raise_error(RuntimeError, 'start_date and end_date must be valid dates in YYYY-MM-DD format')
+      end.to raise_error(ArgumentError, 'start_date and end_date must be valid dates in YYYY-MM-DD format')
     end
   end
 end

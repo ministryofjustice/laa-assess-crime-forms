@@ -8,7 +8,7 @@ module Payments
           Date.parse(start_date)
           Date.parse(end_date)
         rescue ArgumentError
-          raise 'start_date and end_date must be valid dates in YYYY-MM-DD format'
+          raise ArgumentError, 'start_date and end_date must be valid dates in YYYY-MM-DD format'
         end
 
         @start_date = start_date
