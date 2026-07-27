@@ -5,8 +5,8 @@ module Payments
     class Base
       def initialize(start_date, end_date)
         begin
-          start_date = Date.parse(start_date)
-          end_date = Date.parse(end_date)
+          Date.parse(start_date)
+          Date.parse(end_date)
         rescue ArgumentError
           raise 'start_date and end_date must be valid dates in YYYY-MM-DD format'
         end
