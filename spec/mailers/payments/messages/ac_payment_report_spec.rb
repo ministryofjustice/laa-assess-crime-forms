@@ -1,19 +1,19 @@
 require 'rails_helper'
 require 'fileutils'
 
-RSpec.describe Payments::Messages::NsmPaymentReport do
+RSpec.describe Payments::Messages::AcPaymentReport do
   subject { described_class.new(start_date, end_date) }
 
   let(:start_date) { '2023-01-01' }
   let(:end_date) { '2023-01-31' }
   let(:report_id) { '2' }
   let(:attach_link) { 'https://example.com/uploaded_file.csv' }
-  let(:filename) { "nsm_payment_report_#{start_date}_to_#{end_date}.csv" }
+  let(:filename) { "ac_payment_report_#{start_date}_to_#{end_date}.csv" }
   let(:file_path) { Rails.root.join('tmp/uploaded/reports', filename).to_s }
 
   before do
     allow(MetabaseApiClient).to receive(:new).and_return(double(download_question: 'csv_data'))
-    allow(ENV).to receive(:fetch).with('METABASE_NSM_PAYMENT_DASHBOARD_ID', nil).and_return(report_id)
+    allow(ENV).to receive(:fetch).with('METABASE_AC_PAYMENT_DASHBOARD_ID', nil).and_return(report_id)
     allow(Notifications).to receive(:prepare_upload)
       .with(instance_of(File), filename: filename, retention_period: '1 week')
       .and_return(attach_link)
