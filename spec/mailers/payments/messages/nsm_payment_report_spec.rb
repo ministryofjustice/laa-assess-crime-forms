@@ -27,6 +27,7 @@ RSpec.describe Payments::Messages::NsmPaymentReport do
     context 'when the report file does not exist' do
       before do
         allow(File).to receive(:exist?).and_return(false)
+        allow(File).to receive(:binwrite).and_call_original
       end
 
       it 'prepares the file and generates the correct content hash' do
