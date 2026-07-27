@@ -80,6 +80,8 @@ metabase:
   nsmDashboardIds: '4'
   privateUrl: 'http://laa-crime-application-store-app-metabase.laa-crime-application-store-production.svc.cluster.local'
   publicUrl: 'https://crime-forms-metabase.service.justice.gov.uk'
+  acPaymentDashboardId: '11'
+  nsmPaymentDashboardId: '24'
 
 customErrorService:
   enabled: true
