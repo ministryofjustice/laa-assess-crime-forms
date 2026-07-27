@@ -9,7 +9,7 @@ RSpec.describe Payments::ScheduleNsmReports do
   let(:dummy) { double(:mailer, deliver_now: true) }
 
   before do
-    allow(Payments::NsmReportMailer).to receive(:notify).with(any_args).and_return(dummy)
+    allow(Payments::EmailPaymentReportMailer).to receive(:notify).with(any_args).and_return(dummy)
     allow(ENV).to receive(:fetch).with('NSM_REPORT_EMAIL_ADDRESSES', nil).and_return(recipients)
     allow(FileUtils).to receive(:rm_rf).and_return(true)
   end
@@ -18,8 +18,10 @@ RSpec.describe Payments::ScheduleNsmReports do
     it 'sends an email to finance and clears the tmp/uploaded/reports directory' do
       travel_to current_date do
         subject.perform
-        expect(Payments::NsmReportMailer).to have_received(:notify).with(start_date, current_date, 'finance@example.com')
-        expect(Payments::NsmReportMailer).to have_received(:notify).with(start_date, current_date, 'manager@example.com')
+        expect(Payments::EmailPaymentReportMailer).to have_received(:notify).with('nsm', start_date, current_date,
+                                                                                  'finance@example.com')
+        expect(Payments::EmailPaymentReportMailer).to have_received(:notify).with('nsm', start_date, current_date,
+                                                                                  'manager@example.com')
         expect(FileUtils).to have_received(:rm_rf).with(Rails.root.join('tmp/uploaded/reports'))
       end
     end

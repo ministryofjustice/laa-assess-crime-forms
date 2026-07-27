@@ -8,7 +8,7 @@ module Payments
       start_date = (DateTime.now - 15).strftime('%Y-%m-%d')
       Rails.logger.info "Running Payments::ScheduleAcReports at #{Time.zone.now}"
       recipients.each do |recipient|
-        AcReportMailer.notify(start_date, end_date, recipient).deliver_now
+        Payments::EmailPaymentReportMailer.notify('ac', start_date, end_date, recipient).deliver_now
         Rails.logger.info "Sent email to #{recipient} at #{Time.zone.now}"
       end
       Rails.logger.info 'Clearing tmp/uploaded/reports directory'

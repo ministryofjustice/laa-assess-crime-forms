@@ -9,7 +9,7 @@ module Payments
 
       Rails.logger.info "Running Payments::ScheduleNsmReports at #{Time.zone.now}"
       recipients.each do |recipient|
-        NsmReportMailer.notify(start_date, end_date, recipient).deliver_now
+        Payments::EmailPaymentReportMailer.notify('nsm', start_date, end_date, recipient).deliver_now
         Rails.logger.info "Sent email to #{recipient} at #{Time.zone.now}"
       end
       Rails.logger.info 'Clearing tmp/uploaded/reports directory'
