@@ -125,6 +125,101 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
     end
   end
 
+  context 'when viewing payments screens' do
+    let(:payments_index_endpoint) { 'https://appstore.example.com/v1/payment_requests/searches' }
+    let(:payments_index_params) do
+      {
+        page: 1,
+        per_page: 20,
+        sort_by: 'submitted_at',
+        sort_direction: 'descending',
+      }
+    end
+
+    before do
+      allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
+      stub_search(payments_index_endpoint, payments_index_params)
+    end
+
+    it 'has an accessible payments list screen' do
+      visit payments_requests_path
+
+      expect(page).to(be_axe_clean_with_caveats)
+    end
+
+    it 'has an accessible payments search screen' do
+      visit new_payments_search_path
+
+      expect(page).to(be_axe_clean_with_caveats)
+    end
+
+    # rubocop:disable RSpec/MultipleExpectations
+    it 'has accessible NSM payment journey screens' do
+      start_new_payment_request
+      expect(page).to(be_axe_clean_with_caveats)
+
+      choose_claim_type('Non-standard magistrates')
+      expect(page).to have_content("What is the solicitor's firm account number?")
+      expect(page).to(be_axe_clean_with_caveats)
+
+      fill_in "What is the solicitor's firm account number?", with: '1A123B'
+      click_button 'Continue'
+      expect(page).to(be_axe_clean_with_caveats)
+
+      choose 'Yes', allow_label_click: true
+      click_button 'Continue'
+      expect(page).to(be_axe_clean_with_caveats)
+
+      fill_claim_details
+      expect(page).to(be_axe_clean_with_caveats)
+
+      fill_claimed_costs
+      expect(page).to(be_axe_clean_with_caveats)
+
+      fill_allowed_costs
+      expect(page).to(be_axe_clean_with_caveats)
+    end
+
+    it 'has accessible assigned counsel payment journey screens' do
+      start_new_payment_request
+      choose_claim_type('Assigned counsel')
+      expect(page).to(be_axe_clean_with_caveats)
+
+      click_on 'Create a new record'
+      expect(page).to(be_axe_clean_with_caveats)
+
+      fill_in "What is the solicitor's firm account number?", with: '1A123B'
+      click_button 'Continue'
+      expect(page).to(be_axe_clean_with_caveats)
+
+      choose 'Yes', allow_label_click: true
+      click_button 'Continue'
+      expect(page).to(be_axe_clean_with_caveats)
+
+      fill_in 'What is the assigned counsel account number?', with: '1A123C'
+      click_button 'Continue'
+      expect(page).to(be_axe_clean_with_caveats)
+
+      choose 'Yes', allow_label_click: true
+      click_button 'Continue'
+      expect(page).to(be_axe_clean_with_caveats)
+
+      fill_ac_claim_details
+      expect(page).to(be_axe_clean_with_caveats)
+
+      fill_in id: 'counsel_costs_net', with: '150.40'
+      fill_in id: 'counsel_costs_vat', with: '100'
+      click_on 'Continue'
+      expect(page).to(be_axe_clean_with_caveats)
+
+      fill_in id: 'counsel_costs_net', with: '100'
+      fill_in id: 'counsel_costs_vat', with: '70'
+      click_on 'Continue'
+      expect(page).to(be_axe_clean_with_caveats)
+    end
+    # rubocop:enable RSpec/MultipleExpectations
+  end
+
   context 'when signed out' do
     before do
       visit root_path
