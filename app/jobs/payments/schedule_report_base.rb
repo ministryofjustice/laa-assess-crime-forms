@@ -4,6 +4,8 @@ module Payments
 
     # rubocop:disable Metrics/AbcSize
     def perform
+      return unless FeatureFlags.payments.enabled?
+
       Rails.logger.info "Running #{self.class} at #{Time.zone.now}"
       recipients.each do |recipient|
         Payments::EmailPaymentReportMailer.notify(report_type, start_date, end_date, recipient).deliver_now
