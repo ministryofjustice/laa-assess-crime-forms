@@ -1,6 +1,6 @@
-#9 am every Friday on even weeks in the year using modulo operators
+#9 am every Friday every 14 days
 payments_ac_reports:
-  cron: "0 9 * * 5 [ $((10#$(date +%V) % 2)) -eq 0 ]"
+  cron: " 0 9 */14 * 5"
   class: "Payments::ScheduleAcReports"
   queue: "mailers"
 # 9 am every day
