@@ -1,8 +1,11 @@
-payments_nsm_reports:
-  cron: "14 2 * * *"
-  class: "Payments::ScheduleNsmReports"
-  queue: "mailers"
+#9 am every Friday on even weeks in the year using modulo operators
 payments_ac_reports:
-  cron: "14 2 * * *"
+  cron: "0 9 * * 5 [ $((10#$(date +%V) % 2)) -eq 0 ]"
   class: "Payments::ScheduleAcReports"
   queue: "mailers"
+# 9 am every day
+payments_nsm_reports:
+  cron: "0 9 * * *"
+  class: "Payments::ScheduleNsmReports"
+  queue: "mailers"
+
