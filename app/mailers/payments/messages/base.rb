@@ -5,14 +5,12 @@ module Payments
     class Base
       def initialize(start_date, end_date)
         begin
-          Date.parse(start_date)
-          Date.parse(end_date)
+          @start_date = Date.parse(start_date)
+          @end_date = Date.parse(end_date)
         rescue ArgumentError
           raise ArgumentError, 'start_date and end_date must be valid dates in YYYY-MM-DD format'
         end
 
-        @start_date = start_date
-        @end_date = end_date
         @directory_path = Rails.root.join('tmp/uploaded/reports').to_s
         FileUtils.mkdir_p(@directory_path) unless File.directory?(@directory_path)
       end
@@ -30,13 +28,15 @@ module Payments
       end
 
       def contents
-        filename = "#{report_name}_#{@start_date}_to_#{@end_date}.csv"
+        report_date = DateTime.now
+        filename = "#{report_name}_#{report_date.strftime('%Y-%m-%d')}.csv"
         file_path = File.join(@directory_path, filename)
         prepare_file(filename) unless File.exist?(file_path)
         File.open(file_path, 'rb') do |file|
           {
-            start_date: @start_date,
-            end_date: @end_date,
+            report_date: report_date.strftime('%-d %B %Y'),
+            start_date: @start_date.strftime('%-d %B %Y'),
+            end_date: @end_date.strftime('%-d %B %Y'),
             link_to_file: Notifications.prepare_upload(file, filename: filename, retention_period: '1 week')
           }
         end
