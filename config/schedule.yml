@@ -1,6 +1,6 @@
 #9 am every Friday every 14 days
 payments_ac_reports:
-  cron: " 0 9 */14 * 5"
+  cron: "0 9 */14 * 5"
   class: "Payments::ScheduleAcReports"
   queue: "mailers"
 # 9 am every day
