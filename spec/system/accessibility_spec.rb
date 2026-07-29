@@ -162,7 +162,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
       expect(page).to have_content("What is the solicitor's firm account number?")
       expect(page).to(be_axe_clean_with_caveats)
 
-      fill_in "What is the solicitor's firm account number?", with: '1A123B'
+      fill_in id: 'payments-steps-office-code-search-form-solicitor-office-code-field', with: '1A123B'
       click_button 'Continue'
       expect(page).to(be_axe_clean_with_caveats)
 
@@ -188,7 +188,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
       click_on 'Create a new record'
       expect(page).to(be_axe_clean_with_caveats)
 
-      fill_in "What is the solicitor's firm account number?", with: '1A123B'
+      fill_in id: 'payments-steps-office-code-search-form-solicitor-office-code-field', with: '1A123B'
       click_button 'Continue'
       expect(page).to(be_axe_clean_with_caveats)
 
