@@ -1,5 +1,5 @@
 module Payments
-  class ScheduleReportBase < ::ApplicationJob
+  class ScheduleReportBase < ApplicationJob
     sidekiq_options retry: 5
 
     # rubocop:disable Metrics/AbcSize
