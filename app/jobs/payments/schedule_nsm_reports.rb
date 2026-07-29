@@ -14,8 +14,8 @@ module Payments
       'nsm'
     end
 
-    def recipients
-      ENV.fetch('NSM_REPORT_EMAIL_ADDRESSES', nil).split(',').map(&:strip)
+    def recipient_key
+      'NSM_REPORT_EMAIL_ADDRESSES'
     end
   end
 end

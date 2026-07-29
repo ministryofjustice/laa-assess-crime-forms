@@ -1,5 +1,5 @@
 module Payments
-  class ScheduleReportBase < ApplicationJob
+  class ScheduleReportBase < ::ApplicationJob
     sidekiq_options retry: 5
 
     # rubocop:disable Metrics/AbcSize
@@ -17,8 +17,12 @@ module Payments
     end
     # rubocop:enable Metrics/AbcSize
 
-    def recipients
+    def recipient_key
       raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
+    end
+
+    def recipients
+      ENV.fetch(recipient_key, '').split(',').map(&:strip).compact_blank
     end
 
     def start_date

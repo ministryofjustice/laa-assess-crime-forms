@@ -8,8 +8,8 @@ module Payments
       (DateTime.now - 1).strftime('%Y-%m-%d')
     end
 
-    def recipients
-      ENV.fetch('AC_REPORT_EMAIL_ADDRESSES', nil).split(',').map(&:strip)
+    def recipient_key
+      'AC_REPORT_EMAIL_ADDRESSES'
     end
 
     def report_type

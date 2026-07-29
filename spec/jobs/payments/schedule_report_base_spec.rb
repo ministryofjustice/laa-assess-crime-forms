@@ -31,9 +31,9 @@ RSpec.describe Payments::ScheduleReportBase do
     end
   end
 
-  describe '#recipients' do
+  describe '#recipient_key' do
     it 'raises NotImplementedError' do
-      expect { subject.recipients }.to raise_error(NotImplementedError)
+      expect { subject.recipient_key }.to raise_error(NotImplementedError)
     end
   end
 
