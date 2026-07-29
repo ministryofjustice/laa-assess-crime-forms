@@ -25,25 +25,19 @@ class MetabaseApiClient < HttpClient
   def search_params(start_date, end_date)
     {
       format_rows: false,
-        pivot_results: false,
-        parameters: [
-          {
-            type: 'date',
-              target: [
-                'variable',
-                %w[template-tag start_date]
-              ],
-              value: start_date
-          },
-          {
-            type: 'date',
-              target: [
-                'variable',
-                %w[template-tag end_date]
-              ],
-              value: end_date
-          }
-        ]
+      pivot_results: false,
+      parameters: [
+        {
+          type: 'date',
+          target: ['variable', %w[template-tag start_date]],
+          value: start_date
+        },
+        {
+          type: 'date',
+          target: ['variable', %w[template-tag end_date]],
+          value: end_date
+        }
+      ]
     }
   end
   # rubocop:enable Metrics/MethodLength
