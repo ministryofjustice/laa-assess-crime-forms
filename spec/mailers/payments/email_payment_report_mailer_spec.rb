@@ -41,7 +41,8 @@ RSpec.describe Payments::EmailPaymentReportMailer, type: :mailer do
     let(:claim_type) { 'invalid' }
 
     it 'raises an ArgumentError' do
-      expect { subject.notify }.to raise_error(ArgumentError, "Invalid claim type: #{claim_type}")
+      expect { described_class.notify(claim_type, start_date, end_date, recipient) }
+        .to raise_error(ArgumentError, "Invalid claim type: #{claim_type}")
     end
   end
 end
