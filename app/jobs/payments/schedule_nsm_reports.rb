@@ -1,6 +1,6 @@
 module Payments
   class ScheduleNsmReports < Payments::ScheduleReportBase
-    # Finance reconcilliation team wants to receive this data from the earliest date possible
+    # Finance reconciliation team wants to receive this data from the earliest date possible
     # need to provide a date because it's needed by the Metabase API to generate the report.
     def start_date
       '2000-01-01'
