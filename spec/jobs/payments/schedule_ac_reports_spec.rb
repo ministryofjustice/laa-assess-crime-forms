@@ -11,7 +11,7 @@ RSpec.describe Payments::ScheduleAcReports do
 
   before do
     allow(Payments::EmailPaymentReportMailer).to receive(:notify).with(any_args).and_return(dummy)
-    allow(ENV).to receive(:fetch).with('AC_REPORT_EMAIL_ADDRESSES', nil).and_return(recipients)
+    allow(ENV).to receive(:fetch).with('AC_REPORT_EMAIL_ADDRESSES', '').and_return(recipients)
     allow(FileUtils).to receive(:rm_rf).and_return(true)
     allow(FeatureFlags).to receive_message_chain(:payments, :enabled?).and_return(true)
   end
