@@ -17,7 +17,7 @@ RSpec.describe Payments::ScheduleNsmReports do
 
   describe '#perform' do
     it 'sends an email to finance and clears the tmp/uploaded/reports directory' do
-      travel_to current_date do
+      travel_to DateTime.parse(current_date) do
         subject.perform
         expect(Payments::EmailPaymentReportMailer).to have_received(:notify).with('nsm', start_date, current_date,
                                                                                   'finance@example.com')
