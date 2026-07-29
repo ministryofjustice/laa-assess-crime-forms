@@ -36,7 +36,12 @@ module Payments
       def refresh_answers_from_claim
         data = BaseViewModel.build(:payment_claim_details, claim)
         data.request_type = 'non_standard_magistrate'
-        data.to_h.with_indifferent_access
+
+        data = data.to_h.with_indifferent_access
+        return data if current_multi_step_form_session.answers['allowed_profit_cost'].blank?
+
+        # ensure allowed profit cost persists from change when progressing to check your answers page
+        data.merge(allowed_profit_cost: current_multi_step_form_session.answers['allowed_profit_cost'])
       end
 
       def apply_persisted_submission_token!(answers)
