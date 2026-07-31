@@ -1,9 +1,8 @@
 <section class="govuk-service-navigation" aria-label="Service information" data-module="govuk-service-navigation" data-govuk-service-navigation-init="">
   <div class="govuk-width-container">
       <div class="govuk-service-navigation__container">
-          <span class="govuk-service-navigation__service-name">
-              <%= link_to t('payments.service_name'), payments_requests_path,
-                          class: 'govuk-service-navigation__link', id: 'header-service-name' %>
+          <span class="govuk-service-navigation__service-name", id: 'header-service-name'>
+              <%= t('payments.service_name') %>
           </span>
 
           <nav class="govuk-service-navigation__wrapper" aria-label="Main service navigation">

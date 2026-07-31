@@ -75,7 +75,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
 
       start_new_payment_request
       choose_claim_type('Non-standard magistrates')
-      fill_in "What is the solicitor's firm account number?", with: '1A123B'
+      fill_in id: 'payments-steps-office-code-search-form-solicitor-office-code-field', with: '1A123B'
       click_button 'Continue'
 
       expect(page).to have_title("Solicitor's firm account number")
@@ -88,7 +88,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
     it 'returns to office code selection when office code is not selected' do
       start_new_payment_request
       choose_claim_type('Non-standard magistrates')
-      fill_in "What is the solicitor's firm account number?", with: '1A123B'
+      fill_in id: 'payments-steps-office-code-search-form-solicitor-office-code-field', with: '1A123B'
       click_button 'Continue'
       choose 'No, I need to change the number', allow_label_click: true
       click_button 'Continue'
@@ -98,7 +98,7 @@ payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_sta
     it 'shows an error when no field is selected on office code confirmation' do
       start_new_payment_request
       choose_claim_type('Non-standard magistrates')
-      fill_in "What is the solicitor's firm account number?", with: '1A123B'
+      fill_in id: 'payments-steps-office-code-search-form-solicitor-office-code-field', with: '1A123B'
       click_button 'Continue'
       click_button 'Continue'
       expect(page).to have_content('Please select an option')
