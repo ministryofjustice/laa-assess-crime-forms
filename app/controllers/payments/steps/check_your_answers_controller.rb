@@ -30,7 +30,7 @@ module Payments
       end
 
       def submission?
-        ActiveModel::Type::Boolean.new.cast(params[:submission])
+        params[:submission].present?
       end
 
       def refresh_answers_from_claim

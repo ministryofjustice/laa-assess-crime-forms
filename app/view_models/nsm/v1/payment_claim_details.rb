@@ -115,7 +115,7 @@ module Nsm
 
       # rubocop:disable Metrics/MethodLength
       def to_h
-        data = [
+        [
           :id,
           :idempotency_token,
           :linked_laa_reference,
@@ -148,7 +148,6 @@ module Nsm
           :allowed_total,
           :claimed_total
         ].index_with { |k| public_send(k) }.stringify_keys
-        data.merge('submission_id' => id)
       end
       # rubocop:enable Metrics/MethodLength
 
