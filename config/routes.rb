@@ -177,7 +177,7 @@ Rails.application.routes.draw do
           edit_step :office_code_confirm
           edit_step :counsel_code_search
           edit_step :counsel_code_confirm
-          resource :claim_search, only: %i[new edit update],
+          resource :claim_search, path: 'find-a-claim', only: %i[new edit update],
             controller: 'claim_search', path_names: { edit: '' }
           edit_step :claim_types
         end
