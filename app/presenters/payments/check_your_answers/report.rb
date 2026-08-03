@@ -66,7 +66,7 @@ module Payments
       def cost_summary
         case session_answers['request_type'].to_sym
         when :non_standard_magistrate, :breach_of_injunction
-          Payments::NsmCostsSummary.new(session_answers)
+          Payments::NsmCostsSummary.new(session_answers, from_submission: from_submission?)
         when :non_standard_mag_supplemental
           if session_answers['laa_reference'].present? || session_answers['linked_laa_reference'].present?
             Payments::NsmCostsSummaryAmendedAndClaimed.new(session_answers)
@@ -102,6 +102,10 @@ module Payments
                            id: card.change_link_session_id, only_path: true)
           ),
         ]
+      end
+
+      def from_submission?
+        params[:submission].present?
       end
     end
   end

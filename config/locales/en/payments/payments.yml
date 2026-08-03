@@ -73,6 +73,7 @@ en:
           submit_payment_request: Submit payment request
           cancel_payment_request: Cancel payment request
           change: Change
+          change_profit_cost: Change profit cost
       date_claim_assessed:
         edit:
           page_title: Date claim assessed
@@ -103,11 +104,6 @@ en:
           select: Select
           no_results_html: |
             <p>If there are no results that match your search, try a different search.</p>
-      submission_allowed_costs:
-        edit:
-          page_title: Amend allowed profit costs
-          heading: Amend allowed profit costs
-          profit_costs: Amend allowed profit costs
       counsel_code_search:
         edit:
           page_title: Assigned counsel's office account number
@@ -132,7 +128,8 @@ en:
       office_code_search:
         edit:
           page_title: Solicitor's firm account number
-          solicitor_office_code: What is the solicitor's firm account number?
+          heading: What is the solicitor's firm account number?
+          solicitor_office_code: Solicitor office code
           provider_unavailable_heading: There was a problem.
           provider_unavailable_body: We cannot check the account number at the moment. This is a temporary issue with PDA. Try again later.
       office_code_confirm:
@@ -225,6 +222,11 @@ en:
             waiting_costs: Waiting costs
             calculate_cost: Calculate cost
             total_cost: Total allowed cost
+        submission_allowed_costs:
+          edit:
+            page_title: Amend allowed profit costs
+            heading: Amend allowed profit costs
+            profit_costs: Amend allowed profit costs
     requests:
       payment_request:
         payment_request: Payment request

@@ -30,6 +30,10 @@ module Payments
     def change_link
       raise 'implement this action, if needed, in subclasses'
     end
+
+    def change_link_text
+      I18n.t('payments.steps.check_your_answers.edit.change')
+    end
     # :nocov:
 
     def formatted_summed_fields
