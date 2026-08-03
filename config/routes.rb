@@ -173,10 +173,10 @@ Rails.application.routes.draw do
 
           edit_step :check_your_answers
           edit_step :date_claim_assessed
-          edit_step :office_code_search
-          edit_step :office_code_confirm
-          edit_step :counsel_code_search
-          edit_step :counsel_code_confirm
+          edit_step :office_code_search, path: 'solicitor-account-number'
+          edit_step :office_code_confirm, path: 'check-solicitor-details'
+          edit_step :counsel_code_search, path: 'assigned-counsel-account-number'
+          edit_step :counsel_code_confirm, path: 'check-assigned-counsel-details'
           resource :claim_search, path: 'find-a-claim', only: %i[new edit update],
             controller: 'claim_search', path_names: { edit: '' }
           edit_step :claim_types
