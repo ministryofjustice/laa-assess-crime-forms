@@ -10,7 +10,8 @@ class BaseViewModel
       @klass = "#{submission.namespace}::V#{submission.json_schema_version}::#{class_type.to_s.camelcase}".constantize
       @submission = submission
       if nesting.any?
-        @rows = submission.data.dig(*nesting)
+        nested_rows = submission.data.dig(*nesting)
+        @rows = nested_rows.is_a?(Array) || nested_rows.nil? ? nested_rows : [nested_rows]
         @return_array = true
       else
         @rows = [submission.data]

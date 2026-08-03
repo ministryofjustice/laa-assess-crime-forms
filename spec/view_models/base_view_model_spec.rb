@@ -42,6 +42,18 @@ RSpec.describe BaseViewModel do
       end
     end
 
+    context 'for a nested object when only one work item is uploaded' do
+      let(:data) do
+        { 'work_items' => { 'work_type' => { 'value' => 'first' } } }
+      end
+
+      it 'builds one work item from the nested hash' do
+        work_items = described_class.build(:work_item, claim, 'work_items')
+        expect(work_items.count).to eq(1)
+        expect(work_items[0]).to have_attributes(work_type: TranslationObject.new('first', 'nsm.work_type'))
+      end
+    end
+
     context 'for an object that does not handle rows the same' do
       let(:data) { {} }
 
