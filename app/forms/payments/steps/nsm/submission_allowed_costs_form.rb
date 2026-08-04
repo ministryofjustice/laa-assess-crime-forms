@@ -16,12 +16,12 @@ module Payments
           return false unless valid?
 
           multi_step_form_session[:allowed_profit_cost] = allowed_profit_cost
-          multi_step_form_session[:allowed_total] = calculated_total
+          multi_step_form_session[:allowed_total] = calculated_costs
           true
         end
 
-        def calculated_total
-          ALLOWED_COSTS.sum { |key| BigDecimal(multi_step_form_session[key].to_s) }
+        def calculated_costs
+          ALLOWED_COSTS.sum { |key| multi_step_form_session[key].to_d }
         end
       end
     end
