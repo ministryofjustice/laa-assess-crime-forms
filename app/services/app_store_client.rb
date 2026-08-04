@@ -1,7 +1,11 @@
-class AppStoreClient
-  include HTTParty
+class AppStoreClient < HttpClient
+  def headers
+    client_headers.merge(OutboundRequestId.headers)
+  end
 
-  headers 'Content-Type' => 'application/json'
+  def host
+    ENV.fetch('APP_STORE_URL', 'http://localhost:8000')
+  end
 
   def get_submission(submission_id)
     url = "/v1/submissions/#{submission_id}"
@@ -118,15 +122,6 @@ class AppStoreClient
 
   private
 
-  def options(payload = nil)
-    options = payload ? { body: payload.to_json } : {}
-    options.merge(headers:)
-  end
-
-  def headers
-    client_headers.merge(OutboundRequestId.headers)
-  end
-
   def client_headers
     if AppStoreTokenProvider.instance.authentication_configured?
       token = AppStoreTokenProvider.instance.bearer_token
@@ -134,22 +129,6 @@ class AppStoreClient
       { authorization: "Bearer #{token}" }
     else
       { 'X-Client-Type': 'caseworker' }
-    end
-  end
-
-  def host
-    ENV.fetch('APP_STORE_URL', 'http://localhost:8000')
-  end
-
-  def process_response(response, error_message, response_maps)
-    outcome = response_maps.detect { _1[0] == response.code || (_1[0].is_a?(Range) && _1[0].include?(response.code)) }&.last
-
-    raise error_message unless outcome
-
-    if outcome.respond_to?(:call)
-      outcome.call(response.body)
-    else
-      outcome
     end
   end
 end

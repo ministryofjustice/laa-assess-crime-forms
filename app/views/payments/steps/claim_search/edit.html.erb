@@ -24,7 +24,7 @@
 <% if @search_form.executed? %>
   <h2 id="search-results" class="govuk-heading-m"><%= t('shared.search.search_results', count: @search_form.pagy.count) %></h2>
   <% if @search_form.results.any? %>
-    <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
+    <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="search-results">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <% %i[laa_reference office_code firm_name ufn defendant_last_name].each do |key| %>

@@ -27,6 +27,8 @@ module ApplicationHelper
       t('nsm.service_name')
     when 'prior_authority'
       t('prior_authority.service_name')
+    when 'payments'
+      t('payments.service_name')
     else
       t('service.name')
     end

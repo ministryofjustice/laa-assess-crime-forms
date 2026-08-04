@@ -41,7 +41,7 @@
     <h2 class="govuk-summary-card__title"><%= t('.cost_summary') %></h2>
     <ul class="govuk-summary-card__actions">
       <li class="govuk-summary-card__action">
-        <%= link_to t('.change'), @report.cost_summary.change_link %>
+        <%= link_to @report.cost_summary.change_link_text, @report.cost_summary.change_link %>
         <span class="govuk-visually-hidden"><%= t('.cost_summary') %></span>
       </li>
     </ul>
