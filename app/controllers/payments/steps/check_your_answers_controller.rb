@@ -40,8 +40,11 @@ module Payments
         data = data.to_h.with_indifferent_access
         return data if current_multi_step_form_session.answers['allowed_profit_cost'].blank?
 
-        # ensure allowed profit cost persists from change when progressing to check your answers page
-        data.merge(allowed_profit_cost: current_multi_step_form_session.answers['allowed_profit_cost'])
+        # ensure allowed profit cost and new totals persists from change when progressing to check your answers page
+        data.merge(
+          allowed_profit_cost: current_multi_step_form_session.answers['allowed_profit_cost'],
+          allowed_total: current_multi_step_form_session.answers['allowed_total']
+        )
       end
 
       def apply_persisted_submission_token!(answers)
