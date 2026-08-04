@@ -1,6 +1,4 @@
-<% content_for(:page_title) do %>
-  <%= claim_summary.laa_reference %>
-<% end %>
+<% title "#{claim_summary.laa_reference} - #{t('.page_title')}" %>
 <%= render partial: 'nsm/claims/claim_summary', locals: { claim:, claim_summary: } %>
 <%= render partial: 'nsm/claims/claim_nav', locals: { claim: claim, current_page: 'claim_details' } %>
 <div class="govuk-grid-row">

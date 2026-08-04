@@ -44,6 +44,13 @@ RSpec.describe 'Overview', :stub_oauth_token, type: :system do
     let(:firm) { claim.data['firm_office'] }
     let(:solicitor) { claim.data['solicitor'] }
 
+    it 'shows the claim reference and page context in the page title' do
+      expect(page).to have_title(
+        "#{claim.data[:laa_reference]} - Claim details - Assess a non-standard magistrates court payment - GOV.UK",
+        exact: true
+      )
+    end
+
     it 'shows me the total claimed but not adjusted' do
       expect(page)
         .to have_content('Claimed: £359.76')
