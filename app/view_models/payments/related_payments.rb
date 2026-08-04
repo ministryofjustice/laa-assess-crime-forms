@@ -58,7 +58,7 @@ module Payments
     end
 
     def link
-      "/payments/requests/#{payable_claim_id}"
+      "/request-a-payment/requests/#{payable_claim_id}"
     end
   end
 end

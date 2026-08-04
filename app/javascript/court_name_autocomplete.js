@@ -17,7 +17,7 @@ function customSuggestion(result){
 
 async function allCourts(){
   try{
-    let response = await fetch(`/payments/courts`)
+    let response = await fetch(`/request-a-payment/courts`)
     if(response.ok){
       const courts = await response.json()
       return courts
