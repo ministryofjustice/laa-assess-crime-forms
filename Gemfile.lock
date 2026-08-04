@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ministryofjustice/laa-crime-forms-common.git
-  revision: 97f08b749eb75eeba8553ee1d44e941f5acb4f1c
+  revision: 76b87a3427cd32666d2f64802789f317b8425d35
   specs:
     laa_crime_forms_common (0.13.0)
       httparty (>= 0.22.0, < 1)
@@ -97,7 +97,7 @@ GEM
     auth-sanitizer (0.2.3)
       version_gem (~> 1.1, >= 1.1.14)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1269.0)
+    aws-partitions (1.1277.0)
     aws-sdk-core (3.254.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
@@ -109,7 +109,7 @@ GEM
     aws-sdk-kms (1.130.0)
       aws-sdk-core (~> 3, >= 3.254.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.227.0)
+    aws-sdk-s3 (1.228.1)
       aws-sdk-core (~> 3, >= 3.254.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
@@ -160,7 +160,7 @@ GEM
       unicode (>= 0.4.4.5)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
-    csv (3.3.5)
+    csv (3.3.6)
     date (3.5.1)
     debug (1.11.1)
       irb (~> 1.10)
@@ -221,7 +221,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 4.9, < 4.13)
-    govuk_design_system_formbuilder (6.3.1)
+    govuk_design_system_formbuilder (6.4.0)
       actionview (>= 7.2)
       activemodel (>= 7.2)
       activesupport (>= 7.2)
@@ -559,7 +559,7 @@ GEM
     sidekiq_alive (2.5.0)
       gserver (~> 0.0.1)
       sidekiq (>= 5, < 9)
-    simplecov (1.0.1)
+    simplecov (1.0.3)
     simplecov-console (0.9.5)
       ansi
       simplecov
@@ -644,7 +644,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  aws-sdk-s3 (~> 1.225)
+  aws-sdk-s3 (~> 1.228)
   axe-core-rspec
   bootsnap
   capybara
@@ -659,7 +659,7 @@ DEPENDENCIES
   faker
   flatware-rspec
   govuk-components (= 6.3.1)
-  govuk_design_system_formbuilder (~> 6.3.0)
+  govuk_design_system_formbuilder (~> 6.4.0)
   govuk_notify_rails (~> 3.0.0)
   httparty
   jbuilder
