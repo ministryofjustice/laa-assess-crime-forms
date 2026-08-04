@@ -194,6 +194,37 @@ spec:
               value: {{ .Values.variables.sentryTraceSampleRate }}
             - name: PROVIDER_API_EFFECTIVE_DATE_PARAM
               value: '{{ .Values.variables.providerApiEffectiveDate }}'
+            - name: METABASE_AC_PAYMENT_DASHBOARD_ID
+              value: '{{ .Values.metabase.acPaymentDashboardId}}'
+            - name: METABASE_NSM_PAYMENT_DASHBOARD_ID
+              value: '{{ .Values.metabase.nsmPaymentDashboardId}}'
+            - name: METABASE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: metabase_api_key
+            - name: METABASE_PRIVATE_URL
+              value: '{{ .Values.metabase.privateUrl}}'
+            - name: NSM_REPORT_EMAIL_ADDRESSES
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: nsm_report_email_addresses
+            - name: AC_REPORT_EMAIL_ADDRESSES
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: ac_report_email_addresses
+            - name: AC_REPORT_EMAIL_TEMPLATE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: ac_report_email_template_id
+            - name: NSM_REPORT_EMAIL_TEMPLATE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: nsm_report_email_template_id
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

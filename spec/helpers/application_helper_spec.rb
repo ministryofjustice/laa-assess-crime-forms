@@ -58,6 +58,40 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe '#service_name' do
+    context 'when current_layout is nsm' do
+      before do
+        allow(helper).to receive(:current_layout).and_return('nsm')
+      end
+
+      it { expect(helper.service_name).to eq('Assess a non-standard magistrates court payment') }
+    end
+
+    context 'when current_layout is prior_authority' do
+      before do
+        allow(helper).to receive(:current_layout).and_return('prior_authority')
+      end
+
+      it { expect(helper.service_name).to eq('Assess prior authority to incur disbursements') }
+    end
+
+    context 'when current_layout is payments' do
+      before do
+        allow(helper).to receive(:current_layout).and_return('payments')
+      end
+
+      it { expect(helper.service_name).to eq('Request a payment') }
+    end
+
+    context 'when current_layout is unknown' do
+      before do
+        allow(helper).to receive(:current_layout).and_return('unknown')
+      end
+
+      it { expect(helper.service_name).to eq('Assess a crime form') }
+    end
+  end
+
   describe '#fallback_title' do
     before do
       allow(helper).to receive_messages(controller_name: 'my_controller', action_name: 'an_action')

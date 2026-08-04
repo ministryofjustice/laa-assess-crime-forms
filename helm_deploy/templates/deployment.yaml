@@ -216,13 +216,24 @@ spec:
               value: '{{ .Values.metabase.priorAuthorityDashboardIds}}'
             - name: METABASE_NSM_DASHBOARD_IDS
               value: '{{ .Values.metabase.nsmDashboardIds}}'
+            - name: METABASE_AC_PAYMENT_DASHBOARD_ID
+              value: '{{ .Values.metabase.acPaymentDashboardId}}'
+            - name: METABASE_NSM_PAYMENT_DASHBOARD_ID
+              value: '{{ .Values.metabase.nsmPaymentDashboardId}}'
             - name: METABASE_SECRET_KEY
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
                   key: metabase_secret_key
-            - name: METABASE_SITE_URL
-              value: '{{ .Values.metabase.siteUrl}}'
+            - name: METABASE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: metabase_api_key
+            - name: METABASE_PUBLIC_URL
+              value: '{{ .Values.metabase.publicUrl}}'
+            - name: METABASE_PRIVATE_URL
+              value: '{{ .Values.metabase.privateUrl}}'
             - name: MAINTENANCE_MODE
               valueFrom:
                 configMapKeyRef:
@@ -232,6 +243,26 @@ spec:
               value: {{ .Values.variables.sentryTraceSampleRate }}
             - name: PROVIDER_API_EFFECTIVE_DATE_PARAM
               value: '{{ .Values.variables.providerApiEffectiveDate }}'
+            - name: NSM_REPORT_EMAIL_ADDRESSES
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: nsm_report_email_addresses
+            - name: AC_REPORT_EMAIL_ADDRESSES
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: ac_report_email_addresses
+            - name: AC_REPORT_EMAIL_TEMPLATE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: ac_report_email_template_id
+            - name: NSM_REPORT_EMAIL_TEMPLATE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: nsm_report_email_template_id
 
       {{- with .Values.nodeSelector }}
       nodeSelector:

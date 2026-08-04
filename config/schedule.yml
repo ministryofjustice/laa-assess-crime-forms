@@ -1,0 +1,11 @@
+#9 am every 1st friday of the month and every 3rd friday of the month
+payments_ac_reports:
+  cron: "0 9 1-7,15-21 * 5"
+  class: "Payments::ScheduleAcReports"
+  queue: "mailers"
+# 9 am every day
+payments_nsm_reports:
+  cron: "0 9 * * *"
+  class: "Payments::ScheduleNsmReports"
+  queue: "mailers"
+

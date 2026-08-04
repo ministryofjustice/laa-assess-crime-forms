@@ -9,11 +9,26 @@ RSpec.describe Payments::CheckYourAnswers::Report do
     context 'when request_type is non_standard_magistrate' do
       let(:session_answers) { { 'request_type' => 'non_standard_magistrate' } }
 
-      it 'builds an NSM costs summary' do
-        summary = instance_double(Payments::NsmCostsSummary)
+      context 'when not from an existing digital submission' do
+        it 'builds an NSM costs summary' do
+          summary = instance_double(Payments::NsmCostsSummary)
 
-        expect(Payments::NsmCostsSummary).to receive(:new).with(session_answers).and_return(summary)
-        expect(report.cost_summary).to eq(summary)
+          expect(Payments::NsmCostsSummary).to receive(:new).with(session_answers,
+                                                                  from_submission: false).and_return(summary)
+          expect(report.cost_summary).to eq(summary)
+        end
+      end
+
+      context 'when from an existing digital submission' do
+        let(:params) { { id: '1234', submission: true } }
+
+        it 'builds an NSM costs summary with from_submission set to true' do
+          summary = instance_double(Payments::NsmCostsSummary)
+
+          expect(Payments::NsmCostsSummary).to receive(:new).with(session_answers,
+                                                                  from_submission: true).and_return(summary)
+          expect(report.cost_summary).to eq(summary)
+        end
       end
     end
 

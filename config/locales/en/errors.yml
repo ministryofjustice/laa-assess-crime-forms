@@ -262,6 +262,13 @@ en:
               blank: Enter allowed waiting cost
               not_a_number: Allowed waiting costs must be a number, like 25
 
+        payments/steps/nsm/submission_allowed_costs_form:
+          attributes:
+            allowed_profit_cost:
+              greater_than_or_equal_to: Allowed profit costs must be equal or greater than 0
+              blank: Enter allowed profit cost
+              not_a_number: Allowed profit costs must be a number
+
         payments/steps/ac/claim_detail_form:
           attributes:
             date_claim_assessed: *shared_date_errors

@@ -10,6 +10,7 @@ module Decisions
     NSM_CLAIM_DETAILS = 'payments/steps/nsm/claim_details'.freeze
     NSM_CLAIMED_COSTS = 'payments/steps/nsm/claimed_costs'.freeze
     NSM_ALLOWED_COSTS = 'payments/steps/nsm/allowed_costs'.freeze
+    SUBMISSION_ALLOWED_COSTS = 'payments/steps/nsm/submission_allowed_costs'.freeze
 
     AC_CLAIM_DETAILS = '/payments/steps/ac/claim_details'.freeze
     AC_CLAIMED_COSTS = 'payments/steps/ac/claimed_costs'.freeze
@@ -86,6 +87,8 @@ module Decisions
       .goto(edit: NSM_ALLOWED_COSTS)
     from(:nsm_allowed_costs)
       .goto(edit: CHECK_YOUR_ANSWERS)
+    from(:submission_allowed_costs)
+      .goto(edit: CHECK_YOUR_ANSWERS, submission: true)
     from(:check_your_answers)
       .goto(show: SUBMIT)
   end

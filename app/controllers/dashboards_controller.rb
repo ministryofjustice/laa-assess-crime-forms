@@ -87,7 +87,7 @@ class DashboardsController < ApplicationController
       }
       token = JWT.encode(payload, ENV.fetch('METABASE_SECRET_KEY'))
 
-      "#{ENV.fetch('METABASE_SITE_URL')}/embed/dashboard/#{token}#bordered=true&titled=true"
+      "#{ENV.fetch('METABASE_PUBLIC_URL')}/embed/dashboard/#{token}#bordered=true&titled=true"
     end
   end
 end

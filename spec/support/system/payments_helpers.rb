@@ -236,7 +236,7 @@ module PaymentsHelpers
   end
 
   def select_office_code(office_code = '1A123B')
-    fill_in "What is the solicitor's firm account number?", with: office_code
+    fill_in id: 'payments-steps-office-code-search-form-solicitor-office-code-field', with: office_code
     click_button 'Continue'
     choose 'Yes', allow_label_click: true
     click_button 'Continue'

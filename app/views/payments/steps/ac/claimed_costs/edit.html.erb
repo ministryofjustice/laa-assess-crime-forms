@@ -19,7 +19,7 @@
           id: "counsel_costs_net",
           prefix_text: "£",
           inputmode: "decimal",
-          label: { size: 's', text: t('.claimed_net_assigned_counsel_cost') },
+          label: { for: 'counsel_costs_net', size: 's', text: t('.claimed_net_assigned_counsel_cost') },
           width: 10 %>
       </div>
       <div class="govuk-form-group">
@@ -27,7 +27,7 @@
           id: "counsel_costs_vat",
           prefix_text: "£",
           inputmode: "decimal",
-          label: { size: 's', text: t('.claimed_assigned_counsel_vat') },
+          label: { for: 'counsel_costs_vat', size: 's', text: t('.claimed_assigned_counsel_vat') },
           width: 10 %>
       </div>
 
@@ -38,10 +38,10 @@
         ) %>
       </div>
 
-      <p class="govuk-heading-l">
-        <span class="govuk-caption-m"><%= t('.total_cost') %></span>
+      <div class="govuk-heading-l">
+        <h2 class="govuk-caption-m"><%= t('.total_cost') %></h2>
         <span id="total_cost"><%= "#{LaaCrimeFormsCommon::NumberTo.pounds(@form_object.claimed_total)}" %></span>
-      </p>
+      </div>
 
       <%= f.continue_button(primary: :continue_button, secondary: false, primary_opts: { id: 'costs_submit_button'}) %>
     <% end %>
