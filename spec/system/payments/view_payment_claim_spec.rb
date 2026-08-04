@@ -112,7 +112,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
     before do
       allow_any_instance_of(AppStoreClient).to receive(:get_payable_claim)
         .and_return(payload)
-      visit "payments/requests/#{id}"
+      visit "request-a-payment/requests/#{id}"
     end
 
     it 'shows the correct top level details' do
@@ -374,7 +374,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
     before do
       allow_any_instance_of(AppStoreClient).to receive(:get_payable_claim)
         .and_return(payload)
-      visit "payments/requests/#{id}"
+      visit "request-a-payment/requests/#{id}"
     end
 
     it 'shows the correct top level details' do
@@ -517,7 +517,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
     end
 
     it 'raises an error trying to go to the payment request' do
-      expect { visit "payments/requests/#{id}" }.to raise_error 'Invalid claim type: garbage'
+      expect { visit "request-a-payment/requests/#{id}" }.to raise_error 'Invalid claim type: garbage'
     end
   end
 end
