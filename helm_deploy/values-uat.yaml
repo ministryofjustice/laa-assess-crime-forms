@@ -59,6 +59,8 @@ resources:
 
 variables:
   environment: uat
+  authProvider: azure_ad
+  silasRoleMappings: '{}'
   appStoreUrl: http://laa-crime-application-store-app.laa-crime-application-store-uat.svc.cluster.local
   enableSyncTriggerEndpoint: 'false'
   allowIndexing: 'false'

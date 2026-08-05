@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_10_083914) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_05_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -34,6 +34,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_10_083914) do
     t.datetime "updated_at", null: false
     t.index ["submission_id"], name: "index_assignments_on_submission_id", unique: true
     t.index ["user_id"], name: "index_assignments_on_user_id"
+  end
+
+  create_table "authentication_identities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "provider", null: false
+    t.string "subject", null: false
+    t.datetime "first_authenticated_at"
+    t.datetime "last_authenticated_at"
+    t.datetime "roles_synced_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider", "subject"], name: "index_authentication_identities_on_provider_and_subject", unique: true
+    t.index ["user_id", "provider"], name: "index_authentication_identities_on_user_id_and_provider", unique: true
+    t.index ["user_id"], name: "index_authentication_identities_on_user_id"
   end
 
   create_table "autogrant_limits", force: :cascade do |t|
@@ -75,6 +89,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_10_083914) do
     t.datetime "updated_at", null: false
     t.string "service", default: "all"
     t.index ["user_id"], name: "index_roles_on_user_id"
+  end
+
+  create_table "silas_roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "role_type", null: false
+    t.string "service", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "role_type", "service"], name: "index_silas_roles_on_user_id_and_role_type_and_service", unique: true
+    t.index ["user_id"], name: "index_silas_roles_on_user_id"
   end
 
   create_table "solid_cache_entries", force: :cascade do |t|
@@ -121,15 +145,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_10_083914) do
     t.datetime "first_auth_at"
     t.datetime "deactivated_at"
     t.datetime "invitation_expires_at"
+    t.string "silas_user_name"
+    t.datetime "silas_roles_last_synced_at"
     t.index ["auth_subject_id"], name: "index_users_on_auth_subject_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["silas_user_name"], name: "index_users_on_silas_user_name", unique: true, where: "(silas_user_name IS NOT NULL)"
   end
 
   add_foreign_key "access_logs", "users"
   add_foreign_key "assignments", "submissions"
   add_foreign_key "assignments", "users"
+  add_foreign_key "authentication_identities", "users"
   add_foreign_key "events", "submissions"
   add_foreign_key "events", "users", column: "primary_user_id"
   add_foreign_key "events", "users", column: "secondary_user_id"
   add_foreign_key "roles", "users"
+  add_foreign_key "silas_roles", "users"
 end

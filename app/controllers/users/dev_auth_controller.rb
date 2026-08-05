@@ -4,8 +4,9 @@ module Users
       skip_authorization
       raise ActionController::RoutingError, 'dev authentication not available' unless FeatureFlags.dev_auth.enabled?
 
-      users = User.where(deactivated_at: nil).order(last_auth_at: :desc)
-      @emails = users.pluck(:email) << OmniAuth::Strategies::DevAuth::NO_AUTH_EMAIL
+      users = User.includes(:authentication_identities).where(deactivated_at: nil)
+      users = users.sort_by { _1.most_recent_authentication_at || Time.zone.at(0) }.reverse
+      @emails = users.map(&:email) << OmniAuth::Strategies::DevAuth::NO_AUTH_EMAIL
     end
   end
 end

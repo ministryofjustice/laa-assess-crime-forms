@@ -66,6 +66,24 @@ Devise.setup do |config|
     }
   )
 
+  config.omniauth(
+    :openid_connect,
+    {
+      name: :silas,
+      scope: [:openid, :email],
+      response_type: :code,
+      client_options: {
+        identifier: ENV.fetch('SILAS_ENTRA_CLIENT_ID', nil),
+        secret: ENV.fetch('SILAS_ENTRA_CLIENT_SECRET', nil),
+        redirect_uri: ENV.fetch('SILAS_ENTRA_REDIRECT_URI', nil)
+      },
+      discovery: true,
+      pkce: true,
+      issuer: "https://login.microsoftonline.com/#{ENV.fetch('SILAS_ENTRA_TENANT_ID', nil)}/v2.0",
+      strategy_class: strategy_class
+    }
+  )
+
   OmniAuth.config.logger = Rails.logger
 end
 # rubocop:enable Metrics/BlockLength

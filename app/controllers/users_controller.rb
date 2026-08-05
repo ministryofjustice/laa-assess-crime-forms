@@ -2,14 +2,20 @@ class UsersController < ApplicationController
   layout 'user_management'
 
   before_action :authorize_supervisor
+  before_action :ensure_local_role_management, except: :index
   before_action :set_default_table_sort_options, only: %i[index]
 
   DEFAULT_SORT = 'name'.freeze
 
   def index
-    pagy, users = pagy_array(sorted_users)
+    pagy, users = pagy_array(directory_users)
 
-    render :index, locals: { pagy:, users: }
+    render :index, locals: {
+      pagy: pagy,
+      users: users,
+      role_management_editable: current_auth_context.role_management_editable?,
+      role_management_source: current_auth_context.role_source.display_name
+    }
   end
 
   def new
@@ -19,7 +25,7 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(controller_params['id'])
     user = @user.attributes.slice('first_name', 'last_name', 'email')
-    role = @user.roles.first
+    role = current_auth_context.role_source.roles_for(@user).first
     role_type = if role.nil? || @user.deactivated_at.present?
                   'none'
                 else
@@ -54,22 +60,25 @@ class UsersController < ApplicationController
 
   private
 
-  def sorted_users
+  def directory_users
     direction = @sort_direction == 'descending' ? :desc : :asc
-    case @sort_by
-    when 'name'
-      User.order(first_name: direction, last_name: direction)
-    when 'role'
-      User.includes(:roles).order(roles: { role_type: direction })
-    when 'service'
-      User.includes(:roles).order(roles: { service: direction })
-    else
-      User.order(params[:sort_by] => direction)
-    end
+
+    Users::DirectoryQuery.new(
+      role_source: current_auth_context.role_source,
+      sort_by: @sort_by,
+      direction: direction
+    ).call
   end
 
   def authorize_supervisor
     authorize :user_management, :show?
+  end
+
+  def ensure_local_role_management
+    return if current_auth_context.role_management_editable?
+
+    redirect_to users_path,
+                flash: { notice: t('users.roles_managed_externally', source: current_auth_context.role_source.display_name) }
   end
 
   def controller_params

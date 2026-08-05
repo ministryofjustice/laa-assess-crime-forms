@@ -1,6 +1,6 @@
 class PriorAuthorityApplicationPolicy < ApplicationPolicy
   def unassign?
-    service_access? && assessable? && record.assigned_user_id.present? && !user.viewer?
+    service_access? && assessable? && record.assigned_user_id.present? && !user.viewer?(:pa)
   end
 
   def self_assign?
@@ -8,11 +8,11 @@ class PriorAuthorityApplicationPolicy < ApplicationPolicy
   end
 
   def update?
-    service_access? && assessable? && record.assigned_user_id == user.id && !user.viewer?
+    service_access? && assessable? && record.assigned_user_id == user.id && !user.viewer?(:pa)
   end
 
   def assign?
-    service_access? && !user.viewer?
+    service_access? && !user.viewer?(:pa)
   end
 
   def index?
