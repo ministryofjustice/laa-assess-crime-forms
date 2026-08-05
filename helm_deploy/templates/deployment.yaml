@@ -1,3 +1,4 @@
+{{- include "laa-assess-crime-forms.validateAuthConfiguration" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -106,6 +107,10 @@ spec:
                   key: secret_key_base
             - name: APP_STORE_URL
               value: {{ .Values.variables.appStoreUrl}}
+            - name: ASSESS_AUTH_PROVIDER
+              value: {{ .Values.variables.authProvider | default "azure_ad" | quote }}
+            - name: SILAS_ROLE_MAPPINGS
+              value: {{ .Values.variables.silasRoleMappings | default "{}" | quote }}
             - name: OMNIAUTH_AZURE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -126,6 +131,30 @@ spec:
                 secretKeyRef:
                   name: azure-auth
                   key: tenant_id
+            - name: SILAS_ENTRA_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: silas-auth
+                  key: client_id
+                  optional: {{ ne (.Values.variables.authProvider | default "azure_ad") "silas" }}
+            - name: SILAS_ENTRA_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: silas-auth
+                  key: client_secret
+                  optional: {{ ne (.Values.variables.authProvider | default "azure_ad") "silas" }}
+            - name: SILAS_ENTRA_REDIRECT_URI
+              valueFrom:
+                secretKeyRef:
+                  name: silas-auth
+                  key: redirect_uri
+                  optional: {{ ne (.Values.variables.authProvider | default "azure_ad") "silas" }}
+            - name: SILAS_ENTRA_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: silas-auth
+                  key: tenant_id
+                  optional: {{ ne (.Values.variables.authProvider | default "azure_ad") "silas" }}
             - name: APP_STORE_TENANT_ID
               valueFrom:
                 secretKeyRef:

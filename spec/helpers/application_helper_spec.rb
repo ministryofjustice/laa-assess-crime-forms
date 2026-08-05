@@ -136,6 +136,30 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe '#user_omniauth_authorize_path' do
+    before do
+      provider = instance_double(Auth::Provider, authorization_path_helper: :user_silas_omniauth_authorize_path)
+      allow(Auth::Provider).to receive(:current).and_return(provider)
+      allow(helper).to receive(:user_silas_omniauth_authorize_path).and_return('/users/auth/silas')
+    end
+
+    it 'uses the authorize path for the configured auth provider' do
+      expect(helper.user_omniauth_authorize_path).to eq('/users/auth/silas')
+    end
+  end
+
+  describe '#user_omniauth_callback_path' do
+    before do
+      provider = instance_double(Auth::Provider, callback_path_helper: :user_silas_omniauth_callback_path)
+      allow(Auth::Provider).to receive(:current).and_return(provider)
+      allow(helper).to receive(:user_silas_omniauth_callback_path).and_return('/users/auth/silas/callback')
+    end
+
+    it 'uses the callback path for the configured auth provider' do
+      expect(helper.user_omniauth_callback_path).to eq('/users/auth/silas/callback')
+    end
+  end
+
   describe '#format_period' do
     context 'when period is nil' do
       it { expect(helper.format_period(nil)).to be_nil }

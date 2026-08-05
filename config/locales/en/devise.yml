@@ -4,6 +4,9 @@ en:
   devise:
     failure:
       user:
+        auth_provider_changed: |
+          Your sign-in method has changed.
+          Sign in again to continue using the service.
         reauthenticate: |
           For your security, we signed you out
           This is because you were signed in for more than 12 hours.

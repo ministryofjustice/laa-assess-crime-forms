@@ -59,6 +59,8 @@ resources:
 
 variables:
   environment: development
+  authProvider: azure_ad
+  silasRoleMappings: '{}'
   appStoreUrl: https://main-nscc-store-dev.cloud-platform.service.justice.gov.uk
   enableSyncTriggerEndpoint: 'true'
   allowIndexing: 'false'

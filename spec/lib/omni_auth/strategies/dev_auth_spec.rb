@@ -32,8 +32,12 @@ describe OmniAuth::Strategies::DevAuth do
       expect(strategy.client_options).to match(expected_options)
     end
 
-    it 'only one OmniAuth strategy is configured' do
-      expect(Devise.omniauth_configs.keys).to eq [:azure_ad]
+    it 'configures Azure and the dormant SiLAS strategy' do
+      expect(Devise.omniauth_configs.keys).to contain_exactly(:azure_ad, :silas)
+    end
+
+    it 'uses the local bypass for SiLAS when dev auth is enabled' do
+      expect(Devise.omniauth_configs.fetch(:silas).strategy_class).to eq(described_class)
     end
   end
 end

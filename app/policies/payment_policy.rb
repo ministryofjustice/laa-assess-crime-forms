@@ -18,10 +18,10 @@ class PaymentPolicy < ApplicationPolicy
   end
 
   def supervisor_role?
-    user.roles.supervisor.exists?
+    user.supervisor?
   end
 
   def caseworker_payments_role?
-    user.roles.exists?(role_type: Role::CASEWORKER, service: %w[nsm all])
+    user.caseworker?(:nsm)
   end
 end
