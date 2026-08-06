@@ -56,4 +56,20 @@ RSpec.describe Auth::Strategies::AzureAd do
       expect(result.failure_reason).to eq(:not_authorized)
     end
   end
+
+  context 'when synchronizing the local user fails validation' do
+    let!(:user) { create(:caseworker, auth_subject_id: subject_id, email: email) }
+
+    before do
+      identity = user.authentication_identity_for('azure_ad')
+      allow(AuthenticationIdentity).to receive(:find_by).and_return(identity)
+      allow(identity).to receive(:user).and_return(user)
+      allow(user).to receive(:update!).and_raise(ActiveRecord::RecordInvalid.new(user))
+    end
+
+    it 'fails closed' do
+      expect(result).not_to be_success
+      expect(result.failure_reason).to eq(:invalid_azure_identity)
+    end
+  end
 end

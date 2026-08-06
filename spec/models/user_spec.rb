@@ -39,6 +39,13 @@ RSpec.describe User do
       expect(user.authentication_identity_for('silas').subject).to eq('silas-user-123')
       expect(user.authentication_identity_for('azure_ad')).to be_present
     end
+
+    it 'uses preloaded identities when available' do
+      user = create(:caseworker, silas_user_name: 'silas-user-123')
+      user.authentication_identities.load
+
+      expect(user.authentication_identity_for('silas').subject).to eq('silas-user-123')
+    end
   end
 
   describe '#pending_activation?' do
@@ -46,6 +53,31 @@ RSpec.describe User do
       user = build(:caseworker, auth_subject_id: nil)
 
       expect(user).to be_pending_activation
+    end
+  end
+
+  describe '#most_recent_authentication_at' do
+    let(:user) { create(:caseworker).reload }
+
+    it 'queries the most recent provider authentication' do
+      expected = AuthenticationIdentity.where(user:).maximum(:last_authenticated_at)
+
+      expect(user.most_recent_authentication_at).to eq(expected)
+    end
+
+    it 'uses preloaded identities when available' do
+      user.authentication_identities.load
+
+      expect(user.most_recent_authentication_at)
+        .to eq(user.authentication_identities.first.last_authenticated_at)
+    end
+  end
+
+  describe '#auth_expired?' do
+    it 'is false when maximum reauthentication time is disabled' do
+      allow(Rails.configuration.x.auth).to receive(:reauthenticate_in).and_return(nil)
+
+      expect(build(:caseworker).auth_expired?('azure_ad')).to be(false)
     end
   end
 end
