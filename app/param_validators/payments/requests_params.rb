@@ -6,6 +6,8 @@ module Payments
     attribute :page, :integer
     attribute :current_page, :string
     attribute :payment_id, :string
+    attribute :flow_id, :string
+    attribute :payment_request_id, :string
 
     validates :sort_by, inclusion: { in: %w[
       laa_reference firm_name solicitor_firm_name
@@ -16,5 +18,7 @@ module Payments
     validates :id, is_a_uuid: true, allow_nil: true
     validates :current_page, inclusion: { in: %w[payment_request claim_details related_payments] }, allow_nil: true
     validates :payment_id, is_a_uuid: true, allow_nil: true
+    validates :flow_id, is_a_uuid: true, allow_nil: true
+    validates :payment_request_id, is_a_uuid: true, allow_nil: true
   end
 end

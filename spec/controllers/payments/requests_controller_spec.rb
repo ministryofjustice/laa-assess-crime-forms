@@ -21,7 +21,9 @@ RSpec.describe Payments::RequestsController, :stub_oauth_token do
   end
 
   describe 'POST #create' do
-    let(:session_answers) { { 'some' => 'answer', 'nested' => { 'a' => 1 } } }
+    let(:flow_id) { '11111111-1111-4111-8111-111111111111' }
+    let(:payment_request_id) { '22222222-2222-4222-8222-222222222222' }
+    let(:session_answers) { { 'id' => flow_id, 'some' => 'answer', 'nested' => { 'a' => 1 } } }
     let(:session_double) { instance_double(Decisions::MultiStepFormSession, id: 'session-123', answers: session_answers) }
     let(:client_double) { instance_double(AppStoreClient) }
 
@@ -43,26 +45,64 @@ RSpec.describe Payments::RequestsController, :stub_oauth_token do
     end
 
     context 'when the AppStore succeeds' do
-      let(:ok_response) { { 'payment_request_id' => 'pr-123' } }
+      let(:ok_response) do
+        {
+          'payment_request_id' => payment_request_id,
+          'payment_request' => {
+            'id' => payment_request_id,
+            'request_type' => 'non_standard_magistrate',
+            'allowed_total' => 123.45,
+            'ignored' => 'x'
+          },
+          'claim' => { 'laa_reference' => 'LAA-REF-123', 'ignored' => 'y' },
+          'ignored' => 'z'
+        }
+      end
       let(:summary_double) { instance_double(Payments::ConfirmationSummary) }
 
-      it 'builds a confirmation summary and renders :confirmation' do
+      it 'redirects to confirmation with flow id and payment request id' do
         expected_payload = session_answers.merge('submitter_id' => controller.current_user.id)
         expect(client_double)
           .to receive(:create_payment_request)
           .with(expected_payload)
           .and_return(ok_response)
 
-        allow(Payments::ConfirmationSummary)
-          .to receive(:new)
-          .with(ok_response)
-          .and_return(summary_double)
-
         post :create
 
-        expect(assigns(:payment_confirmation)).to eq(summary_double)
-        expect(response).to render_template(:confirmation)
+        expect(response).to redirect_to(payments_confirmation_path(flow_id:, payment_request_id:))
+        expect(session[:payments_confirmation_response]).to eq(
+          {
+            'payment_request' => { 'request_type' => 'non_standard_magistrate', 'allowed_total' => 123.45 },
+            'claim' => { 'laa_reference' => 'LAA-REF-123' }
+          }
+        )
       end
+    end
+  end
+
+  describe 'GET #confirmation' do
+    let(:flow_id) { '11111111-1111-4111-8111-111111111111' }
+    let(:payment_request_id) { '22222222-2222-4222-8222-222222222222' }
+    let(:ok_response) do
+      {
+        'payment_request' => { 'request_type' => 'non_standard_magistrate', 'allowed_total' => 123.45 },
+        'claim' => { 'laa_reference' => 'LAA-REF-123' }
+      }
+    end
+    let(:summary_double) { instance_double(Payments::ConfirmationSummary) }
+
+    it 'builds a confirmation summary from session response' do
+      allow(Payments::ConfirmationSummary)
+        .to receive(:new)
+        .with(ok_response)
+        .and_return(summary_double)
+
+      get :confirmation,
+          params: { flow_id:, payment_request_id: },
+          session: { payments_confirmation_response: ok_response }
+
+      expect(assigns(:payment_confirmation)).to eq(summary_double)
+      expect(session[:payments_confirmation_response]).to be_nil
     end
   end
 
