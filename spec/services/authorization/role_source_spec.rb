@@ -42,5 +42,11 @@ RSpec.describe Authorization::RoleSource do
 
       expect(Authorization::RoleSources::Silas.new.roles_for(user)).to be_empty
     end
+
+    it 'fails closed when the user has no SiLAS identity' do
+      user = create(:caseworker, silas_roles: [build(:silas_role, :viewer, service: 'nsm')])
+
+      expect(Authorization::RoleSources::Silas.new.roles_for(user)).to be_empty
+    end
   end
 end
