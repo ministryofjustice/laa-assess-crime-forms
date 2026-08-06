@@ -170,9 +170,13 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
 
       it 'allows profit cost to be amended' do
         click_link_or_button 'Create payment request'
+        expect(page.all('.govuk-table__footer')
+          .map(&:text)).to include('Total claimed£359.76', 'Total allowed£358.86')
         click_link_or_button 'Change profit cost'
-        fill_in 'payments_steps_nsm_submission_allowed_costs_form[allowed_profit_cost]', with: '50'
+        fill_in 'payments_steps_nsm_submission_allowed_costs_form[allowed_profit_cost]', with: '0'
         click_link_or_button 'Save and continue'
+        expect(page.all('.govuk-table__footer')
+          .map(&:text)).to include('Total claimed£359.76', 'Total allowed£243.52')
         expect(page).to have_content 'Check your answers'
       end
 
