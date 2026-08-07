@@ -13,11 +13,7 @@ module DecisionStepHeaderHelper
   def as
     current_request = request.path_parameters[:controller].split('/').last
     current_path = request.path
-    referer_path = begin
-      URI.parse(request.referer).path
-    rescue URI::InvalidURIError, TypeError
-      nil
-    end
+    referer_path = request.referer.present? ? URI.parse(request.referer).path : nil
 
     # If browser reload, default to current controller
     return request.path_parameters[:controller] if referer_path.present? && referer_path == current_path
