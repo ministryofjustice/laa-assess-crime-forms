@@ -13,7 +13,6 @@ module DecisionStepHeaderHelper
   def as
     current_request = request.path_parameters[:controller].split('/').last
     current_path = request.path
-
     referer_path = begin
       URI.parse(request.referer).path
     rescue URI::InvalidURIError, TypeError
