@@ -23,20 +23,21 @@ RSpec.describe 'Check your answers with changes', :javascript, :stub_oauth_token
     fill_claim_details
     fill_claimed_costs
     fill_allowed_costs
-    within('.govuk-summary-card', text: 'Claim details') do
-      click_link 'Change'
-    end
-    expect(page).to have_title("Solicitor's firm account number")
   end
 
   describe 'check your answers back link' do
     it 'can navigate back to the check your answers page with the back link' do
+      within('.govuk-summary-card', text: 'Claim details') do
+        click_link 'Change'
+      end
+      expect(page).to have_title("Solicitor's firm account number")
       click_link 'Back'
       expect(page).to have_title('Check your answers')
     end
 
     it 'can reload the page using the address bar without error' do
-      refresh
+      id = page.current_path.split('/')[1]
+      visit edit_payments_steps_office_code_search_path(id:)
       expect(page).to have_title("Solicitor's firm account number")
     end
   end
