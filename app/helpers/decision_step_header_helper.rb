@@ -9,9 +9,22 @@ module DecisionStepHeaderHelper
 
   private
 
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def as
     current_request = request.path_parameters[:controller].split('/').last
-    current_referer = URI.parse(request.referer).path.split('/').last
+    current_path = request.path
+
+    referer_path = begin
+      URI.parse(request.referer).path
+    rescue URI::InvalidURIError, TypeError
+      nil
+    end
+
+    # If browser reload, default to current controller
+    return request.path_parameters[:controller] if referer_path.present? && referer_path == current_path
+
+    # If on form navigated from CYA page, return CYA controller to allow back link to return to CYA page
+    current_referer = referer_path&.split('/')&.last
     back_to_cya = %w[claim_search claimed_costs allowed_costs submission_allowed_costs office_code_search]
 
     if back_to_cya.include?(current_request) && current_referer == 'check_your_answers'
@@ -20,4 +33,5 @@ module DecisionStepHeaderHelper
       request.path_parameters[:controller]
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 end
