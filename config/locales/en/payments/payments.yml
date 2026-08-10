@@ -247,6 +247,7 @@ en:
           assigned_counsel_amendment: Allowed costs after amendment
         total_claimed: Total claimed
         total_allowed: Total allowed
+        cost_type: Cost type
         profit_cost: Profit costs
         disbursement_cost: Disbursements
         travel_cost: Travel
