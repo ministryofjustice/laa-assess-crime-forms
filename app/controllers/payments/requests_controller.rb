@@ -28,15 +28,21 @@ module Payments
       redirect_to edit_payments_steps_claim_types_path(id: cycle_multi_step_form_session_object.id)
     end
 
-    def confirmation; end
+    def confirmation
+      @payment_confirmation = Payments::ConfirmationSummary.new(session.delete(:payments_confirmation_response))
+    end
 
     def create
-      response = AppStoreClient.new.create_payment_request(request_payload)
+      payload = request_payload
+      response = AppStoreClient.new.create_payment_request(payload)
       persist_last_submission_token
       destroy_current_form_sessions
-      @payment_confirmation = Payments::ConfirmationSummary.new(response)
+      session[:payments_confirmation_response] = confirmation_response_payload(response)
 
-      render :confirmation
+      redirect_to payments_confirmation_path(
+        flow_id: payload['id'],
+        payment_request_id: payment_request_id_from(response)
+      )
     rescue RuntimeError => e
       persist_last_submission_token
       destroy_current_form_sessions
@@ -57,6 +63,22 @@ module Payments
 
     def request_payload
       current_multi_step_form_session.answers.merge('submitter_id' => current_user.id)
+    end
+
+    def confirmation_response_payload(response)
+      {
+        'payment_request' => {
+          'request_type' => response.dig('payment_request', 'request_type'),
+          'allowed_total' => response.dig('payment_request', 'allowed_total')
+        },
+        'claim' => {
+          'laa_reference' => response.dig('claim', 'laa_reference')
+        }
+      }
+    end
+
+    def payment_request_id_from(response)
+      response['payment_request_id'] || response.dig('payment_request', 'id')
     end
 
     def persist_last_submission_token
@@ -83,7 +105,9 @@ module Payments
         :sort_direction,
         :page,
         :current_page,
-        :payment_id
+        :payment_id,
+        :flow_id,
+        :payment_request_id
       )
     end
 

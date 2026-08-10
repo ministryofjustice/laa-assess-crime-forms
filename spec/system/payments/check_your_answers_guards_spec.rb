@@ -4,11 +4,14 @@ RSpec.describe 'Payment submission safeguards', type: :system do
   let(:caseworker) { create(:caseworker, first_name: 'Sam', last_name: 'Beta') }
   let(:claim_id) { SecureRandom.uuid }
   let(:token) { SecureRandom.uuid }
+  let(:payment_request_id) { SecureRandom.uuid }
   let(:app_store_client) { instance_double(AppStoreClient) }
   let(:confirmation_response) do
     {
+      'payment_request_id' => payment_request_id,
       'claim' => { 'laa_reference' => 'LAA-123' },
       'payment_request' => {
+        'id' => payment_request_id,
         'request_type' => 'non_standard_magistrate',
         'allowed_total' => '100.0'
       }
