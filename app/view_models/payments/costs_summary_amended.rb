@@ -10,7 +10,7 @@ module Payments
 
     def headers
       [
-        '',
+        t('cost_type', numeric: false, width: '50%'),
         (t('original_total_allowed') if session_answers['original_allowed_total'].present?),
         t('total_allowed')
       ].compact
