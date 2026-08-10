@@ -62,6 +62,7 @@ en:
           total_claimed: Total claimed
           original_total_claimed: Previously claimed
           total_allowed: Total allowed
+          cost_type: Cost type
           original_total_allowed: Previously allowed
           profit_cost: Profit costs
           disbursement_cost: Disbursements
