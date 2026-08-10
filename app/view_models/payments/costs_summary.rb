@@ -16,7 +16,7 @@ module Payments
 
     def headers
       [
-        '',
+        t('cost_type', numeric: false, width: '50%'),
         t('total_claimed'),
         t('total_allowed')
       ]

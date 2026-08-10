@@ -132,7 +132,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       expect(page).to have_content 'Claimed and allowed costs'
       expect(all('table td, table th').map(&:text)).to eq(
         [
-          '', 'Total claimed', 'Total allowed',
+          'Cost type', 'Total claimed', 'Total allowed',
           'Profit costs', '£300.40', '£250.40',
           'Travel', '£20.55', '£0.00',
           'Waiting', '£10.33', '£6.40',
@@ -390,7 +390,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
       expect(page).to have_content 'Allowed costs after amendment'
       expect(all('table td, table th').map(&:text)).to eq(
         [
-          '', 'Total claimed', 'Total allowed',
+          'Cost type', 'Total claimed', 'Total allowed',
           'Net counsel fees', '£100.00', '£100.00',
           'VAT on counsel fees', '£20.00', '£50.00',
           'Total', 'Total claimed£120.00', 'Total allowed£150.00'
