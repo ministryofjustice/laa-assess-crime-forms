@@ -3,6 +3,7 @@ module RouteHelpers
     resource name,
              only: opts.fetch(:only, [:edit, :update]),
              controller: name,
-             path_names: { edit: '' }
+             path_names: { edit: '' },
+             path: opts.fetch(:path, name.to_s)
   end
 end
