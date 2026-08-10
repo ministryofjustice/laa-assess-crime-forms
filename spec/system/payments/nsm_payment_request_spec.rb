@@ -18,12 +18,19 @@ RSpec.describe 'NSM payment request', :javascript, :stub_oauth_token do
       laa_reference: '123-abc'
     }
   end
+  let(:created_payment_request_id) { SecureRandom.uuid }
 
   let(:create_payment_stub) do
     stub_request(:post, create_endpoint).to_return(
       status: 201,
       body: { claim: { laa_reference: '1234-abc' },
-payment_request: { claimed_total: 100, allowed_total: 10, request_type: 'non_standard_magistrate' } }.to_json
+payment_request_id: created_payment_request_id,
+payment_request: {
+  id: created_payment_request_id,
+  claimed_total: 100,
+  allowed_total: 10,
+  request_type: 'non_standard_magistrate'
+} }.to_json
     )
   end
 
