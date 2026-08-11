@@ -12,8 +12,10 @@ module Auth
     def self.validate!(provider: Provider.current)
       return true unless provider.name == 'silas'
 
-      missing = REQUIRED_SILAS_ENV.select { ENV.fetch(_1, nil).blank? }
-      raise InvalidConfiguration, "Missing SiLAS configuration: #{missing.join(', ')}" if missing.any?
+      if FeatureFlags.dev_auth.disabled?
+        missing = REQUIRED_SILAS_ENV.select { ENV.fetch(_1, nil).blank? }
+        raise InvalidConfiguration, "Missing SiLAS configuration: #{missing.join(', ')}" if missing.any?
+      end
 
       mappings = SilasRoleMapper.role_mappings
       raise InvalidConfiguration, 'SILAS_ROLE_MAPPINGS must define at least one role' if mappings.empty?
