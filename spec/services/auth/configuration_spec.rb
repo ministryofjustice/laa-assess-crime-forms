@@ -26,11 +26,31 @@ RSpec.describe Auth::Configuration do
       expect(validate_configuration).to be(true)
     end
 
-    it 'rejects missing credentials' do
-      allow(ENV).to receive(:fetch).with('SILAS_ENTRA_CLIENT_SECRET', nil).and_return('')
+    context 'when DevAuth is enabled' do
+      before do
+        allow(FeatureFlags).to receive(:dev_auth).and_return(instance_double(FeatureFlags::EnabledFeature, disabled?: false))
+      end
 
-      expect { validate_configuration }
-        .to raise_error(described_class::InvalidConfiguration, /SILAS_ENTRA_CLIENT_SECRET/)
+      it 'does not require external SiLAS credentials' do
+        described_class::REQUIRED_SILAS_ENV.each do |key|
+          allow(ENV).to receive(:fetch).with(key, nil).and_return(nil)
+        end
+
+        expect(validate_configuration).to be(true)
+      end
+    end
+
+    context 'when DevAuth is disabled' do
+      before do
+        allow(FeatureFlags).to receive(:dev_auth).and_return(instance_double(FeatureFlags::EnabledFeature, disabled?: true))
+      end
+
+      it 'rejects missing credentials' do
+        allow(ENV).to receive(:fetch).with('SILAS_ENTRA_CLIENT_SECRET', nil).and_return('')
+
+        expect { validate_configuration }
+          .to raise_error(described_class::InvalidConfiguration, /SILAS_ENTRA_CLIENT_SECRET/)
+      end
     end
 
     it 'rejects an empty role mapping' do
