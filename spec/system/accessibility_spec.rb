@@ -192,8 +192,39 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
             'allowed_total' => '492.0',
             'created_at' => '2025-10-29 14:01:57 UTC',
             'updated_at' => '2025-10-29 14:01:57 UTC'
+          },
+          {
+            'id' => '1604df63-10ef-0bc1-99f1-9hb0c01102f',
+            'submitter_id' => 'e061f876-3863-4bfd-9f25-ffefb942c90e',
+            'request_type' => 'non_standard_magistrate_supplemental',
+            'submitted_at' => '2025-10-29 14:01:57 UTC',
+            'date_claim_assessed' => '2025-10-29 00:00:00 UTC',
+            'claimed_profit_cost' => '123.0',
+            'allowed_profit_cost' => '123.0',
+            'claimed_travel_cost' => '123.0',
+            'allowed_travel_cost' => '123.0',
+            'claimed_waiting_cost' => '123.0',
+            'allowed_waiting_cost' => '123.0',
+            'claimed_disbursement_cost' => '123.0',
+            'allowed_disbursement_cost' => '123.0',
+            'claimed_total' => '492.0',
+            'allowed_total' => '492.0',
+            'created_at' => '2025-10-29 14:01:57 UTC',
+            'updated_at' => '2025-10-29 14:01:57 UTC'
           }
-        ]
+        ],
+        'assigned_counsel_claim' => {
+          'id' => '2604df63-10ef-0bc1-99f1-9hb0c01102f',
+          'laa_reference' => 'LAA-ab1234',
+          'ufn' => '120223/002',
+          'counsel_office_code' => '1A123C',
+          'counsel_firm_name' => 'Some Counsel',
+          'client_last_name' => 'Doe',
+          'solicitor_office_code' => '1A123B',
+          'solicitor_firm_name' => 'Some Solicitor',
+          'created_at' => '2025-10-29 14:01:57 UTC',
+          'updated_at' => '2025-10-29 14:01:57 UTC'
+        }
       }
     end
 
@@ -296,6 +327,18 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
       click_button 'Search'
       expect(page).to(be_axe_clean_with_caveats)
       click_button 'Select'
+      expect(page).to(be_axe_clean_with_caveats)
+    end
+
+    it 'has accessible view payment request screen' do
+      visit payments_request_path(claim_id)
+
+      expect(page).to(be_axe_clean_with_caveats)
+
+      click_on 'Claim details'
+      expect(page).to(be_axe_clean_with_caveats)
+
+      click_on 'Related payment requests'
       expect(page).to(be_axe_clean_with_caveats)
     end
     # rubocop:enable RSpec/MultipleExpectations
