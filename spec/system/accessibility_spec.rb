@@ -127,6 +127,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
 
   context 'when viewing payments screens' do
     let(:claim_id) { SecureRandom.uuid }
+    let(:laa_reference) { 'LAA-qWRbvm' }
     let(:payment_get_endpoint) { "https://appstore.example.com/v1/payable_claims/#{claim_id}" }
     let(:payments_index_endpoint) { 'https://appstore.example.com/v1/payment_requests/searches' }
     let(:payments_search_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
@@ -153,7 +154,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
       {
         'id' => claim_id,
         'type' => 'NsmClaim',
-        'laa_reference' => 'LAA-qWRbvm',
+        'laa_reference' => laa_reference,
         'solicitor_office_code' => '1A123B',
         'solicitor_firm_name' => 'some name',
         'defendant_last_name' => 'Doe',
@@ -227,6 +228,28 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
         }
       }
     end
+    let(:create_endpoint) { 'https://appstore.example.com/v1/payment_requests' }
+    let(:create_payload) do
+      {
+        laa_reference:
+      }
+    end
+
+    let(:created_payment_request_id) { SecureRandom.uuid }
+
+    let(:create_payment_stub) do
+      stub_request(:post, create_endpoint).to_return(
+        status: 201,
+        body: { claim: { laa_reference: },
+        payment_request_id: created_payment_request_id,
+        payment_request: {
+          id: created_payment_request_id,
+          claimed_total: 100,
+          allowed_total: 10,
+          request_type: 'non_standard_magistrate'
+        } }.to_json
+      )
+    end
 
     before do
       allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
@@ -237,6 +260,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
           status: 200,
           body: payable_claim.to_json
         )
+      create_payment_stub
     end
 
     it 'has an accessible payments list screen' do
