@@ -201,7 +201,6 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
       allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
       stub_search(payments_index_endpoint, payments_index_params)
       stub_search(payments_index_endpoint, payment_search_params, payment_data)
-      stub_get_claim(get_claim_endpoint)
     end
 
     it 'has an accessible payments list screen' do
