@@ -245,6 +245,10 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
 
       fill_allowed_costs
       expect(page).to(be_axe_clean_with_caveats)
+
+      click_button 'Submit payment request'
+      expect(page).to have_title('Check your answers')
+      expect(page).to(be_axe_clean_with_caveats)
     end
 
     it 'has accessible assigned counsel payment journey screens' do
