@@ -302,7 +302,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
       expect(page).to(be_axe_clean_with_caveats)
 
       click_button 'Submit payment request'
-      expect(page).to have_title('Check your answers')
+      expect(page).to have_title('Payment request complete')
       expect(page).to(be_axe_clean_with_caveats)
     end
 
