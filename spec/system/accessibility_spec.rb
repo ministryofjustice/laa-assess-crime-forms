@@ -127,7 +127,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
 
   context 'when viewing payments screens' do
     let(:claim_id) { SecureRandom.uuid }
-    let(:payment_get_endpoint) { "https://appstore.example.com/v1/payment_requests/#{claim_id}" }
+    let(:payment_get_endpoint) { "https://appstore.example.com/v1/payable_claims/#{claim_id}" }
     let(:payments_index_endpoint) { 'https://appstore.example.com/v1/payment_requests/searches' }
     let(:payments_search_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
     let(:payments_index_params) do
