@@ -197,7 +197,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
           {
             'id' => '1604df63-10ef-0bc1-99f1-9hb0c01102f',
             'submitter_id' => 'e061f876-3863-4bfd-9f25-ffefb942c90e',
-            'request_type' => 'non_standard_magistrate_supplemental',
+            'request_type' => 'non_standard_mag_supplemental',
             'submitted_at' => '2025-10-29 14:01:57 UTC',
             'date_claim_assessed' => '2025-10-29 00:00:00 UTC',
             'claimed_profit_cost' => '123.0',
