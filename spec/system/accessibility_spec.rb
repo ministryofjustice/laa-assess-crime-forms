@@ -177,7 +177,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
         'payment_requests' => [
           {
             'id' => '0604df63-ba7f-4cca-87b0-9db0b0e2d02f',
-            'submitter_id' => 'e061f876-3863-4bfd-9f25-ffefb942c90e',
+            'submitter_id' => caseworker.id,
             'request_type' => 'non_standard_magistrate',
             'submitted_at' => '2025-10-29 14:01:57 UTC',
             'date_claim_assessed' => '2025-10-29 00:00:00 UTC',
@@ -196,7 +196,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
           },
           {
             'id' => '1604df63-10ef-0bc1-99f1-9hb0c01102f',
-            'submitter_id' => 'e061f876-3863-4bfd-9f25-ffefb942c90e',
+            'submitter_id' => caseworker.id,
             'request_type' => 'non_standard_mag_supplemental',
             'submitted_at' => '2025-10-29 14:01:57 UTC',
             'date_claim_assessed' => '2025-10-29 00:00:00 UTC',
