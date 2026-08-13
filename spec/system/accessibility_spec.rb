@@ -135,11 +135,72 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
         sort_direction: 'descending',
       }
     end
-    let(:get_claim_endpoint) { 'https://appstore.example.com/v1/payable_claims/1234' }
+    let(:payment_search_params) do
+      {
+        page: 1,
+        sort_by: 'created_at',
+        sort_direction: 'descending',
+        query: '1234',
+        request_type: 'non_standard_magistrate',
+        claim_type: 'non_standard_mag_supplemental',
+        per_page: 20
+      }
+    end
+    let(:payment_data) do
+      [
+        {
+          'id' => 'dd9fa50c-12cc-4175-a10c-51a014459ef2',
+          'type' => 'NsmClaim',
+          'laa_reference' => 'LAA-qWRbvm',
+          'solicitor_office_code' => '1A123B',
+          'solicitor_firm_name' => 'some name',
+          'defendant_last_name' => 'Doe',
+          'original_submission_month' => 10,
+          'original_submission_year' => 2025,
+          'stage_code' => 'PROG',
+          'work_completed_date' => '2025-10-29 00:00:00 UTC',
+          'court_id' => 'C3208F',
+          'court_name' => 'USK',
+          'court_attendances' => 2,
+          'no_of_defendants' => 2,
+          'defendant_first_name' => 'John',
+          'outcome_code' => 'CP19',
+          'matter_type' => '13',
+          'youth_court' => true,
+          'ufn' => '120223/001',
+          'submission_id' => nil,
+          'created_at' => '2025-10-29 14:01:57 UTC',
+          'updated_at' => '2025-10-29 14:01:57 UTC',
+          'payment_requests' =>
+          [
+            {
+              'id' => '0604df63-ba7f-4cca-87b0-9db0b0e2d02f',
+              'submitter_id' => 'e061f876-3863-4bfd-9f25-ffefb942c90e',
+              'request_type' => 'non_standard_magistrate',
+              'submitted_at' => '2025-10-29 14:01:57 UTC',
+              'date_claim_assessed' => '2025-10-29 00:00:00 UTC',
+              'claimed_profit_cost' => '123.0',
+              'allowed_profit_cost' => '123.0',
+              'claimed_travel_cost' => '123.0',
+              'allowed_travel_cost' => '123.0',
+              'claimed_waiting_cost' => '123.0',
+              'allowed_waiting_cost' => '123.0',
+              'claimed_disbursement_cost' => '123.0',
+              'allowed_disbursement_cost' => '123.0',
+              'claimed_total' => '492.0',
+              'allowed_total' => '492.0',
+              'created_at' => '2025-10-29 14:01:57 UTC',
+              'updated_at' => '2025-10-29 14:01:57 UTC'
+            }
+          ]
+        }
+      ]
+    end
 
     before do
       allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
       stub_search(payments_index_endpoint, payments_index_params)
+      stub_search(payments_index_endpoint, payment_search_params, payment_data)
       stub_get_claim(get_claim_endpoint)
     end
 
