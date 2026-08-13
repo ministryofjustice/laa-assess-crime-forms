@@ -126,6 +126,8 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
   end
 
   context 'when viewing payments screens' do
+    let(:claim_id) { SecureRandom.uuid }
+    let(:payment_get_endpoint) { "https://appstore.example.com/v1/payment_requests/#{claim_id}" }
     let(:payments_index_endpoint) { 'https://appstore.example.com/v1/payment_requests/searches' }
     let(:payments_search_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
     let(:payments_index_params) do
@@ -150,7 +152,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
     let(:payment_data) do
       [
         {
-          'id' => 'dd9fa50c-12cc-4175-a10c-51a014459ef2',
+          'id' => claim_id,
           'type' => 'NsmClaim',
           'laa_reference' => 'LAA-qWRbvm',
           'solicitor_office_code' => '1A123B',
@@ -202,6 +204,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
       allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
       stub_search(payments_index_endpoint, payments_index_params)
       stub_search(payments_search_endpoint, payment_search_params, payment_data)
+      stub_get_claim(payment_get_endpoint, claim_id, payment_data.first)
     end
 
     it 'has an accessible payments list screen' do
