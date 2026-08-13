@@ -127,6 +127,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
 
   context 'when viewing payments screens' do
     let(:payments_index_endpoint) { 'https://appstore.example.com/v1/payment_requests/searches' }
+    let(:payments_search_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
     let(:payments_index_params) do
       {
         page: 1,
@@ -200,7 +201,7 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
     before do
       allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
       stub_search(payments_index_endpoint, payments_index_params)
-      stub_search(payments_index_endpoint, payment_search_params, payment_data)
+      stub_search(payments_search_endpoint, payment_search_params, payment_data)
     end
 
     it 'has an accessible payments list screen' do
