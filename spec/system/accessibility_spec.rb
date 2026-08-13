@@ -135,10 +135,12 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
         sort_direction: 'descending',
       }
     end
+    let(:get_claim_endpoint) { 'https://appstore.example.com/v1/payable_claims/1234' }
 
     before do
       allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
       stub_search(payments_index_endpoint, payments_index_params)
+      stub_get_claim(get_claim_endpoint)
     end
 
     it 'has an accessible payments list screen' do
@@ -215,6 +217,16 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
       click_on 'Continue'
+      expect(page).to(be_axe_clean_with_caveats)
+    end
+
+    it 'has accessible linked payment journey screens' do
+      start_new_payment_request
+      choose_claim_type('Non-standard magistrates - supplemental')
+      fill_in 'Find a claim', with: '1234'
+      click_button 'Search'
+      expect(page).to(be_axe_clean_with_caveats)
+      click_button 'Select'
       expect(page).to(be_axe_clean_with_caveats)
     end
     # rubocop:enable RSpec/MultipleExpectations
