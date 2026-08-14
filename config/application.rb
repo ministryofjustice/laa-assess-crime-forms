@@ -81,6 +81,7 @@ module LaaAssessNonStandardMagistrateFee
 
     config.x.nsm.feedback_url = 'https://www.smartsurvey.co.uk/s/CRM7Assess/'
     config.x.prior_authority.feedback_url = 'https://www.smartsurvey.co.uk/s/CRM4Assess/'
+    config.x.rap.feedback_url = 'https://www.smartsurvey.co.uk/s/RequestToPay/'
     config.x.contact.feedback_url = 'tbc'
   end
 end
