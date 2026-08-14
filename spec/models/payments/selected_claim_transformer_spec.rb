@@ -20,6 +20,7 @@ RSpec.describe Payments::SelectedClaimTransformer do
         {
           'id' => 'pr-1',
           'updated_at' => '2024-01-01T10:00:00Z',
+          'submitted_at' => '2024-01-01T10:00:00Z',
           'claimed_profit_cost' => 100,
           'claimed_travel_cost' => 50,
           'claimed_total' => 150
@@ -27,6 +28,7 @@ RSpec.describe Payments::SelectedClaimTransformer do
         {
           'id' => 'pr-2',
           'updated_at' => '2024-01-02T10:00:00Z',
+          'submitted_at' => '2024-01-02T10:00:00Z',
           'claimed_profit_cost' => 200,
           'claimed_travel_cost' => 75,
           'claimed_total' => 275

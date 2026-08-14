@@ -58,7 +58,7 @@ module Payments
       payment_requests = payment_requests.map(&:with_indifferent_access)
 
       payment_request = payment_requests.max_by do |pr|
-        DateTime.parse(pr[:updated_at].to_s)
+        DateTime.parse(pr[:submitted_at].to_s)
       end.except!(:id, :created_at, :updated_at,
                   :date_claim_assessed, :request_type,
                   :submitter_id, :submitted_at)
