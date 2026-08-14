@@ -126,7 +126,11 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
   end
 
   context 'when viewing payments screens' do
+    let(:claim_id) { SecureRandom.uuid }
+    let(:laa_reference) { 'LAA-qWRbvm' }
+    let(:payment_get_endpoint) { "https://appstore.example.com/v1/payable_claims/#{claim_id}" }
     let(:payments_index_endpoint) { 'https://appstore.example.com/v1/payment_requests/searches' }
+    let(:payments_search_endpoint) { 'https://appstore.example.com/v1/linked_claim/searches' }
     let(:payments_index_params) do
       {
         page: 1,
@@ -135,10 +139,128 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
         sort_direction: 'descending',
       }
     end
+    let(:payment_search_params) do
+      {
+        page: 1,
+        sort_by: 'created_at',
+        sort_direction: 'descending',
+        query: '1234',
+        request_type: 'non_standard_magistrate',
+        claim_type: 'non_standard_mag_supplemental',
+        per_page: 20
+      }
+    end
+    let(:payable_claim) do
+      {
+        'id' => claim_id,
+        'type' => 'NsmClaim',
+        'laa_reference' => laa_reference,
+        'solicitor_office_code' => '1A123B',
+        'solicitor_firm_name' => 'some name',
+        'defendant_last_name' => 'Doe',
+        'original_submission_month' => 10,
+        'original_submission_year' => 2025,
+        'stage_code' => 'PROG',
+        'work_completed_date' => '2025-10-29 00:00:00 UTC',
+        'court_id' => 'C3208F',
+        'court_name' => 'USK',
+        'court_attendances' => 2,
+        'no_of_defendants' => 2,
+        'defendant_first_name' => 'John',
+        'outcome_code' => 'CP19',
+        'matter_type' => '13',
+        'youth_court' => true,
+        'ufn' => '120223/001',
+        'submission_id' => nil,
+        'created_at' => '2025-10-29 14:01:57 UTC',
+        'updated_at' => '2025-10-29 14:01:57 UTC',
+        'payment_requests' => [
+          {
+            'id' => '0604df63-ba7f-4cca-87b0-9db0b0e2d02f',
+            'submitter_id' => caseworker.id,
+            'request_type' => 'non_standard_magistrate',
+            'submitted_at' => '2025-10-29 14:01:57 UTC',
+            'date_claim_assessed' => '2025-10-29 00:00:00 UTC',
+            'claimed_profit_cost' => '123.0',
+            'allowed_profit_cost' => '123.0',
+            'claimed_travel_cost' => '123.0',
+            'allowed_travel_cost' => '123.0',
+            'claimed_waiting_cost' => '123.0',
+            'allowed_waiting_cost' => '123.0',
+            'claimed_disbursement_cost' => '123.0',
+            'allowed_disbursement_cost' => '123.0',
+            'claimed_total' => '492.0',
+            'allowed_total' => '492.0',
+            'created_at' => '2025-10-29 14:01:57 UTC',
+            'updated_at' => '2025-10-29 14:01:57 UTC'
+          },
+          {
+            'id' => '1604df63-10ef-0bc1-99f1-9hb0c01102f',
+            'submitter_id' => caseworker.id,
+            'request_type' => 'non_standard_mag_supplemental',
+            'submitted_at' => '2025-10-29 14:01:57 UTC',
+            'date_claim_assessed' => '2025-10-29 00:00:00 UTC',
+            'claimed_profit_cost' => '123.0',
+            'allowed_profit_cost' => '123.0',
+            'claimed_travel_cost' => '123.0',
+            'allowed_travel_cost' => '123.0',
+            'claimed_waiting_cost' => '123.0',
+            'allowed_waiting_cost' => '123.0',
+            'claimed_disbursement_cost' => '123.0',
+            'allowed_disbursement_cost' => '123.0',
+            'claimed_total' => '492.0',
+            'allowed_total' => '492.0',
+            'created_at' => '2025-10-29 14:01:57 UTC',
+            'updated_at' => '2025-10-29 14:01:57 UTC'
+          }
+        ],
+        'assigned_counsel_claim' => {
+          'id' => '2604df63-10ef-0bc1-99f1-9hb0c01102f',
+          'laa_reference' => 'LAA-ab1234',
+          'ufn' => '120223/002',
+          'counsel_office_code' => '1A123C',
+          'counsel_firm_name' => 'Some Counsel',
+          'client_last_name' => 'Doe',
+          'solicitor_office_code' => '1A123B',
+          'solicitor_firm_name' => 'Some Solicitor',
+          'created_at' => '2025-10-29 14:01:57 UTC',
+          'updated_at' => '2025-10-29 14:01:57 UTC'
+        }
+      }
+    end
+    let(:create_endpoint) { 'https://appstore.example.com/v1/payment_requests' }
+    let(:create_payload) do
+      {
+        laa_reference:
+      }
+    end
+
+    let(:created_payment_request_id) { SecureRandom.uuid }
+
+    let(:create_payment_stub) do
+      stub_request(:post, create_endpoint).to_return(
+        status: 201,
+        body: { claim: { laa_reference: },
+        payment_request_id: created_payment_request_id,
+        payment_request: {
+          id: created_payment_request_id,
+          claimed_total: 100,
+          allowed_total: 10,
+          request_type: 'non_standard_magistrate'
+        } }.to_json
+      )
+    end
 
     before do
       allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
       stub_search(payments_index_endpoint, payments_index_params)
+      stub_search(payments_search_endpoint, payment_search_params, [payable_claim])
+      stub_request(:get, payment_get_endpoint)
+        .to_return(
+          status: 200,
+          body: payable_claim.to_json
+        )
+      create_payment_stub
     end
 
     it 'has an accessible payments list screen' do
@@ -178,6 +300,10 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
 
       fill_allowed_costs
       expect(page).to(be_axe_clean_with_caveats)
+
+      click_button 'Submit payment request'
+      expect(page).to have_content('Payment request complete')
+      expect(page).to(be_axe_clean_with_caveats)
     end
 
     it 'has accessible assigned counsel payment journey screens' do
@@ -215,6 +341,28 @@ RSpec.describe 'Accessibility', :accessibility, :stub_oauth_token do
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
       click_on 'Continue'
+      expect(page).to(be_axe_clean_with_caveats)
+    end
+
+    it 'has accessible linked payment journey screens' do
+      start_new_payment_request
+      choose_claim_type('Non-standard magistrates - supplemental')
+      fill_in 'Find a claim', with: '1234'
+      click_button 'Search'
+      expect(page).to(be_axe_clean_with_caveats)
+      click_button 'Select'
+      expect(page).to(be_axe_clean_with_caveats)
+    end
+
+    it 'has accessible view payment request screen' do
+      visit payments_request_path(claim_id)
+
+      expect(page).to(be_axe_clean_with_caveats)
+
+      click_on 'Claim details'
+      expect(page).to(be_axe_clean_with_caveats)
+
+      click_on 'Related payment requests'
       expect(page).to(be_axe_clean_with_caveats)
     end
     # rubocop:enable RSpec/MultipleExpectations
