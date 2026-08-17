@@ -45,6 +45,10 @@ RSpec.describe Auth::Configuration do
         allow(FeatureFlags).to receive(:dev_auth).and_return(instance_double(FeatureFlags::EnabledFeature, disabled?: true))
       end
 
+      it 'accepts complete credentials and role mappings' do
+        expect(validate_configuration).to be(true)
+      end
+
       it 'rejects missing credentials' do
         allow(ENV).to receive(:fetch).with('SILAS_ENTRA_CLIENT_SECRET', nil).and_return('')
 
