@@ -42,7 +42,8 @@ module Auth
         now = Time.current
 
         ActiveRecord::Base.transaction do
-          identity = user.authentication_identity_for(PROVIDER)
+          identity = user.authentication_identities.find_or_initialize_by(provider: PROVIDER)
+          identity.subject = silas_user_name
           user.assign_attributes(user_attributes(user, now))
           user.save!
 
@@ -70,7 +71,14 @@ module Auth
       end
 
       def local_user
-        AuthenticationIdentity.find_by(provider: PROVIDER, subject: silas_user_name)&.user
+        identity = AuthenticationIdentity.find_by(provider: PROVIDER, subject: silas_user_name)
+        return identity.user if identity
+
+        user = User.find_by(email: silas_email)
+        return unless user
+        return if user.authentication_identity_for(PROVIDER)
+
+        user
       end
 
       def silas_user_name

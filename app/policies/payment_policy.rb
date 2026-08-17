@@ -18,7 +18,7 @@ class PaymentPolicy < ApplicationPolicy
   end
 
   def supervisor_role?
-    user.supervisor?
+    user.supervisor?(:nsm)
   end
 
   def caseworker_payments_role?

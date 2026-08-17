@@ -42,12 +42,50 @@ RSpec.describe Auth::Strategies::Silas do
     end
 
     context 'when an existing Azure user has the same email but no SiLAS identifier' do
-      let!(:user) { create(:caseworker, email:) }
+      let(:email) { 'sally.silas@example.com' }
+      let!(:user) do
+        create(
+          :caseworker,
+          email: 'Sally.Silas@example.com',
+          roles: [build(:role, :viewer, service: 'pa')]
+        )
+      end
+      let(:azure_identity) { user.authentication_identity_for('azure_ad') }
+      let(:azure_subject) { azure_identity.subject }
 
-      it 'does not guess how the existing user should be linked' do
+      it 'links the verified email to USER_NAME and preserves the Azure rollback identity' do
+        expect(result).to be_success
+        expect(result.user).to eq(user)
+
+        reloaded_user = user.reload
+        expect(reloaded_user.authentication_identity_for('silas').subject).to eq('silas-uuid')
+        expect(reloaded_user.authentication_identity_for('azure_ad').subject).to eq(azure_subject)
+        expect(reloaded_user.roles.pluck(:role_type, :service)).to eq([%w[viewer pa]])
+      end
+
+      it 'can authenticate through the original Azure identity after linking SiLAS' do
+        expect(result).to be_success
+
+        azure_auth_hash = OmniAuth::AuthHash.new(
+          provider: 'azure_ad',
+          uid: azure_subject,
+          info: { email: user.email, first_name: user.first_name, last_name: user.last_name }
+        )
+        azure_result = Auth::Strategies::AzureAd.new(azure_auth_hash).call
+
+        expect(azure_result).to be_success
+        expect(azure_result.user).to eq(user)
+        expect(user.reload.roles.pluck(:role_type, :service)).to eq([%w[viewer pa]])
+      end
+    end
+
+    context 'when the email is already linked to a different SiLAS identifier' do
+      let!(:user) { create(:caseworker, email: email, silas_user_name: 'different-silas-user') }
+
+      it 'fails closed without replacing the existing identity' do
         expect(result).not_to be_success
         expect(result.failure_reason).to eq(:unknown_silas_user)
-        expect(user.reload.authentication_identity_for('silas')).to be_nil
+        expect(user.reload.authentication_identity_for('silas').subject).to eq('different-silas-user')
       end
     end
 
@@ -68,6 +106,16 @@ RSpec.describe Auth::Strategies::Silas do
         expect(result).not_to be_success
         expect(result.user).to be_nil
         expect(result.failure_reason).to eq(:user_deactivated)
+      end
+    end
+
+    context 'when a deactivated Azure user has the same email but no SiLAS identifier' do
+      let!(:user) { create(:caseworker, :deactivated, email:) }
+
+      it 'fails closed without linking the identity' do
+        expect(result).not_to be_success
+        expect(result.failure_reason).to eq(:user_deactivated)
+        expect(user.reload.authentication_identity_for('silas')).to be_nil
       end
     end
 
