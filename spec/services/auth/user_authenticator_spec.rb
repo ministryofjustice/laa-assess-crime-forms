@@ -56,7 +56,7 @@ RSpec.describe Auth::UserAuthenticator do
             raw_info: {
               'USER_NAME' => 'silas-user-123',
               'USER_EMAIL' => 'caseworker@example.com',
-              'LAA_APP_ROLES' => ['ASSESS_CASEWORKER_ALL']
+              'LAA_APP_ROLES' => ['Assess Caseworker (All)']
             }
           }
         )

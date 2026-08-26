@@ -1,5 +1,15 @@
 module Auth
   class SilasRoleMapper
+    ALLOWED_ROLE_ATTRIBUTES = [
+      { role_type: Role::CASEWORKER, service: 'all' },
+      { role_type: Role::CASEWORKER, service: 'nsm' },
+      { role_type: Role::CASEWORKER, service: 'pa' },
+      { role_type: Role::SUPERVISOR, service: 'all' },
+      { role_type: Role::VIEWER, service: 'all' },
+      { role_type: Role::VIEWER, service: 'nsm' },
+      { role_type: Role::VIEWER, service: 'pa' }
+    ].map(&:freeze).freeze
+
     class MissingRoles < StandardError; end
     class UnknownRole < StandardError; end
     class InvalidConfiguration < StandardError; end
@@ -24,7 +34,7 @@ module Auth
 
         role_attributes = attributes.to_h.symbolize_keys.slice(:role_type, :service)
 
-        unless Role::ROLE_TYPES.include?(role_attributes[:role_type]) && Role.services.key?(role_attributes[:service])
+        unless ALLOWED_ROLE_ATTRIBUTES.include?(role_attributes)
           raise InvalidConfiguration, "Invalid SiLAS role mapping for #{claim_value}"
         end
 

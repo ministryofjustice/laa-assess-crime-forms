@@ -24,7 +24,7 @@ RSpec.describe Auth::Strategies::Silas do
       {
         'USER_NAME' => 'silas-uuid',
         'USER_EMAIL' => email,
-        'LAA_APP_ROLES' => ['ASSESS_CASEWORKER_NSM']
+        'LAA_APP_ROLES' => ['Assess Caseworker (NSM)']
       }
     end
 
@@ -137,7 +137,7 @@ RSpec.describe Auth::Strategies::Silas do
     end
 
     context 'when USER_NAME is missing' do
-      let(:raw_info) { { 'USER_EMAIL' => email, 'LAA_APP_ROLES' => ['ASSESS_CASEWORKER_NSM'] } }
+      let(:raw_info) { { 'USER_EMAIL' => email, 'LAA_APP_ROLES' => ['Assess Caseworker (NSM)'] } }
 
       it 'fails closed' do
         expect(result).not_to be_success
@@ -146,7 +146,7 @@ RSpec.describe Auth::Strategies::Silas do
     end
 
     context 'when USER_EMAIL is missing' do
-      let(:raw_info) { { 'USER_NAME' => 'silas-uuid', 'LAA_APP_ROLES' => ['ASSESS_CASEWORKER_NSM'] } }
+      let(:raw_info) { { 'USER_NAME' => 'silas-uuid', 'LAA_APP_ROLES' => ['Assess Caseworker (NSM)'] } }
 
       it 'fails closed' do
         expect(result).not_to be_success
@@ -159,7 +159,7 @@ RSpec.describe Auth::Strategies::Silas do
         {
           'USER_NAME' => 123,
           'USER_EMAIL' => email,
-          'LAA_APP_ROLES' => ['ASSESS_CASEWORKER_NSM']
+          'LAA_APP_ROLES' => ['Assess Caseworker (NSM)']
         }
       end
 
@@ -174,7 +174,7 @@ RSpec.describe Auth::Strategies::Silas do
         {
           'USER_NAME' => 'silas-uuid',
           'USER_EMAIL' => { 'value' => email },
-          'LAA_APP_ROLES' => ['ASSESS_CASEWORKER_NSM']
+          'LAA_APP_ROLES' => ['Assess Caseworker (NSM)']
         }
       end
 
@@ -216,7 +216,7 @@ RSpec.describe Auth::Strategies::Silas do
         {
           'USER_NAME' => 'silas-uuid',
           'USER_EMAIL' => email,
-          'LAA_APP_ROLES' => ['ASSESS_CASEWORKER_NSM', 123]
+          'LAA_APP_ROLES' => ['Assess Caseworker (NSM)', 123]
         }
       end
 
