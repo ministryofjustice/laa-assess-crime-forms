@@ -43,6 +43,7 @@ metadata:
       SecRule REQUEST_URI "@rx /work_items/[0-9a-fA-F\-]+(?:$|\?|/)" "id:1001003,phase:1,pass,log,msg:\"Excluding RCE rules (932230/235/250) for work_item_form-explanation\",ctl:ruleRemoveTargetById=932230;ARGS:nsm_work_item_form[explanation],ctl:ruleRemoveTargetById=932235;ARGS:nsm_work_item_form[explanation],ctl:ruleRemoveTargetById=932250;ARGS:nsm_work_item_form[explanation]"
       SecAction "id:900200,phase:1,nolog,pass,t:none,setvar:tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE"
       SecAction "id:900110,phase:1,nolog,pass,t:none,setvar:tx.inbound_anomaly_score_threshold=25"
+      SecRule REQUEST_METHOD "!@within GET POST PUT PATCH HEAD DELETE OPTIONS CONNECT TRACE" "id:20,phase:1,deny,log,msg:\"HTTP Request method is not allowed by policy\""
     external-dns.alpha.kubernetes.io/aws-weight: "100"
   {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
