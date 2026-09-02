@@ -54,11 +54,14 @@ en:
           claimed_and_allowed_costs: Claimed and allowed costs
           amended_allowed_costs: Amended allowed costs
           allowed_costs: Allowed costs
+          costs_to_be_paid: Costs to be paid
+          total_costs_to_be_paid: Total costs to be paid
           accessible:
             total_claimed: Total claimed
             total_allowed: Total allowed
             original_total_claimed: Previous claim
             original_total_allowed: Previously allowed
+            total_costs_to_be_paid: Total costs to be paid
           total_claimed: Total claimed
           original_total_claimed: Previously claimed
           total_allowed: Total allowed
