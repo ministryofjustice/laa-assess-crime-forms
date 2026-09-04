@@ -47,7 +47,7 @@ module Nsm
       render :edit, locals: { claim:, item:, form: }
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable-next Metrics/AbcSize
     def update
       authorize(claim, :edit?)
       rows = BaseViewModel.build(:additional_fees_summary, claim).rows
@@ -61,7 +61,6 @@ module Nsm
         render :edit, locals: { claim:, item:, form: }
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def adjusted
       authorize(claim, :show?)

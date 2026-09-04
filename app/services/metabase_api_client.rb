@@ -21,7 +21,7 @@ class MetabaseApiClient < HttpClient
 
   private
 
-  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable-next Metrics/MethodLength
   def search_params(start_date, end_date)
     {
       format_rows: false,
@@ -40,5 +40,4 @@ class MetabaseApiClient < HttpClient
       ]
     }
   end
-  # rubocop:enable Metrics/MethodLength
 end

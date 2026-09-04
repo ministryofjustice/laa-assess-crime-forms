@@ -66,7 +66,7 @@ module Payments
 
         private
 
-        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable-next Metrics/AbcSize
         def handle_court_details
           # We need to check if the court name suggestion matches an existing court and
           # if so, use the existing court's name and id instead of the custom values
@@ -82,7 +82,6 @@ module Payments
             self.court_name = ''
           end
         end
-        # rubocop:enable Metrics/AbcSize
 
         def submission_year_must_be_present
           return unless original_submission_year.blank? && submission_date_partially_present?

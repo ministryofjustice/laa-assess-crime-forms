@@ -1,5 +1,5 @@
 module SystemHelpers
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Layout/LineLength
+  # rubocop:disable-next Metrics/AbcSize, Metrics/MethodLength, Layout/LineLength
   def stub_app_store_interactions(submission)
     return unless submission
 
@@ -57,7 +57,6 @@ module SystemHelpers
                                                                                                         { status: 204 }
                                                                                                       end)
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Layout/LineLength
 end
 
 RSpec.configuration.include SystemHelpers

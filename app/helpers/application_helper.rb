@@ -108,7 +108,7 @@ module ApplicationHelper
     Claim.load_from_app_store(claim_id)
   end
 
-  # rubocop:disable Metrics/ParameterLists
+  # rubocop:disable-next Metrics/ParameterLists
   def suggestion_select(form, field, values, id_field, value_field, data_module = 'accessible-autocomplete', *,
                         data: {}, **)
     data[:module] = data_module
@@ -116,5 +116,4 @@ module ApplicationHelper
 
     form.govuk_collection_select(field, values, id_field, value_field, *, data:, **)
   end
-  # rubocop:enable Metrics/ParameterLists
 end

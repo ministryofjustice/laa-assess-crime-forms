@@ -51,7 +51,7 @@ module Nsm
         end
       end
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable-next Metrics/MethodLength
       def data
         [
           {
@@ -77,13 +77,12 @@ module Nsm
           *contact_details,
         ]
       end
-      # rubocop:enable Metrics/MethodLength
 
       def rows
         { title:, data: }
       end
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable-next Metrics/MethodLength
       def contact_details
         if contact_email.blank?
           [
@@ -105,7 +104,6 @@ module Nsm
           ]
         end
       end
-      # rubocop:enable Metrics/MethodLength
     end
   end
 end

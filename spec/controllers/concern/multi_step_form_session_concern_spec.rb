@@ -2,9 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Payments::MultiStepFormSessionConcern, type: :controller do
   controller(ApplicationController) do
-    # rubocop:disable RSpec/DescribedClass
+    # rubocop:disable-next RSpec/DescribedClass
     include Payments::MultiStepFormSessionConcern
-    # rubocop:enable RSpec/DescribedClass
 
     def index
       head :ok

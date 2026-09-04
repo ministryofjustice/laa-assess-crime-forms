@@ -2,7 +2,7 @@
 
 require 'active_support/core_ext/integer/time'
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -86,4 +86,3 @@ Rails.application.configure do
   config.logstasher.suppress_app_log = false
   config.logstasher.source = 'laa-assess-crime-forms-dev'
 end
-# rubocop:enable Metrics/BlockLength

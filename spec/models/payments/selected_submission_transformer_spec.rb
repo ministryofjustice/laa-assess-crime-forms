@@ -43,7 +43,7 @@ RSpec.describe Payments::SelectedSubmissionTransformer do
   end
 
   describe '#transform' do
-    # rubocop:disable RSpec/MultipleExpectations
+    # rubocop:disable-next RSpec/MultipleExpectations
     it 'returns sanitized claim data with duplicated costs and submission id' do
       result = transformer.transform
 
@@ -57,7 +57,6 @@ RSpec.describe Payments::SelectedSubmissionTransformer do
       expect(result).not_to have_key(:type)
       expect(result).not_to have_key(:assigned_counsel_claim)
     end
-    # rubocop:enable RSpec/MultipleExpectations
 
     it 'loads the claim from the app store and payment claim details view model' do
       transformer.transform

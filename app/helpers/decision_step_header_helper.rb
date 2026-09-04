@@ -9,7 +9,7 @@ module DecisionStepHeaderHelper
 
   private
 
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:disable-next Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def as
     current_request = request.path_parameters[:controller].split('/').last
     current_path = request.path
@@ -28,5 +28,4 @@ module DecisionStepHeaderHelper
       request.path_parameters[:controller]
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 end

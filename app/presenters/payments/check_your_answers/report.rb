@@ -62,7 +62,7 @@ module Payments
         # :nocov:
       end
 
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+      # rubocop:disable-next Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
       def cost_summary
         case session_answers['request_type'].to_sym
         when :non_standard_magistrate, :breach_of_injunction
@@ -87,7 +87,6 @@ module Payments
         end
         # :nocov:
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
 
       private
 
