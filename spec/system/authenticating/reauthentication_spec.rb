@@ -4,8 +4,11 @@ RSpec.describe 'Reauthentication', :stub_oauth_token do
   let(:reauthenticate_in) { Rails.configuration.x.auth.reauthenticate_in }
   let(:user) { create(:caseworker) }
   let(:sign_out_all_scopes) { true }
+  let(:configured_provider) { Auth::Provider.fetch('azure_ad') }
+  let(:refresh_request) { true }
 
   before do
+    allow(Auth::Provider).to receive(:current).and_return(configured_provider)
     stub_request(:post, 'https://appstore.example.com/v1/submissions/searches').to_return(
       status: 201,
       body: { metadata: { total_results: 0 }, raw_data: [] }.to_json
@@ -13,8 +16,8 @@ RSpec.describe 'Reauthentication', :stub_oauth_token do
     allow(Devise).to receive(:sign_out_all_scopes).and_return(sign_out_all_scopes)
     sign_in user
     visit '/nsm/claims/your'
-    user.update(last_auth_at:)
-    visit current_path
+    user.authentication_identity_for('azure_ad').update!(last_authenticated_at: last_auth_at)
+    visit current_path if refresh_request
   end
 
   context 'when the authentication has not expired' do
@@ -48,6 +51,17 @@ RSpec.describe 'Reauthentication', :stub_oauth_token do
         expect(page).to have_content('For your security, we signed you out')
         expect(page).to have_content('This is because you were signed in for more than 12 hours.')
       end
+    end
+  end
+
+  context 'when the authenticated session belongs to the previous provider' do
+    let(:last_auth_at) { Time.current }
+    let(:configured_provider) { Auth::Provider.fetch('silas') }
+    let(:refresh_request) { false }
+
+    it 'signs the user out and requires authentication with the configured provider' do
+      expect(page).to have_no_content 'Your claims'
+      expect(page).to have_content('Your sign-in method has changed')
     end
   end
 end

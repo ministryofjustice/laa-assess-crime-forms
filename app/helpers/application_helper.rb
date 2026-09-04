@@ -42,6 +42,14 @@ module ApplicationHelper
     "app-environment-#{ENV.fetch('ENV', 'local')}"
   end
 
+  def user_omniauth_authorize_path
+    public_send(Auth::Provider.current.authorization_path_helper)
+  end
+
+  def user_omniauth_callback_path
+    public_send(Auth::Provider.current.callback_path_helper)
+  end
+
   def format_period(period, style: :short)
     return period if period.blank?
 

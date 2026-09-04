@@ -7,10 +7,22 @@ users:
   last_name: true
   auth_oid: false
   auth_subject_id: false
+  silas_user_name: true
+  silas_roles_last_synced_at: false
   last_auth_at: false
   first_auth_at: false
   deactivated_at: false
   invitation_expires_at: false
+authentication_identities:
+  id: false
+  user_id: false
+  provider: false
+  subject: true
+  first_authenticated_at: false
+  last_authenticated_at: false
+  roles_synced_at: false
+  created_at: false
+  updated_at: false
 assignments:
   id: false
   submission_id: false
@@ -66,6 +78,13 @@ autogrant_limits:
   created_at: false
   updated_at: false
 roles:
+  id: false
+  user_id: false
+  service: false
+  role_type: false
+  created_at: false
+  updated_at: false
+silas_roles:
   id: false
   user_id: false
   service: false

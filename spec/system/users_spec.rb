@@ -174,4 +174,46 @@ RSpec.describe 'Users', :stub_oauth_token do
       expect(caseworker.reload.deactivated_at).to be_nil
     end
   end
+
+  context 'when SiLAS manages roles' do
+    before do
+      role_source = Authorization::RoleSources::Silas.new
+      auth_context = instance_double(
+        Auth::SessionContext,
+        valid?: true,
+        provider: Auth::Provider.fetch('silas'),
+        role_source: role_source,
+        role_management_editable?: false
+      )
+      allow(Auth::SessionContext).to receive(:new).and_return(auth_context)
+
+      [supervisor, caseworker].each do |user|
+        user.authentication_identities.create!(
+          provider: 'silas',
+          subject: "silas-#{user.id}",
+          first_authenticated_at: Time.current,
+          last_authenticated_at: Time.current,
+          roles_synced_at: Time.current
+        )
+      end
+      supervisor.silas_roles.create!(role_type: Role::SUPERVISOR, service: 'all')
+      caseworker.silas_roles.create!(role_type: Role::CASEWORKER, service: 'nsm')
+      sign_in supervisor
+      visit users_path
+    end
+
+    it 'shows the SiLAS roles in a read-only user list' do
+      expect(page).to have_content(I18n.t('users.index.read_only_external_roles', source: 'SiLAS'))
+      expect(page).to have_content(/#{caseworker.display_name}.*Caseworker.*NSM/)
+      expect(page).to have_no_link(I18n.t('users.index.add_new_user'))
+      expect(page).to have_no_link(caseworker.display_name)
+    end
+
+    it 'blocks direct access to local role editing' do
+      visit edit_user_path(caseworker)
+
+      expect(page).to have_current_path(users_path)
+      expect(page).to have_content(I18n.t('users.roles_managed_externally', source: 'SiLAS'))
+    end
+  end
 end

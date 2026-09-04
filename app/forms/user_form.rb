@@ -26,14 +26,17 @@ class UserForm < BaseForm
     if id.nil?
       create_user
     else
-      update_user
+      update_existing_user
+      true
     end
   end
 
   private
 
   def create_user
-    user = User.create(user_params)
+    user = User.new(user_attributes)
+    assign_local_role(user)
+    user.save
 
     return true if user.errors.empty?
 
@@ -42,19 +45,31 @@ class UserForm < BaseForm
     false
   end
 
-  def update_user
-    User.find(id).update!(user_params)
+  def update_existing_user
+    user = User.find(id)
+
+    User.transaction do
+      user.update!(user_attributes)
+      user.roles.destroy_all
+      assign_local_role(user)
+    end
   end
 
-  def user_params
+  def user_attributes
     {
       first_name: first_name,
       last_name: last_name,
       email: email,
       auth_oid: SecureRandom.uuid,
-      roles: role_type == 'none' ? [] : [Role.new(role_type:, service:)],
       deactivated_at: (DateTime.now if role_type == 'none')
     }
+  end
+
+  def assign_local_role(user)
+    return if role_type == 'none'
+
+    role = user.roles.build(role_type:, service:)
+    role.save! if user.persisted?
   end
 
   def service

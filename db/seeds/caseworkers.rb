@@ -1,51 +1,26 @@
 return unless HostEnv.local? || HostEnv.development?
 
-User
-  .find_or_initialize_by(email: 'case.worker@test.com')
-  .update(
-    first_name: 'Case',
-    last_name: 'Worker',
-    auth_oid: SecureRandom.uuid,
-    auth_subject_id: SecureRandom.uuid,
-    roles: [Role.new(role_type: 'caseworker', service: 'all')]
+seed_users = [
+  { email: 'case.worker@test.com', first_name: 'Case', last_name: 'Worker', role_type: 'caseworker', service: 'all' },
+  { email: 'super.visor@test.com', first_name: 'Super', last_name: 'Visor', role_type: 'supervisor', service: 'all' },
+  { email: 'viewer@test.com', first_name: 'Reid', last_name: "O'Nly", role_type: 'viewer', service: 'all' },
+  { email: 'pa@test.com', first_name: 'Crim', last_name: 'Fours', role_type: 'caseworker', service: 'pa' },
+  { email: 'nsm@test.com', first_name: 'Crim', last_name: 'Sevens', role_type: 'caseworker', service: 'nsm' }
+]
+
+seed_users.each do |attributes|
+  user = User.find_or_initialize_by(email: attributes.fetch(:email))
+  user.update!(
+    attributes.slice(:first_name, :last_name).merge(
+      auth_oid: SecureRandom.uuid,
+      roles: [Role.new(role_type: attributes.fetch(:role_type), service: attributes.fetch(:service))]
+    )
   )
 
-User
-  .find_or_initialize_by(email: 'super.visor@test.com')
-  .update(
-    first_name: 'Super',
-    last_name: 'Visor',
-    auth_oid: SecureRandom.uuid,
-    auth_subject_id: SecureRandom.uuid,
-    roles: [Role.new(role_type: 'supervisor', service: 'all')]
+  identity = user.authentication_identities.find_or_initialize_by(provider: 'azure_ad')
+  identity.update!(
+    subject: identity.subject.presence || SecureRandom.uuid,
+    first_authenticated_at: identity.first_authenticated_at || Time.current,
+    last_authenticated_at: Time.current
   )
-
-User
-  .find_or_initialize_by(email: 'viewer@test.com')
-  .update(
-    first_name: 'Reid',
-    last_name: "O'Nly",
-    auth_oid: SecureRandom.uuid,
-    auth_subject_id: SecureRandom.uuid,
-    roles: [Role.new(role_type: 'viewer', service: 'all')]
-  )
-
-User
-  .find_or_initialize_by(email: 'pa@test.com')
-  .update(
-    first_name: 'Crim',
-    last_name: 'Fours',
-    auth_oid: SecureRandom.uuid,
-    auth_subject_id: SecureRandom.uuid,
-    roles: [Role.new(role_type: 'caseworker', service: 'pa')]
-  )
-
-User
-  .find_or_initialize_by(email: 'nsm@test.com')
-  .update(
-    first_name: 'Crim',
-    last_name: 'Sevens',
-    auth_oid: SecureRandom.uuid,
-    auth_subject_id: SecureRandom.uuid,
-    roles: [Role.new(role_type: 'caseworker', service: 'nsm')]
-  )
+end

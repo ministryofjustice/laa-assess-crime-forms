@@ -3,13 +3,11 @@ module Users
     before_action :skip_authorization
 
     def azure_ad
-      @user = UserAuthenticate.new(request.env['omniauth.auth']).authenticate
+      authenticate_from_omniauth
+    end
 
-      if @user
-        sign_in_and_redirect @user, event: :authentication
-      else
-        throw(:warden, recall: 'Errors#forbidden', message: :forbidden)
-      end
+    def silas
+      authenticate_from_omniauth
     end
 
     # :nocov:
@@ -25,5 +23,19 @@ module Users
       redirect_to new_user_session_path
     end
     # :nocov:
+
+    private
+
+    def authenticate_from_omniauth
+      result = Auth::UserAuthenticator.call(request.env['omniauth.auth'])
+
+      if result.success?
+        Auth::SessionContext.bind!(session, request.env['omniauth.auth'].provider)
+        sign_in_and_redirect result.user, event: :authentication
+      else
+        Rails.logger.warn("Authentication failed: #{result.failure_reason}")
+        throw(:warden, recall: 'Errors#forbidden', message: :forbidden)
+      end
+    end
   end
 end

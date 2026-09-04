@@ -98,3 +98,16 @@ Function to return a list of whitelisted IPs allowed to access the service.
     {{- if .Values.ingress.whitelist.addresses }}{{- join "," .Values.ingress.whitelist.addresses }},{{- end }}{{- .Values.sharedIPs }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Fail chart rendering when the selected authentication provider is incomplete.
+*/}}
+{{- define "laa-assess-crime-forms.validateAuthConfiguration" -}}
+{{- $provider := .Values.variables.authProvider | default "azure_ad" -}}
+{{- if not (has $provider (list "azure_ad" "silas")) -}}
+{{- fail (printf "variables.authProvider must be azure_ad or silas, got %s" $provider) -}}
+{{- end -}}
+{{- if and (eq $provider "silas") (empty (.Values.variables.silasRoleMappings | default "{}" | fromJson)) -}}
+{{- fail "variables.silasRoleMappings must define at least one role when SiLAS authentication is active" -}}
+{{- end -}}
+{{- end -}}
