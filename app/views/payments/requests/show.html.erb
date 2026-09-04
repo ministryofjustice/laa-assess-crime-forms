@@ -6,9 +6,13 @@
 <h1 class="govuk-heading-xl">
   <%= @claim_details.laa_reference %>
 <h1>
-<p class="govuk-body-m">
-  <strong><%= t(".allowed") %>: </strong><%= @claim_details.current_total %>
-<p>
+
+<% if @to_be_paid == false %>
+  <p class="govuk-body-m">
+    <strong><%= t(".allowed") %>: </strong><%= @claim_details.current_total %>
+  <p>
+<% end %>
+
 <p class="govuk-body-m">
   <strong><%= t(".claim_type") %>: </strong><%= @claim_details.claim_type %>
   <br>

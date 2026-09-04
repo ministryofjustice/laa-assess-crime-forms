@@ -18,6 +18,7 @@ module Payments
     end
 
     def show
+      @to_be_paid = true
       @claim_details = payable_claim
       @current_page = controller_params[:current_page] || 'payment_request'
       @selected_payment = selected_payment(@claim_details.payment_requests) || @claim_details.payment_requests.first

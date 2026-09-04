@@ -54,11 +54,14 @@ en:
           claimed_and_allowed_costs: Claimed and allowed costs
           amended_allowed_costs: Amended allowed costs
           allowed_costs: Allowed costs
+          costs_to_be_paid: Costs to be paid
+          total_costs_to_be_paid: Total costs to be paid
           accessible:
             total_claimed: Total claimed
             total_allowed: Total allowed
             original_total_claimed: Previous claim
             original_total_allowed: Previously allowed
+            total_costs_to_be_paid: Total costs to be paid
           total_claimed: Total claimed
           original_total_claimed: Previously claimed
           total_allowed: Total allowed
@@ -181,6 +184,10 @@ en:
             allowed_assigned_counsel_vat: VAT on counsel fees
             calculate_cost: Calculate cost
             total_cost: Total allowed cost
+            to_be_paid_overrides:
+              page_title: Costs to be paid
+              heading: Costs to be paid
+              additional_text: Where a cost has increased since the previous payment, enter the difference to be paid in the relevant field.
       nsm:
         claim_details:
           edit:
@@ -223,6 +230,10 @@ en:
             waiting_costs: Waiting costs
             calculate_cost: Calculate cost
             total_cost: Total allowed cost
+            to_be_paid_overrides:
+              page_title: Costs to be paid
+              heading: Costs to be paid
+              additional_text: Where a cost has increased since the previous payment, enter the difference to be paid in the relevant field.
         submission_allowed_costs:
           edit:
             page_title: Amend allowed profit costs

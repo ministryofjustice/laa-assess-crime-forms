@@ -1,4 +1,5 @@
-<% title t('.page_title') %>
+<% local_prefix = @to_be_paid ? '.to_be_paid_overrides' : nil %>
+<% title t("#{local_prefix}.page_title") %>
 
 <% step_header(path: previous_decision_step_path) %>
 
@@ -6,8 +7,13 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-xl">
-      <%= t('.heading') %>
+      <%= t("#{local_prefix}.heading") %>
     </h1>
+    <% if @to_be_paid %>
+      <p class="govuk-body">
+        <%= t("#{local_prefix}.additional_text") %>
+      </p>
+    <% end %>
   </div>
 </div>
 

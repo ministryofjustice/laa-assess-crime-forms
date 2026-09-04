@@ -11,7 +11,7 @@ module Payments
     end
 
     def heading
-      I18n.t('payments.steps.check_your_answers.edit.claimed_and_allowed_costs')
+      t('claimed_and_allowed_costs')
     end
 
     def headers
