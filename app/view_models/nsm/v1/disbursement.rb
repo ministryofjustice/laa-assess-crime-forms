@@ -57,7 +57,7 @@ module Nsm
         )
       end
 
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable-next Metrics/AbcSize
       def disbursement_fields
         table_fields = {}
         table_fields[:type] = type_name.capitalize
@@ -73,9 +73,8 @@ module Nsm
 
         table_fields
       end
-      # rubocop:enable Metrics/AbcSize
 
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable-next Metrics/AbcSize
       def disbursement_allowed_fields
         table_fields = {}
         table_fields[:miles] = miles.to_s if miles.present?
@@ -87,7 +86,6 @@ module Nsm
 
         table_fields
       end
-      # rubocop:enable Metrics/AbcSize
 
       def pricing
         submission.rates.disbursements[disbursement_type.value.to_sym]

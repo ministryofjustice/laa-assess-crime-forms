@@ -9,7 +9,7 @@ module WardenHooks
   # and during authentication. Retrieving the user from session (:fetch) will not trigger it.
 
   module AuthUpdateable
-    # rubocop:disable Lint/NonLocalExitFromIterator
+    # rubocop:disable-next Lint/NonLocalExitFromIterator
     Warden::Manager.after_set_user except: :fetch do |user, warden, options|
       # :nocov:
       return unless user && warden.authenticated?(options[:scope])
@@ -17,6 +17,5 @@ module WardenHooks
 
       user.update_from_auth_hash!(warden)
     end
-    # rubocop:enable Lint/NonLocalExitFromIterator
   end
 end

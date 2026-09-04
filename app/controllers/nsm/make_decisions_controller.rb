@@ -6,7 +6,7 @@ module Nsm
       render locals: { claim:, decision: }
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable-next Metrics/AbcSize
     def update
       authorize(claim)
       decision = MakeDecisionForm.new(claim:, **form_params)
@@ -23,7 +23,6 @@ module Nsm
         render :edit, locals: { claim:, decision: }
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     private
 

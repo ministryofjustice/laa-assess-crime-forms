@@ -112,7 +112,7 @@ payment_request: {
       expect(page).not_to have_field('Unique file number', with: '120223/001')
     end
 
-    # rubocop:disable RSpec/MultipleExpectations
+    # rubocop:disable-next RSpec/MultipleExpectations
     it 'allows user to complete payment journey' do
       expect(page).to have_title('Date claim assessed')
       fill_date_claim_assessed
@@ -136,7 +136,6 @@ payment_request: {
 
       expect(page).to have_content('Payment request complete')
     end
-    # rubocop:enable RSpec/MultipleExpectations
 
     it 'sends Claim details Change to claim search from CYA' do
       expect(page).to have_title('Date claim assessed')

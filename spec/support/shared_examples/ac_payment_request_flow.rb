@@ -99,7 +99,7 @@ payment_request: {
       click_button 'Select'
     end
 
-    # rubocop:disable RSpec/MultipleExpectations
+    # rubocop:disable-next RSpec/MultipleExpectations
     it 'allows user to complete payment journey' do
       fill_date_claim_assessed
 
@@ -122,7 +122,6 @@ payment_request: {
 
       expect(page).to have_content('Payment request complete')
     end
-    # rubocop:enable RSpec/MultipleExpectations
 
     it 'sends Claim details Change to claim search and back link returns to Check your answers' do
       fill_date_claim_assessed

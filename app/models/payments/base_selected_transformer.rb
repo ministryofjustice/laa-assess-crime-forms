@@ -86,7 +86,7 @@ module Payments
        :assigned_counsel_claim]
     end
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable-next Metrics/MethodLength
     def claim_amount_keys
       {
         nsm_claim: [
@@ -111,6 +111,5 @@ module Payments
         ]
       }
     end
-    # rubocop:enable Metrics/MethodLength
   end
 end

@@ -2,7 +2,7 @@ module Payments
   class ScheduleReportBase < ApplicationJob
     sidekiq_options retry: 5
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable-next Metrics/AbcSize
     def perform
       return unless FeatureFlags.payments.enabled?
 
@@ -15,7 +15,6 @@ module Payments
       FileUtils.rm_rf(Rails.root.join('tmp/uploaded/reports'))
       Rails.logger.info 'Cleared tmp/uploaded/reports directory'
     end
-    # rubocop:enable Metrics/AbcSize
 
     def recipient_key
       raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
