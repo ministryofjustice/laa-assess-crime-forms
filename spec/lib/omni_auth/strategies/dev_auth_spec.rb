@@ -40,4 +40,74 @@ describe OmniAuth::Strategies::DevAuth do
       expect(Devise.omniauth_configs.fetch(:silas).strategy_class).to eq(described_class)
     end
   end
+
+  describe 'SiLAS claim simulation' do
+    subject(:claims) { strategy.send(:silas_claims) }
+
+    let(:strategy) { described_class.new(nil, name: :silas) }
+    let(:email) { 'case.worker@example.com' }
+    let(:request) { instance_double(Rack::Request, params: { 'email' => email }) }
+
+    before do
+      allow(strategy).to receive(:request).and_return(request)
+    end
+
+    context 'when the local user has no SiLAS snapshot' do
+      before do
+        create(
+          :caseworker,
+          email: email,
+          silas_user_name: nil,
+          roles: [build(:role, :caseworker, service: 'all')]
+        )
+      end
+
+      it 'generates deterministic identity and role claims from local data' do
+        expect(claims).to eq(
+          'USER_NAME' => "silas-#{email}",
+          'USER_EMAIL' => email,
+          'LAA_APP_ROLES' => ['Assess Caseworker (All)']
+        )
+      end
+    end
+
+    context 'when no local user matches the email' do
+      let(:email) { described_class::NO_AUTH_EMAIL }
+
+      it 'keeps the identity and role claims empty' do
+        expect(claims).to eq(
+          'USER_NAME' => nil,
+          'USER_EMAIL' => email,
+          'LAA_APP_ROLES' => []
+        )
+      end
+    end
+
+    context 'when the local role cannot be mapped' do
+      before do
+        create(
+          :supervisor,
+          email: email,
+          silas_user_name: nil,
+          roles: [build(:role, :supervisor, service: 'nsm')]
+        )
+      end
+
+      it 'emits an empty role claim' do
+        expect(claims['LAA_APP_ROLES']).to eq([])
+      end
+    end
+
+    context 'when the role mapping configuration is invalid' do
+      before do
+        create(:caseworker, email: email, silas_user_name: nil)
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with('SILAS_ROLE_MAPPINGS', '{}').and_return('{invalid')
+      end
+
+      it 'emits an empty role claim' do
+        expect(claims['LAA_APP_ROLES']).to eq([])
+      end
+    end
+  end
 end

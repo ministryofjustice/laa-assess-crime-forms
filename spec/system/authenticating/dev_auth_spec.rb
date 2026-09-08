@@ -143,20 +143,54 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
       context 'when the selected user has not been given a SiLAS identity' do
         let(:user) { create(:caseworker, email: 'unprovisioned@example.com') }
 
-        it 'fails closed' do
+        it 'links the user using a deterministic SiLAS subject' do
+          select user.email
+          click_on 'Sign in'
+
+          expect(page).to have_content 'Assess a crime form'
+          expect(user.reload.authentication_identity_for('silas').subject).to eq("silas-#{user.email}")
+        end
+
+        it 'uses the stored SiLAS subject on the next sign-in' do
+          select user.email
+          click_on 'Sign in'
+          stored_subject = user.reload.authentication_identity_for('silas').subject
+
+          click_on 'Sign out'
+          select user.email
+          click_on 'Sign in'
+
+          expect(page).to have_content 'Assess a crime form'
+          expect(user.reload.authentication_identity_for('silas').subject).to eq(stored_subject)
+        end
+      end
+
+      context 'when the selected user has an unmappable local role' do
+        let(:user) do
+          create(
+            :supervisor,
+            email: 'nsm.supervisor@example.com',
+            roles: [build(:role, :supervisor, service: 'nsm')]
+          )
+        end
+
+        it 'fails closed without linking the SiLAS identity' do
           select user.email
           click_on 'Sign in'
 
           expect(page).to have_content 'Access to this service is restricted'
+          expect(user.reload.authentication_identity_for('silas')).to be_nil
         end
       end
 
       context 'when no matching local user exists' do
-        it 'fails closed' do
+        it 'fails closed without synthesising a SiLAS subject' do
           select OmniAuth::Strategies::DevAuth::NO_AUTH_EMAIL
           click_on 'Sign in'
 
           expect(page).to have_content 'Access to this service is restricted'
+          expect(AuthenticationIdentity.find_by(provider: 'silas', subject: "silas-#{OmniAuth::Strategies::DevAuth::NO_AUTH_EMAIL}"))
+            .to be_nil
         end
       end
     end

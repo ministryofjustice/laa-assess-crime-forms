@@ -36,7 +36,11 @@ module OmniAuth
       end
 
       def authentication_subject
-        user&.authentication_identity_for(provider_name)&.subject || SecureRandom.uuid
+        identity = user&.authentication_identity_for(provider_name)
+        return identity.subject if identity
+        return "silas-#{email}" if silas? && user
+
+        SecureRandom.uuid unless silas?
       end
 
       def first_name
@@ -61,16 +65,22 @@ module OmniAuth
 
       def silas_claims
         {
-          'USER_NAME' => user&.authentication_identity_for('silas')&.subject,
+          'USER_NAME' => authentication_subject,
           'USER_EMAIL' => email,
-          'LAA_APP_ROLES' => Auth::SilasRoleMapper.claim_values_for(simulated_silas_roles)
+          'LAA_APP_ROLES' => simulated_silas_claim_values
         }
       end
 
       def simulated_silas_roles
         return [] unless user
 
-        user.silas_roles
+        user.silas_roles.presence || user.roles
+      end
+
+      def simulated_silas_claim_values
+        Auth::SilasRoleMapper.claim_values_for(simulated_silas_roles)
+      rescue Auth::SilasRoleMapper::UnknownRole, Auth::SilasRoleMapper::InvalidConfiguration
+        []
       end
     end
   end
