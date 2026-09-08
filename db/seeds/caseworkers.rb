@@ -5,7 +5,9 @@ seed_users = [
   { email: 'super.visor@test.com', first_name: 'Super', last_name: 'Visor', role_type: 'supervisor', service: 'all' },
   { email: 'viewer@test.com', first_name: 'Reid', last_name: "O'Nly", role_type: 'viewer', service: 'all' },
   { email: 'pa@test.com', first_name: 'Crim', last_name: 'Fours', role_type: 'caseworker', service: 'pa' },
-  { email: 'nsm@test.com', first_name: 'Crim', last_name: 'Sevens', role_type: 'caseworker', service: 'nsm' }
+  { email: 'nsm@test.com', first_name: 'Crim', last_name: 'Sevens', role_type: 'caseworker', service: 'nsm' },
+  { email: 'pa.viewer@test.com', first_name: 'Prior', last_name: 'Viewer', role_type: 'viewer', service: 'pa' },
+  { email: 'nsm.viewer@test.com', first_name: 'NSM', last_name: 'Viewer', role_type: 'viewer', service: 'nsm' }
 ]
 
 seed_users.each do |attributes|
