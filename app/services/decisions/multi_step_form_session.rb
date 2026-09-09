@@ -37,19 +37,54 @@ module Decisions
       answers['laa_reference'].blank? && answers['linked_nsm_reference'].blank? && answers['linked_laa_reference'].blank?
     end
 
+    def payment_basis
+      if answers['request_type'].in? %w[non_standard_magistrate assigned_counsel]
+        LaaCrimeFormsCommon::PaymentBasis::NEW_UNLINKED_RECORD
+      elsif linked_payment? && no_original_payment?
+        LaaCrimeFormsCommon::PaymentBasis::LINKED_NO_ORIGINAL_PAYMENT
+      elsif linked_payment?
+        LaaCrimeFormsCommon::PaymentBasis::EXISTING_PAYMENT_RECORD
+      else
+        raise 'Unknown payment basis'
+      end
+    end
+
     private
 
+    def no_original_payment?
+      request_type = if answers['request_type'].start_with?('non_standard_mag')
+                       'non_standard_magistrate'
+                     elsif answers['request_type'].start_with?('assigned_counsel')
+                       'assigned_counsel'
+                     else
+                       raise 'Unknown request type'
+                     end
+      search_params = {
+        laa_reference: answers['laa_reference'] || answers['linked_laa_reference'],
+        request_type: request_type
+      }
+      results = AppStoreClient.new.search(answers['laa_reference'] || answers['linked_laa_reference'], search_params)
+
+      results.dig(:metadata, :total_results).zero?
+    end
+
+    def linked_payment?
+      answers['request_type'].in?(
+        %w[
+          non_standard_mag_supplemental
+          non_standard_mag_amendment
+          non_standard_mag_appeal
+          assigned_counsel_appeal
+          assigned_counsel_amendment
+        ]
+      )
+    end
+
     def create!
-      # rubocop:disable Rails/Presence
-      if session[key].blank?
-        session[key] = {
-          'answers' => { 'id' => id,
-            'idempotency_token' => SecureRandom.uuid }
-        }
-      else
-        session[key]
-      end
-      # rubocop:enable Rails/Presence
+      session[key].presence || session(key, {
+                                         'answers' => { 'id' => id,
+                                           'idempotency_token' => SecureRandom.uuid }
+                                       })
     end
 
     def key
