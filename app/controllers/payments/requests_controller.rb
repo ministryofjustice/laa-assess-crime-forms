@@ -63,7 +63,10 @@ module Payments
     end
 
     def request_payload
-      current_multi_step_form_session.answers.merge('submitter_id' => current_user.id)
+      current_multi_step_form_session.answers.merge(
+        'submitter_id' => current_user.id,
+        'payment_basis' => current_multi_step_form_session.payment_basis
+      )
     end
 
     def confirmation_response_payload(response)
