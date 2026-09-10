@@ -256,8 +256,10 @@ en:
           assigned_counsel: Claimed and allowed costs
           assigned_counsel_appeal: Allowed costs after appeal
           assigned_counsel_amendment: Allowed costs after amendment
+          costs_to_be_paid: Costs to be paid
         total_claimed: Total claimed
         total_allowed: Total allowed
+        total_costs_to_be_paid: Total costs to be paid
         cost_type: Cost type
         profit_cost: Profit costs
         disbursement_cost: Disbursements
@@ -269,6 +271,7 @@ en:
         accessible:
           total_claimed: Total claimed
           total_allowed: Total allowed
+          total_costs_to_be_paid: Total costs to be paid
         payment_type: Payment type
         date_claim_assessed:
           breach_of_injunction: Date claim assessed

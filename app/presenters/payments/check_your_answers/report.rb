@@ -14,8 +14,9 @@ module Payments
         ]
       end
 
-      def initialize(session_answers, _params, to_be_paid)
+      def initialize(session_answers, params, to_be_paid)
         @session_answers = session_answers
+        @params = params
         @to_be_paid = to_be_paid
       end
 
@@ -45,16 +46,16 @@ module Payments
       end
 
       def claim_types_section
-        [ClaimTypesCard.new(@session_answers)]
+        [ClaimTypesCard.new(session_answers)]
       end
 
       def claim_details_section
-        case @session_answers['request_type'].to_sym
+        case session_answers['request_type'].to_sym
         when :breach_of_injunction, :non_standard_magistrate, :non_standard_mag_supplemental,
              :non_standard_mag_amendment, :non_standard_mag_appeal
-          [NsmClaimDetailsCard.new(@session_answers, params)]
+          [NsmClaimDetailsCard.new(session_answers, params)]
         when :assigned_counsel, :assigned_counsel_appeal, :assigned_counsel_amendment
-          [AcClaimDetailsCard.new(@session_answers, params)]
+          [AcClaimDetailsCard.new(session_answers, params)]
         # :nocov:
         else
           false
@@ -64,10 +65,10 @@ module Payments
 
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def cost_summary
-        if @session_answers['request_type'].starts_with('non_standard_mag') && @to_be_paid
-          Payments::NsmCostsSummaryToBePaid.new(@session_answers)
-        elsif @session_answers['request_type'].starts_with('assigned_counsel') && @to_be_paid
-          Payments::AcCostsSummaryToBePaid.new(@session_answers)
+        if session_answers['request_type'].start_with?('non_standard_mag') && to_be_paid
+          Payments::NsmCostsSummaryToBePaid.new(session_answers)
+        elsif session_answers['request_type'].start_with?('assigned_counsel') && to_be_paid
+          Payments::AcCostsSummaryToBePaid.new(session_answers)
         else
           case session_answers['request_type'].to_sym
           when :non_standard_magistrate, :breach_of_injunction

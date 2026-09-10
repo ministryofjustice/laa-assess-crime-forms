@@ -18,7 +18,11 @@ module Payments
     end
 
     def title
-      I18n.t("payments.requests.payment_details.payment_heading.#{@payment_request['request_type']}")
+      if calculation_method == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID
+        I18n.t('payments.requests.payment_details.payment_heading.costs_to_be_paid')
+      else
+        I18n.t("payments.requests.payment_details.payment_heading.#{@payment_request['request_type']}")
+      end
     end
 
     def date_claim_assessed
@@ -43,6 +47,10 @@ module Payments
 
     def cost_summary
       @cost_summary ||= Payments::ViewCostsSummary.new(@payment_request, @claim_type)
+    end
+
+    def calculation_method
+      @payment_request['calculation_method']
     end
   end
 end

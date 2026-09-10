@@ -40,7 +40,7 @@ module Decisions
     def payment_basis
       if answers['request_type'].in? %w[non_standard_magistrate assigned_counsel]
         LaaCrimeFormsCommon::PaymentBasis::NEW_UNLINKED_RECORD
-      elsif linked_payment? && no_original_payment?
+      elsif (linked_payment? && no_original_payment?) || no_existing_ref?
         LaaCrimeFormsCommon::PaymentBasis::LINKED_NO_ORIGINAL_PAYMENT
       elsif linked_payment?
         LaaCrimeFormsCommon::PaymentBasis::EXISTING_PAYMENT_RECORD
@@ -71,9 +71,9 @@ module Decisions
         laa_reference: answers['laa_reference'] || answers['linked_laa_reference'],
         request_type: request_type
       }
-      results = AppStoreClient.new.search(answers['laa_reference'] || answers['linked_laa_reference'], search_params)
+      results = AppStoreClient.new.search(search_params, :payment_requests)
 
-      results.dig(:metadata, :total_results).zero?
+      results.dig('metadata', 'total_results').zero?
     end
 
     def linked_payment?
@@ -89,10 +89,16 @@ module Decisions
     end
 
     def create!
-      session[key].presence || session(key, {
-                                         'answers' => { 'id' => id,
-                                           'idempotency_token' => SecureRandom.uuid }
-                                       })
+      # rubocop:disable Rails/Presence
+      if session[key].blank?
+        session[key] = {
+          'answers' => { 'id' => id,
+            'idempotency_token' => SecureRandom.uuid }
+        }
+      else
+        session[key]
+      end
+      # rubocop:enable Rails/Presence
     end
 
     def key
