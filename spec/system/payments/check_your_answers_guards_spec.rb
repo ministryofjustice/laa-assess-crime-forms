@@ -38,7 +38,7 @@ RSpec.describe 'Payment submission safeguards', type: :system do
     expect(page).to have_title('Check your answers')
 
     click_button 'Submit payment request'
-    expect(page).to have_title('Payment Confirmation')
+    expect(page).to have_title('Payment request complete')
 
     visit edit_payments_steps_check_your_answers_path(claim_id, submission: true)
 
