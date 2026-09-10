@@ -49,6 +49,10 @@ module Decisions
       end
     end
 
+    def calculation_method
+      LaaCrimeFormsCommon::PaymentBasis.calculation_method_for(payment_basis)
+    end
+
     private
 
     def no_original_payment?
