@@ -5,7 +5,7 @@ module Payments
       include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
 
-      attr_reader :session_answers, :params
+      attr_reader :session_answers, :params, :to_be_paid
 
       def show_groups
         %w[
@@ -14,9 +14,9 @@ module Payments
         ]
       end
 
-      def initialize(session_answers, params)
+      def initialize(session_answers, _params, to_be_paid)
         @session_answers = session_answers
-        @params = params
+        @to_be_paid = to_be_paid
       end
 
       def section_groups
@@ -45,16 +45,16 @@ module Payments
       end
 
       def claim_types_section
-        [ClaimTypesCard.new(session_answers)]
+        [ClaimTypesCard.new(@session_answers)]
       end
 
       def claim_details_section
-        case session_answers['request_type'].to_sym
+        case @session_answers['request_type'].to_sym
         when :breach_of_injunction, :non_standard_magistrate, :non_standard_mag_supplemental,
              :non_standard_mag_amendment, :non_standard_mag_appeal
-          [NsmClaimDetailsCard.new(session_answers, params)]
+          [NsmClaimDetailsCard.new(@session_answers, params)]
         when :assigned_counsel, :assigned_counsel_appeal, :assigned_counsel_amendment
-          [AcClaimDetailsCard.new(session_answers, params)]
+          [AcClaimDetailsCard.new(@session_answers, params)]
         # :nocov:
         else
           false
@@ -62,32 +62,38 @@ module Payments
         # :nocov:
       end
 
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def cost_summary
-        case session_answers['request_type'].to_sym
-        when :non_standard_magistrate, :breach_of_injunction
-          Payments::NsmCostsSummary.new(session_answers, from_submission: from_submission?)
-        when :non_standard_mag_supplemental
-          if session_answers['laa_reference'].present? || session_answers['linked_laa_reference'].present?
-            Payments::NsmCostsSummaryAmendedAndClaimed.new(session_answers)
-          else
-            Payments::NsmCostsSummary.new(session_answers)
-          end
-        when :non_standard_mag_amendment, :non_standard_mag_appeal
-          Payments::NsmCostsSummaryAmended.new(session_answers)
-        when :assigned_counsel
-          Payments::AcCostsSummary.new(session_answers)
-        when :assigned_counsel_appeal
-          Payments::AcCostsSummaryAppealed.new(session_answers)
-        when :assigned_counsel_amendment
-          Payments::AcCostsSummaryAmended.new(session_answers)
-          # :nocov:
+        if @session_answers['request_type'].starts_with('non_standard_mag') && @to_be_paid
+          Payments::NsmCostsSummaryToBePaid.new(@session_answers)
+        elsif @session_answers['request_type'].starts_with('assigned_counsel') && @to_be_paid
+          Payments::AcCostsSummaryToBePaid.new(@session_answers)
         else
-          raise StandardError, "Unknown request type: #{session_answers['request_type']}"
+          case session_answers['request_type'].to_sym
+          when :non_standard_magistrate, :breach_of_injunction
+            Payments::NsmCostsSummary.new(session_answers, from_submission: from_submission?)
+          when :non_standard_mag_supplemental
+            if session_answers['laa_reference'].present? || session_answers['linked_laa_reference'].present?
+              Payments::NsmCostsSummaryAmendedAndClaimed.new(session_answers)
+            else
+              Payments::NsmCostsSummary.new(session_answers)
+            end
+          when :non_standard_mag_amendment, :non_standard_mag_appeal
+            Payments::NsmCostsSummaryAmended.new(session_answers)
+          when :assigned_counsel
+            Payments::AcCostsSummary.new(session_answers)
+          when :assigned_counsel_appeal
+            Payments::AcCostsSummaryAppealed.new(session_answers)
+          when :assigned_counsel_amendment
+            Payments::AcCostsSummaryAmended.new(session_answers)
+          # :nocov:
+          else
+            raise StandardError, "Unknown request type: #{session_answers['request_type']}"
+          end
+          # :nocov:
         end
-        # :nocov:
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       private
 
