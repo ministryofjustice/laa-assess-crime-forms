@@ -56,7 +56,7 @@ module Decisions
     def to_be_paid?
       # original payments have an entered to be paid calculation method for totals
       # but we need to capture claimed and allowed values as normal
-      return false if no_existing_ref?
+      return false if answers['request_type'].in? %w[non_standard_magistrate assigned_counsel]
 
       calculation_method == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID
     end
