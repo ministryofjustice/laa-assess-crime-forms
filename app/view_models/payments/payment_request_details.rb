@@ -54,7 +54,7 @@ module Payments
     end
 
     def to_be_paid?
-      return false if @payment_request['request_type'].in? %w[non_standard_magistrate assigned_counsel]
+      return false if @payment_request['request_type'].in? %w[non_standard_magistrate assigned_counsel breach_of_injunction]
 
       calculation_method == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID
     end
