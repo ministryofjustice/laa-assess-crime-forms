@@ -18,7 +18,7 @@ module Payments
     end
 
     def title
-      if calculation_method == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID
+      if to_be_paid?
         I18n.t('payments.requests.payment_details.payment_heading.costs_to_be_paid')
       else
         I18n.t("payments.requests.payment_details.payment_heading.#{@payment_request['request_type']}")
@@ -46,11 +46,17 @@ module Payments
     end
 
     def cost_summary
-      @cost_summary ||= Payments::ViewCostsSummary.new(@payment_request, @claim_type)
+      @cost_summary ||= Payments::ViewCostsSummary.new(@payment_request, @claim_type, to_be_paid?)
     end
 
     def calculation_method
       @payment_request['calculation_method']
+    end
+
+    def to_be_paid?
+      return false if @payment_request['request_type'].in? %w[non_standard_magistrate assigned_counsel]
+
+      calculation_method == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID
     end
   end
 end

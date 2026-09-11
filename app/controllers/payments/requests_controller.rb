@@ -21,7 +21,7 @@ module Payments
       @claim_details = payable_claim
       @current_page = controller_params[:current_page] || 'payment_request'
       @selected_payment = selected_payment(@claim_details.payment_requests) || @claim_details.payment_requests.first
-      @to_be_paid = @selected_payment.calculation_method == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID
+      @to_be_paid = @selected_payment.to_be_paid?
       @related_payments_pagy = Pagy.new(**related_payments_pagy_params)
     end
 

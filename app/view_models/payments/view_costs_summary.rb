@@ -16,9 +16,10 @@ module Payments
       assigned_counsel_vat
     ].freeze
 
-    def initialize(payment_request, claim_type)
+    def initialize(payment_request, claim_type, to_be_paid)
       @payment_request = payment_request
       @claim_type = claim_type
+      @to_be_paid = to_be_paid
     end
 
     def row_fields
@@ -33,7 +34,7 @@ module Payments
     end
 
     def headers
-      if to_be_paid?
+      if @to_be_paid
         [
           t('cost_type', numeric: false, width: '50%'),
           t('total_costs_to_be_paid')
@@ -52,7 +53,7 @@ module Payments
     end
 
     def formatted_summed_fields
-      if to_be_paid?
+      if @to_be_paid
         {
           name: t('total', numeric: false),
           total_costs_to_be_paid: format(calculated_allowed_costs)
@@ -73,7 +74,7 @@ module Payments
     private
 
     def build_row(type)
-      if to_be_paid?
+      if @to_be_paid
         {
           name: t(type, numeric: false),
           to_be_paid: format(@payment_request["allowed_#{type}"].to_f)
@@ -101,10 +102,6 @@ module Payments
         numeric: numeric,
         width: width
       }
-    end
-
-    def to_be_paid?
-      @payment_request['calculation_method'] == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID
     end
   end
 end
