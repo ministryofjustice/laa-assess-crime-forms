@@ -22,7 +22,7 @@ module Decisions
       .when(-> { nsm_supplemental && multi_step_form_session.to_be_paid? && multi_step_form_session.no_existing_ref? })
       .goto(edit: DecisionTree::NSM_CLAIM_DETAILS)
       .when(-> { nsm_supplemental && multi_step_form_session.to_be_paid? })
-      .goto(edit: DecisionTree::NSM_ALLOWED_COSTS)
+      .goto(edit: DecisionTree::DATE_CLAIM_ASSESSED)
       .when(-> { nsm_supplemental })
       .goto(edit: DecisionTree::NSM_CLAIMED_COSTS)
       .when(-> { (nsm_appeal || nsm_amendment) && multi_step_form_session.no_existing_ref? })
