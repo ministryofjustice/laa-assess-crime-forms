@@ -68,7 +68,7 @@ module Decisions
                        raise 'Unknown request type'
                      end
       search_params = {
-        laa_reference: answers['laa_reference'] || answers['linked_laa_reference'],
+        query: answers['laa_reference'] || answers['linked_laa_reference'],
         request_type: request_type
       }
       results = AppStoreClient.new.search(search_params, :payment_requests)

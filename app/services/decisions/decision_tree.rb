@@ -69,6 +69,8 @@ module Decisions
       .goto(edit: DATE_CLAIM_ASSESSED)
 
     from(:date_claim_assessed)
+      .when(-> { nsm_supplemental && multi_step_form_session.to_be_paid? })
+      .goto(edit: NSM_ALLOWED_COSTS)
       .when(-> { nsm_supplemental })
       .goto(edit: NSM_CLAIMED_COSTS)
       .when(-> { nsm_appeal || nsm_amendment })
@@ -80,6 +82,8 @@ module Decisions
 
     from(:nsm_claim_details)
       .when(-> { nsm_appeal || nsm_amendment })
+      .goto(edit: NSM_ALLOWED_COSTS)
+      .when(-> { nsm_supplemental && multi_step_form_session.to_be_paid? })
       .goto(edit: NSM_ALLOWED_COSTS)
       .when(-> { nsm || boi || nsm_supplemental })
       .goto(edit: NSM_CLAIMED_COSTS)
