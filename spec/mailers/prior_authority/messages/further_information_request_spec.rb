@@ -70,7 +70,7 @@ RSpec.describe LaaCrimeFormsCommon::Messages::PriorAuthority::FurtherInformation
             "## Further information request\n\n" \
             "Please provide this further info...\n\n" \
             "## Amendment request\n\n" \
-            'Please correct this information...' \
+            'Please correct this information...'
         )
       end
     end

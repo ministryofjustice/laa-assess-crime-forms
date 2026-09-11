@@ -111,7 +111,7 @@ RSpec.describe PriorAuthority::EmailToProviderMailer, type: :mailer do
       "## Further information request\n\n" \
         "Please provide this further info...\n\n" \
         "## Amendment request\n\n" \
-        'Please correct this information...' \
+        'Please correct this information...'
     end
 
     let(:submission) do
