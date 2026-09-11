@@ -5,6 +5,8 @@ module Payments
       @claim_type = claim_type
     end
 
+    attr_reader :payment_request, :claim_type
+
     def id
       @payment_request['id']
     end
@@ -46,7 +48,7 @@ module Payments
     end
 
     def cost_summary
-      @cost_summary ||= Payments::ViewCostsSummary.new(@payment_request, @claim_type, to_be_paid?)
+      @cost_summary ||= Payments::ViewCostsSummary.new(self)
     end
 
     def calculation_method

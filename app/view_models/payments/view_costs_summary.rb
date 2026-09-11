@@ -16,10 +16,10 @@ module Payments
       assigned_counsel_vat
     ].freeze
 
-    def initialize(payment_request, claim_type, to_be_paid)
-      @payment_request = payment_request
-      @claim_type = claim_type
-      @to_be_paid = to_be_paid
+    def initialize(payment_request_details)
+      @payment_request = payment_request_details.payment_request
+      @claim_type = payment_request_details.claim_type
+      @to_be_paid = payment_request_details.to_be_paid?
     end
 
     def row_fields
