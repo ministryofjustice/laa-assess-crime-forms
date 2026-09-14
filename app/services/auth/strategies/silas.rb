@@ -19,7 +19,7 @@ module Auth
 
         sync_user!(user, mapped_roles)
 
-        Result.new(user: user, failure_reason: nil)
+        Auth::Result.new(user: user, failure_reason: nil)
       rescue SilasRoleMapper::MissingRoles, SilasRoleMapper::UnknownRole, SilasRoleMapper::InvalidConfiguration
         failure(:invalid_silas_roles)
       rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique
@@ -104,7 +104,7 @@ module Auth
       end
 
       def failure(reason)
-        Result.new(user: nil, failure_reason: reason)
+        Auth::Result.new(user: nil, failure_reason: reason)
       end
     end
   end

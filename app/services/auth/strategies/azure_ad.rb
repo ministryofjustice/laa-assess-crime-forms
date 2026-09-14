@@ -12,7 +12,7 @@ module Auth
         return failure(:not_authorized) unless user
 
         sync_user!(user)
-        Result.new(user: user, failure_reason: nil)
+        Auth::Result.new(user: user, failure_reason: nil)
       rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique
         failure(:invalid_azure_identity)
       end
@@ -57,7 +57,7 @@ module Auth
       end
 
       def failure(reason)
-        Result.new(user: nil, failure_reason: reason)
+        Auth::Result.new(user: nil, failure_reason: reason)
       end
     end
   end

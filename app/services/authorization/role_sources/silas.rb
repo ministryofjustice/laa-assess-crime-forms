@@ -1,6 +1,6 @@
 module Authorization
   module RoleSources
-    class Silas < Database
+    class Silas < StoredRoles
       def initialize
         super(preload_association: :silas_roles)
       end

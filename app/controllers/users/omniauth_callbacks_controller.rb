@@ -2,6 +2,7 @@ module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     before_action :skip_authorization
 
+    # Devise dispatches each provider callback to its named action.
     def azure_ad
       authenticate_from_omniauth
     end

@@ -1,6 +1,6 @@
 module Authorization
   module RoleSources
-    class Local < Database
+    class Local < StoredRoles
       def initialize
         super(preload_association: :roles)
       end

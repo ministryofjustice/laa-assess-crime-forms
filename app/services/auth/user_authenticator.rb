@@ -16,8 +16,8 @@ module Auth
     end
 
     def call
-      return Result.new(user: nil, failure_reason: :unsupported_provider) unless strategy
-      return Result.new(user: nil, failure_reason: :provider_mismatch) unless provider.accepts_callback?(auth_hash.provider)
+      return Auth::Result.new(user: nil, failure_reason: :unsupported_provider) unless strategy
+      return Auth::Result.new(user: nil, failure_reason: :provider_mismatch) unless provider.accepts_callback?(auth_hash.provider)
 
       strategy.new(auth_hash).call
     end

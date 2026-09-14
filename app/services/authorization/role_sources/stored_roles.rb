@@ -1,6 +1,6 @@
 module Authorization
   module RoleSources
-    class Database
+    class StoredRoles
       attr_reader :preload_association
 
       def initialize(preload_association:)

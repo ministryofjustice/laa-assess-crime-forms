@@ -71,6 +71,7 @@ module OmniAuth
         }
       end
 
+      # The local bypass builds SiLAS claims from stored roles without contacting SiLAS.
       def simulated_silas_roles
         return [] unless user
 
