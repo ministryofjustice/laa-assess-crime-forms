@@ -3,7 +3,7 @@ module Payments
     module Ac
       class AllowedCostsController < BaseController
         def edit
-          @to_be_paid = multi_step_form_session.to_be_paid?
+          @to_be_paid = to_be_paid?(multi_step_form_session.answers)
           @form_object = Payments::Steps::Ac::AllowedCostsForm.build(multi_step_form_session.answers,
                                                                      multi_step_form_session:)
         end

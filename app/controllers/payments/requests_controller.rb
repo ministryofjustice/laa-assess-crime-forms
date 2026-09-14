@@ -1,5 +1,6 @@
 module Payments
   class RequestsController < ApplicationController
+    include PaymentsHelper
     include Payments::MultiStepFormSessionConcern
 
     layout 'payments'
@@ -65,7 +66,7 @@ module Payments
     def request_payload
       current_multi_step_form_session.answers.merge(
         'submitter_id' => current_user.id,
-        'payment_basis' => current_multi_step_form_session.payment_basis
+        'payment_basis' => payment_basis(current_multi_step_form_session.answers)
       )
     end
 
