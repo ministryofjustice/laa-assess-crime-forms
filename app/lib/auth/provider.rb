@@ -17,10 +17,10 @@ module Auth
 
     class << self
       def current
-        fetch(ENV.fetch('ASSESS_AUTH_PROVIDER', 'azure_ad'))
+        build(ENV.fetch('ASSESS_AUTH_PROVIDER', 'azure_ad'))
       end
 
-      def fetch(name)
+      def build(name)
         normalised_name = name.to_s
         configuration = CONFIGURATIONS[normalised_name]
         raise UnknownProvider, "Unknown auth provider: #{normalised_name}" unless configuration

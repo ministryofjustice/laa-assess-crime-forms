@@ -17,7 +17,7 @@ module Auth
     end
 
     def provider
-      @provider ||= Provider.fetch(session.fetch(SESSION_KEY, LEGACY_PROVIDER))
+      @provider ||= Provider.build(session.fetch(SESSION_KEY, LEGACY_PROVIDER))
     rescue Provider::UnknownProvider
       nil
     end

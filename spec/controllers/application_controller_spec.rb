@@ -28,7 +28,7 @@ RSpec.describe ApplicationController, type: :controller do
   context 'with an authenticated session from a different provider' do
     before do
       session[Auth::SessionContext::SESSION_KEY] = 'azure_ad'
-      allow(Auth::Provider).to receive(:current).and_return(Auth::Provider.fetch('silas'))
+      allow(Auth::Provider).to receive(:current).and_return(Auth::Provider.build('silas'))
       allow(controller).to receive_messages(user_signed_in?: true, current_user: auth_user)
       allow(controller).to receive(:sign_out)
     end

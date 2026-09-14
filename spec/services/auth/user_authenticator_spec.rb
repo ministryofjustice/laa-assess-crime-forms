@@ -40,7 +40,7 @@ RSpec.describe Auth::UserAuthenticator do
 
     context 'when the provider is silas' do
       before do
-        allow(Auth::Provider).to receive(:current).and_return(Auth::Provider.fetch('silas'))
+        allow(Auth::Provider).to receive(:current).and_return(Auth::Provider.build('silas'))
       end
 
       let(:auth_hash) do

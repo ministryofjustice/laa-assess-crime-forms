@@ -4,7 +4,7 @@ RSpec.describe Auth::SessionContext do
   subject(:context) { described_class.new(session:, configured_provider:) }
 
   let(:session) { {} }
-  let(:configured_provider) { Auth::Provider.fetch('azure_ad') }
+  let(:configured_provider) { Auth::Provider.build('azure_ad') }
 
   describe '.bind!' do
     it 'binds a successful callback to its configured provider' do
@@ -33,7 +33,7 @@ RSpec.describe Auth::SessionContext do
 
     context 'when the configured provider changes' do
       let(:session) { { described_class::SESSION_KEY => 'azure_ad' } }
-      let(:configured_provider) { Auth::Provider.fetch('silas') }
+      let(:configured_provider) { Auth::Provider.build('silas') }
 
       it { is_expected.not_to be_valid }
     end
@@ -51,7 +51,7 @@ RSpec.describe Auth::SessionContext do
 
   describe '#role_source' do
     let(:session) { { described_class::SESSION_KEY => 'silas' } }
-    let(:configured_provider) { Auth::Provider.fetch('silas') }
+    let(:configured_provider) { Auth::Provider.build('silas') }
 
     it 'builds the provider-neutral source selected at authentication' do
       expect(context.role_source).to be_a(Authorization::RoleSources::Silas)

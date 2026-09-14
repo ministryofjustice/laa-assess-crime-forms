@@ -96,7 +96,7 @@ RSpec.describe 'Authenticating with the DevAuth strategy' do
 
     context 'when SiLAS auth is selected' do
       before do
-        allow(Auth::Provider).to receive(:current).and_return(Auth::Provider.fetch('silas'))
+        allow(Auth::Provider).to receive(:current).and_return(Auth::Provider.build('silas'))
         visit '/'
       end
 

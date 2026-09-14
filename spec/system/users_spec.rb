@@ -181,7 +181,7 @@ RSpec.describe 'Users', :stub_oauth_token do
       auth_context = instance_double(
         Auth::SessionContext,
         valid?: true,
-        provider: Auth::Provider.fetch('silas'),
+        provider: Auth::Provider.build('silas'),
         role_source: role_source,
         role_management_editable?: false
       )

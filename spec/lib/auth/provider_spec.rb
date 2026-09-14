@@ -31,16 +31,16 @@ RSpec.describe Auth::Provider do
     end
   end
 
-  describe '.fetch' do
+  describe '.build' do
     it 'encapsulates the role authority for Azure authentication' do
-      provider = described_class.fetch('azure_ad')
+      provider = described_class.build('azure_ad')
 
       expect(provider.role_authority).to eq('local')
       expect(provider).to be_role_management_editable
     end
 
     it 'encapsulates the role authority for SiLAS authentication' do
-      provider = described_class.fetch('silas')
+      provider = described_class.build('silas')
 
       expect(provider.role_authority).to eq('silas')
       expect(provider).not_to be_role_management_editable
@@ -49,14 +49,14 @@ RSpec.describe Auth::Provider do
 
   describe '#accepts_callback?' do
     it 'accepts only the configured provider' do
-      provider = described_class.fetch('silas')
+      provider = described_class.build('silas')
 
       expect(provider.accepts_callback?(:silas)).to be true
       expect(provider.accepts_callback?(:azure_ad)).to be false
     end
 
     it 'accepts the local development provider in Azure mode' do
-      provider = described_class.fetch('azure_ad')
+      provider = described_class.build('azure_ad')
 
       expect(provider.accepts_callback?(:dev_auth)).to be true
     end
@@ -64,7 +64,7 @@ RSpec.describe Auth::Provider do
 
   describe '#callback_path_helper' do
     it 'returns the callback helper for the configured provider' do
-      provider = described_class.fetch('silas')
+      provider = described_class.build('silas')
 
       expect(provider.callback_path_helper).to eq(:user_silas_omniauth_callback_path)
     end

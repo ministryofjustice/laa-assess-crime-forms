@@ -4,7 +4,7 @@ RSpec.describe 'Reauthentication', :stub_oauth_token do
   let(:reauthenticate_in) { Rails.configuration.x.auth.reauthenticate_in }
   let(:user) { create(:caseworker) }
   let(:sign_out_all_scopes) { true }
-  let(:configured_provider) { Auth::Provider.fetch('azure_ad') }
+  let(:configured_provider) { Auth::Provider.build('azure_ad') }
   let(:refresh_request) { true }
 
   before do
@@ -56,7 +56,7 @@ RSpec.describe 'Reauthentication', :stub_oauth_token do
 
   context 'when the authenticated session belongs to the previous provider' do
     let(:last_auth_at) { Time.current }
-    let(:configured_provider) { Auth::Provider.fetch('silas') }
+    let(:configured_provider) { Auth::Provider.build('silas') }
     let(:refresh_request) { false }
 
     it 'signs the user out and requires authentication with the configured provider' do

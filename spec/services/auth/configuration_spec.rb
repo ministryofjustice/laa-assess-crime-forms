@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe Auth::Configuration do
   subject(:validate_configuration) { described_class.validate!(provider:) }
 
-  let(:provider) { Auth::Provider.fetch('silas') }
+  let(:provider) { Auth::Provider.build('silas') }
 
   before do
     allow(ENV).to receive(:fetch).and_call_original
   end
 
   context 'when Azure AD is active' do
-    let(:provider) { Auth::Provider.fetch('azure_ad') }
+    let(:provider) { Auth::Provider.build('azure_ad') }
 
     it 'does not require SiLAS configuration' do
       described_class::REQUIRED_SILAS_ENV.each do |key|
