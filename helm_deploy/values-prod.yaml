@@ -59,8 +59,6 @@ resources:
 
 variables:
   environment: production
-  authProvider: azure_ad
-  silasRoleMappings: '{}'
   appStoreUrl: http://laa-crime-application-store-app.laa-crime-application-store-production.svc.cluster.local
   enableSyncTriggerEndpoint: 'false'
   allowIndexing: 'true'

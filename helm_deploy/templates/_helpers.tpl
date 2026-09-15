@@ -100,14 +100,12 @@ Function to return a list of whitelisted IPs allowed to access the service.
 {{- end -}}
 
 {{/*
-Fail chart rendering when the selected authentication provider is incomplete.
+The provider is resolved from a ConfigMap at pod startup. Always supply role mappings
+so changing the provider does not require another chart deployment.
 */}}
 {{- define "laa-assess-crime-forms.validateAuthConfiguration" -}}
-{{- $provider := .Values.variables.authProvider | default "azure_ad" -}}
-{{- if not (has $provider (list "azure_ad" "silas")) -}}
-{{- fail (printf "variables.authProvider must be azure_ad or silas, got %s" $provider) -}}
-{{- end -}}
-{{- if and (eq $provider "silas") (empty (.Values.variables.silasRoleMappings | default "{}" | fromJson)) -}}
-{{- fail "variables.silasRoleMappings must define at least one role when SiLAS authentication is active" -}}
+{{- $mappings := .Values.variables.silasRoleMappings | default "{}" | mustFromJson -}}
+{{- if or (not (kindIs "map" $mappings)) (empty $mappings) -}}
+{{- fail "variables.silasRoleMappings must define a non-empty JSON object" -}}
 {{- end -}}
 {{- end -}}
