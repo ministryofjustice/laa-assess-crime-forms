@@ -5,6 +5,7 @@ RSpec.describe DashboardsController do
     context 'dashboard ids not set' do
       let(:search_form) { nil }
       let(:search_form_instance) { instance_double(SearchForm, valid?: true, execute: true) }
+      let(:dashboard_user) { create(:supervisor) }
 
       before do
         allow(ENV).to receive(:fetch).and_call_original
@@ -13,7 +14,7 @@ RSpec.describe DashboardsController do
         allow(ENV).to receive(:fetch).with('METABASE_NSM_DASHBOARD_IDS')
                                      .and_return(nil)
         allow(FeatureFlags).to receive_messages(insights: double(enabled?: true))
-        allow(subject).to receive(:current_user).and_return(double(supervisor?: true))
+        allow(subject).to receive(:current_user).and_return(dashboard_user)
         allow(SearchForm).to receive(:new).and_return(search_form_instance)
       end
 

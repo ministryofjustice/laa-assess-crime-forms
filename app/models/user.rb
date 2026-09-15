@@ -3,41 +3,34 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
   has_many :access_logs, dependent: :destroy
   has_many :roles, dependent: :destroy
+  has_many :silas_roles, dependent: :destroy
+  has_many :authentication_identities, dependent: :destroy
 
   devise :omniauthable, :timeoutable
 
-  include AuthUpdateable
   include Reauthable
 
-  scope :active, -> { where(deactivated_at: nil).where.not(auth_subject_id: nil) }
-  scope :pending_activation, -> { where(auth_subject_id: nil, deactivated_at: nil) }
-
-  def nsm_access?
-    @nsm_access ||= roles.nsm_access.exists?
-  end
-
-  def pa_access?
-    @pa_access ||= roles.pa_access.exists?
-  end
+  scope :active, -> { where(deactivated_at: nil).where.associated(:authentication_identities).distinct }
+  scope :pending_activation, -> { where(deactivated_at: nil).where.missing(:authentication_identities) }
 
   def display_name
     "#{first_name} #{last_name}"
   end
 
-  def supervisor?
-    @supervisor ||= roles.supervisor.any?
-  end
+  def authentication_identity_for(provider)
+    return authentication_identities.detect { _1.provider == provider.to_s } if authentication_identities.loaded?
 
-  def caseworker?
-    @caseworker ||= roles.caseworker.any?
-  end
-
-  def viewer?
-    @viewer ||= roles.viewer.any?
+    authentication_identities.find_by(provider: provider.to_s)
   end
 
   def pending_activation?
-    auth_subject_id.nil? && first_auth_at.nil?
+    authentication_identities.empty?
+  end
+
+  def most_recent_authentication_at
+    return authentication_identities.filter_map(&:last_authenticated_at).max if authentication_identities.loaded?
+
+    authentication_identities.maximum(:last_authenticated_at)
   end
 
   def self.load(user_id)

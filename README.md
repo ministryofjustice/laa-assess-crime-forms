@@ -133,6 +133,27 @@ other value.
 
 ### 10. Helm Template
 
+#### Authentication provider
+
+The existing `<deployment-name>` ConfigMap stores `auth_provider` alongside `MAINTENANCE_MODE`. It defaults to `azure_ad`, including when an existing ConfigMap lacks the key. The selected provider is preserved across Helm redeployments.
+
+Use `bin/set_auth_provider <namespace> <azure_ad|silas> [deployment-name]` after deploying the chart, with `kubectl` authenticated to the target cluster:
+
+```sh
+# Switch UAT to SiLAS
+bin/set_auth_provider laa-assess-crime-forms-uat silas
+
+# Switch UAT back to Azure
+bin/set_auth_provider laa-assess-crime-forms-uat azure_ad
+
+# Switch production to SiLAS
+bin/set_auth_provider laa-assess-crime-forms-prod silas
+```
+
+The script updates the ConfigMap, restarts the web and worker deployments, and waits for both rollouts. For a branch deployment, pass its deployment name as the third argument. Switching provider requires users to sign in again.
+
+Before switching to SiLAS, populate its credentials in AWS Secrets Manager and wait for the `silas-auth` Kubernetes Secret to sync. After changing credentials in AWS, wait for sync and restart the web and worker pods; running the script again with the current provider also does this.
+
 #### Security Context
 We have a default [k8s security context ](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#securitycontext-v1-core) defined in our _helpers.tpl template file. It sets the following:
 

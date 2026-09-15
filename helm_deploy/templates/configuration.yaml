@@ -7,4 +7,5 @@ metadata:
     helm.sh/resource-policy: keep
 data:
   MAINTENANCE_MODE: 'false'
+  auth_provider: azure_ad
 {{ end }}

@@ -41,6 +41,7 @@ en:
     before_date_from: End date cannot be before start date
 
   errors:
+    auth_provider_changed: Your sign-in method has changed. Sign in again to continue.
     office_code: Must be an alphanumeric string starting with a number and ending in a letter
     unauthorised: 'You are not authorised to perform this action'
     format: "%{message}"
