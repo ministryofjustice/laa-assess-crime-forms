@@ -68,14 +68,18 @@ RSpec.shared_examples 'AC payment request flow' do |type_suffix|
   let(:create_payment_stub) do
     stub_request(:post, create_endpoint).to_return(
       status: 201,
-      body: { claim: { laa_reference: '1234-abc' },
-payment_request_id: created_payment_request_id,
-payment_request: {
-  id: created_payment_request_id,
-  claimed_total: 100,
-  allowed_total: 10,
-  request_type: claim_type_code
-} }.to_json
+      body: {
+        claim: {
+          laa_reference: '1234-abc'
+        },
+        payment_request_id: created_payment_request_id,
+        payment_request: {
+          id: created_payment_request_id,
+          claimed_total: 100,
+          allowed_total: 10,
+          request_type: claim_type_code
+        }
+      }.to_json
     )
   end
 
