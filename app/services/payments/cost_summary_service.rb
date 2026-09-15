@@ -2,9 +2,10 @@ module Payments
   class CostSummaryService
     include PaymentsHelper
 
-    def initialize(session_answers, to_be_paid)
+    def initialize(session_answers, to_be_paid, from_submission)
       @session_answers = session_answers
       @to_be_paid = to_be_paid
+      @from_submission = from_submission
     end
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -16,7 +17,7 @@ module Payments
       else
         case @session_answers['request_type'].to_sym
         when :non_standard_magistrate, :breach_of_injunction
-          Payments::NsmCostsSummary.new(@session_answers, from_submission: from_submission?)
+          Payments::NsmCostsSummary.new(@session_answers, from_submission: @from_submission)
         when :non_standard_mag_supplemental
           if @session_answers['laa_reference'].present? || @session_answers['linked_laa_reference'].present?
             Payments::NsmCostsSummaryAmendedAndClaimed.new(@session_answers)

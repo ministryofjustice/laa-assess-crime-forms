@@ -64,7 +64,7 @@ module Payments
       end
 
       def cost_summary
-        Payments::CostSummaryService.new(session_answers, to_be_paid).call
+        Payments::CostSummaryService.new(session_answers, to_be_paid, from_submission?).call
       end
 
       private
