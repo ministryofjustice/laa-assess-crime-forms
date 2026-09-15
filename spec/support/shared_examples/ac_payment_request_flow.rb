@@ -79,9 +79,18 @@ payment_request: {
     )
   end
 
+  let(:search_original_payment_stub) do
+    stub_request(:post, 'https://appstore.example.com/v1/payment_requests/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: 1 }, data: [] }.to_json
+    )
+  end
+  let(:search_original_results) { 0 }
+
   before do
     allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     create_payment_stub
+    search_original_payment_stub
     stub_search(index_endpoint, index_params)
     sign_in caseworker
     start_new_payment_request
@@ -93,6 +102,8 @@ payment_request: {
   end
 
   context 'Linked assigned counsel claim exists' do
+    let(:search_original_results) { 1 }
+
     before do
       fill_in 'Find a claim', with: ac_claim_ref
       click_button 'Search'
@@ -198,6 +209,8 @@ payment_request: {
   end
 
   context 'No linked assigned counsel claim found' do
+    let(:search_original_results) { 0 }
+
     before do
       stub_search(linked_claim_endpoint, empty_search_params, [], 0)
       fill_in 'Find a claim', with: 'garbage'

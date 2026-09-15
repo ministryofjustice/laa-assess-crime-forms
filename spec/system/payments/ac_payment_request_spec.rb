@@ -65,11 +65,18 @@ payment_request: {
 } }.to_json
     )
   end
+  let(:search_original_payment_stub) do
+    stub_request(:post, 'https://appstore.example.com/v1/payment_requests/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 }, data: [] }.to_json
+    )
+  end
 
   before do
     allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     create_payment_stub
     stub_search(index_endpoint, index_params)
+    search_original_payment_stub
     sign_in caseworker
   end
 
