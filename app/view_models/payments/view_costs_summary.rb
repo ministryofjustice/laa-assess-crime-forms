@@ -16,9 +16,10 @@ module Payments
       assigned_counsel_vat
     ].freeze
 
-    def initialize(payment_request, claim_type)
-      @payment_request = payment_request
-      @claim_type = claim_type
+    def initialize(payment_request_details)
+      @payment_request = payment_request_details.payment_request
+      @claim_type = payment_request_details.claim_type
+      @to_be_paid = payment_request_details.to_be_paid?
     end
 
     def row_fields
@@ -33,11 +34,18 @@ module Payments
     end
 
     def headers
-      [
-        t('cost_type', numeric: false, width: '50%'),
-        t('total_claimed'),
-        t('total_allowed'),
-      ]
+      if @to_be_paid
+        [
+          t('cost_type', numeric: false, width: '50%'),
+          t('total_costs_to_be_paid')
+        ]
+      else
+        [
+          t('cost_type', numeric: false, width: '50%'),
+          t('total_claimed'),
+          t('total_allowed')
+        ]
+      end
     end
 
     def table_fields
@@ -45,11 +53,18 @@ module Payments
     end
 
     def formatted_summed_fields
-      {
-        name: t('total', numeric: false),
-        total_claimed: format(calculated_claimed_costs),
-        total_allowed: format(calculated_allowed_costs),
-      }
+      if @to_be_paid
+        {
+          name: t('total', numeric: false),
+          total_costs_to_be_paid: format(calculated_allowed_costs)
+        }
+      else
+        {
+          name: t('total', numeric: false),
+          total_claimed: format(calculated_claimed_costs),
+          total_allowed: format(calculated_allowed_costs),
+        }
+      end
     end
 
     def calculated_allowed_costs
@@ -59,11 +74,18 @@ module Payments
     private
 
     def build_row(type)
-      {
-        name: t(type, numeric: false),
-        total_claimed: format(@payment_request["claimed_#{type}"].to_f),
-        total_allowed: format(@payment_request["allowed_#{type}"].to_f),
-      }
+      if @to_be_paid
+        {
+          name: t(type, numeric: false),
+          to_be_paid: format(@payment_request["allowed_#{type}"].to_f)
+        }
+      else
+        {
+          name: t(type, numeric: false),
+          total_claimed: format(@payment_request["claimed_#{type}"].to_f),
+          total_allowed: format(@payment_request["allowed_#{type}"].to_f),
+        }
+      end
     end
 
     def format(value)

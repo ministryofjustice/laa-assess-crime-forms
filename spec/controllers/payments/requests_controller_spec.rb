@@ -23,7 +23,9 @@ RSpec.describe Payments::RequestsController, :stub_oauth_token do
   describe 'POST #create' do
     let(:flow_id) { '11111111-1111-4111-8111-111111111111' }
     let(:payment_request_id) { '22222222-2222-4222-8222-222222222222' }
-    let(:session_answers) { { 'id' => flow_id, 'some' => 'answer', 'nested' => { 'a' => 1 } } }
+    let(:session_answers) do
+      { 'id' => flow_id, 'some' => 'answer', 'nested' => { 'a' => 1 }, 'payment_basis' => 'linked_no_original_payment' }
+    end
     let(:session_double) { instance_double(Decisions::MultiStepFormSession, id: 'session-123', answers: session_answers) }
     let(:client_double) { instance_double(AppStoreClient) }
 
