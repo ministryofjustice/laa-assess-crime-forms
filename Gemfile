@@ -5,18 +5,18 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').strip
 
-gem 'aws-sdk-s3', '~> 1.229'
+gem 'aws-sdk-s3', '~> 1.230'
 gem 'bootsnap', require: false
 gem 'cssbundling-rails', '>= 1.4.1'
 gem 'devise', '>= 4.9.4'
 gem 'faker'
 gem 'govuk-components', '6.3.1'
-gem 'govuk_design_system_formbuilder', '~> 6.4.0'
+gem 'govuk_design_system_formbuilder', '~> 6.5.0'
 gem 'govuk_notify_rails', '~> 3.0.0'
 gem 'httparty'
 gem 'jbuilder'
 gem 'jsbundling-rails', '>= 1.3.1'
-gem 'laa_crime_forms_common', '~> 0.13.0', github: 'ministryofjustice/laa-crime-forms-common'
+gem 'laa_crime_forms_common', '~> 0.13.2', github: 'ministryofjustice/laa-crime-forms-common'
 gem 'lograge'
 gem 'logstasher', '~> 3.0'
 gem 'logstash-event'
