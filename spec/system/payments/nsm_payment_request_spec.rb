@@ -267,9 +267,7 @@ RSpec.describe 'NSM payment request', :javascript, :stub_oauth_token do
       expect(page).to have_title('Claim details')
 
       fill_claim_details(fill_original_submission_date: true)
-      expect(page).to have_title('Claimed costs')
-      fill_claimed_costs
-      expect(page).to have_title('Allowed costs')
+      expect(page).to have_title('Costs to be paid')
       fill_allowed_costs
       expect(page).to have_title('Check your answers')
     end
