@@ -174,7 +174,6 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
           fill_in_laa_ref
           fill_date_claim_assessed
           fill_claimed_costs if type_suffix == 'supplemental'
-          fill_allowed_costs
           expect(page).to have_title('Costs to be paid')
         end
       end

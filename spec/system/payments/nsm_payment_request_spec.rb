@@ -254,22 +254,26 @@ RSpec.describe 'NSM payment request', :javascript, :stub_oauth_token do
       }
     end
 
-    it 'goes to NSM claim details when creating a new supplemental record' do
-      start_new_payment_request
-      stub_search(linked_claim_endpoint, empty_search_params, [], 0)
-      choose_claim_type('Non-standard magistrates - supplemental')
-      fill_in 'Find a claim', with: 'garbage'
-      click_button 'Search'
-      expect(page).to have_content('There are no results that match the search criteria')
+    context 'there are no linked claims' do
+      let(:search_original_results) { 0 }
 
-      click_on 'Create a new record'
-      select_office_code
-      expect(page).to have_title('Claim details')
+      it 'goes to NSM claim details when creating a new supplemental record' do
+        start_new_payment_request
+        stub_search(linked_claim_endpoint, empty_search_params, [], 0)
+        choose_claim_type('Non-standard magistrates - supplemental')
+        fill_in 'Find a claim', with: 'garbage'
+        click_button 'Search'
+        expect(page).to have_content('There are no results that match the search criteria')
 
-      fill_claim_details(fill_original_submission_date: true)
-      expect(page).to have_title('Costs to be paid')
-      fill_allowed_costs
-      expect(page).to have_title('Check your answers')
+        click_on 'Create a new record'
+        select_office_code
+        expect(page).to have_title('Claim details')
+
+        fill_claim_details(fill_original_submission_date: true)
+        expect(page).to have_title('Costs to be paid')
+        fill_allowed_costs
+        expect(page).to have_title('Check your answers')
+      end
     end
 
     it_behaves_like 'NSM payment request flow', 'supplemental'
