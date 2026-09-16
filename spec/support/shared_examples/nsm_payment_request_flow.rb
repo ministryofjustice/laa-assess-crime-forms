@@ -164,6 +164,20 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         fill_claimed_costs if type_suffix == 'supplemental'
         expect(page).to have_title('Allowed costs')
       end
+
+      context 'when there is no original payment associated to the claim' do
+        let(:search_original_results) { 0 }
+
+        it 'shows Cost to be paid screen' do
+          start_new_payment_request
+          choose_claim_type(claim_type)
+          fill_in_laa_ref
+          fill_date_claim_assessed
+          fill_claimed_costs if type_suffix == 'supplemental'
+          fill_allowed_costs
+          expect(page).to have_title('Costs to be paid')
+        end
+      end
     end
 
     describe 'check your answers' do
@@ -209,6 +223,22 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
           expect(page).to have_title('Allowed costs')
           click_link 'Back'
           expect(page).to have_title('Check your answers')
+        end
+
+        context 'when there is no original payment associated to the claim' do
+          let(:search_original_results) { 0 }
+
+          it 'shows Cost to be paid cost summary' do
+            start_new_payment_request
+            choose_claim_type(claim_type)
+            fill_in_laa_ref
+            fill_date_claim_assessed
+            fill_allowed_costs
+            expect(page).to have_title('Check your answers')
+            within('.govuk-summary-card', text: 'Costs to be paid') do
+              expect(page).to have_content('Costs to be paid')
+            end
+          end
         end
       else
         it 'sends Cost summary Change to claimed costs and back link returns to Check your answers' do
