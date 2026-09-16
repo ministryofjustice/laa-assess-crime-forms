@@ -86,10 +86,10 @@ RSpec.shared_examples 'AC payment request flow' do |type_suffix|
   let(:search_original_payment_stub) do
     stub_request(:post, 'https://appstore.example.com/v1/payment_requests/searches').to_return(
       status: 201,
-      body: { metadata: { total_results: 1 }, data: [] }.to_json
+      body: { metadata: { total_results: search_original_results }, data: [] }.to_json
     )
   end
-  let(:search_original_results) { 0 }
+  let(:search_original_results) { 1 }
 
   before do
     allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
@@ -231,17 +231,13 @@ RSpec.shared_examples 'AC payment request flow' do |type_suffix|
       select_counsel_code
       fill_ac_claim_details
 
-      expect(page).to have_content('Allowed costs')
+      expect(page).to have_content('Costs to be paid')
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
       click_on 'Continue'
 
       expect(page).to have_title('Check your answers')
-      if type_suffix == 'amendment'
-        expect(page).to have_content('Amended allowed costs')
-      elsif type_suffix == 'appeal'
-        expect(page).to have_content('Allowed costs')
-      end
+      expect(page).to have_content('Costs to be paid')
       click_on 'Submit payment request'
       expect(page).to have_content('Payment request complete')
     end
