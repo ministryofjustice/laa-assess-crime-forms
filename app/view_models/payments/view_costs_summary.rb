@@ -17,22 +17,23 @@ module Payments
     ].freeze
 
     def initialize(payment_request_details)
+      @payment_request_details = payment_request_details
       @payment_request = payment_request_details.payment_request
     end
 
     def row_fields
-      case @payment_request.claim_type
+      case @payment_request_details.claim_type
       when 'NsmClaim'
         NSM_COSTS
       when 'AssignedCounselClaim'
         ASSIGNED_COUNSEL_COSTS
       else
-        raise "Invalid payment claim type: #{@payment_request.claim_type}"
+        raise "Invalid payment claim type: #{@payment_request_details.claim_type}"
       end
     end
 
     def headers
-      if @payment_request.to_be_paid?
+      if @payment_request_details.to_be_paid?
         [
           t('cost_type', numeric: false, width: '50%'),
           t('total_costs_to_be_paid')
@@ -51,7 +52,7 @@ module Payments
     end
 
     def formatted_summed_fields
-      if @payment_request.to_be_paid?
+      if @payment_request_details.to_be_paid?
         {
           name: t('total', numeric: false),
           total_costs_to_be_paid: format(calculated_allowed_costs)
@@ -72,7 +73,7 @@ module Payments
     private
 
     def build_row(type)
-      if @payment_request.to_be_paid?
+      if @payment_request_details.to_be_paid?
         {
           name: t(type, numeric: false),
           to_be_paid: format(@payment_request["allowed_#{type}"].to_f)
