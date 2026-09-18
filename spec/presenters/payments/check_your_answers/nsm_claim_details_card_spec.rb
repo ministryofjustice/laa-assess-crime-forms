@@ -68,7 +68,7 @@ RSpec.describe Payments::CheckYourAnswers::NsmClaimDetailsCard do
     end
   end
 
-  describe 'original submission month' do
+  describe '#original_submission_month' do
     context 'when request_type is non_standard_magistrate' do
       let(:session_answers) do
         { 'request_type' => 'non_standard_magistrate' }
@@ -90,6 +90,28 @@ RSpec.describe Payments::CheckYourAnswers::NsmClaimDetailsCard do
 
       it 'returns the formatted month name' do
         expect(card.original_submission_month[:text]).to eq('May 2023')
+      end
+    end
+  end
+
+  describe '#youth_court' do
+    context 'when youth court is selected' do
+      let(:session_answers) do
+        { 'youth_court' => true }
+      end
+
+      it 'returns true' do
+        expect(card.youth_court[:text]).to eq('Yes')
+      end
+    end
+
+    context 'when youth court is not selected' do
+      let(:session_answers) do
+        { 'youth_court' => false }
+      end
+
+      it 'returns false' do
+        expect(card.youth_court[:text]).to eq('No')
       end
     end
   end

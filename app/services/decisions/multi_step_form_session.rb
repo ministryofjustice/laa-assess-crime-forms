@@ -33,10 +33,6 @@ module Decisions
                                end
     end
 
-    def no_existing_ref?
-      answers['laa_reference'].blank? && answers['linked_nsm_reference'].blank? && answers['linked_laa_reference'].blank?
-    end
-
     private
 
     def create!
