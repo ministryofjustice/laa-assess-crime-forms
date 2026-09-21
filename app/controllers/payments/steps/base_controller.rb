@@ -2,12 +2,28 @@ module Payments
   module Steps
     class BaseController < ::Steps::BaseStepController
       before_action :authorized
+      before_action :redirect_old_session, only: [:edit]
 
       layout 'payments'
 
       def decision_tree_class
         Decisions::DecisionTree
       end
+
+      def redirect_old_session
+        # Redirect to Request a Payment home page if trying to access a
+        # payment request construction form without an existing session object
+        # avoids redirecting when accessing the first step (choosing payment request type)
+        return if instance_of?(Payments::Steps::ClaimTypesController) || multi_step_form_session.answers['request_type'].present?
+
+        redirect_to payments_requests_path
+      end
+
+      # :nocov:
+      def edit
+        raise 'implement this action, if needed, in subclasses'
+      end
+      # :nocov:
 
       private
 
