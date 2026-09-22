@@ -5,7 +5,7 @@ module Payments
       include GovukVisuallyHiddenHelper
       include ActionView::Helpers::UrlHelper
 
-      attr_reader :session_answers, :params
+      attr_reader :session_answers, :params, :to_be_paid
 
       def show_groups
         %w[
@@ -14,9 +14,10 @@ module Payments
         ]
       end
 
-      def initialize(session_answers, params)
+      def initialize(session_answers, params, to_be_paid)
         @session_answers = session_answers
         @params = params
+        @to_be_paid = to_be_paid
       end
 
       def section_groups
@@ -62,32 +63,9 @@ module Payments
         # :nocov:
       end
 
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
       def cost_summary
-        case session_answers['request_type'].to_sym
-        when :non_standard_magistrate, :breach_of_injunction
-          Payments::NsmCostsSummary.new(session_answers, from_submission: from_submission?)
-        when :non_standard_mag_supplemental
-          if session_answers['laa_reference'].present? || session_answers['linked_laa_reference'].present?
-            Payments::NsmCostsSummaryAmendedAndClaimed.new(session_answers)
-          else
-            Payments::NsmCostsSummary.new(session_answers)
-          end
-        when :non_standard_mag_amendment, :non_standard_mag_appeal
-          Payments::NsmCostsSummaryAmended.new(session_answers)
-        when :assigned_counsel
-          Payments::AcCostsSummary.new(session_answers)
-        when :assigned_counsel_appeal
-          Payments::AcCostsSummaryAppealed.new(session_answers)
-        when :assigned_counsel_amendment
-          Payments::AcCostsSummaryAmended.new(session_answers)
-          # :nocov:
-        else
-          raise StandardError, "Unknown request type: #{session_answers['request_type']}"
-        end
-        # :nocov:
+        Payments::CostSummaryService.new(session_answers, to_be_paid, from_submission?).call
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
 
       private
 

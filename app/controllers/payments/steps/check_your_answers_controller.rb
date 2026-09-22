@@ -10,7 +10,8 @@ module Payments
         @form_object = Payments::Steps::CheckYourAnswersForm.build(payment_details,
                                                                    multi_step_form_session:)
 
-        @report = Payments::CheckYourAnswers::Report.new(payment_details, params)
+        to_be_paid = to_be_paid?(multi_step_form_session.answers)
+        @report = Payments::CheckYourAnswers::Report.new(payment_details, params, to_be_paid)
       end
 
       private

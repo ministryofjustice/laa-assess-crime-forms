@@ -1,0 +1,26 @@
+#!/bin/sh
+set -eu
+
+if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
+  echo "Usage: $0 <namespace> <azure_ad|silas> [deployment-name]" >&2
+  exit 1
+fi
+
+NAMESPACE=$1
+AUTH_PROVIDER=$2
+DEPLOYMENT=${3:-laa-assess-crime-forms-app}
+
+case "$AUTH_PROVIDER" in
+  azure_ad|silas) ;;
+  *) echo "Auth provider must be azure_ad or silas" >&2; exit 1 ;;
+esac
+
+# Check both deployments exist before changing the setting.
+kubectl -n "$NAMESPACE" get "deployment/$DEPLOYMENT" "deployment/$DEPLOYMENT-worker" -o name >/dev/null
+
+kubectl -n "$NAMESPACE" patch configmap "$DEPLOYMENT" --type merge \
+  -p "{\"data\":{\"auth_provider\":\"$AUTH_PROVIDER\"}}"
+
+kubectl -n "$NAMESPACE" rollout restart "deployment/$DEPLOYMENT" "deployment/$DEPLOYMENT-worker"
+kubectl -n "$NAMESPACE" rollout status "deployment/$DEPLOYMENT" --timeout=5m
+kubectl -n "$NAMESPACE" rollout status "deployment/$DEPLOYMENT-worker" --timeout=5m

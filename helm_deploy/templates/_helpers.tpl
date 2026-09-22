@@ -98,3 +98,14 @@ Function to return a list of whitelisted IPs allowed to access the service.
     {{- if .Values.ingress.whitelist.addresses }}{{- join "," .Values.ingress.whitelist.addresses }},{{- end }}{{- .Values.sharedIPs }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+The provider is resolved from a ConfigMap at pod startup. Always supply role mappings
+so changing the provider does not require another chart deployment.
+*/}}
+{{- define "laa-assess-crime-forms.validateAuthConfiguration" -}}
+{{- $mappings := .Values.variables.silasRoleMappings | default "{}" | mustFromJson -}}
+{{- if or (not (kindIs "map" $mappings)) (empty $mappings) -}}
+{{- fail "variables.silasRoleMappings must define a non-empty JSON object" -}}
+{{- end -}}
+{{- end -}}

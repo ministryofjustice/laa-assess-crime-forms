@@ -125,6 +125,7 @@ en:
 
   users:
     service_name: User management
+    roles_managed_externally: Roles are managed in %{source}. User management is read-only.
     service:
       title: Select service
       all: All
@@ -152,6 +153,7 @@ en:
     index:
       page_title: User management
       add_new_user: Add new user
+      read_only_external_roles: Roles are managed in %{source}. This page is read-only.
       users: users
       no_role: None
       user_disabled: No access

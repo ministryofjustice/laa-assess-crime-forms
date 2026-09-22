@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe PaymentPolicy do
-  subject(:policy) { described_class.new(user, :payment) }
+  subject(:policy) { described_class.new(principal, :payment) }
+
+  let(:principal) { Authorization::Principal.new(user:, role_source:) }
+  let(:role_source) { Authorization::RoleSources::Local.new }
 
   shared_examples 'permits payments access' do
     it 'allows access' do
@@ -37,10 +40,22 @@ RSpec.describe PaymentPolicy do
     it_behaves_like 'denies payments access'
   end
 
-  context 'when user is a supervisor' do
-    let(:user) { create(:supervisor, roles: [build(:role, :supervisor, service: 'pa')]) }
+  context 'when user is a supervisor with NSM service' do
+    let(:user) { create(:supervisor, roles: [build(:role, :supervisor, service: 'nsm')]) }
 
     it_behaves_like 'permits payments access'
+  end
+
+  context 'when user is a supervisor with all services' do
+    let(:user) { create(:supervisor, roles: [build(:role, :supervisor, service: 'all')]) }
+
+    it_behaves_like 'permits payments access'
+  end
+
+  context 'when user is a supervisor with PA service only' do
+    let(:user) { create(:supervisor, roles: [build(:role, :supervisor, service: 'pa')]) }
+
+    it_behaves_like 'denies payments access'
   end
 
   context 'when user is a viewer' do
@@ -75,5 +90,34 @@ RSpec.describe PaymentPolicy do
     end
 
     it_behaves_like 'permits payments access'
+  end
+
+  context 'when SiLAS provides an NSM caseworker role' do
+    let(:role_source) { Authorization::RoleSources::Silas.new }
+
+    let(:user) do
+      create(
+        :caseworker,
+        silas_user_name: 'silas-payments-caseworker',
+        roles: [build(:role, :viewer, service: 'pa')],
+        silas_roles: [build(:silas_role, :caseworker, service: 'nsm')]
+      )
+    end
+
+    it_behaves_like 'permits payments access'
+  end
+
+  context 'when SiLAS provides a PA supervisor role' do
+    let(:role_source) { Authorization::RoleSources::Silas.new }
+
+    let(:user) do
+      create(
+        :supervisor,
+        silas_user_name: 'silas-pa-supervisor',
+        silas_roles: [build(:silas_role, :supervisor, service: 'pa')]
+      )
+    end
+
+    it_behaves_like 'denies payments access'
   end
 end

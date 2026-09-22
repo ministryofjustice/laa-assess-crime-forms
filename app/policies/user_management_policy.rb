@@ -1,5 +1,5 @@
 class UserManagementPolicy < ApplicationPolicy
   def show?
-    user.supervisor?
+    user.supervisor?(:all)
   end
 end

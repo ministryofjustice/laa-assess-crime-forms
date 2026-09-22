@@ -1,5 +1,6 @@
 module Payments
   class RequestsController < ApplicationController
+    include PaymentsHelper
     include Payments::MultiStepFormSessionConcern
 
     layout 'payments'
@@ -21,6 +22,7 @@ module Payments
       @claim_details = payable_claim
       @current_page = controller_params[:current_page] || 'payment_request'
       @selected_payment = selected_payment(@claim_details.payment_requests) || @claim_details.payment_requests.first
+      @to_be_paid = @selected_payment.to_be_paid?
       @related_payments_pagy = Pagy.new(**related_payments_pagy_params)
     end
 
@@ -62,7 +64,10 @@ module Payments
     end
 
     def request_payload
-      current_multi_step_form_session.answers.merge('submitter_id' => current_user.id)
+      current_multi_step_form_session.answers.merge(
+        'submitter_id' => current_user.id,
+        'payment_basis' => payment_basis(current_multi_step_form_session.answers)
+      )
     end
 
     def confirmation_response_payload(response)
