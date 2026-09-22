@@ -46,7 +46,7 @@ module Payments
       def redirect_old_session
         # Redirect to Request a Payment home page if trying to access a
         # payment request construction form without an existing session object
-        # avoids redirecting when:
+        # avoids redirecting when session object isn't present when:
         # 1. Accessing the first step (choosing payment request type)
         # 2. Accessing the Check Your Answers step from granted/part granted claim
 
