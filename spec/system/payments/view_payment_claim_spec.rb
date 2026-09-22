@@ -27,7 +27,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           'allowed_net_assigned_counsel_cost' => '90',
           'allowed_assigned_counsel_vat' => '18',
           'created_at' => '2025-10-07 10:31:07 UTC',
-          'updated_at' => '2025-10-07 10:31:07 UTC'
+          'updated_at' => '2025-10-07 10:31:07 UTC',
+          'calculation_method' => calculation_method
         },
         {
           'id' => SecureRandom.uuid,
@@ -40,7 +41,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           'allowed_net_assigned_counsel_cost' => '100',
           'allowed_assigned_counsel_vat' => '20',
           'created_at' => '2025-10-07 10:31:07 UTC',
-          'updated_at' => '2025-10-07 10:31:07 UTC'
+          'updated_at' => '2025-10-07 10:31:07 UTC',
+          'calculation_method' => calculation_method
         },
       ]
     end
@@ -77,6 +79,7 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         }
       ]
     end
+    let(:calculation_method) { 'calculated_difference' }
     let(:payload) do
       {
         'id' => id,
@@ -246,7 +249,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
             'claimed_disbursement_cost' => '100.0',
             'allowed_disbursement_cost' => '50.0',
             'created_at' => '2025-10-07 10:31:07 UTC',
-            'updated_at' => '2025-10-07 10:31:07 UTC'
+            'updated_at' => '2025-10-07 10:31:07 UTC',
+            'calculation_method' => calculation_method
           },
           {
             'id' => 'bs374f60-2fa8-332a-12ad-123d35104b11',
@@ -263,7 +267,8 @@ RSpec.describe 'View payment request', :stub_oauth_token do
             'claimed_disbursement_cost' => '100.0',
             'allowed_disbursement_cost' => '50.0',
             'created_at' => '2025-10-07 10:31:07 UTC',
-            'updated_at' => '2025-10-07 10:31:07 UTC'
+            'updated_at' => '2025-10-07 10:31:07 UTC',
+            'calculation_method' => calculation_method
           },
         ]
       end
@@ -323,10 +328,71 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         )
       end
     end
+
+    context 'when there are no original payments attached to the claim' do
+      let(:calculation_method) { 'entered_to_be_paid' }
+      let(:payment_requests) do
+        [
+          {
+            'id' => id,
+            'submitter_id' => caseworker.id,
+            'request_type' => 'non_standard_mag_amendment',
+            'submitted_at' => '2025-10-7 10:31:07 UTC',
+            'date_claim_assessed' => '2025-09-07 10:31:07 UTC',
+            'claimed_profit_cost' => '300.4',
+            'allowed_profit_cost' => '250.4',
+            'claimed_travel_cost' => '20.55',
+            'allowed_travel_cost' => '0.0',
+            'claimed_waiting_cost' => '10.33',
+            'allowed_waiting_cost' => '6.4',
+            'claimed_disbursement_cost' => '100.0',
+            'allowed_disbursement_cost' => '50.0',
+            'created_at' => '2025-10-07 10:31:07 UTC',
+            'updated_at' => '2025-10-07 10:31:07 UTC',
+            'calculation_method' => calculation_method
+          }
+        ]
+      end
+
+      it 'shows the payments in the Costs to be paid table' do
+        expect(page).to have_content 'Costs to be paid'
+      end
+    end
   end
 
   context 'when payment is for an AssignedCounselClaim' do
     let(:related_claim) { nil }
+    let(:calculation_method) { 'calculation_difference' }
+    let(:payment_requests) do
+      [
+        {
+          'id' => SecureRandom.uuid,
+          'submitter_id' => caseworker.id,
+          'request_type' => 'assigned_counsel',
+          'submitted_at' => '2025-09-14 10:31:07 UTC',
+          'date_claim_assessed' => '2025-09-16 10:31:07 UTC',
+          'claimed_net_assigned_counsel_cost' => '100',
+          'claimed_assigned_counsel_vat' => '20',
+          'allowed_net_assigned_counsel_cost' => '90',
+          'allowed_assigned_counsel_vat' => '18',
+          'created_at' => '2025-10-07 10:31:07 UTC',
+          'updated_at' => '2025-10-07 10:31:07 UTC'
+        },
+        {
+          'id' => SecureRandom.uuid,
+          'submitter_id' => caseworker.id,
+          'request_type' => 'assigned_counsel_amendment',
+          'submitted_at' => '2025-10-14 10:31:07 UTC',
+          'date_claim_assessed' => '2025-09-16 10:31:07 UTC',
+          'claimed_net_assigned_counsel_cost' => '100',
+          'claimed_assigned_counsel_vat' => '20',
+          'allowed_net_assigned_counsel_cost' => '100',
+          'allowed_assigned_counsel_vat' => '50',
+          'created_at' => '2025-10-07 10:31:07 UTC',
+          'updated_at' => '2025-10-07 10:31:07 UTC'
+        },
+      ]
+    end
     let(:payload) do
       {
         'id' => id,
@@ -339,35 +405,9 @@ RSpec.describe 'View payment request', :stub_oauth_token do
         'solicitor_office_code' => 'AB2034',
         'solicitor_firm_name' => 'Solicitor Firm',
         'defendant_last_name' => 'Smith',
+        'calculation_method' => calculation_method,
         'nsm_claim' => related_claim,
-        'payment_requests' => [
-          {
-            'id' => SecureRandom.uuid,
-            'submitter_id' => caseworker.id,
-            'request_type' => 'assigned_counsel',
-            'submitted_at' => '2025-09-14 10:31:07 UTC',
-            'date_claim_assessed' => '2025-09-16 10:31:07 UTC',
-            'claimed_net_assigned_counsel_cost' => '100',
-            'claimed_assigned_counsel_vat' => '20',
-            'allowed_net_assigned_counsel_cost' => '90',
-            'allowed_assigned_counsel_vat' => '18',
-            'created_at' => '2025-10-07 10:31:07 UTC',
-            'updated_at' => '2025-10-07 10:31:07 UTC'
-          },
-          {
-            'id' => SecureRandom.uuid,
-            'submitter_id' => caseworker.id,
-            'request_type' => 'assigned_counsel_amendment',
-            'submitted_at' => '2025-10-14 10:31:07 UTC',
-            'date_claim_assessed' => '2025-09-16 10:31:07 UTC',
-            'claimed_net_assigned_counsel_cost' => '100',
-            'claimed_assigned_counsel_vat' => '20',
-            'allowed_net_assigned_counsel_cost' => '100',
-            'allowed_assigned_counsel_vat' => '50',
-            'created_at' => '2025-10-07 10:31:07 UTC',
-            'updated_at' => '2025-10-07 10:31:07 UTC'
-          },
-        ]
+        'payment_requests' => payment_requests
       }
     end
 
@@ -499,6 +539,32 @@ RSpec.describe 'View payment request', :stub_oauth_token do
           ]
         )
         expect(page).to have_content 'Showing 2 of 2 payment requests'
+      end
+    end
+
+    context 'when there is no original payment associated to the claim' do
+      let(:calculation_method) { 'entered_to_be_paid' }
+      let(:payment_requests) do
+        [
+          {
+            'id' => SecureRandom.uuid,
+            'submitter_id' => caseworker.id,
+            'request_type' => 'assigned_counsel_amendment',
+            'submitted_at' => '2025-10-14 10:31:07 UTC',
+            'date_claim_assessed' => '2025-09-16 10:31:07 UTC',
+            'claimed_net_assigned_counsel_cost' => '100',
+            'claimed_assigned_counsel_vat' => '20',
+            'allowed_net_assigned_counsel_cost' => '100',
+            'allowed_assigned_counsel_vat' => '50',
+            'created_at' => '2025-10-07 10:31:07 UTC',
+            'updated_at' => '2025-10-07 10:31:07 UTC',
+            'calculation_method' => calculation_method
+          }
+        ]
+      end
+
+      it 'shows the costs to be paid' do
+        expect(page).to have_content 'Costs to be paid'
       end
     end
   end
