@@ -4,7 +4,7 @@ module Payments
       include PaymentsHelper
 
       before_action :authorized
-      before_action :redirect_old_session, only: [:edit]
+      before_action :redirect_stale_session, only: [:edit]
 
       layout 'payments'
 
@@ -45,7 +45,7 @@ module Payments
         authorize(:payment, :update?)
       end
 
-      def redirect_old_session
+      def redirect_stale_session
         # Redirect to Request a Payment home page if trying to access a
         # payment request construction form without an existing session object
         # avoids redirecting when session object isn't present when:
