@@ -4,12 +4,19 @@ module Payments
       include PaymentsHelper
 
       before_action :authorized
+      before_action :redirect_stale_session, only: [:edit]
 
       layout 'payments'
 
       def decision_tree_class
         Decisions::DecisionTree
       end
+
+      # :nocov:
+      def edit
+        raise 'implement this action, if needed, in subclasses'
+      end
+      # :nocov:
 
       private
 
@@ -32,10 +39,23 @@ module Payments
                                   :assigned_counsel
                                 end
       end
-
       # :nocov:
+
       def authorized
         authorize(:payment, :update?)
+      end
+
+      def redirect_stale_session
+        # Redirect to Request a Payment home page if trying to access a
+        # payment request construction form without an existing session object
+        # avoids redirecting when session object isn't present when:
+        # 1. Accessing the first step (choosing payment request type)
+        # 2. Accessing the Check Your Answers step from granted/part granted claim
+
+        return if instance_of?(Payments::Steps::ClaimTypesController) || multi_step_form_session.answers['request_type'].present?
+        return if instance_of?(Payments::Steps::CheckYourAnswersController) && params[:submission].present?
+
+        redirect_to payments_requests_path
       end
     end
   end

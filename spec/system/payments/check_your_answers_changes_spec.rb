@@ -36,7 +36,7 @@ RSpec.describe 'Check your answers with changes', :javascript, :stub_oauth_token
     end
 
     it 'can reload the page using the address bar without error' do
-      id = page.current_path.split('/')[1]
+      id = page.current_path.split('/')[2]
       visit edit_payments_steps_office_code_search_path(id:)
       expect(page).to have_title("Solicitor's firm account number")
     end
