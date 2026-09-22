@@ -11,17 +11,17 @@ module OmniAuth
       # information in the database.
       #
       # In cases where the strategy is unable to find an authorised
-      # user with the given email address, it sets an auth_subject_id
-      # and guesses the user's first and last name based on the email
-      # address.
+      # user with the given email address, it generates a subject and
+      # guesses the user's first and last name based on the email address.
 
       include OmniAuth::Strategy
 
       NO_AUTH_EMAIL = 'Not.Authorised@example.com'.freeze
 
-      uid { auth_subject_id }
+      uid { authentication_subject }
       credentials { { expires_in: 12.hours } }
       info { { email:, first_name:, last_name: } }
+      extra { silas? ? { raw_info: silas_claims } : {} }
 
       private
 
@@ -35,8 +35,12 @@ module OmniAuth
         @user = User.find_by(email:)
       end
 
-      def auth_subject_id
-        user&.auth_subject_id || SecureRandom.uuid
+      def authentication_subject
+        identity = user&.authentication_identity_for(provider_name)
+        return identity.subject if identity
+        return "silas-#{email}" if silas? && user
+
+        SecureRandom.uuid unless silas?
       end
 
       def first_name
@@ -49,6 +53,35 @@ module OmniAuth
 
       def names_from_email
         @names_from_email ||= email.split('@').first.split('.')
+      end
+
+      def silas?
+        options.name.to_s == 'silas'
+      end
+
+      def provider_name
+        silas? ? 'silas' : 'azure_ad'
+      end
+
+      def silas_claims
+        {
+          'USER_NAME' => authentication_subject,
+          'USER_EMAIL' => email,
+          'LAA_APP_ROLES' => simulated_silas_claim_values
+        }
+      end
+
+      # The local bypass builds SiLAS claims from stored roles without contacting SiLAS.
+      def simulated_silas_roles
+        return [] unless user
+
+        user.silas_roles.presence || user.roles
+      end
+
+      def simulated_silas_claim_values
+        Auth::SilasRoleMapper.claim_values_for(simulated_silas_roles)
+      rescue Auth::SilasRoleMapper::UnknownRole, Auth::SilasRoleMapper::InvalidConfiguration
+        []
       end
     end
   end

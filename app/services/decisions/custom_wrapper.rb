@@ -1,5 +1,7 @@
 module Decisions
   class CustomWrapper < SimpleDelegator
+    include PaymentsHelper
+
     private
 
     def claim_type

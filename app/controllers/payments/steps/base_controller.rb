@@ -1,6 +1,8 @@
 module Payments
   module Steps
     class BaseController < ::Steps::BaseStepController
+      include PaymentsHelper
+
       before_action :authorized
       before_action :redirect_old_session, only: [:edit]
 
