@@ -1,3 +1,4 @@
+{{- include "laa-assess-crime-forms.validateAuthConfiguration" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -103,6 +104,15 @@ spec:
                   key: secret_key_base
             - name: APP_STORE_URL
               value: {{ .Values.variables.appStoreUrl}}
+            - name: ASSESS_AUTH_PROVIDER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "laa-assess-crime-forms.fullname" . }}
+                  key: auth_provider
+                  # Existing ConfigMaps may lack this key; Rails defaults to azure_ad.
+                  optional: true
+            - name: SILAS_ROLE_MAPPINGS
+              value: {{ .Values.variables.silasRoleMappings | default "{}" | quote }}
             - name: OMNIAUTH_AZURE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -123,6 +133,30 @@ spec:
                 secretKeyRef:
                   name: azure-auth
                   key: tenant_id
+            - name: SILAS_ENTRA_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: silas-auth
+                  key: client_id
+                  optional: true
+            - name: SILAS_ENTRA_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: silas-auth
+                  key: client_secret
+                  optional: true
+            - name: SILAS_ENTRA_REDIRECT_URI
+              valueFrom:
+                secretKeyRef:
+                  name: silas-auth
+                  key: redirect_uri
+                  optional: true
+            - name: SILAS_ENTRA_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: silas-auth
+                  key: tenant_id
+                  optional: true
             - name: APP_STORE_TENANT_ID
               valueFrom:
                 secretKeyRef:

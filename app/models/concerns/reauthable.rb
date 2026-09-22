@@ -7,10 +7,11 @@ require Rails.root.join('app/lib/warden_hooks/reauthable')
 module Reauthable
   extend ActiveSupport::Concern
 
-  def auth_expired?
-    return false unless reauthenticate_in && last_auth_at
+  def auth_expired?(provider)
+    return false unless reauthenticate_in
 
-    last_auth_at < reauthenticate_in.ago
+    identity = authentication_identity_for(provider)
+    identity.nil? || identity.authentication_expired?
   end
 
   private
