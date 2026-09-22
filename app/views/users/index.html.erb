@@ -6,16 +6,22 @@
         </h1>
     </div>
 
-    <div class="moj-page-header-actions__actions">
-        <div class="moj-button-group moj-button-group--inline">
-            <%= govuk_button_link_to(
-                t(".add_new_user"),
-                new_user_path,
-                secondary: true
-            ) %>
+    <% if role_management_editable %>
+        <div class="moj-page-header-actions__actions">
+            <div class="moj-button-group moj-button-group--inline">
+                <%= govuk_button_link_to(
+                    t(".add_new_user"),
+                    new_user_path,
+                    secondary: true
+                ) %>
+            </div>
         </div>
-    </div>
+    <% end %>
 </div>
+
+<% unless role_management_editable %>
+    <%= govuk_inset_text(text: t('.read_only_external_roles', source: role_management_source)) %>
+<% end %>
 
 <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="page-title">
     <thead class="govuk-table__head">
@@ -54,9 +60,14 @@
 
     <tbody class="govuk-table__body app-task-list__items">
         <% users.each do |user| %>
+            <% roles = user.roles %>
             <tr class="govuk-table__row app-task-list__item">
                 <td class="govuk-table__cell">
-                    <%= govuk_link_to(user.display_name, edit_user_path(user.id)) %>
+                    <% if role_management_editable %>
+                        <%= govuk_link_to(user.display_name, edit_user_path(user.id)) %>
+                    <% else %>
+                        <%= user.display_name %>
+                    <% end %>
                 </td>
                 <td class="govuk-table__cell">
                     <%= user.email %>
@@ -64,20 +75,15 @@
                 <td class="govuk-table__cell">
                     <% if user.deactivated_at.present? %>
                         <%= t('.user_disabled') %>
-                    <% elsif user.roles.any? %>
-                        <%= user.roles.first.role_type.capitalize %>
+                    <% elsif roles.any? %>
+                        <%= roles.map { _1.role_type.capitalize }.join(', ') %>
                     <% else %>
                         <%= t('.no_role') %>
                     <% end %>
                 </td>
                 <td class="govuk-table__cell">
-                    <% if user.roles.any? && user.deactivated_at.nil? %>
-                        <% service = user.roles.first.service || '-' %>
-                        <% if service == "all" %>
-                            <%= service.capitalize %>
-                        <% else %>
-                            <%= service.upcase %>
-                        <% end %>
+                    <% if roles.any? && user.deactivated_at.nil? %>
+                        <%= roles.map { |role| role.service == 'all' ? role.service.capitalize : role.service.upcase }.join(', ') %>
                     <% else %>
                         -
                     <% end %>

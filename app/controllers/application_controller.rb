@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   before_action :check_maintenance_mode
   before_action :check_controller_params
   before_action :authenticate_user!
+  before_action :enforce_auth_provider_session!
   before_action :set_security_headers
   before_action :set_default_cookies
   before_action :set_referrer
@@ -21,7 +22,26 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  helper_method :current_auth_context
+
   private
+
+  def current_auth_context
+    @current_auth_context ||= Auth::SessionContext.new(session:)
+  end
+
+  def pundit_user
+    @pundit_user ||= Authorization::Principal.new(user: current_user, role_source: current_auth_context.role_source)
+  end
+
+  def enforce_auth_provider_session!
+    return unless user_signed_in?
+    return if current_auth_context.valid?
+
+    sign_out current_user
+    session.delete(Auth::SessionContext::SESSION_KEY)
+    redirect_to new_user_session_path, alert: t('errors.auth_provider_changed')
+  end
 
   def store_outbound_request_id
     OutboundRequestId.set(request.request_id)
