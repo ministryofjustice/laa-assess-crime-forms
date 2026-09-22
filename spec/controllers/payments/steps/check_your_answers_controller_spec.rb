@@ -49,17 +49,13 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
       expect(current_answers).to include('claimed_total' => '25', 'idempotency_token' => persisted_token)
     end
 
-    context 'when request_type has not been set' do
-      let(:request_type) { nil }
+    it 'redirects to your claims when the user returns after a successful submission' do
+      session[:payments_last_submission] = { 'id' => submission_id, 'idempotency_token' => SecureRandom.uuid }
+      expect(controller).not_to receive(:refresh_answers_from_claim)
 
-      it 'redirects to your claims when the user returns after a successful submission' do
-        session[:payments_last_submission] = { 'id' => submission_id, 'idempotency_token' => SecureRandom.uuid }
-        expect(controller).not_to receive(:refresh_answers_from_claim)
+      get :edit, params: { id: submission_id, submission: true }
 
-        get :edit, params: { id: submission_id, submission: true }
-
-        expect(response).to redirect_to(your_nsm_claims_path)
-      end
+      expect(response).to redirect_to(your_nsm_claims_path)
     end
 
     it 'removes stale payments session data for a different submission id' do
