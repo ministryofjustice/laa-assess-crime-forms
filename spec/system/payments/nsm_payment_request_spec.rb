@@ -23,21 +23,32 @@ RSpec.describe 'NSM payment request', :javascript, :stub_oauth_token do
   let(:create_payment_stub) do
     stub_request(:post, create_endpoint).to_return(
       status: 201,
-      body: { claim: { laa_reference: '1234-abc' },
-payment_request_id: created_payment_request_id,
-payment_request: {
-  id: created_payment_request_id,
-  claimed_total: 100,
-  allowed_total: 10,
-  request_type: 'non_standard_magistrate'
-} }.to_json
+      body: {
+        claim: { laa_reference: '1234-abc' },
+        payment_request_id: created_payment_request_id,
+        payment_request: {
+          id: created_payment_request_id,
+          claimed_total: 100,
+          allowed_total: 10,
+          request_type: 'non_standard_magistrate'
+        }
+      }.to_json
     )
   end
+
+  let(:search_original_payment_stub) do
+    stub_request(:post, 'https://appstore.example.com/v1/payment_requests/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: search_original_results }, data: [] }.to_json
+    )
+  end
+  let(:search_original_results) { 0 }
 
   before do
     allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     create_payment_stub
     stub_search(index_endpoint, search_params)
+    search_original_payment_stub
     sign_in caseworker
   end
 
@@ -243,24 +254,26 @@ payment_request: {
       }
     end
 
-    it 'goes to NSM claim details when creating a new supplemental record' do
-      start_new_payment_request
-      stub_search(linked_claim_endpoint, empty_search_params, [], 0)
-      choose_claim_type('Non-standard magistrates - supplemental')
-      fill_in 'Find a claim', with: 'garbage'
-      click_button 'Search'
-      expect(page).to have_content('There are no results that match the search criteria')
+    context 'there are no linked claims' do
+      let(:search_original_results) { 0 }
 
-      click_on 'Create a new record'
-      select_office_code
-      expect(page).to have_title('Claim details')
+      it 'goes to NSM claim details when creating a new supplemental record' do
+        start_new_payment_request
+        stub_search(linked_claim_endpoint, empty_search_params, [], 0)
+        choose_claim_type('Non-standard magistrates - supplemental')
+        fill_in 'Find a claim', with: 'garbage'
+        click_button 'Search'
+        expect(page).to have_content('There are no results that match the search criteria')
 
-      fill_claim_details(fill_original_submission_date: true)
-      expect(page).to have_title('Claimed costs')
-      fill_claimed_costs
-      expect(page).to have_title('Allowed costs')
-      fill_allowed_costs
-      expect(page).to have_title('Check your answers')
+        click_on 'Create a new record'
+        select_office_code
+        expect(page).to have_title('Claim details')
+
+        fill_claim_details(fill_original_submission_date: true)
+        expect(page).to have_title('Costs to be paid')
+        fill_allowed_costs
+        expect(page).to have_title('Check your answers')
+      end
     end
 
     it_behaves_like 'NSM payment request flow', 'supplemental'

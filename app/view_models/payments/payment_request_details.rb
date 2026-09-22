@@ -5,6 +5,8 @@ module Payments
       @claim_type = claim_type
     end
 
+    attr_reader :payment_request, :claim_type
+
     def id
       @payment_request['id']
     end
@@ -18,7 +20,11 @@ module Payments
     end
 
     def title
-      I18n.t("payments.requests.payment_details.payment_heading.#{@payment_request['request_type']}")
+      if to_be_paid?
+        I18n.t('payments.requests.payment_details.payment_heading.costs_to_be_paid')
+      else
+        I18n.t("payments.requests.payment_details.payment_heading.#{@payment_request['request_type']}")
+      end
     end
 
     def date_claim_assessed
@@ -42,7 +48,17 @@ module Payments
     end
 
     def cost_summary
-      @cost_summary ||= Payments::ViewCostsSummary.new(@payment_request, @claim_type)
+      @cost_summary ||= Payments::ViewCostsSummary.new(self)
+    end
+
+    def calculation_method
+      @payment_request['calculation_method']
+    end
+
+    def to_be_paid?
+      return false if @payment_request['request_type'].in? %w[non_standard_magistrate assigned_counsel breach_of_injunction]
+
+      calculation_method == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID
     end
   end
 end

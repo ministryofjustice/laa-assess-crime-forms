@@ -56,13 +56,19 @@ RSpec.describe 'Assigned counsel payment request', :stub_oauth_token do
     stub_request(:post, create_endpoint).to_return(
       status: 201,
       body: { claim: { laa_reference: '1234-abc' },
-payment_request_id: created_payment_request_id,
-payment_request: {
-  id: created_payment_request_id,
-  claimed_total: 100,
-  allowed_total: 10,
-  request_type: 'assigned_counsel'
-} }.to_json
+        payment_request_id: created_payment_request_id,
+        payment_request: {
+          id: created_payment_request_id,
+          claimed_total: 100,
+          allowed_total: 10,
+          request_type: 'assigned_counsel'
+        } }.to_json
+    )
+  end
+  let(:search_original_payment_stub) do
+    stub_request(:post, 'https://appstore.example.com/v1/payment_requests/searches').to_return(
+      status: 201,
+      body: { metadata: { total_results: 0 }, data: [] }.to_json
     )
   end
 
@@ -70,6 +76,7 @@ payment_request: {
     allow(FeatureFlags).to receive_messages(payments: double(enabled?: true))
     create_payment_stub
     stub_search(index_endpoint, index_params)
+    search_original_payment_stub
     sign_in caseworker
   end
 
