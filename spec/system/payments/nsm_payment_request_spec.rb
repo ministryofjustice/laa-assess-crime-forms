@@ -68,7 +68,7 @@ RSpec.describe 'NSM payment request', :javascript, :stub_oauth_token do
     end
   end
 
-  describe 'claim details' do
+  describe 'inputting claim details' do
     it 'completes claim details and proceeds' do
       start_new_payment_request
       choose_claim_type('Non-standard magistrates')
@@ -179,32 +179,6 @@ RSpec.describe 'NSM payment request', :javascript, :stub_oauth_token do
       end
     end
 
-    describe 'submit payment success' do
-      it 'submits payment and redirects to payment confirmation' do
-        start_new_payment_request
-        choose_claim_type('Non-standard magistrates')
-        select_office_code
-        fill_claim_details
-        fill_claimed_costs
-        fill_allowed_costs
-        click_button 'Submit payment request'
-        expect(page).to have_content('Payment request complete')
-      end
-    end
-
-    describe 'cancel payment request' do
-      it 'submits payment and redirects to payment confirmation' do
-        start_new_payment_request
-        choose_claim_type('Non-standard magistrates')
-        select_office_code
-        fill_claim_details
-        fill_claimed_costs
-        fill_allowed_costs
-        click_link 'Cancel payment request'
-        expect(page).to have_title('Payment requests')
-      end
-    end
-
     describe 'payment request with custom court' do
       it 'completes claim details with custom court and proceeds' do
         start_new_payment_request
@@ -218,17 +192,56 @@ RSpec.describe 'NSM payment request', :javascript, :stub_oauth_token do
         expect(page).to have_content('Payment request complete')
       end
     end
+
+    describe 'payment request when youth court matter is No' do
+      it 'shows the correct details in the Claim details card' do
+        start_new_payment_request
+        choose_claim_type('Non-standard magistrates')
+        select_office_code
+        fill_claim_details(youth_court: 'No')
+        fill_claimed_costs
+        fill_allowed_costs
+        expect(page).to have_content('Youth court matter No')
+      end
+    end
   end
 
-  describe 'payment request when youth court matter is No' do
-    it 'shows the correct details in the Claim details card' do
+  describe 'submitting claim details' do
+    it 'can submit payment and redirects to payment confirmation' do
       start_new_payment_request
       choose_claim_type('Non-standard magistrates')
       select_office_code
-      fill_claim_details(youth_court: 'No')
+      fill_claim_details
       fill_claimed_costs
       fill_allowed_costs
-      expect(page).to have_content('Youth court matter No')
+      click_button 'Submit payment request'
+      expect(page).to have_content('Payment request complete')
+    end
+
+    it 'can cancel payment and redirects to payment confirmation' do
+      start_new_payment_request
+      choose_claim_type('Non-standard magistrates')
+      select_office_code
+      fill_claim_details
+      fill_claimed_costs
+      fill_allowed_costs
+      click_link 'Cancel payment request'
+      expect(page).to have_title('Payment requests')
+    end
+
+    it 'redirects to the payment requests index page if going back to already submitted payment forms' do
+      start_new_payment_request
+      choose_claim_type('Non-standard magistrates')
+      select_office_code
+      fill_claim_details
+      fill_claimed_costs
+      fill_allowed_costs
+      click_button 'Submit payment request'
+      expect(page).to have_content('Payment request complete')
+      page.go_back
+      expect(page).to have_css('h1', text: 'Payment requests')
+      page.go_back
+      expect(page).to have_css('h1', text: 'Payment requests')
     end
   end
 

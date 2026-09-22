@@ -30,7 +30,7 @@ RSpec.describe Payments::Steps::CheckYourAnswersController, type: :controller do
       it 'redirects to your claims' do
         get :edit, params: { id: submission_id }
 
-        expect(response).to redirect_to(your_nsm_claims_path)
+        expect(response).to redirect_to(payments_requests_path)
       end
     end
   end

@@ -9,7 +9,6 @@ module Payments
       def edit
         @form_object = Payments::Steps::CheckYourAnswersForm.build(payment_details,
                                                                    multi_step_form_session:)
-        redirect_to your_nsm_claims_path and return if multi_step_form_session['request_type'].blank?
 
         to_be_paid = to_be_paid?(multi_step_form_session.answers)
         @report = Payments::CheckYourAnswers::Report.new(payment_details, params, to_be_paid)
