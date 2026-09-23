@@ -171,9 +171,6 @@ en:
             ufn:
               invalid_characters: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
               blank: Enter the unique file number
-            solicitor_office_code:
-              blank: Select the firm office account number
-              invalid_characters: This office account number is not valid
             stage_reached:
               inclusion: Select the stage reached
             defendant_first_name:
@@ -218,6 +215,7 @@ en:
               provider_unavailable: We cannot check the account number at the moment. This is a temporary issue with PDA. Try again later.
             solicitor_office_code:
               blank: Enter the solicitor’s firm account number
+              office_code: This office account number is not valid
         payments/steps/counsel_code_search_form:
           attributes:
             counsel_office_code:
