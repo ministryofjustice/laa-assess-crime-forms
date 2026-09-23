@@ -18,7 +18,7 @@ RSpec.describe Payments::Steps::ClaimSearchForm, type: :model do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:query]).to include("can't be blank")
+        expect(form.errors[:query]).to include('Search for defendant, firm account, UFN or LAA reference')
       end
     end
   end
