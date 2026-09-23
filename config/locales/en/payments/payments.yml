@@ -324,7 +324,6 @@ en:
     hint:
       payments_steps_nsm_claim_detail_form:
         date_claim_assessed: For example, 17/5/2025.
-        office_code: Enter the office account number or firm name, or select from the suggestions that appear when you start typing.
         ufn: For example, 120223/001.
         hearing_outcome_code: Start typing the hearing outcome and select one of the suggestions that appear.
         matter_type: Start typing the matter type and select one of the suggestions that appear.
