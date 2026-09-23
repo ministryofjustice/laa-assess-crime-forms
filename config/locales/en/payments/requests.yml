@@ -20,7 +20,7 @@ en:
           request_type: Payment type
           submitted_at: Submitted
       confirmation:
-        page_title: Payment Confirmation
+        page_title: Payment request complete
         payment_request_complete: Payment request complete
         reference: "Reference: %{laa_reference}"
         payment_type: Payment type
