@@ -130,7 +130,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         choose_claim_type(claim_type)
         fill_in 'Find a claim', with: ''
         click_button 'Search'
-        expect(page).to have_content("can't be blank")
+        expect(page).to have_content('Search for defendant, firm account, UFN or LAA reference')
       end
     end
 

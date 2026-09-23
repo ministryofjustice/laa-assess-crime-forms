@@ -15,7 +15,7 @@ RSpec.describe Payments::Steps::SelectedClaimForm, type: :model do
     it 'is invalid without a payable_claim_id' do
       form.payable_claim_id = nil
       expect(form.valid?).to be(false)
-      expect(form.errors[:payable_claim_id]).to include("can't be blank")
+      expect(form.errors[:payable_claim_id]).to include('Search for defendant, firm account, UFN or LAA reference')
     end
 
     it 'is valid with a payable_claim_id' do

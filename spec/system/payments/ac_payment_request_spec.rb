@@ -296,7 +296,7 @@ RSpec.describe 'Assigned counsel payment request', :stub_oauth_token do
       fill_in 'What is the assigned counsel account number?', with: '1A123C'
       click_button 'Continue'
       click_button 'Continue'
-      expect(page).to have_content('Please select an option')
+      expect(page).to have_content('Select yes if this is the right account')
     end
 
     it 'Does not allow selecting non advocate office code' do
