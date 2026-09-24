@@ -16,7 +16,7 @@ module Payments
 
     def transform
       load_claim = claim
-      latest_payment_request = latest_payment_request(load_claim)
+      latest_payment_request = to_be_paid(load_claim) ? {} : latest_payment_request(load_claim)
       claim = format_claim(load_claim)
       claim.merge!(latest_payment_request)
     end
@@ -74,6 +74,14 @@ module Payments
         hash[:"original_#{key}"] = hash[key]
       end
       hash
+    end
+
+    def to_be_paid(claim)
+      # previous allowed costs shouldn't be considered if the calculation method is ENTERED_TO_BE_PAID
+      # having this data pre-populated is confusing to users since it does not reflect the to be paid differences
+      payment_requests = claim.with_indifferent_access[:payment_requests]
+
+      payment_requests&.any? { |pr| pr[:calculation_method] == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID }
     end
 
     def response_except_list
