@@ -81,7 +81,7 @@ RSpec.describe 'NSM payment request', :javascript, :stub_oauth_token do
       start_new_payment_request
       choose_claim_type('Non-standard magistrates')
       click_button 'Continue'
-      expect(page).to have_content('Enter the office code')
+      expect(page).to have_content('Enter the solicitor’s firm account number')
     end
 
     it 'shows an outage alert when PDA is unavailable and stays on office code page' do
@@ -119,7 +119,7 @@ RSpec.describe 'NSM payment request', :javascript, :stub_oauth_token do
       fill_in id: 'payments-steps-office-code-search-form-solicitor-office-code-field', with: '1A123B'
       click_button 'Continue'
       click_button 'Continue'
-      expect(page).to have_content('Please select an option')
+      expect(page).to have_content('Select yes if this is the right account')
     end
 
     describe 'claimed costs' do

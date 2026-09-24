@@ -89,7 +89,7 @@ RSpec.describe 'Search', :stub_oauth_token do
       visit new_payments_search_path
       click_button 'Search'
       within('main') { click_on 'Search' }
-      expect(page).to have_content('Enter details in at least one field to search for a payment request')
+      expect(page).to have_content('Enter some details or filter your search criteria')
     end
 
     it 'displays an error when unparsable date strings used as filters' do
@@ -135,6 +135,7 @@ RSpec.describe 'Search', :stub_oauth_token do
     it 'notifies sentry and shows an error' do
       expect(Sentry).to receive(:capture_exception)
       visit new_payments_search_path
+      fill_in 'Enter a defendant, firm account, UFN or LAA reference', with: 'query'
       within('main') { click_on 'Search' }
       expect(page).to have_content 'Something went wrong trying to perform this search'
     end

@@ -22,6 +22,7 @@ module Payments
     attribute :submission_id, :string
 
     validates :submitted_from, :submitted_to, :received_from, :received_to, is_a_date: true
+    validate :at_least_one_field_set
 
     def executed?
       @search_response.present?
@@ -33,6 +34,23 @@ module Payments
 
     def show_all
       @show_all ||= Option.new('', I18n.t('search.show_all'))
+    end
+
+    def at_least_one_field_set
+      fields = [:query,
+                :request_type,
+                :submitted_from,
+                :submitted_to,
+                :received_from,
+                :received_to, :submission_id]
+
+      field_set = fields.any? do |field|
+        send(field).present?
+      end
+
+      return if field_set
+
+      errors.add(:base, :nothing_specified)
     end
   end
 end
