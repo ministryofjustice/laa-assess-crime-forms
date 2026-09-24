@@ -174,6 +174,7 @@ en:
               invalid_characters: Unique file number must only include numbers and a forward slash
               future_date: First 6 digits of the unique file number cannot be a future date
             stage_reached:
+              blank: Select the stage reached
               inclusion: Select the stage reached
             defendant_first_name:
               blank: Enter the defendant first name
