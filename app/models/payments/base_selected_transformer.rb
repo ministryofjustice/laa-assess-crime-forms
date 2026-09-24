@@ -63,6 +63,10 @@ module Payments
                   :date_claim_assessed, :request_type,
                   :submitter_id, :submitted_at)
 
+      # previous allowed costs shouldn't be considered if the calculation method is ENTERED_TO_BE_PAID
+      # having this data pre-populated is confusing to users since it does not reflect the to be paid differences
+      return {} if payment_request[:calculation_method] == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID
+
       dup_original_costs_to(payment_request)
     end
 
