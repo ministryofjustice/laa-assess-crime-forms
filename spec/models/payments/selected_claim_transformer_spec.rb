@@ -6,6 +6,28 @@ RSpec.describe Payments::SelectedClaimTransformer do
   let(:payable_claim_id) { 'abc-123' }
   let(:multi_step_form_session) { {} }
   let(:app_store_client) { instance_double(AppStoreClient) }
+  let(:payment_requests) do
+    [
+      {
+        'id' => 'pr-1',
+        'updated_at' => '2024-01-01T10:00:00Z',
+        'submitted_at' => '2024-01-01T10:00:00Z',
+        'claimed_profit_cost' => 100,
+        'claimed_travel_cost' => 50,
+        'claimed_total' => 150,
+        'calculation_method' => 'calculated_difference'
+      },
+      {
+        'id' => 'pr-2',
+        'updated_at' => '2024-01-02T10:00:00Z',
+        'submitted_at' => '2024-01-02T10:00:00Z',
+        'claimed_profit_cost' => 200,
+        'claimed_travel_cost' => 75,
+        'claimed_total' => 275,
+        'calculation_method' => 'calculated_difference'
+      }
+    ]
+  end
 
   let(:base_claim_response) do
     {
@@ -16,24 +38,7 @@ RSpec.describe Payments::SelectedClaimTransformer do
         'id' => 'nsm-456',
         'laa_reference' => 'LAA-linked'
       },
-      'payment_requests' => [
-        {
-          'id' => 'pr-1',
-          'updated_at' => '2024-01-01T10:00:00Z',
-          'submitted_at' => '2024-01-01T10:00:00Z',
-          'claimed_profit_cost' => 100,
-          'claimed_travel_cost' => 50,
-          'claimed_total' => 150
-        },
-        {
-          'id' => 'pr-2',
-          'updated_at' => '2024-01-02T10:00:00Z',
-          'submitted_at' => '2024-01-02T10:00:00Z',
-          'claimed_profit_cost' => 200,
-          'claimed_travel_cost' => 75,
-          'claimed_total' => 275
-        }
-      ],
+      'payment_requests' => payment_requests,
       'created_at' => '2024-01-01T00:00:00Z',
       'updated_at' => '2024-01-02T00:00:00Z'
     }
@@ -115,6 +120,39 @@ RSpec.describe Payments::SelectedClaimTransformer do
         expect(result[:laa_reference]).to eq('LAA-qWRbvm')
         expect(result).not_to have_key(:payment_requests)
         expect(result).not_to have_key(:original_claimed_total)
+      end
+    end
+
+    context 'when the last payment request is entered_to_be_paid' do
+      let(:payment_requests) do
+        [
+          {
+            'id' => 'pr-1',
+            'updated_at' => '2024-01-01T10:00:00Z',
+            'submitted_at' => '2024-01-01T10:00:00Z',
+            'claimed_profit_cost' => 100,
+            'claimed_travel_cost' => 50,
+            'claimed_total' => 150,
+            'calculation_method' => 'entered_to_be_paid'
+          },
+          {
+            'id' => 'pr-2',
+            'updated_at' => '2024-01-02T10:00:00Z',
+            'submitted_at' => '2024-01-02T10:00:00Z',
+            'claimed_profit_cost' => 200,
+            'claimed_travel_cost' => 75,
+            'claimed_total' => 275,
+            'calculation_method' => 'entered_to_be_paid'
+          }
+        ]
+      end
+
+      it 'does not record the original costs' do
+        result = transformer.transform
+
+        expect(result).not_to have_key(:original_claimed_total)
+        expect(result).not_to have_key(:original_claimed_profit_cost)
+        expect(result).not_to have_key(:original_claimed_travel_cost)
       end
     end
   end
