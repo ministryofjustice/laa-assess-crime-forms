@@ -81,7 +81,7 @@ module Payments
       # having this data pre-populated is confusing to users since it does not reflect the to be paid differences
       payment_requests = claim.with_indifferent_access[:payment_requests]
 
-      payment_requests.any? { |pr| pr[:calculation_method] != LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID }
+      payment_requests&.any? { |pr| pr[:calculation_method] == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID }
     end
 
     def response_except_list
