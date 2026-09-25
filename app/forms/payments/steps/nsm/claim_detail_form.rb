@@ -22,24 +22,24 @@ module Payments
         attribute :youth_court, :boolean
         attribute :date_completed, :date
 
-        validates :defendant_first_name, :defendant_last_name,
-                  :hearing_outcome_code, :matter_type, :court_name,
-                  presence: true
-
-        validates :number_of_defendants, :number_of_attendances, presence: true, is_a_number: true,
-          numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }
-
-        # Due to how Rails handles HTML forms with radio buttons that
-        # can be blank, we can't use presence validation here
-        validates :youth_court, inclusion: { in: [true, false] }
-        validates :stage_reached, inclusion: { in: %w[PROG PROM] }
-
-        validates :ufn, presence: true, ufn: true
-        validates :date_completed, :date_claim_assessed,
-                  presence: true, multiparam_date: { allow_past: true, allow_future: false }
         validate  :submission_year_must_be_present, :submission_month_must_be_present, :submission_date_must_be_present,
                   :submission_year_must_be_valid, :submission_month_must_be_valid, :submission_date_must_be_in_past,
                   if: :new_submission_date_needed?
+        validates :date_claim_assessed,
+                  presence: true, multiparam_date: { allow_past: true, allow_future: false }
+        validates :ufn, presence: true, ufn: true
+        validates :stage_reached, presence: true
+        validates :defendant_first_name, :defendant_last_name,
+                  presence: true
+        validates :number_of_defendants, :number_of_attendances, presence: true, is_a_number: true,
+          numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: NumericLimits::MAX_INTEGER }
+        validates :hearing_outcome_code, :matter_type, :court_name,
+                  presence: true
+        # Due to how Rails handles HTML forms with radio buttons that
+        # can be blank, we can't use presence validation here
+        validates :youth_court, inclusion: { in: [true, false] }
+        validates :date_completed,
+                  presence: true, multiparam_date: { allow_past: true, allow_future: false }
 
         def save
           handle_court_details

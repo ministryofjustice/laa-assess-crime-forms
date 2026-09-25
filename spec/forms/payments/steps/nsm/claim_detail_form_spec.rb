@@ -4,7 +4,7 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
   subject(:form) do
     described_class.new(
       date_claim_assessed: '2026-01-01',
-      ufn: '010123/001',
+      ufn: ufn,
       stage_reached: 'PROG',
       defendant_first_name: 'John',
       defendant_last_name: 'Doe',
@@ -28,6 +28,7 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
   let(:court_name) { 'USK' }
   let(:original_submission_year) { nil }
   let(:original_submission_month) { nil }
+  let(:ufn) { '010123/001' }
   let(:session_store) { {} }
 
   describe 'validations' do
@@ -174,6 +175,28 @@ RSpec.describe Payments::Steps::Nsm::ClaimDetailForm, type: :model do
             'Enter a year as 4 numbers, for example 2025'
           )
         end
+      end
+    end
+
+    context 'when ufn is not in the valid format' do
+      let(:ufn) { 'invalid_ufn' }
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+        expect(form.errors[:ufn]).to include(
+          'Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123'
+        )
+      end
+    end
+
+    context 'when ufn does not have a valid date in it' do
+      let(:ufn) { '311399/001' }
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+        expect(form.errors[:ufn]).to include(
+          'Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123'
+        )
       end
     end
   end
