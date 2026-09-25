@@ -106,6 +106,13 @@ RSpec.describe Payments::RequestsController, :stub_oauth_token do
       expect(assigns(:payment_confirmation)).to eq(summary_double)
       expect(session[:payments_confirmation_response]).to be_nil
     end
+
+    it 'redirects to the payments index page when no payment confirmation data is in session' do
+      get :confirmation,
+          params: { flow_id:, payment_request_id: }
+
+      expect(response).to redirect_to(payments_requests_path)
+    end
   end
 
   describe '#new existing form session' do
