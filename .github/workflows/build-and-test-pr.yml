@@ -35,7 +35,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
+        uses: ruby/setup-ruby@a0102e0972be65f351c307e2d64b9314a57c8073
         with:
           bundler-cache: true
 
@@ -127,7 +127,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
+        uses: ruby/setup-ruby@a0102e0972be65f351c307e2d64b9314a57c8073
         with:
           bundler-cache: true
 
@@ -186,7 +186,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
+        uses: ruby/setup-ruby@a0102e0972be65f351c307e2d64b9314a57c8073
         with:
           bundler-cache: true
 
@@ -271,7 +271,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
+        uses: ruby/setup-ruby@a0102e0972be65f351c307e2d64b9314a57c8073
         with:
           bundler-cache: true
 
@@ -295,7 +295,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Upload results to Github Code Scanning
-        uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd
+        uses: github/codeql-action/upload-sarif@1c5b675653bb5c22dbe9b12b556ec555138e09fd
         with:
           sarif_file: snyk_sarif
 
