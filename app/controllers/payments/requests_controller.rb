@@ -31,6 +31,8 @@ module Payments
     end
 
     def confirmation
+      redirect_to payments_requests_path and return if session[:payments_confirmation_response].blank?
+
       @payment_confirmation = Payments::ConfirmationSummary.new(session.delete(:payments_confirmation_response))
     end
 
