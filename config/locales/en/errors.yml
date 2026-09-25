@@ -170,10 +170,11 @@ en:
               blank: Enter date work completed
             ufn:
               invalid_characters: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
+              invalid: Unique file number must be a 6 digit date, followed by / and 3 more digits, for example DDMMYY/123 or 121023/123
               blank: Enter the unique file number
-              invalid_characters: Unique file number must only include numbers and a forward slash
               future_date: First 6 digits of the unique file number cannot be a future date
             stage_reached:
+              blank: Select the stage reached
               inclusion: Select the stage reached
             defendant_first_name:
               blank: Enter the defendant first name
