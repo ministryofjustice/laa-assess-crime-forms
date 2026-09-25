@@ -19,7 +19,7 @@ module Payments
     end
 
     def change_link
-      url_helpers.edit_payments_steps_nsm_submission_allowed_costs_path(session_answers['id'])
+      url_helpers.edit_payments_steps_nsm_allowed_costs_path(session_answers['id'])
     end
 
     private
