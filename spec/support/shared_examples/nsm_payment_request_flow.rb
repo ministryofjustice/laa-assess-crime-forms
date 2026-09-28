@@ -237,6 +237,22 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
               expect(page).to have_content('Costs to be paid')
             end
           end
+
+          it 'returns to Costs to be paid screen when cost summary change link is clicked' do
+            start_new_payment_request
+            choose_claim_type(claim_type)
+            fill_in_laa_ref
+            fill_date_claim_assessed
+            fill_allowed_costs
+            expect(page).to have_title('Check your answers')
+
+            within('.govuk-summary-card', text: 'Costs to be paid') do
+              click_link 'Change'
+            end
+            expect(page).to have_title('Costs to be paid')
+            click_link 'Back'
+            expect(page).to have_title('Check your answers')
+          end
         end
       else
         it 'sends Cost summary Change to claimed costs and back link returns to Check your answers' do
