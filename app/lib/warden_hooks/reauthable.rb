@@ -7,9 +7,9 @@ module WardenHooks
     Warden::Manager.after_set_user do |user, warden, options|
       scope = options[:scope]
 
-      # :nocov:
+      # simplecov:disable
       return unless user && warden.authenticated?(scope)
-      # :nocov:
+      # simplecov:enable
 
       proxy = Devise::Hooks::Proxy.new(warden)
       auth_context = Auth::SessionContext.new(session: warden.request.session)

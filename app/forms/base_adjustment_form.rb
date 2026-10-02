@@ -54,7 +54,7 @@ class BaseAdjustmentForm
     explanation != selected_record[self.class::COMMENT_FIELD]
   end
 
-  # :nocov:
+  # simplecov:disable
   def validate_time_period_max_hours(attribute, max_hours:)
     value = public_send(attribute)
     return if value.blank? || value.is_a?(Hash)
@@ -62,9 +62,9 @@ class BaseAdjustmentForm
 
     errors.add(attribute, :max_hours, count: max_hours) if value.hours.to_i > max_hours
   end
-  # :nocov:
+  # simplecov:enable
 
-  # :nocov:
+  # simplecov:disable
   def data_has_changed?
     raise 'implement in class'
   end
@@ -72,5 +72,5 @@ class BaseAdjustmentForm
   def selected_record
     raise 'implement in class'
   end
-  # :nocov:
+  # simplecov:enable
 end

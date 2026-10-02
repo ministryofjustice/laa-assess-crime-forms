@@ -32,11 +32,11 @@ module Payments
           Payments::AcCostsSummaryAppealed.new(@session_answers)
         when :assigned_counsel_amendment
           Payments::AcCostsSummaryAmended.new(@session_answers)
-        # :nocov:
+        # simplecov:disable
         else
           raise StandardError, "Unknown request type: #{@session_answers['request_type']}"
         end
-        # :nocov:
+        # simplecov:enable
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     end

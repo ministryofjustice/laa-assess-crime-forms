@@ -9,7 +9,7 @@ class ApplicationPolicy
   # We give the base class all these methods returning false,
   # so that in future any new policies we create are restrictive
   # by default.
-  # :nocov:
+  # simplecov:disable
   def index?
     false
   end
@@ -37,5 +37,5 @@ class ApplicationPolicy
   def destroy?
     false
   end
-  # :nocov:
+  # simplecov:enable
 end

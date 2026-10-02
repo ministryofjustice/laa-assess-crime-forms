@@ -11,7 +11,7 @@ module Users
       authenticate_from_omniauth
     end
 
-    # :nocov:
+    # simplecov:disable
     def failure
       throw(:warden, recall: 'Errors#forbidden', message: :forbidden)
     end
@@ -23,7 +23,7 @@ module Users
     def passthru
       redirect_to new_user_session_path
     end
-    # :nocov:
+    # simplecov:enable
 
     private
 
