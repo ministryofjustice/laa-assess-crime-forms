@@ -3,7 +3,7 @@ module Steps
     helper StepsHelper
     helper FormBuilderHelper
 
-    # :nocov:
+    # simplecov:disable
     def show
       raise 'implement this action, if needed, in subclasses'
     end
@@ -15,11 +15,11 @@ module Steps
     def update
       raise 'implement this action, if needed, in subclasses'
     end
-    # :nocov:
+    # simplecov:enable
 
     private
 
-    # :nocov:
+    # simplecov:disable
     def multi_step_form_session
       raise 'implement this action, in subclasses'
     end
@@ -27,7 +27,7 @@ module Steps
     def decision_tree_class
       raise 'implement this action, in subclasses'
     end
-    # :nocov:
+    # simplecov:enable
 
     def update_and_advance(form_class, opts = {})
       hash = permitted_params(form_class).to_h

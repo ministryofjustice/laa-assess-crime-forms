@@ -56,11 +56,11 @@ module Payments
           [NsmClaimDetailsCard.new(session_answers, params)]
         when :assigned_counsel, :assigned_counsel_appeal, :assigned_counsel_amendment
           [AcClaimDetailsCard.new(session_answers, params)]
-        # :nocov:
+        # simplecov:disable
         else
           false
         end
-        # :nocov:
+        # simplecov:enable
       end
 
       def cost_summary

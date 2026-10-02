@@ -17,11 +17,11 @@ module PaymentsHelper
       LaaCrimeFormsCommon::PaymentBasis::LINKED_NO_ORIGINAL_PAYMENT
     elsif linked_payment
       LaaCrimeFormsCommon::PaymentBasis::EXISTING_PAYMENT_RECORD
-    # :nocov:
+    # simplecov:disable
     else
       raise 'Unknown payment basis'
     end
-    # :nocov:
+    # simplecov:enable
   end
 
   def to_be_paid?(payment_hash)

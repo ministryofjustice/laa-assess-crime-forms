@@ -30,11 +30,11 @@ class ErrorsController < ApplicationController
   # Determine the error page to render based on the status
   def error_page
     # TODO: increase test coverage for these edge caess if possible
-    # :nocov:
+    # simplecov:disable
     return :internal_server_error if status >= 500
     return :forbidden if status == 403
     return :unprocessable_entity if [422, 400].include? status
-    # :nocov:
+    # simplecov:enable
 
     :not_found
   end
@@ -44,9 +44,9 @@ class ErrorsController < ApplicationController
     status_from_path = request.path_info[1..].to_i
 
     # TODO: increase test coverage for these edge caess if possible
-    # :nocov:
+    # simplecov:disable
     return 404 unless (400..511).cover?(status_from_path)
-    # :nocov:
+    # simplecov:enable
 
     status_from_path
   end

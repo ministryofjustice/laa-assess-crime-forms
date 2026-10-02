@@ -29,11 +29,11 @@ module Payments
       claim.except!(*response_except_list)
     end
 
-    # :nocov:
+    # simplecov:disable
     def claim
       raise NotImplementedError, 'Subclasses must implement the claim method'
     end
-    # :nocov:
+    # simplecov:enable
 
     def format_ac_claim(claim)
       if multi_step_form_session['request_type'] == 'assigned_counsel'

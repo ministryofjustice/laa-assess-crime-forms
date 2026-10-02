@@ -71,9 +71,9 @@ class DashboardsController < ApplicationController
     elsif nav_select == 'nsm'
       ids = ENV.fetch('METABASE_NSM_DASHBOARD_IDS')&.split(',')
     else
-      # :nocov:
+      # simplecov:disable
       false
-      # :nocov:
+      # simplecov:enable
     end
     ids || []
   end

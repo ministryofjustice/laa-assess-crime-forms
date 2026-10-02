@@ -28,7 +28,7 @@ module Decisions
       @nsm_amendment ||= claim_type == Payments::ClaimType::NSM_AMENDMENT.to_s
     end
 
-    # :nocov:
+    # simplecov:disable
     def ac
       @ac ||= claim_type == Payments::ClaimType::AC.to_s
     end
@@ -40,6 +40,6 @@ module Decisions
     def ac_amendment
       @ac_amendment ||= claim_type == Payments::ClaimType::AC_AMENDMENT.to_s
     end
-    # :nocov:
+    # simplecov:enable
   end
 end

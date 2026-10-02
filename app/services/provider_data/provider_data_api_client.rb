@@ -25,12 +25,12 @@ module ProviderData
       def contracted_office_details(office_code)
         # effective_date only used in UAT environment
         effective_date = HostEnv.uat? ? PROVIDER_API_EFFECTIVE_DATE_PARAM : nil
-        # :nocov: Querying an external API
+        # simplecov:disable Querying an external API
         params = {
           'areaOfLaw' => 'CRIME LOWER',
           'effectiveDate' => effective_date
         }.compact
-        # :nocov:
+        # simplecov:enable
 
         query(
           :get,

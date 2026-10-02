@@ -50,11 +50,11 @@ module Payments
         attribute_names.grep(/(_cost|_vat)$/).sum { |attr| public_send(attr).to_d }
       end
 
-      # :nocov:
+      # simplecov:disable
       def persist!
         raise 'Subclasses of BaseFormObject need to implement #persist!'
       end
-      # :nocov:
+      # simplecov:enable
 
       def amendment?
         request_type.end_with?('amendment')
