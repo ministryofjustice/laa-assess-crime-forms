@@ -22,6 +22,7 @@ Rails.application.configure do
     policy.worker_src :blob
 
     policy.frame_src ENV.fetch('METABASE_PUBLIC_URL', nil)
+    policy.frame_ancestors :none
   end
 
   # Generate session nonces for permitted importmap and inline scripts
