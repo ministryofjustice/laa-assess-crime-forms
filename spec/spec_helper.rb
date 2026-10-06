@@ -3,29 +3,29 @@ require 'simplecov-console'
 require 'simplecov_json_formatter'
 require 'webmock/rspec'
 
-SimpleCov.formatter = SimpleCov::Formatter::Console if ENV['TEST_ENV_NUMBER']
+SimpleCov.configure do
+  formatter SimpleCov::Formatter::Console if ENV['TEST_ENV_NUMBER']
 
-SimpleCov.use_merging true
-SimpleCov.merge_timeout 3600
+  merging true
+  merge_timeout 3600
 
-SimpleCov.start 'rails' do
-  add_filter 'spec/'
-  add_filter 'gems/'
-  add_filter 'config/'
-  add_filter 'lib/tasks/'
+  skip 'spec/'
+  skip 'gems/'
+  skip 'config/'
+  skip 'lib/tasks/'
 
-  add_filter 'app/presenters/claim_details/table.rb'
-  add_filter 'app/jobs/application_job.rb'
-  add_filter 'app/mailers/application_mailer.rb'
-  add_filter 'app/controllers/concerns/error_handling.rb'
-  add_filter 'lib/govuk_design_system_formbuilder/elements/period.rb'
+  skip 'app/presenters/claim_details/table.rb'
+  skip 'app/jobs/application_job.rb'
+  skip 'app/mailers/application_mailer.rb'
+  skip 'app/controllers/concerns/error_handling.rb'
+  skip 'lib/govuk_design_system_formbuilder/elements/period.rb'
 
-  add_group 'Forms', '/app/forms'
-  add_group 'Services', '/app/services'
-  add_group 'View models', '/app/view_models'
+  group 'Forms', '/app/forms'
+  group 'Services', '/app/services'
+  group 'View models', '/app/view_models'
 
-  add_group 'Ignored Code' do |src_file|
-    File.readlines(src_file.filename).grep(/:nocov:/).any?
+  group 'Ignored Code' do |src_file|
+    File.readlines(src_file.filename).grep(/simplecov:disable/).any?
   end
 
   enable_coverage :branch
@@ -35,11 +35,13 @@ SimpleCov.start 'rails' do
     primary_coverage :branch
     minimum_coverage branch: 100, line: 100
 
-    SimpleCov.at_exit do
+    at_exit do
       SimpleCov.result.format!
     end
   end
 end
+
+SimpleCov.start 'rails'
 
 WebMock.disable_net_connect!(allow_localhost: true)
 

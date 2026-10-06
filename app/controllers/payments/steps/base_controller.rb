@@ -12,11 +12,11 @@ module Payments
         Decisions::DecisionTree
       end
 
-      # :nocov:
+      # simplecov:disable
       def edit
         raise 'implement this action, if needed, in subclasses'
       end
-      # :nocov:
+      # simplecov:enable
 
       private
 
@@ -27,7 +27,7 @@ module Payments
                                                                          session_id: id)
       end
 
-      # :nocov:
+      # simplecov:disable
       def parent_claim_class
         parent_scope = multi_step_form_session['request_type']
                        .sub(/_(supplemental|appeal|amendment)\z/, '').sub(/mag\z/, 'magistrate')
@@ -39,7 +39,7 @@ module Payments
                                   :assigned_counsel
                                 end
       end
-      # :nocov:
+      # simplecov:enable
 
       def authorized
         authorize(:payment, :update?)

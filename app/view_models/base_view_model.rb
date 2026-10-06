@@ -34,7 +34,7 @@ class BaseViewModel
     end
 
     def process(&block)
-      # :nocov:
+      # simplecov:disable
       # This change is needed because AdditionalFeesSummary doesn't
       # call `build` the way other summary viewmodels do.
       #
@@ -42,7 +42,7 @@ class BaseViewModel
       # for it, and since we want to hopefully remove all this
       # evantually it's simpler to just not cover it.
       result = rows&.map(&block)
-      # :nocov:
+      # simplecov:enable
       return_array ? result : result[0]
     end
   end

@@ -1,7 +1,7 @@
 require Rails.root.join('lib/govuk_design_system_formbuilder/elements/period')
 
 module FormBuilderHelper
-  # :nocov:
+  # simplecov:disable
   # rubocop:disable Metrics/ParameterLists
   def govuk_period_field(attribute_name, hint: {}, legend: {}, caption: {}, widths: {}, maxlength_enabled: false,
                          form_group: {}, **, &block)
@@ -22,5 +22,5 @@ module FormBuilderHelper
     govuk_submit I18n.t("helpers.steps.#{i18n_key}"), **opts, &block
   end
   # rubocop:enable Metrics/ParameterLists
-  # :nocov:
+  # simplecov:enable
 end
