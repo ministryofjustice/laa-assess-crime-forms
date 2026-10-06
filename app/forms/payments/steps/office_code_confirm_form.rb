@@ -13,11 +13,11 @@ module Payments
         if confirm_office_code
           multi_step_form_session[:solicitor_office_code] = details['firmOfficeCode']
           multi_step_form_session[:solicitor_firm_name] = details.dig('firm', 'firmName')
-        # :nocov:
+        # simplecov:disable
         else
           false
         end
-        # :nocov:
+        # simplecov:enable
 
         true
       end

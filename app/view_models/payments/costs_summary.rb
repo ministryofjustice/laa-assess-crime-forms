@@ -22,7 +22,7 @@ module Payments
       ]
     end
 
-    # :nocov:
+    # simplecov:disable
     def table_fields
       raise 'implement this action, if needed, in subclasses'
     end
@@ -34,7 +34,7 @@ module Payments
     def change_link_text
       I18n.t('payments.steps.check_your_answers.edit.change')
     end
-    # :nocov:
+    # simplecov:enable
 
     def formatted_summed_fields
       {

@@ -58,11 +58,11 @@ module PriorAuthority
       controller_params[:id]
     end
 
-    # :nocov:
+    # simplecov:disable
     def secondary_id
       nil
     end
-    # :nocov:
+    # simplecov:enable
 
     def authorize_list
       authorize PriorAuthorityApplication, :index?

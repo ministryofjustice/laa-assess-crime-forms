@@ -11,11 +11,11 @@ module Payments
         if confirm_office_code
           multi_step_form_session[:counsel_office_code] = office_code_details['office']['firmOfficeCode']
           multi_step_form_session[:counsel_firm_name] = office_code_details['firm']['firmName']
-        # :nocov:
+        # simplecov:disable
         else
           false
         end
-        # :nocov:
+        # simplecov:enable
 
         true
       end

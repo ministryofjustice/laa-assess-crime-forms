@@ -38,31 +38,31 @@ module PriorAuthority
       true
     end
 
-    # :nocov:
+    # simplecov:disable
     def per_item?
       raise 'Implement in subclass'
     end
-    # :nocov:
+    # simplecov:enable
 
-    # :nocov:
+    # simplecov:disable
     def per_hour?
       raise 'Implement in subclass'
     end
-    # :nocov:
+    # simplecov:enable
 
     private
 
-    # :nocov:
+    # simplecov:disable
     def process_fields
       raise 'Implement in subclass'
     end
-    # :nocov:
+    # simplecov:enable
 
     def period_hours_within_limit
       validate_time_period_max_hours(:period, max_hours: NumericLimits::MAX_INTEGER)
     end
 
-    # :nocov:
+    # simplecov:disable
     def items_within_limit
       return if items.blank? || !items.is_a?(Numeric)
 
@@ -74,7 +74,7 @@ module PriorAuthority
 
       errors.add(:cost_per_item, :less_than_or_equal_to, count: MAX_FLOAT) if cost_per_item > MAX_FLOAT
     end
-    # :nocov:
+    # simplecov:enable
 
     def data_has_changed?
       if per_hour?
