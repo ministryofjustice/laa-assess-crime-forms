@@ -43,6 +43,9 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInArguments:
   Enabled: false
 
+Style/IfUnlessModifier:
+  Enabled: false
+
 Layout/HashAlignment:
   Enabled: false
 
