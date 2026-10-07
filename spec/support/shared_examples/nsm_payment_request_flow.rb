@@ -96,9 +96,6 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
           laa_reference: crm7_reference.upcase,
           request_type: crm7_request_type
         )
-      end
-
-      it 'allows continuing the flow with the submission-backed claim' do
         start_new_payment_request
         choose_claim_type(claim_type)
         fill_in 'Find a claim', with: crm7_reference
@@ -106,6 +103,15 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         click_button 'Select'
 
         fill_date_claim_assessed
+      end
+
+      it 'pre-populates costs' do
+        page.all('input', visible: true).find_each do |input|
+          expect(input.value).not_to be_empty
+        end
+      end
+
+      it 'allows continuing the flow with the submission-backed claim' do
         fill_claimed_costs if type_suffix == 'supplemental'
         fill_allowed_costs
 
@@ -168,12 +174,15 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
       context 'when there is no original payment associated to the claim' do
         let(:search_original_results) { 0 }
 
-        it 'shows Cost to be paid screen' do
+        it 'shows Cost to be paid screen with non pre-populated inputs' do
           start_new_payment_request
           choose_claim_type(claim_type)
           fill_in_laa_ref
           fill_date_claim_assessed
           expect(page).to have_title('Costs to be paid')
+          page.all('input', visible: true).find_each do |input|
+            expect(input.value).to be_empty
+          end
         end
       end
     end
