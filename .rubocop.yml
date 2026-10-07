@@ -49,9 +49,6 @@ Style/IfUnlessModifier:
 Layout/HashAlignment:
   Enabled: false
 
-Rails/FindEach:
-  Enabled: false
-
 # TODO: revisit this once app operational
 RSpec/PendingWithoutReason:
   Enabled: false
