@@ -2,7 +2,8 @@ module Payments
   class SelectedSubmissionTransformer < BaseSelectedTransformer
     def transform
       load_claim = claim
-      dup_original_costs_to(load_claim)
+      dup_original_costs_to(load_claim) if multi_step_form_session['request_type'].in?(%w[assigned_counsel
+                                                                                          non_standard_magistrate])
       format_claim(load_claim)
     end
 
@@ -12,7 +13,13 @@ module Payments
       loaded_claim = Claim.load_from_app_store(payable_claim_id)
       @claim ||= BaseViewModel.build(:payment_claim_details, loaded_claim)
       @claim.request_type = multi_step_form_session['request_type']
-      @claim.to_h.with_indifferent_access
+      clear_claim_costs(@claim.to_h)
+      if multi_step_form_session['request_type'].in?(%w[assigned_counsel
+                                                        non_standard_magistrate])
+        @claim.to_h.with_indifferent_access
+      else
+        clear_claim_costs(@claim.to_h.with_indifferent_access)
+      end
     end
 
     def format_claim(claim)
@@ -28,6 +35,13 @@ module Payments
         next unless claim_amount_keys.include?(key.to_sym)
 
         hash[:"original_#{key}"] = hash[key]
+      end
+      hash
+    end
+
+    def clear_claim_costs(hash)
+      claim_amount_keys.each do |key|
+        hash[key] = nil
       end
       hash
     end
