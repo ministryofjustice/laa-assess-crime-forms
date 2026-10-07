@@ -2,8 +2,7 @@ module Payments
   class SelectedSubmissionTransformer < BaseSelectedTransformer
     def transform
       load_claim = claim
-      dup_original_costs_to(load_claim) if multi_step_form_session['request_type'].in?(%w[assigned_counsel
-                                                                                          non_standard_magistrate])
+      dup_original_costs_to(load_claim)
       format_claim(load_claim)
     end
 
