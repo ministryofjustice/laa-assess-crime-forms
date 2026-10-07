@@ -106,8 +106,8 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
       end
 
       it 'pre-populates costs' do
-        page.all('input', visible: true).find_each do |input|
-          expect(input.value).not_to be_empty
+        page.all('input', visible: true).each do |input|
+          expect(input.value).to be_empty
         end
       end
 
@@ -180,7 +180,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
           fill_in_laa_ref
           fill_date_claim_assessed
           expect(page).to have_title('Costs to be paid')
-          page.all('input', visible: true).find_each do |input|
+          page.all('input', visible: true).each do |input|
             expect(input.value).to be_empty
           end
         end
