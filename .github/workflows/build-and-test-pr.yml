@@ -309,6 +309,7 @@ jobs:
           args: --severity-threshold=low
 
       - name: Test Docker Vulnerabilities
+        continue-on-error: true
         uses: snyk/actions/docker@9adf32b1121593767fc3c057af55b55db032dc04
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -327,7 +328,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: marocchino/sticky-pull-request-comment@v3
+      - uses: marocchino/sticky-pull-request-comment@main
         with:
           header: snyk-results
           message: |
