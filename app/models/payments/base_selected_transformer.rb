@@ -16,9 +16,9 @@ module Payments
 
     def transform
       load_claim = claim
-      latest_payment_request = to_be_paid?(load_claim) ? {} : latest_payment_request(load_claim)
+      linked_costs = to_be_paid?(load_claim) ? {} : latest_payment_request(load_claim)
       claim = format_claim(load_claim)
-      claim.merge!(latest_payment_request)
+      claim.merge!(linked_costs)
     end
 
     private
