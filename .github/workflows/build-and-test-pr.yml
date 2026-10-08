@@ -315,7 +315,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ env.ECR_IMAGE }}
-          args: --severity-threshold=high
+          args: --severity-threshold=high --file=Dockerfile
           sarif: true
       - name: Upload Docker Vulnerability Results to Github Code Scanning
         uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd
