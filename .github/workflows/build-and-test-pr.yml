@@ -321,6 +321,19 @@ jobs:
         with:
           sarif_file: snyk.sarif
 
+  snyk-pr-comment:
+    needs: snyk-scan
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: marocchino/sticky-pull-request-comment@v3
+        with:
+          header: snyk-results
+          message: |
+            ### Security scan
+            [View open code-scanning alerts for this PR](${{ github.server_url }}/${{ github.repository }}/security/code-scanning?query=pr%3A${{ github.event.pull_request.number }}+is%3Aopen)
+
   e2e-test:
     name: Run E2E Tests
     uses: ministryofjustice/nsm-e2e-test/.github/workflows/run-e2e-tests.yml@main
