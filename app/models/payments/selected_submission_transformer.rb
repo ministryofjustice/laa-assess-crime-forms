@@ -12,7 +12,6 @@ module Payments
       loaded_claim = Claim.load_from_app_store(payable_claim_id)
       @claim ||= BaseViewModel.build(:payment_claim_details, loaded_claim)
       @claim.request_type = multi_step_form_session['request_type']
-      clear_claim_costs(@claim.to_h)
       if multi_step_form_session['request_type'].in?(%w[assigned_counsel
                                                         non_standard_magistrate])
         @claim.to_h.with_indifferent_access
