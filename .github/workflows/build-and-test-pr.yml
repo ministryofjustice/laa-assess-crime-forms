@@ -308,6 +308,19 @@ jobs:
           command: monitor
           args: --severity-threshold=low
 
+      - name: Test Docker Vulnerabilities
+        continue-on-error: true
+        uses: snyk/actions/docker@9adf32b1121593767fc3c057af55b55db032dc04
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ env.ECR_IMAGE }}
+          args: --severity-threshold=high
+      - name: Upload Docker Vulnerability Results to Github Code Scanning
+        uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd
+        with:
+          sarif_file: snyk.sarif
+
   e2e-test:
     name: Run E2E Tests
     uses: ministryofjustice/nsm-e2e-test/.github/workflows/run-e2e-tests.yml@main
