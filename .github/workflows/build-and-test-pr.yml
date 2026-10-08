@@ -309,7 +309,6 @@ jobs:
           args: --severity-threshold=low
 
       - name: Test Docker Vulnerabilities
-        continue-on-error: true
         uses: snyk/actions/docker@9adf32b1121593767fc3c057af55b55db032dc04
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
