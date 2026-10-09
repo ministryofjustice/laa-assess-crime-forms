@@ -16,9 +16,9 @@ module Payments
 
     def transform
       load_claim = claim
-      latest_payment_request = to_be_paid(load_claim) ? {} : latest_payment_request(load_claim)
+      linked_costs = to_be_paid?(load_claim) ? {} : latest_payment_request(load_claim)
       claim = format_claim(load_claim)
-      claim.merge!(latest_payment_request)
+      claim.merge!(linked_costs)
     end
 
     private
@@ -76,12 +76,14 @@ module Payments
       hash
     end
 
-    def to_be_paid(claim)
+    def to_be_paid?(claim)
       # previous allowed costs shouldn't be considered if the calculation method is ENTERED_TO_BE_PAID
       # having this data pre-populated is confusing to users since it does not reflect the to be paid differences
       payment_requests = claim.with_indifferent_access[:payment_requests]
+      return false if payment_requests&.any? { |pr| pr[:request_type].in?(%w[assigned_counsel non_standard_magistrate]) }
+      return true if payment_requests&.any? { |pr| pr[:calculation_method] == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID }
 
-      payment_requests&.any? { |pr| pr[:calculation_method] == LaaCrimeFormsCommon::PaymentBasis::ENTERED_TO_BE_PAID }
+      false
     end
 
     def response_except_list

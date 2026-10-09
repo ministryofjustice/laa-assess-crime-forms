@@ -155,5 +155,54 @@ RSpec.describe Payments::SelectedClaimTransformer do
         expect(result).not_to have_key(:original_claimed_travel_cost)
       end
     end
+
+    context 'when there is a mix of original cost and additional payments' do
+      let(:payment_requests) do
+        [
+          {
+            'id' => 'pr-1',
+            'request_type' => 'non_standard_magistrate',
+            'updated_at' => '2024-01-01T10:00:00Z',
+            'submitted_at' => '2024-01-01T10:00:00Z',
+            'claimed_profit_cost' => 100,
+            'claimed_travel_cost' => 50,
+            'claimed_total' => 150,
+            'allowed_profit_cost' => 90,
+            'allowed_travel_cost' => 40,
+            'allowed_total' => 140,
+            'calculation_method' => 'entered_to_be_paid'
+          },
+          {
+            'id' => 'pr-2',
+            'request_type' => 'non_standard_mag_amendment',
+            'updated_at' => '2024-01-02T10:00:00Z',
+            'submitted_at' => '2024-01-02T10:00:00Z',
+            'claimed_profit_cost' => 200,
+            'claimed_travel_cost' => 75,
+            'claimed_total' => 275,
+            'allowed_profit_cost' => 190,
+            'allowed_travel_cost' => 65,
+            'allowed_total' => 265,
+            'calculation_method' => 'calculated_difference'
+          }
+        ]
+      end
+
+      # rubocop:disable RSpec/MultipleExpectations
+      it 'merges the previous costs into the claim data' do
+        result = transformer.transform
+
+        expect(result).to have_key(:original_claimed_total)
+        expect(result).to have_key(:original_claimed_profit_cost)
+        expect(result).to have_key(:original_claimed_travel_cost)
+        expect(result[:claimed_profit_cost]).to eq(200)
+        expect(result[:claimed_travel_cost]).to eq(75)
+        expect(result[:claimed_total]).to eq(275)
+        expect(result[:allowed_profit_cost]).to eq(190)
+        expect(result[:allowed_travel_cost]).to eq(65)
+        expect(result[:allowed_total]).to eq(265)
+      end
+      # rubocop:enable RSpec/MultipleExpectations
+    end
   end
 end
