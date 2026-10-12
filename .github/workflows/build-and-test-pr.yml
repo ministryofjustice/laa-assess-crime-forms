@@ -329,7 +329,7 @@ jobs:
         env:
           SNYK_ORG: ${{ secrets.SNYK_ORG }}
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: ./bin/snyk_delta_all_projects -d --targetReference=main
+        run: ./bin/snyk_delta_all_projects --targetReference=main
 
   snyk-pr-comment:
     needs: snyk-scan
