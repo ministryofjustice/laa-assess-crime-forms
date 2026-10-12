@@ -311,14 +311,6 @@ jobs:
           command: monitor
           args: --severity-threshold=low
 
-      - name: Monitor All
-        uses: snyk/actions/docker@9adf32b1121593767fc3c057af55b55db032dc04
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor
-          args: --severity-threshold=low --all-projects
-
       - name: Test Docker Vulnerabilities
         continue-on-error: true
         uses: snyk/actions/docker@9adf32b1121593767fc3c057af55b55db032dc04
@@ -333,11 +325,8 @@ jobs:
       - name: Install snyk-delta
         run: npm install -g snyk-delta
 
-      - name: Run snyk-delta for all projects
-        env:
-          SNYK_ORG: ${{ secrets.SNYK_ORG }}
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: ./bin/snyk_delta_all_projects --targetReference=main --org=${{ secrets.SNYK_ORG }}
+      - name: Run snyk-delta for package.json
+        run: snyk test --file=package.json --print-deps | snyk-delta --baselineOrg=${{ secrets.SNYK_ORG }} --baselineProject=${{ secrets.SNYK_PROJECT }}
 
   snyk-pr-comment:
     needs: snyk-scan
