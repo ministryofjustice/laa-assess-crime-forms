@@ -326,6 +326,8 @@ jobs:
         run: npm install -g snyk-delta
 
       - name: Run snyk-delta for package.json
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: snyk test --file=package.json --print-deps --json | snyk-delta --baselineOrg=${{ secrets.SNYK_ORG }} --baselineProject=${{ secrets.SNYK_PROJECT }}
 
   snyk-pr-comment:
