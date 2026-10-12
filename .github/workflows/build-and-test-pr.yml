@@ -288,8 +288,8 @@ jobs:
       - name: Pull Docker image from ECR for scanning
         run: docker pull $ECR_IMAGE
 
-      # - name: Install Snyk CLI
-      #   uses: snyk/actions/setup@9adf32b1121593767fc3c057af55b55db032dc04
+      - name: Install Snyk CLI
+        uses: snyk/actions/setup@9adf32b1121593767fc3c057af55b55db032dc04
 
       # - name: Snyk Code Test
       #   continue-on-error: true
@@ -327,7 +327,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: monitor
-          args: --severity-threshold=low --file=package.json
+          args: --severity-threshold=low --file=package.json --project-name=assess-npm
 
 
       - name: Install snyk-delta
