@@ -326,8 +326,7 @@ jobs:
         env:
           SNYK_ORG: ${{ secrets.SNYK_ORG }}
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: ./bin/snyk_delta_all_projects -d --file=Dockerfile
-
+        run: ./bin/snyk_delta_all_projects -d
 
   snyk-pr-comment:
     needs: snyk-scan
