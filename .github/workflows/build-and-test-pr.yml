@@ -323,7 +323,7 @@ jobs:
         run: npm install -g snyk-delta
 
       - name: Run snyk-delta for all projects
-        run: ./scripts/snyk_delta_all_projects.sh --targetReference=main --baselineOrg=${{ secrets.SNYK_ORG }}
+        run: ./bin/snyk_delta_all_projects --targetReference=main --baselineOrg=${{ secrets.SNYK_ORG }}
 
 
   snyk-pr-comment:
