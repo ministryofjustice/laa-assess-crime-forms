@@ -9,6 +9,8 @@
 
 set -euo pipefail
 
+snyk_org=${SNYK_ORG:-}
+
 exit_code=0
 snyk_test_json=''
 formatted_json=''
@@ -16,7 +18,7 @@ args=("$*")
 
 run_snyk_delta () {
     # add in any other arguments you would like to use
-    snyk-delta
+    snyk-delta --baselineOrg=${snyk_org}
 }
 
 run_snyk_test () {
