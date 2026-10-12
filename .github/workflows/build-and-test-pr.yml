@@ -325,6 +325,7 @@ jobs:
       - name: Run snyk-delta for all projects
         env:
           SNYK_ORG: ${{ secrets.SNYK_ORG }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: ./bin/snyk_delta_all_projects -d --file=Dockerfile
 
 
