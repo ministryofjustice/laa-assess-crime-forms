@@ -84,23 +84,6 @@ jobs:
           helm template --debug helm_deploy --values helm_deploy/values-${{ matrix.environment }}.yaml > /tmp/helm-output.yaml
           yamllint /tmp/helm-output.yaml -f github
 
-  test_deps:
-    name: Install test dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          persist-credentials: false
-
-      - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
-        with:
-          bundler-cache: true
-
-      - name: Install JavaScript dependencies
-        run: yarn install --frozen-lockfile
-
   # test:
   #   name: RSpec ${{ matrix.test-type }} tests
   #   runs-on: ubuntu-latest
@@ -278,7 +261,7 @@ jobs:
       id-token: write
       security-events: write
       contents: read
-    needs: [build, test_deps]
+    needs: build
     env:
       ECR_IMAGE: ${{ secrets.ECR_REGISTRY_URL}}/${{ vars.ASSESS_DEV_ECR_REPOSITORY}}:${{ needs.build.outputs.image-tag }}
     steps:
@@ -291,6 +274,9 @@ jobs:
         uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
         with:
           bundler-cache: true
+
+      - name: Install JavaScript dependencies
+        run: yarn install --frozen-lockfile
 
       - name: Configure AWS credentials for ECR access
         uses: ministryofjustice/laa-reusable-github-actions/.github/actions/ecr-auth@main
@@ -343,7 +329,7 @@ jobs:
         env:
           SNYK_ORG: ${{ secrets.SNYK_ORG }}
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: ./bin/snyk_delta_all_projects -d
+        run: ./bin/snyk_delta_all_projects -d --targetReference=main
 
   snyk-pr-comment:
     needs: snyk-scan
