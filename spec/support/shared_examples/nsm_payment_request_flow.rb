@@ -167,7 +167,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
 
       if type_suffix.in?(%w[amendment appeal])
         # rubocop:disable RSpec/ExampleLength
-        it 'renders prefilled amounts to two decimal places and width 7' do
+        it 'renders prefilled amounts to two decimal places and width 10' do
           start_new_payment_request
           choose_claim_type(claim_type)
           fill_in_laa_ref
@@ -176,15 +176,17 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
           field_ids = %w[profit_costs disbursement_costs travel_costs waiting_costs]
           values = field_ids
                    .index_with { |field_id| find_field(field_id).value }
+          expected_values = claim.fetch('payment_requests').last
+                                 .slice('allowed_profit_cost', 'allowed_disbursement_cost', 'allowed_travel_cost',
+                                        'allowed_waiting_cost')
+                                 .transform_values { |value| format('%.2f', BigDecimal(value)) }
+                                 .transform_keys do |key|
+            key.sub('allowed_', '').sub('_cost', '_costs')
+          end
           widths = field_ids
-                   .index_with { |field_id| find_field(field_id)[:class].include?('govuk-input--width-7') }
+                   .index_with { |field_id| find_field(field_id)[:class].include?('govuk-input--width-10') }
 
-          expect(values).to eq(
-            'profit_costs' => '123.00',
-            'disbursement_costs' => '123.00',
-            'travel_costs' => '123.00',
-            'waiting_costs' => '123.00'
-          )
+          expect(values).to eq(expected_values)
           expect(widths).to eq(
             'profit_costs' => true,
             'disbursement_costs' => true,

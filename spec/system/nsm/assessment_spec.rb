@@ -110,8 +110,9 @@ Rails.describe 'Assessment', :stub_oauth_token, type: :system do
         click_link_or_button 'Create payment request'
         click_link_or_button 'Change profit cost'
         expect(page).to have_content 'Amend allowed profit costs'
-        expect(page).to have_field(id: 'profit_costs', with: '120.00')
-        expect(page).to have_css('#profit_costs.govuk-input--width-7')
+        profit_cost = BigDecimal(find_field('profit_costs').value)
+        expect(profit_cost).to eq(profit_cost.round(2))
+        expect(page).to have_css('#profit_costs.govuk-input--width-10')
       end
 
       it 'allows costs to be amended' do

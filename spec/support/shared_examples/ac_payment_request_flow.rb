@@ -121,8 +121,8 @@ RSpec.shared_examples 'AC payment request flow' do |type_suffix|
       expect(page).to have_title('Allowed costs')
       expect(page).to have_field(id: 'counsel_costs_net', with: '900.00')
       expect(page).to have_field(id: 'counsel_costs_vat', with: '300.00')
-      expect(page).to have_css('#counsel_costs_net.govuk-input--width-7')
-      expect(page).to have_css('#counsel_costs_vat.govuk-input--width-7')
+      expect(page).to have_css('#counsel_costs_net.govuk-input--width-10')
+      expect(page).to have_css('#counsel_costs_vat.govuk-input--width-10')
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
       click_on 'Continue'
