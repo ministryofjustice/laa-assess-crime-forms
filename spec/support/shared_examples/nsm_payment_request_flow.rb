@@ -165,6 +165,36 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
         expect(page).to have_title('Allowed costs')
       end
 
+      if type_suffix.in?(%w[amendment appeal])
+        # rubocop:disable RSpec/ExampleLength
+        it 'renders prefilled amounts to two decimal places and width 7' do
+          start_new_payment_request
+          choose_claim_type(claim_type)
+          fill_in_laa_ref
+          fill_date_claim_assessed
+
+          field_ids = %w[profit_costs disbursement_costs travel_costs waiting_costs]
+          values = field_ids
+                   .index_with { |field_id| find_field(field_id).value }
+          widths = field_ids
+                   .index_with { |field_id| find_field(field_id)[:class].include?('govuk-input--width-7') }
+
+          expect(values).to eq(
+            'profit_costs' => '123.00',
+            'disbursement_costs' => '123.00',
+            'travel_costs' => '123.00',
+            'waiting_costs' => '123.00'
+          )
+          expect(widths).to eq(
+            'profit_costs' => true,
+            'disbursement_costs' => true,
+            'travel_costs' => true,
+            'waiting_costs' => true
+          )
+        end
+        # rubocop:enable RSpec/ExampleLength
+      end
+
       context 'when there is no original payment associated to the claim' do
         let(:search_original_results) { 0 }
 

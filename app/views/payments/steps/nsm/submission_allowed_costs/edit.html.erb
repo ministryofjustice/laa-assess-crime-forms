@@ -12,7 +12,8 @@
           prefix_text: "£",
           inputmode: "decimal",
           label: { size: 'xl', text: t('.profit_costs') },
-          width: 10 %>
+          width: 7,
+          value: number_with_precision(@form_object.allowed_profit_cost, precision: 2) %>
       </div>
       <%= f.continue_button(primary: :save_and_continue, secondary: false) %>
     <% end %>

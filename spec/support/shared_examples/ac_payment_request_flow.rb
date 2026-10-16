@@ -114,13 +114,15 @@ RSpec.shared_examples 'AC payment request flow' do |type_suffix|
       click_button 'Select'
     end
 
-    # rubocop:disable RSpec/MultipleExpectations
+    # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
     it 'allows user to complete payment journey' do
       fill_date_claim_assessed
 
       expect(page).to have_title('Allowed costs')
-      expect(page).to have_field(id: 'counsel_costs_net', with: '900.0')
-      expect(page).to have_field(id: 'counsel_costs_vat', with: '300.0')
+      expect(page).to have_field(id: 'counsel_costs_net', with: '900.00')
+      expect(page).to have_field(id: 'counsel_costs_vat', with: '300.00')
+      expect(page).to have_css('#counsel_costs_net.govuk-input--width-7')
+      expect(page).to have_css('#counsel_costs_vat.govuk-input--width-7')
       fill_in id: 'counsel_costs_net', with: '100'
       fill_in id: 'counsel_costs_vat', with: '70'
       click_on 'Continue'
@@ -137,7 +139,7 @@ RSpec.shared_examples 'AC payment request flow' do |type_suffix|
 
       expect(page).to have_content('Payment request complete')
     end
-    # rubocop:enable RSpec/MultipleExpectations
+    # rubocop:enable RSpec/ExampleLength, RSpec/MultipleExpectations
 
     it 'sends Claim details Change to claim search and back link returns to Check your answers' do
       fill_date_claim_assessed
