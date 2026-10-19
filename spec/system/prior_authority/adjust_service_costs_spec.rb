@@ -10,7 +10,7 @@ RSpec.describe 'Adjust service costs', :stub_oauth_token do
     application.assigned_user_id = caseworker.id
 
     visit prior_authority_application_path(application)
-    click_on 'Adjust quote'
+    click_on 'Quotes'
     expect(page).to have_title('Adjustments')
     click_on 'Adjust service costs'
     expect(page).to have_title('Adjust service costs')

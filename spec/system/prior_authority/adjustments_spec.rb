@@ -58,7 +58,7 @@ RSpec.describe 'Adjustments', :stub_oauth_token do
     it 'updates the total at the top of the page' do
       visit prior_authority_application_path(application)
       expect(page).to have_content 'Requested: £356.50'
-      click_on 'Adjust quote'
+      click_on 'Quotes'
       expect(page).to have_content 'Amount1 hour 0 minutesRate£32.00 per hour'
       click_on cost_adjustment_button_label
       fill_in 'Minutes', with: '30'

@@ -10,7 +10,7 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
     application.assigned_user_id = caseworker.id
 
     visit prior_authority_application_path(application)
-    click_on 'Adjust quote'
+    click_on 'Quotes'
   end
 
   let(:caseworker) { create(:caseworker) }
@@ -59,7 +59,7 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
     end
 
     it 'shows the key information card' do
-      within('.govuk-summary-card') do
+      within('.govuk-summary-card', text: 'Key information') do
         expect(page)
           .to have_css('.govuk-summary-card__title', text: 'Key information')
           .and have_content('Main offenceRobbery')

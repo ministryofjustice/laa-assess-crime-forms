@@ -70,6 +70,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
     end
 
     it 'shows primary quote card' do
+      click_on 'Quotes'
       within('#primary-quote.govuk-summary-card') do
         expect(page).to have_content "Service requiredPathologist report\n" \
                                      "Service detailsABC DEFABC, HIJ, SW1 1AA\n" \
@@ -88,6 +89,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
     end
 
     it 'shows alternative quote card' do
+      click_on 'Quotes'
       within('.govuk-summary-card', text: 'Alternative quote 1') do
         expect(page).to have_content "Service detailsABC DEFABC, HIJ, SW1 1AA\n" \
                                      "Quote uploadNone\nAdditional items\nFoo Bar"
@@ -129,6 +131,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
     end
 
     it 'lets me view associated files' do
+      click_on 'Quotes'
       click_on 'test – with odd-char.pdf'
       expect(page).to have_current_path(
         %r{
@@ -206,6 +209,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
     end
 
     it 'shows requested values in the primary quote card' do
+      click_on 'Quotes'
       within('#primary-quote.govuk-summary-card') do
         within('.govuk-table') do
           expect(page)
@@ -219,6 +223,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
     end
 
     it 'shows requested values in the alternative quote card' do
+      click_on 'Quotes'
       within('.govuk-summary-card', text: 'Alternative quote 1') do
         within('.govuk-table') do
           expect(page)
@@ -233,6 +238,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
 
     context 'when alternative quotes have no travel or additional costs' do
       it 'shows requested values in the alternative quote card' do
+        click_on 'Quotes'
         within('.govuk-summary-card', text: 'Alternative quote 2') do
           within('.govuk-table') do
             expect(page)

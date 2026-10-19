@@ -2,8 +2,10 @@ en:
   prior_authority:
     adjustments:
       index:
+        adjust_service_cost: Adjust service costs
         adjust_quote: Adjust quote
         adjustments: Adjustments
+        quotes: Quotes
       key_information_card:
         key_information: Key information
       additional_costs:
