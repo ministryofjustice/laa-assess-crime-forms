@@ -275,9 +275,6 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Install JavaScript dependencies
-        run: yarn install --frozen-lockfile
-
       - name: Configure AWS credentials for ECR access
         uses: ministryofjustice/laa-reusable-github-actions/.github/actions/ecr-auth@main
         with:
