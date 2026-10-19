@@ -324,15 +324,13 @@ jobs:
           sarif_file: snyk.sarif
 
   snyk-pr-comment:
+    name: Comment on PR with Snyk results from Github Code Scanning
     needs: snyk-scan
-    runs-on: ubuntu-latest
+    uses: ministryofjustice/laa-crime-forms-common/.github/workflows/comment-pr.yml@main
     permissions:
       pull-requests: write
-    steps:
-      - uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88
-        with:
-          header: snyk-results
-          message: |
+    with:
+      comment-body: |
             ### Security scan
             [View open code-scanning alerts for this PR](${{ github.server_url }}/${{ github.repository }}/security/code-scanning?query=pr%3A${{ github.event.pull_request.number }}+is%3Aopen)
 
