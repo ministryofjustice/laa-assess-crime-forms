@@ -291,53 +291,41 @@ jobs:
       - name: Install Snyk CLI
         uses: snyk/actions/setup@9adf32b1121593767fc3c057af55b55db032dc04
 
-      # - name: Snyk Code Test
-      #   continue-on-error: true
-      #   run: snyk code test --sarif | tee snyk_sarif
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Snyk Code Test
+        continue-on-error: true
+        run: snyk code test --sarif | tee snyk_sarif
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      # - name: Upload results to Github Code Scanning
-      #   uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd
-      #   with:
-      #     sarif_file: snyk_sarif
+      - name: Upload results to Github Code Scanning
+        uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd
+        with:
+          sarif_file: snyk_sarif
 
-      # - name: Monitor Docker Vulnerabilities
-      #   uses: snyk/actions/docker@9adf32b1121593767fc3c057af55b55db032dc04
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      #   with:
-      #     image: ${{ env.ECR_IMAGE }}
-      #     command: monitor
-      #     args: --severity-threshold=low
-
-      # - name: Test Docker Vulnerabilities
-      #   continue-on-error: true
-      #   uses: snyk/actions/docker@9adf32b1121593767fc3c057af55b55db032dc04
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      #   with:
-      #     image: ${{ env.ECR_IMAGE }}
-      #     args: --severity-threshold=high --file=Dockerfile
-      #     sarif: true
-      #     json: true
-      - name: Monitor package.json dependencies
+      - name: Monitor Docker Vulnerabilities
         uses: snyk/actions/docker@9adf32b1121593767fc3c057af55b55db032dc04
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ env.ECR_IMAGE }}
           command: monitor
-          args: --severity-threshold=low --file=package.json --project-name=assess-npm
+          args: --target-reference=laa-assess-crime-forms-newest-pr
 
-
-      - name: Install snyk-delta
-        run: npm install -g snyk-delta
-
-      - name: Run snyk-delta for package.json
+      - name: Test Docker Vulnerabilities
+        continue-on-error: true
+        uses: snyk/actions/docker@9adf32b1121593767fc3c057af55b55db032dc04
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk test --file=package.json --print-deps --json | snyk-delta --baselineOrg=${{ secrets.SNYK_ORG }} --baselineProject=${{ secrets.SNYK_PROJECT }}
+        with:
+          image: ${{ env.ECR_IMAGE }}
+          args: --severity-threshold=high
+          command: container test
+          sarif: true
+
+      - name: Upload Docker Vulnerability Results to Github Code Scanning
+        uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd
+        with:
+          sarif_file: snyk.sarif
 
   snyk-pr-comment:
     needs: snyk-scan
