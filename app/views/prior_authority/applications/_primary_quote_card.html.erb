@@ -4,9 +4,4 @@
   <%= govuk_table(head: [t('.cost_type'), t('.amount'), t('.rate'), t('.total')],
                   rows: model.table_rows,) %>
 
-  <% if editable %>
-    <p>
-      <%= link_to t('.adjust'), prior_authority_application_adjustments_path(model.application_details.id) %>
-    </p>
-  <% end %>
 <% end %>

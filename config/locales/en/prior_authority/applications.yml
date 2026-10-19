@@ -62,6 +62,7 @@ en:
         rate: Rate
         total: Total requested
         adjust: Adjust quote figures
+        adjust_service_cost: Adjust service cost
       reason_why_card:
         reason_for_prior_authority: Reason for prior authority
       alternative_quote_card:

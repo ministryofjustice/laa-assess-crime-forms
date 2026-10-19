@@ -8,9 +8,13 @@
       <%= render 'prior_authority/shared/application_nav', application_summary:, current_page: 'adjust_quote' %>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-m"><%= editable ? t('.adjust_quote') :  t('.adjustments') %></h2>
+    <h2 class="govuk-heading-m"><%= t('.quotes') %></h2>
 
     <%= render 'key_information_card', model: @key_information.key_information_card %>
+    <%= render 'prior_authority/applications/primary_quote_card',
+               model: @details.primary_quote_card,
+               editable: %>
+
     <%= render 'service_costs', application_summary:, application:, editable: %>
 
     <% if application_summary.primary_quote.travel_costs(original: true).positive? %>
@@ -18,6 +22,12 @@
     <% end %>
 
     <%= render 'additional_costs', additional_costs: core_cost_summary.additional_costs, application:, editable: %>
+    <% @details.alternative_quote_cards.each_with_index do |alternative_quote_card, index| %>
+      <%= render "prior_authority/applications/#{alternative_quote_card.class.name.split('::').last.underscore}",
+                 model: alternative_quote_card,
+                 n: index + 1 %>
+    <% end %>
+
     <% if editable %>
       <%= render 'prior_authority/shared/application_buttons', application_summary: %>
     <% end %>
