@@ -297,7 +297,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      - name: Upload results to Github Code Scanning
+      - name: Upload Snyk code test results to Github Code Scanning
         uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd
         with:
           sarif_file: snyk_sarif
@@ -318,11 +318,10 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ env.ECR_IMAGE }}
-          args: --severity-threshold=high
+          args: --severity-threshold=high --sarif-file-output=snyk.sarif
           command: container test
-          sarif: true
 
-      - name: Upload Docker Vulnerability Results to Github Code Scanning
+      - name: Upload Snyk Docker Vulnerability Results to Github Code Scanning
         uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd
         with:
           sarif_file: snyk.sarif
