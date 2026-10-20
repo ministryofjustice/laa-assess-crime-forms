@@ -309,11 +309,10 @@ jobs:
           args: --target-reference=laa-assess-crime-forms-newest-pr
 
       - name: Monitor Ruby Gemfile Vulnerabilities
-        uses: snyk/actions/docker@11b673cfb4b0dc0d860a1323caa199d54950dcce
+        uses: snyk/actions/ruby@11b673cfb4b0dc0d860a1323caa199d54950dcce
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: ${{ env.ECR_IMAGE }}
           command: monitor
           args: --target-reference=laa-assess-crime-forms-newest-pr --file=Gemfile.lock
 
