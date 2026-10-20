@@ -308,6 +308,15 @@ jobs:
           command: monitor
           args: --target-reference=laa-assess-crime-forms-newest-pr
 
+      - name: Monitor Ruby Gemfile Vulnerabilities
+        uses: snyk/actions/docker@11b673cfb4b0dc0d860a1323caa199d54950dcce
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ env.ECR_IMAGE }}
+          command: monitor
+          args: --target-reference=laa-assess-crime-forms-newest-pr --file=Gemfile.lock
+
       - name: Test Docker Vulnerabilities
         continue-on-error: true
         uses: snyk/actions/docker@11b673cfb4b0dc0d860a1323caa199d54950dcce
@@ -315,26 +324,35 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ env.ECR_IMAGE }}
-          args: --sarif-file-output=snyk.sarif
+          args: --sarif-file-output=snyk-container.sarif
           command: container test
 
-      - name: Test vulnerabilities from gemfile
+      - name: Test vulnerabilities from Gemfile
         continue-on-error: true
         uses: snyk/actions/ruby@11b673cfb4b0dc0d860a1323caa199d54950dcce
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --file=Gemfile.lock
+          args: --file=Gemfile.lock --sarif-file-output=snyk-gemfile.sarif
 
-      - name: Sanitise Snyk Test SARIF output
+      - name: Sanitise Snyk Test SARIF outputs
         run: |
-          sed -i 's/"security-severity": "null"/"security-severity": "0"/g' "snyk.sarif"
-          sed -i 's/"security-severity": "undefined"/"security-severity": "0"/g' "snyk.sarif"
+          for sarif in snyk-*.sarif; do
+            if [ -f "$sarif" ]; then
+              sed -i 's/"security-severity": "null"/"security-severity": "0"/g' "$sarif"
+              sed -i 's/"security-severity": "undefined"/"security-severity": "0"/g' "$sarif"
+            fi
+          done
 
       - name: Upload Snyk Docker Vulnerability Results to Github Code Scanning
         uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
         with:
-          sarif_file: snyk.sarif
+          sarif_file: snyk-container.sarif
+
+      - name: Upload Snyk Gemfile Vulnerability Results to Github Code Scanning
+        uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
+        with:
+          sarif_file: snyk-gemfile.sarif
 
   snyk-pr-comment:
     name: Comment on PR with Snyk results from Github Code Scanning

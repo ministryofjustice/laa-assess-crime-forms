@@ -89,13 +89,23 @@ jobs:
           uses: snyk/actions/setup@9adf32b1121593767fc3c057af55b55db032dc04
 
         - name: Monitor Docker Vulnerabilities
-          uses: snyk/actions/docker@9adf32b1121593767fc3c057af55b55db032dc04
+          uses: snyk/actions/docker@11b673cfb4b0dc0d860a1323caa199d54950dcce
           env:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           with:
             image: ${{ env.ECR_IMAGE }}
             command: monitor
             args: --target-reference=laa-assess-crime-forms-newest-main
+
+
+        - name: Monitor Ruby Gemfile Vulnerabilities
+          uses: snyk/actions/docker@11b673cfb4b0dc0d860a1323caa199d54950dcce
+          env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          with:
+            image: ${{ env.ECR_IMAGE }}
+            command: monitor
+            args: --target-reference=laa-assess-crime-forms-newest-main --file=Gemfile.lock
 
   deploy-dev-uat:
     name: Deploy branch to ${{ matrix.env }}
