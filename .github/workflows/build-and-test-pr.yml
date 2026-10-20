@@ -315,7 +315,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ env.ECR_IMAGE }}
-          args: --sarif-file-output=snyk.sarif --severity-threshold=low
+          args: --sarif-file-output=snyk.sarif
           command: container test
 
       - name: Upload Snyk Docker Vulnerability Results to Github Code Scanning
