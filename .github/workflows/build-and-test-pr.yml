@@ -295,12 +295,12 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Upload Snyk code test results to Github Code Scanning
-        uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd
+        uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
         with:
           sarif_file: snyk_sarif
 
       - name: Monitor Docker Vulnerabilities
-        uses: snyk/actions/docker@9adf32b1121593767fc3c057af55b55db032dc04
+        uses: snyk/actions/docker@11b673cfb4b0dc0d860a1323caa199d54950dcce
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -310,7 +310,7 @@ jobs:
 
       - name: Test Docker Vulnerabilities
         continue-on-error: true
-        uses: snyk/actions/docker@9adf32b1121593767fc3c057af55b55db032dc04
+        uses: snyk/actions/docker@11b673cfb4b0dc0d860a1323caa199d54950dcce
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -322,7 +322,7 @@ jobs:
         run: cat snyk.sarif
 
       - name: Upload Snyk Docker Vulnerability Results to Github Code Scanning
-        uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd
+        uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
         with:
           sarif_file: snyk.sarif
 
