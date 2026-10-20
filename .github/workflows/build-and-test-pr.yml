@@ -318,12 +318,6 @@ jobs:
           args: --sarif-file-output=snyk.sarif
           command: container test
 
-      - name: Test All Vulnerabilities
-        continue-on-error: true
-        uses: snyk/actions/ruby@11b673cfb4b0dc0d860a1323caa199d54950dcce
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
       - name: Sanitise Snyk Test SARIF output
         run: |
           sed -i 's/"security-severity": "null"/"security-severity": "0"/g' "snyk.sarif"
