@@ -318,6 +318,9 @@ jobs:
           args: --sarif-file-output=snyk.sarif
           command: container test
 
+      - name: Debug print snyk sarif file
+        run: cat snyk.sarif
+
       - name: Upload Snyk Docker Vulnerability Results to Github Code Scanning
         uses: github/codeql-action/upload-sarif@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd
         with:
