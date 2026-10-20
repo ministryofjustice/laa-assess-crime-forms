@@ -323,9 +323,6 @@ jobs:
           sed -i 's/"security-severity": "null"/"security-severity": "0"/g' "snyk.sarif"
           sed -i 's/"security-severity": "undefined"/"security-severity": "0"/g' "snyk.sarif"
 
-      - name: Debug print snyk sarif file
-        run: cat snyk.sarif
-
       - name: Upload Snyk Docker Vulnerability Results to Github Code Scanning
         uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
         with:
