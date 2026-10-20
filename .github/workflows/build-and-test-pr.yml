@@ -318,6 +318,11 @@ jobs:
           args: --sarif-file-output=snyk.sarif
           command: container test
 
+      - name: Sanitise Snyk Test SARIF output
+        run: |
+          sed -i 's/"security-severity": "null"/"security-severity": "0"/g' "snyk.sarif"
+          sed -i 's/"security-severity": "undefined"/"security-severity": "0"/g' "snyk.sarif"
+
       - name: Debug print snyk sarif file
         run: cat snyk.sarif
 
