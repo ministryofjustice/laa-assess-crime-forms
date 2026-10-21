@@ -20,7 +20,8 @@
           prefix_text: "£",
           inputmode: "decimal",
           label: { for: 'counsel_costs_net', size: 's', text: t('.claimed_net_assigned_counsel_cost') },
-          width: 10 %>
+          width: 10,
+          value: number_with_precision(@form_object.claimed_net_assigned_counsel_cost, precision: 2) %>
       </div>
       <div class="govuk-form-group">
         <%= f.govuk_text_field :claimed_assigned_counsel_vat,
@@ -28,7 +29,8 @@
           prefix_text: "£",
           inputmode: "decimal",
           label: { for: 'counsel_costs_vat', size: 's', text: t('.claimed_assigned_counsel_vat') },
-          width: 10 %>
+          width: 10,
+          value: number_with_precision(@form_object.claimed_assigned_counsel_vat, precision: 2) %>
       </div>
 
       <div class="govuk-form-group">
