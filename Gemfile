@@ -48,6 +48,7 @@ gem 'sentry-rails', '>= 5.17.3'
 gem 'sentry-ruby'
 gem 'uuid', '~> 2.3'
 gem 'with_advisory_lock'
+gem 'oj', '3.17.1' #remove before merging
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
