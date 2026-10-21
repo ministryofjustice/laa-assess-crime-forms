@@ -343,9 +343,6 @@ jobs:
             fi
           done
 
-      - name: Debugging - Print gemfile sarif file
-        run: cat snyk-gemfile.sarif
-
       - name: Upload Snyk Docker Vulnerability Results to Github Code Scanning
         uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
         with:
