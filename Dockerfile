@@ -5,6 +5,11 @@ LABEL maintainer="Non-standard magistrates' court payment team"
 # temp fix to security issue in base image: ruby:3.2.2-alpine3.18
 RUN apk update && apk upgrade --no-cache libcrypto3 libssl3 openssl libxml2 sqlite
 
+# update CA certs
+RUN apk add --no-cache --upgrade \
+  ca-certificates \
+  ca-certificates-bundle
+
 # dependencies required both at runtime and build time
 RUN apk add --update \
   build-base \
