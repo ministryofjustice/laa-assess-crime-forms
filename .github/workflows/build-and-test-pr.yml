@@ -353,6 +353,23 @@ jobs:
         with:
           sarif_file: snyk-gemfile.sarif
 
+      - name: Gate PR on patchable vulnerabilities above high severity (Docker image)
+        uses: snyk/actions/docker@11b673cfb4b0dc0d860a1323caa199d54950dcce
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ env.ECR_IMAGE }}
+          args: --fail-on=patchable --severity-threshold=high
+          command: container test
+
+      - name: Gate PR on patchable vulnerabilities above high severity (Gemfile)
+        uses: snyk/actions/ruby@11b673cfb4b0dc0d860a1323caa199d54950dcce
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --fail-on=patchable --severity-threshold=high --file=Gemfile.lock
+          command: test
+
   snyk-pr-comment:
     name: Comment on PR with Snyk results from Github Code Scanning
     needs: snyk-scan
