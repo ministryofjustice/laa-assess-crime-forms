@@ -309,7 +309,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: monitor
-          args: --target-reference=laa-assess-crime-forms-newest-pr --file=Gemfile.lock
+          args: --project-name=laa-assess-crime-forms-newest-pr --file=Gemfile.lock
 
       - name: Test Docker Vulnerabilities
         continue-on-error: true
