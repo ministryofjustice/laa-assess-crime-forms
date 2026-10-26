@@ -290,14 +290,9 @@ jobs:
 
       - name: Snyk Code Test
         continue-on-error: true
-        run: snyk code test --sarif | tee snyk_sarif
+        run: snyk code test --sarif | tee snyk_code.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-      - name: Upload Snyk code test results to Github Code Scanning
-        uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
-        with:
-          sarif_file: snyk_sarif
 
       - name: Monitor Docker Vulnerabilities
         uses: snyk/actions/docker@11b673cfb4b0dc0d860a1323caa199d54950dcce
@@ -314,7 +309,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: monitor
-          args: --target-reference=laa-assess-crime-forms-newest-pr --file=Gemfile.lock
+          args: --project-name=laa-assess-crime-forms-newest-pr --file=Gemfile.lock
 
       - name: Test Docker Vulnerabilities
         continue-on-error: true
@@ -343,6 +338,11 @@ jobs:
             fi
           done
 
+      - name: Upload Snyk code test results to Github Code Scanning
+        uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
+        with:
+          sarif_file: snyk_code.sarif
+
       - name: Upload Snyk Docker Vulnerability Results to Github Code Scanning
         uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
         with:
@@ -352,6 +352,23 @@ jobs:
         uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
         with:
           sarif_file: snyk-gemfile.sarif
+
+      - name: Gate PR on patchable vulnerabilities above high severity (Docker image)
+        uses: snyk/actions/docker@11b673cfb4b0dc0d860a1323caa199d54950dcce
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ env.ECR_IMAGE }}
+          args: --fail-on=patchable --severity-threshold=high
+          command: container test
+
+      - name: Gate PR on patchable vulnerabilities above high severity (Gemfile)
+        uses: snyk/actions/ruby@11b673cfb4b0dc0d860a1323caa199d54950dcce
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --fail-on=patchable --severity-threshold=high --file=Gemfile.lock
+          command: test
 
   snyk-pr-comment:
     name: Comment on PR with Snyk results from Github Code Scanning
