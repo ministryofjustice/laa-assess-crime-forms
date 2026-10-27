@@ -35,7 +35,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@26e5b7d197ebf60545ee9667bcbace0be11ccaec
+        uses: ruby/setup-ruby@7f797815d8adceb1c412e7abefdd1ab4abc47a5f
         with:
           bundler-cache: true
 
@@ -127,12 +127,12 @@ jobs:
           persist-credentials: false
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@26e5b7d197ebf60545ee9667bcbace0be11ccaec
+        uses: ruby/setup-ruby@7f797815d8adceb1c412e7abefdd1ab4abc47a5f
         with:
           bundler-cache: true
 
       - name: Set up Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -158,7 +158,7 @@ jobs:
 
       - name: Upload code coverage results
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: coverage-results-${{ matrix.test-type }}
           path: coverage
@@ -166,7 +166,7 @@ jobs:
 
       - name: Upload Capybara screenshots (on test failure)
         if: failure() && matrix.needs-chrome == true
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: capybara-screenshots
           path: tmp/capybara
@@ -186,12 +186,12 @@ jobs:
           persist-credentials: false
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@26e5b7d197ebf60545ee9667bcbace0be11ccaec
+        uses: ruby/setup-ruby@7f797815d8adceb1c412e7abefdd1ab4abc47a5f
         with:
           bundler-cache: true
 
       - name: Download coverage results from all test types
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           pattern: coverage-results-*
           path: coverage_results
@@ -201,7 +201,7 @@ jobs:
 
       - name: Upload final coverage artifact
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: coverage-final
           path: coverage
@@ -271,7 +271,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@26e5b7d197ebf60545ee9667bcbace0be11ccaec
+        uses: ruby/setup-ruby@7f797815d8adceb1c412e7abefdd1ab4abc47a5f
         with:
           bundler-cache: true
 
@@ -339,17 +339,17 @@ jobs:
           done
 
       - name: Upload Snyk code test results to Github Code Scanning
-        uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
+        uses: github/codeql-action/upload-sarif@166cc10f7e5fe6a7b6be6b258f62223eea08d69a
         with:
           sarif_file: snyk_code.sarif
 
       - name: Upload Snyk Docker Vulnerability Results to Github Code Scanning
-        uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
+        uses: github/codeql-action/upload-sarif@166cc10f7e5fe6a7b6be6b258f62223eea08d69a
         with:
           sarif_file: snyk-container.sarif
 
       - name: Upload Snyk Gemfile Vulnerability Results to Github Code Scanning
-        uses: github/codeql-action/upload-sarif@3db7caf9014b962f9392088c0fcaf53eeddf47db
+        uses: github/codeql-action/upload-sarif@166cc10f7e5fe6a7b6be6b258f62223eea08d69a
         with:
           sarif_file: snyk-gemfile.sarif
 
