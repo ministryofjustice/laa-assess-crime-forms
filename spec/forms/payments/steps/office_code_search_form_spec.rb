@@ -56,6 +56,15 @@ RSpec.describe Payments::Steps::OfficeCodeSearchForm, type: :model do
         expect(multi_step_form_session[:solicitor_firm_name]).to eq('Correct Firm Name')
         expect(multi_step_form_session[:solicitor_office_code_details]).to be_nil
       end
+
+      context 'when office code is lowercase' do
+        let(:solicitor_office_code) { '1a123b' }
+
+        it 'looks up and persists the uppercase office code' do
+          expect(form.save).to be(true)
+          expect(multi_step_form_session[:solicitor_office_code]).to eq('1A123B')
+        end
+      end
     end
 
     context 'when PDA returns no office details' do

@@ -225,9 +225,9 @@ RSpec.describe 'Assigned counsel payment request', :stub_oauth_token do
       click_on 'Create a new record'
     end
 
-    it 'allows user to complete payment journey' do
-      select_office_code
-      select_counsel_code
+    it 'allows user to complete payment journey with lowercase office codes' do
+      select_office_code('1a123b')
+      select_counsel_code('1a123c')
       fill_ac_claim_details
       fill_in id: 'counsel_costs_net', with: '150.40'
       fill_in id: 'counsel_costs_vat', with: '100'
