@@ -7,14 +7,28 @@
 <p><%= t('.body_line_2') %></p>
 <p><%= t('.body_line_3') %></p>
 
-<div class="moj-search moj-search--inline app-claim-search govuk-!-margin-bottom-5">
+<search class="moj-search app-claim-search govuk-!-margin-bottom-5">
   <%= form_with(url: new_payments_steps_claim_search_path(anchor: 'search-results'), method: :get, model: @search_form) do |f| %>
-    <div class="govuk-form-group" role="search">
-      <%= f.govuk_text_field :query, class: "govuk-input moj-search__input", type: "search", label: { size: 's' } %>
-    </div>
-    <%= f.submit "Search", class: "govuk-button moj-search__button" %>
+    <% query_error = @search_form.errors.messages_for(:query).first %>
+    <% hint_id = f.field_id(:query, :hint) %>
+    <% error_id = f.field_id(:query, :error) %>
+    <%= tag.div(class: ['govuk-form-group', ('govuk-form-group--error' if query_error)]) do %>
+      <%= f.label :query, class: 'govuk-label govuk-label--s' %>
+      <div id="<%= hint_id %>" class="govuk-hint"><%= t('helpers.hint.payments_steps_claim_search_form.query') %></div>
+      <% if query_error %>
+        <p id="<%= error_id %>" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> <%= query_error %>
+        </p>
+      <% end %>
+      <div class="govuk-input__wrapper moj-search__input-wrapper">
+        <%= f.search_field :query,
+                           class: ['govuk-input', 'moj-search__input', ('govuk-input--error' if query_error)],
+                           aria: { describedby: [hint_id, (error_id if query_error)].compact.join(' ') } %>
+        <%= f.submit 'Search', class: 'govuk-button moj-search__button' %>
+      </div>
+    <% end %>
   <% end %>
-</div>
+</search>
 
 <div class="govuk-!-margin-top-3">
   <%= govuk_button_to t('.new_record'), payments_steps_claim_search_path(new_record: 'true'), method: :put, secondary: true %>
@@ -58,7 +72,7 @@
                 <%= search_result.defendant_last_name %>
               </td>
               <td class="govuk-table__cell">
-                <%= f.submit t(".select"),  class: "govuk-button moj-search__button"%>
+                <%= f.submit t(".select"),  class: "govuk-button moj-search__button" %>
               </td>
             </tr>
           <% end %>
