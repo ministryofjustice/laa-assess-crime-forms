@@ -15,6 +15,7 @@ permissions:
   checks: write
 
 env:
+  COMMON_TRUST_POLICY: assess-pr-read
   RACK_ENV: test
   RAILS_ENV: test
 
@@ -25,17 +26,27 @@ jobs:
 
   rubocop:
     name: Rubocop
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
+      - name: Obtain read-only token for Common repo
+        uses: ./.github/actions/common-token
+        id: common-token
+        with:
+          trust-policy: ${{ env.COMMON_TRUST_POLICY }}
+
       - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94
+        env:
+          BUNDLE_GITHUB__COM: x-access-token:${{ steps.common-token.outputs.token }}
         with:
           bundler-cache: true
 
@@ -86,10 +97,12 @@ jobs:
 
   test:
     name: RSpec ${{ matrix.test-type }} tests
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: read
       checks: write
+      id-token: write
     strategy:
       fail-fast: false
       matrix:
@@ -126,8 +139,16 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Obtain read-only token for Common repo
+        uses: ./.github/actions/common-token
+        id: common-token
+        with:
+          trust-policy: ${{ env.COMMON_TRUST_POLICY }}
+
       - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94
+        env:
+          BUNDLE_GITHUB__COM: x-access-token:${{ steps.common-token.outputs.token }}
         with:
           bundler-cache: true
 
@@ -173,20 +194,30 @@ jobs:
 
   coverage:
     name: Verify code coverage
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     needs: test
     permissions:
       contents: read
       checks: write
       pull-requests: write
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
+      - name: Obtain read-only token for Common repo
+        uses: ./.github/actions/common-token
+        id: common-token
+        with:
+          trust-policy: ${{ env.COMMON_TRUST_POLICY }}
+
       - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94
+        env:
+          BUNDLE_GITHUB__COM: x-access-token:${{ steps.common-token.outputs.token }}
         with:
           bundler-cache: true
 
@@ -212,6 +243,7 @@ jobs:
 
   build:
     name: Build and push Docker image to ECR
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     needs: [rubocop, test, helm-lint]
     # Required for OIDC
@@ -226,6 +258,12 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Obtain read-only token for Common repo
+        uses: ./.github/actions/common-token
+        id: common-token
+        with:
+          trust-policy: ${{ env.COMMON_TRUST_POLICY }}
+
       - name: Configure AWS credentials for ECR access
         uses: ministryofjustice/laa-reusable-github-actions/.github/actions/ecr-auth@main
         with:
@@ -235,6 +273,8 @@ jobs:
 
       - name: Build Docker image and push to ECR
         id: build
+        env:
+          COMMON_TOKEN: ${{ steps.common-token.outputs.token }}
         run: |
           IMAGE_TAG="branch-${{ github.sha }}"
           echo "image-tag=${IMAGE_TAG}" >> $GITHUB_OUTPUT
@@ -242,6 +282,8 @@ jobs:
           ECR_IMAGE=${{ secrets.ECR_REGISTRY_URL }}/${{ vars.ASSESS_DEV_ECR_REPOSITORY }}
 
           docker build \
+            --no-cache \
+            --secret id=common_token,env=COMMON_TOKEN \
             --build-arg APP_BUILD_DATE=$(date +%Y-%m-%dT%H:%M:%S%z) \
             --build-arg APP_BUILD_TAG=${{ github.sha }} \
             --build-arg APP_GIT_COMMIT=${{ github.sha }} \
@@ -256,6 +298,7 @@ jobs:
   # ============================================================================
   snyk-scan:
     name: Snyk security scanning
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -270,8 +313,16 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Obtain read-only token for Common repo
+        uses: ./.github/actions/common-token
+        id: common-token
+        with:
+          trust-policy: ${{ env.COMMON_TRUST_POLICY }}
+
       - name: Set up Ruby and install gems
         uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94
+        env:
+          BUNDLE_GITHUB__COM: x-access-token:${{ steps.common-token.outputs.token }}
         with:
           bundler-cache: true
 
