@@ -65,7 +65,7 @@
       <%= link_to t('.overview'), prior_authority_application_path(application_summary.id), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'overview' ? "page" : nil) %>
     </li>
     <li class="moj-sub-navigation__item">
-      <%= link_to policy(application_summary.submission).update? ? t('.adjust_quote') : t('.adjustments'),
+      <%= link_to t('.quotes'),
                   prior_authority_application_adjustments_path(application_summary.id), class: 'moj-sub-navigation__link', 'aria-current': (current_page == 'adjust_quote' ? "page" : nil) %>
     </li>
     <li class="moj-sub-navigation__item">
