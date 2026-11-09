@@ -3,7 +3,7 @@ module WardenHooks
   # authentications has been exceded. If it has, the user is signed out.
   #
   module Reauthable
-    # rubocop:disable Lint/NonLocalExitFromIterator
+    # rubocop:disable-next Lint/NonLocalExitFromIterator
     Warden::Manager.after_set_user do |user, warden, options|
       scope = options[:scope]
 
@@ -27,6 +27,5 @@ module WardenHooks
         throw :warden, scope:, message:
       end
     end
-    # rubocop:enable Lint/NonLocalExitFromIterator
   end
 end

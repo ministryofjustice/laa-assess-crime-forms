@@ -19,7 +19,7 @@ module GOVUKDesignSystemFormBuilder
         FIELDS.index(key) + 1
       end
 
-      # rubocop:disable Metrics/ParameterLists
+      # rubocop:disable-next Metrics/ParameterLists
       def initialize(builder, object_name, attribute_name, legend:, caption:, hint:, maxlength_enabled:, form_group:,
                      widths: {}, **kwargs, &block)
         super(builder, object_name, attribute_name, &block)
@@ -32,7 +32,6 @@ module GOVUKDesignSystemFormBuilder
         @widths            = widths
         @html_attributes   = kwargs
       end
-      # rubocop:enable Metrics/ParameterLists
 
       def html
         Containers::FormGroup.new(*bound, **@form_group, **@html_attributes).html do

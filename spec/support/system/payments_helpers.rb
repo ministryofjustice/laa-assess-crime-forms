@@ -1,4 +1,4 @@
-# rubocop:disable Metrics/MethodLength, Metrics/ModuleLength
+# rubocop:disable-next Metrics/MethodLength, Metrics/ModuleLength
 module PaymentsHelpers
   include RSpec::Mocks::ArgumentMatchers
 
@@ -60,7 +60,7 @@ module PaymentsHelpers
     }
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable-next Metrics/AbcSize
   def stub_crm7_submission_claim(submission_id:, laa_reference: 'LAA-CRM7', request_type: 'non_standard_magistrate',
                                  nsm_claim: nil)
     claim_double = instance_double(Claim)
@@ -110,7 +110,6 @@ module PaymentsHelpers
       .and_return(view_model_double)
     allow(view_model_double).to receive(:request_type=).and_return(true)
   end
-  # rubocop:enable Metrics/AbcSize
 
   def ac_claim
     {
@@ -249,7 +248,7 @@ module PaymentsHelpers
     click_button 'Continue'
   end
 
-  # rubocop:disable Metrics/ParameterLists
+  # rubocop:disable-next Metrics/ParameterLists
   def fill_claim_details(
     received_on: '2025-09-24',
     ufn: '120223/001',
@@ -288,7 +287,6 @@ module PaymentsHelpers
 
     click_button 'Continue'
   end
-  # rubocop:enable Metrics/ParameterLists
 
   def fill_ac_claim_details(
     received_on: '2025-09-24',
@@ -320,5 +318,4 @@ module PaymentsHelpers
     alias_method name, :fill_costs
   end
 end
-# rubocop:enable Metrics/MethodLength, Metrics/ModuleLength
 RSpec.configuration.include PaymentsHelpers

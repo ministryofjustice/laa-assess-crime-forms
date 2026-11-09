@@ -114,7 +114,7 @@ RSpec.shared_examples 'AC payment request flow' do |type_suffix|
       click_button 'Select'
     end
 
-    # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
+    # rubocop:disable-next RSpec/ExampleLength, RSpec/MultipleExpectations
     it 'allows user to complete payment journey' do
       fill_date_claim_assessed
 
@@ -139,7 +139,6 @@ RSpec.shared_examples 'AC payment request flow' do |type_suffix|
 
       expect(page).to have_content('Payment request complete')
     end
-    # rubocop:enable RSpec/ExampleLength, RSpec/MultipleExpectations
 
     it 'sends Claim details Change to claim search and back link returns to Check your answers' do
       fill_date_claim_assessed
