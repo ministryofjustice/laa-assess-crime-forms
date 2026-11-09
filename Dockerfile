@@ -45,7 +45,8 @@ RUN --mount=type=secret,id=common_token,required=true \
   bundle config set without test:development && \
   bundle config build.nokogiri --use-system-libraries && \
   BUNDLE_GITHUB__COM="x-access-token:$(cat /run/secrets/common_token)" \
-  bundle install --jobs 5 --retry 3
+  bundle install --jobs 5 --retry 3 && \
+  rm -rf /usr/local/bundle/cache/bundler/git
 
 RUN yarn install --frozen-lockfile --ignore-scripts
 
