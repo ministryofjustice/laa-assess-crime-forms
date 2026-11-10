@@ -102,7 +102,7 @@ en:
           status_with_assignment: Status
           submitted_at: Submitted at
           request_type: Payment type
-          defendant_last_name: Defendant
+          defendant_name: Defendant
           payment_request_id: Payment request id
           office_code: Firm account
           ufn: UFN
