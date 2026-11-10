@@ -14,8 +14,8 @@ module Payments
       row[:laa_reference]
     end
 
-    def defendant_last_name
-      row[:defendant_last_name]
+    def defendant_name
+      row[:defendant_name]
     end
 
     def firm_name
