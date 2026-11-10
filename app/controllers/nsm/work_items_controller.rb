@@ -7,7 +7,7 @@ module Nsm
 
     include Nsm::AdjustmentConcern
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable-next Metrics/AbcSize
     def index
       authorize(claim, :show?)
       editable = policy(claim).update?
@@ -26,7 +26,6 @@ module Nsm
                claim:, records:, summary:, claim_summary:, core_cost_summary:, pagy:, scope:, type_changed_records:, editable:
              }
     end
-    # rubocop:enable Metrics/AbcSize
 
     def adjusted
       authorize(claim, :show?)
