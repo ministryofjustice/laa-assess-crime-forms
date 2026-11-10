@@ -166,7 +166,7 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
       end
 
       if type_suffix.in?(%w[amendment appeal])
-        # rubocop:disable RSpec/ExampleLength
+        # rubocop:disable-next RSpec/ExampleLength
         it 'renders prefilled amounts to two decimal places and width 10' do
           start_new_payment_request
           choose_claim_type(claim_type)
@@ -194,7 +194,6 @@ RSpec.shared_examples 'NSM payment request flow' do |type_suffix|
             'waiting_costs' => true
           )
         end
-        # rubocop:enable RSpec/ExampleLength
       end
 
       context 'when there is no original payment associated to the claim' do

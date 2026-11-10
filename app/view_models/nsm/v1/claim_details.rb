@@ -21,7 +21,7 @@ module Nsm
         I18n.t(".nsm.claim_details.#{key}.title")
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
       def data
         [
           {
@@ -78,7 +78,6 @@ module Nsm
           }
         ].compact
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def rows
         { title:, data: }

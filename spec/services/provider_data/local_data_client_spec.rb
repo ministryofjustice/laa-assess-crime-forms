@@ -7,7 +7,7 @@ RSpec.describe ProviderData::LocalDataClient do
     context 'when office code is 1A123C' do
       let(:office_code) { '1A123C' }
 
-      # rubocop:disable RSpec/ExampleLength
+      # rubocop:disable-next RSpec/ExampleLength
       it 'returns the correct advocate office details' do
         expect(described_class.new.office_details(office_code)).to eq(
           {
@@ -59,7 +59,6 @@ RSpec.describe ProviderData::LocalDataClient do
           }
         )
       end
-      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'when office code is 1A123D' do

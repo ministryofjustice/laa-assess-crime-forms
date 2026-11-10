@@ -16,7 +16,7 @@ module ProviderData
       }
     end
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable-next Metrics/MethodLength
     def office_details(office_code)
       if office_code == '1A123C'
         {
@@ -116,6 +116,5 @@ module ProviderData
         }
       end
     end
-    # rubocop:enable Metrics/MethodLength
   end
 end
