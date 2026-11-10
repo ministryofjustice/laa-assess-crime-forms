@@ -95,7 +95,7 @@ en:
         header:
           laa_reference: LAA reference
           firm_name: Firm name
-          firm_account: Firm account
+          solicitor_office_code: Firm account
           client_name: Client
           caseworker: Caseworker
           last_updated: Last updated

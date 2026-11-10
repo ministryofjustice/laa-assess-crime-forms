@@ -26,7 +26,7 @@ module Payments
       row[:payable_claim][:solicitor_firm_name]
     end
 
-    def firm_account
+    def solicitor_office_code
       row[:payable_claim][:solicitor_office_code]
     end
 
