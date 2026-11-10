@@ -18,7 +18,7 @@ module Payments
       row[:defendant_name]
     end
 
-    def firm_name
+    def solicitor_firm_name
       row[:solicitor_firm_name]
     end
 
