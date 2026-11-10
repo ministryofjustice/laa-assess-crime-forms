@@ -72,7 +72,7 @@ module Payments
       )
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
     def table_format
       [
         original_claim_row,
@@ -92,7 +92,6 @@ module Payments
         [table_heading('work_completed_date'), { text: work_completed_date, numeric: false }],
       ].compact
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
     private
 

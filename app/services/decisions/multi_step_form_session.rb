@@ -36,7 +36,7 @@ module Decisions
     private
 
     def create!
-      # rubocop:disable Rails/Presence
+      # rubocop:disable-next Rails/Presence
       if session[key].blank?
         session[key] = {
           'answers' => { 'id' => id,
@@ -45,7 +45,6 @@ module Decisions
       else
         session[key]
       end
-      # rubocop:enable Rails/Presence
     end
 
     def key
