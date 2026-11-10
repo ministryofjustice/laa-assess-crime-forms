@@ -16,11 +16,10 @@ module Payments
       sorted_records[offset..delta]
     end
 
-    # rubocop:disable Rails/Delegate
+    # rubocop:disable-next Rails/Delegate
     def count
       payment_requests.count
     end
-    # rubocop:enable Rails/Delegate
 
     private
 

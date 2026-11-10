@@ -54,7 +54,7 @@ RSpec.describe Payments::SelectedClaimTransformer do
   end
 
   describe '#transform' do
-    # rubocop:disable RSpec/MultipleExpectations
+    # rubocop:disable-next RSpec/MultipleExpectations
     it 'returns the formatted claim merged with the latest payment request data' do
       result = transformer.transform
 
@@ -68,7 +68,6 @@ RSpec.describe Payments::SelectedClaimTransformer do
       expect(result).not_to have_key(:payment_requests)
       expect(result).not_to have_key(:type)
     end
-    # rubocop:enable RSpec/MultipleExpectations
 
     context 'when the request type is assigned counsel amendment' do
       let(:multi_step_form_session) { { 'request_type' => 'assigned_counsel_amendment' } }
@@ -188,7 +187,7 @@ RSpec.describe Payments::SelectedClaimTransformer do
         ]
       end
 
-      # rubocop:disable RSpec/MultipleExpectations
+      # rubocop:disable-next RSpec/MultipleExpectations
       it 'merges the previous costs into the claim data' do
         result = transformer.transform
 
@@ -202,7 +201,6 @@ RSpec.describe Payments::SelectedClaimTransformer do
         expect(result[:allowed_travel_cost]).to eq(65)
         expect(result[:allowed_total]).to eq(265)
       end
-      # rubocop:enable RSpec/MultipleExpectations
     end
   end
 end

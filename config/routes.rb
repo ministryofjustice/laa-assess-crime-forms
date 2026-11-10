@@ -2,7 +2,7 @@
 
 require 'sidekiq/web'
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 Rails.application.routes.draw do
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
     # Protect against timing attacks:
@@ -193,4 +193,3 @@ Rails.application.routes.draw do
   resource :dashboard, only: %i[new show]
   resources :users
 end
-# rubocop:enable Metrics/BlockLength

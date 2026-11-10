@@ -62,7 +62,7 @@ RSpec.describe 'Payment submission safeguards', type: :system do
     expect(page).to have_title('Check your answers')
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable-next Metrics/AbcSize
   def stub_submission_claim(id)
     claim_double = instance_double(Claim)
     view_model_double = instance_double(Nsm::V1::PaymentClaimDetails, to_h: submission_answers(id))
@@ -77,9 +77,8 @@ RSpec.describe 'Payment submission safeguards', type: :system do
       .and_return(view_model_double)
     allow(view_model_double).to receive(:request_type=).and_return(true)
   end
-  # rubocop:enable Metrics/AbcSize
 
-  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable-next Metrics/MethodLength
   def submission_answers(id)
     timestamp = Time.zone.now
     {
@@ -113,7 +112,6 @@ RSpec.describe 'Payment submission safeguards', type: :system do
       'idempotency_token' => token
     }
   end
-  # rubocop:enable Metrics/MethodLength
 
   def rack_session
     page.driver.request.session

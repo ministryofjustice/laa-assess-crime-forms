@@ -113,7 +113,7 @@ module Nsm
         SecureRandom.uuid
       end
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable-next Metrics/MethodLength
       def to_h
         [
           :id,
@@ -149,7 +149,6 @@ module Nsm
           :claimed_total
         ].index_with { |k| public_send(k) }.stringify_keys
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 
