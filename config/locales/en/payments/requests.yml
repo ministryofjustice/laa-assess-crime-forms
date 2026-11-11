@@ -15,8 +15,8 @@ en:
         create_payment_request: Create payment request
         table:
           laa_reference: LAA reference
-          firm_name: Firm name
-          defendant_last_name: Defendant
+          solicitor_firm_name: Firm name
+          defendant_name: Defendant
           request_type: Payment type
           submitted_at: Submitted
       confirmation:

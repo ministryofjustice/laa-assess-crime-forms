@@ -95,14 +95,14 @@ en:
         header:
           laa_reference: LAA reference
           firm_name: Firm name
-          firm_account: Firm account
+          solicitor_office_code: Firm account
           client_name: Client
           caseworker: Caseworker
           last_updated: Last updated
           status_with_assignment: Status
           submitted_at: Submitted at
           request_type: Payment type
-          defendant_last_name: Defendant
+          defendant_name: Defendant
           payment_request_id: Payment request id
           office_code: Firm account
           ufn: UFN
