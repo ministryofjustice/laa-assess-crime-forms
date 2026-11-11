@@ -14,8 +14,8 @@ module Payments
       row[:payable_claim][:id]
     end
 
-    def defendant_last_name
-      row[:payable_claim][:client_last_name]
+    def defendant_name
+      row[:payable_claim][:client_name]
     end
 
     def request_type
@@ -26,7 +26,7 @@ module Payments
       row[:payable_claim][:solicitor_firm_name]
     end
 
-    def firm_account
+    def solicitor_office_code
       row[:payable_claim][:solicitor_office_code]
     end
 

@@ -76,7 +76,7 @@
         <table class="govuk-table" data-module="moj-sortable-table" aria-describedby="search-results">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-              <% %i[laa_reference firm_account request_type defendant_last_name submitted_at].each do |key| %>
+              <% %i[laa_reference solicitor_office_code request_type defendant_name submitted_at].each do |key| %>
                 <%= table_header_with_link(key,
                                            'shared.search.table.header',
                                            { 'controller' => controller_path, 'action' => 'show',  'payments_search_form' => @search_form.attributes },
@@ -92,13 +92,13 @@
                   <%= link_to search_result.laa_reference, payments_request_path(search_result.payable_claim_id) %>
                 </td>
                 <td class="govuk-table__cell">
-                  <%= search_result.firm_account %>
+                  <%= search_result.solicitor_office_code %>
                 </td>
                 <td class="govuk-table__cell">
                   <%= t("payments.request_types.#{search_result.request_type}") %>
                 </td>
                 <td class="govuk-table__cell">
-                  <%= search_result.defendant_last_name %>
+                  <%= search_result.defendant_name %>
                 </td>
                 <td class="govuk-table__cell">
                   <%= search_result.submitted_at %>
