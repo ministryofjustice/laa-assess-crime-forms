@@ -57,5 +57,18 @@ RSpec.describe Payments::Steps::OfficeCodeConfirmForm, type: :model do
 
       expect(multi_step_form_session[:solicitor_firm_name]).to eq('Correct Firm Name')
     end
+
+    context 'when confirm_office_code is not provided' do
+      before do
+        multi_step_form_session[:solicitor_firm_name] = 'Correct Firm Name'
+        form.confirm_office_code = nil
+      end
+
+      it 'does not save when not valid' do
+        expect(form.save).to be(false)
+        expect(form.errors[:confirm_office_code]).not_to be_empty
+        expect(multi_step_form_session[:solicitor_firm_name]).to eq('Correct Firm Name')
+      end
+    end
   end
 end
