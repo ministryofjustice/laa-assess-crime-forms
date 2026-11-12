@@ -44,7 +44,7 @@ jobs:
           trust-policy: ${{ env.COMMON_TRUST_POLICY }}
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94
+        uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199
         env:
           BUNDLE_GITHUB__COM: x-access-token:${{ steps.common-token.outputs.token }}
         with:
@@ -69,7 +69,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Helm
-        uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310
+        uses: azure/setup-helm@2f5e7bc67f1f9972ab16657bb795f36d8f04de0e
         with:
           version: '3.7.2'
 
@@ -146,7 +146,7 @@ jobs:
           trust-policy: ${{ env.COMMON_TRUST_POLICY }}
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94
+        uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199
         env:
           BUNDLE_GITHUB__COM: x-access-token:${{ steps.common-token.outputs.token }}
         with:
@@ -215,7 +215,7 @@ jobs:
           trust-policy: ${{ env.COMMON_TRUST_POLICY }}
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94
+        uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199
         env:
           BUNDLE_GITHUB__COM: x-access-token:${{ steps.common-token.outputs.token }}
         with:
@@ -320,7 +320,7 @@ jobs:
           trust-policy: ${{ env.COMMON_TRUST_POLICY }}
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94
+        uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199
         env:
           BUNDLE_GITHUB__COM: x-access-token:${{ steps.common-token.outputs.token }}
         with:
@@ -390,17 +390,17 @@ jobs:
           done
 
       - name: Upload Snyk code test results to Github Code Scanning
-        uses: github/codeql-action/upload-sarif@913e1bb775545322a3613f16c3483c0ac3050da5
+        uses: github/codeql-action/upload-sarif@3ea37a44b6e4e6847c46edae209410d258d548d1
         with:
           sarif_file: snyk_code.sarif
 
       - name: Upload Snyk Docker Vulnerability Results to Github Code Scanning
-        uses: github/codeql-action/upload-sarif@913e1bb775545322a3613f16c3483c0ac3050da5
+        uses: github/codeql-action/upload-sarif@3ea37a44b6e4e6847c46edae209410d258d548d1
         with:
           sarif_file: snyk-container.sarif
 
       - name: Upload Snyk Gemfile Vulnerability Results to Github Code Scanning
-        uses: github/codeql-action/upload-sarif@913e1bb775545322a3613f16c3483c0ac3050da5
+        uses: github/codeql-action/upload-sarif@3ea37a44b6e4e6847c46edae209410d258d548d1
         with:
           sarif_file: snyk-gemfile.sarif
 
@@ -476,7 +476,7 @@ jobs:
           role-session-name: ${{ vars.ECR_ROLE_SESSION_NAME }}
 
       - name: Install Helm
-        uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310
+        uses: azure/setup-helm@2f5e7bc67f1f9972ab16657bb795f36d8f04de0e
         with:
           version: '3.7.2'
 
