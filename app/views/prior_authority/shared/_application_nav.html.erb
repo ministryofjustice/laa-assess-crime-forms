@@ -20,6 +20,10 @@
   </span>
 </p>
 <p class="govuk-body-m">
+  <strong><%= t('.date_received') %>
+  </strong> <%= application_summary.date_created_str %>
+</p>
+<p class="govuk-body-m">
   <strong><%= t('.service') %> </strong>
   <%= application_summary.service_name %>
   <% if application_summary.rep_order_date %>
@@ -29,27 +33,19 @@
   <% end %>
 </p>
 <p class="govuk-body-m">
-  <strong><%= t('.date_received') %>
-  </strong> <%= application_summary.date_created_str %>
   <% if policy(application_summary.submission).unassign? %>
-    <br>
     <strong><%= t('.caseworker') %></strong> <%= application_summary.caseworker %>
   <% elsif application_summary.assessed? %>
-    <br>
     <strong><%= t('.date_assessed') %></strong> <%= application_summary.date_updated_str %>
   <% elsif application_summary.sent_back? %>
-    <br>
     <strong><%= t('.date_sent_back') %></strong> <%= application_summary.date_updated_str %>
   <% elsif application_summary.expired? %>
-    <br>
     <strong><%= t('.date_expired') %></strong> <%= application_summary.date_updated_str %>
   <% elsif application_summary.provider_updated? %>
-    <br>
     <strong><%= t('.date_amended') %></strong> <%= application_summary.date_updated_str %>
   <% end %>
 </p>
 
-</p>
 <% if policy(application_summary.submission).unassign? %>
   <%= govuk_button_link_to t('.remove_from_list'),
                            new_prior_authority_application_unassignment_path(application_summary.id),

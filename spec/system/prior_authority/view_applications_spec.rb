@@ -49,10 +49,9 @@ RSpec.describe 'View applications', :stub_oauth_token do
     it 'shows summary details' do
       expect(page).to have_current_path prior_authority_application_path(application)
       expect(page).to have_content('LAA-1234')
-      expect(page).to have_content(
-        "Requested: £80.50\nService: Pathologist report " \
-        "Representation order date: 2 January 2023\nDate received: 2 March 2023"
-      )
+      expect(page).to have_content('Requested: £80.50')
+      expect(page).to have_content('Date received: 2 March 2023')
+      expect(page).to have_content('Service: Pathologist report Representation order date: 2 January 2023')
     end
 
     it 'shows my name' do
@@ -65,10 +64,11 @@ RSpec.describe 'View applications', :stub_oauth_token do
 
     it 'shows application details card' do
       within('.govuk-summary-card', text: 'Application details') do
-        expect(page).to have_content "LAA referenceLAA-1234\nUnique file number130324/001\nPrison LawNo"
+        expect(page).to have_content "Prison LawNo\nLAA referenceLAA-1234\nUnique file number130324/001"
       end
     end
 
+    # rubocop:disable RSpec/MultipleExpectations
     it 'shows primary quote card' do
       click_on 'Quotes'
       within('#primary-quote.govuk-summary-card') do
@@ -76,11 +76,22 @@ RSpec.describe 'View applications', :stub_oauth_token do
                                      "Service detailsABC DEFABC, HIJ, SW1 1AA\n" \
                                      "Quote uploadtest – with odd-char.pdf\n" \
                                      'Existing prior authority grantedYes'
-        expect(page).to have_content 'Cost typeAmountRateTotal requested' \
-                                     'Service3 hours 0 minutes£3.50£10.50' \
-                                     'ABC2 items£35.00£70.00'
+        expect(page).to have_content 'Pathologist report cost'
+        expect(page).to have_content 'DetailsRequestedCaseworker adjusted'
+        expect(page).to have_content 'Amount3 hours 0 minutes'
+        expect(page).to have_content 'Rate£3.50 per hour'
+        expect(page).to have_content 'Total£10.50'
+        expect(page).to have_content 'Additional cost 1'
+        expect(page).to have_content 'Cost description: ABC'
+        expect(page).to have_content 'Amount2 items'
+        expect(page).to have_content 'Rate£35.00 per item'
+        expect(page).to have_content 'Total£70.00'
+        expect(page).to have_content 'Cost typeTotal requested'
+        expect(page).to have_content 'Requested£80.50'
+        expect(page).to have_content 'Allowed£80.50'
       end
     end
+    # rubocop:enable RSpec/MultipleExpectations
 
     it 'shows reason why card' do
       within('.govuk-summary-card', text: 'Reason for prior authority') do
@@ -110,7 +121,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
     it 'shows case details card' do
       within('.govuk-summary-card', text: 'Case details') do
         expect(page).to have_content "Main offenceRobbery\n" \
-                                     "Date of representation order2 January 2023\n" \
+                                     "Representation order date2 January 2023\n" \
                                      "Client detainedNo\n" \
                                      'Subject to POCANo'
       end
@@ -208,19 +219,28 @@ RSpec.describe 'View applications', :stub_oauth_token do
       )
     end
 
+    # rubocop:disable RSpec/MultipleExpectations
     it 'shows requested values in the primary quote card' do
       click_on 'Quotes'
       within('#primary-quote.govuk-summary-card') do
-        within('.govuk-table') do
-          expect(page)
-            .to have_content('Cost typeAmountRateTotal requested')
-            .and have_content('Service4 hours 0 minutes£70.00£280.00')
-            .and have_content('Travel2 hours 0 minutes£30.00£60.00')
-            .and have_content('Mileage100 items£3.50£350.00')
-            .and have_content('Waiting time2 hours 0 minutes£40.00£80.00')
-        end
+        expect(page).to have_content('DetailsRequestedCaseworker adjusted')
+        expect(page).to have_content('Amount4 hours 0 minutes3 hours 30 minutes')
+        expect(page).to have_content('Rate£70.00 per hour£60.00 per hour')
+        expect(page).to have_content('Total£280.00£210.00')
+        expect(page).to have_content('Amount2 hours 0 minutes1 hour 30 minutes')
+        expect(page).to have_content('Rate£30.00 per hour£20.00 per hour')
+        expect(page).to have_content('Total£60.00£30.00')
+        expect(page).to have_content('Mileage')
+        expect(page).to have_content('Amount100 items90 items')
+        expect(page).to have_content('Rate£3.50 per item£2.50 per item')
+        expect(page).to have_content('Total£350.00£225.00')
+        expect(page).to have_content('Waiting time')
+        expect(page).to have_content('Amount2 hours 0 minutes1 hour 30 minutes')
+        expect(page).to have_content('Rate£40.00 per hour£35.00 per hour')
+        expect(page).to have_content('Total£80.00£52.50')
       end
     end
+    # rubocop:enable RSpec/MultipleExpectations
 
     it 'shows requested values in the alternative quote card' do
       click_on 'Quotes'

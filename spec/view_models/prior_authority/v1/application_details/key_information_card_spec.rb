@@ -1,60 +1,61 @@
 require 'rails_helper'
 
-RSpec.describe PriorAuthority::V1::ApplicationDetails::KeyInformationCard do
+RSpec.describe PriorAuthority::V1::ApplicationDetails::QuotesKeyInformationCard do
   subject(:key_information) { described_class.new(application_summary) }
 
   let(:klass) { PriorAuthority::V1::KeyInformation }
   let(:application_summary) { klass.new(args) }
 
-  describe '#primary_quote_location' do
+  context 'when not a prison law case' do
     let(:args) do
       {
+        prison_law: false,
+        main_offence_id: 'robbery',
+        prior_authority_granted: false,
         quotes: [
           {
             'primary' => true,
-            'town' => 'Royston Vasey',
-            'postcode' => 'E15',
+            'ordered_by_court' => true,
           },
         ],
       }
     end
 
-    it 'returns the town and postcode from the quote marked as primary true' do
-      expect(key_information.primary_quote_location).to eq('Royston Vasey, E15')
+    it 'shows only main offence, existing prior authority and ordered by court rows' do
+      expect(key_information.card_rows.map { _1[:key][:text] }).to eq(
+        [
+          'Main offence',
+          'Existing prior authority granted',
+          'Ordered by court',
+        ]
+      )
+      expect(key_information.card_rows.last.dig(:value, :text)).to eq('Yes')
     end
   end
 
-  describe '#ufn' do
-    let(:args) do
-      {
-        prison_law: false,
-        ufn: '121212/001'
-      }
-    end
-
-    it 'returns nil when not prison law' do
-      expect(key_information.ufn).to be_nil
-    end
-  end
-
-  context 'when it is a prison law case' do
+  context 'when main offence is missing' do
     let(:args) do
       {
         prison_law: true,
-        ufn: '121212/001'
+        main_offence_id: nil,
+        prior_authority_granted: false,
+        quotes: [
+          {
+            'primary' => true,
+            'ordered_by_court' => false,
+          },
+        ],
       }
     end
 
-    describe '#main_offence' do
-      it 'returns nil' do
-        expect(key_information.main_offence).to be_nil
-      end
-    end
-
-    describe '#ufn' do
-      it 'returns the ufn' do
-        expect(key_information.ufn).to eq '121212/001'
-      end
+    it 'omits the main offence row' do
+      rows = key_information.card_rows
+      expect(rows.map { _1[:key][:text] }).to eq(
+        [
+          'Existing prior authority granted',
+          'Ordered by court',
+        ]
+      )
     end
   end
 end

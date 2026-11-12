@@ -8,9 +8,9 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
       { ufn: '123', laa_reference: '456', prison_law: false }
     end
     let(:expected_rows) do
-      [{ key: { text: 'LAA reference' }, value: { text: '456' } },
-       { key: { text: 'Unique file number' }, value: { text: '123' } },
-       { key: { text: 'Prison Law' }, value: { text: 'No' } }]
+      [{ key: { text: 'Prison Law' }, value: { text: 'No' } },
+       { key: { text: 'LAA reference' }, value: { text: '456' } },
+       { key: { text: 'Unique file number' }, value: { text: '123' } },]
     end
 
     it { expect(subject.overview_card.card_rows).to eq(expected_rows) }
@@ -37,6 +37,54 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
     end
 
     it { expect(subject.primary_quote_card.card_rows).to eq(expected_rows) }
+
+    describe '#table_rows' do
+      let(:expected_table_rows) do
+        [['Service', '7 pages', '£3.50', '£24.50'],
+         ['Travel', '3 hours 0 minutes', '£100.00', '£300.00'],
+         ['ABC', '1 hour 0 minutes', '£32.00', '£32.00']]
+      end
+
+      it { expect(subject.primary_quote_card.table_rows).to eq(expected_table_rows) }
+
+      context 'when travel costs are zero' do
+        let(:quote) { build(:primary_quote, travel_cost_per_hour: 0).with_indifferent_access }
+        let(:expected_table_rows) do
+          [['Service', '7 pages', '£3.50', '£24.50'],
+           ['ABC', '1 hour 0 minutes', '£32.00', '£32.00']]
+        end
+
+        it { expect(subject.primary_quote_card.table_rows).to eq(expected_table_rows) }
+      end
+    end
+
+    context 'when quote upload is missing and travel reason is provided' do
+      let(:quote) do
+        build(
+          :primary_quote,
+          travel_cost_reason: 'Travel required for this service',
+          document: {
+            'file_name' => 'test.pdf',
+            'file_path' => nil,
+            'file_type' => 'application/pdf',
+            'file_size' => 1234,
+            'document_type' => 'quote'
+          }
+        ).with_indifferent_access
+      end
+      let(:expected_rows) do
+        [{ key: { text: 'Service required' },
+          value: { text: 'Accident reconstruction' } },
+         { key: { text: 'Service details' },
+           value: { text: 'ABC DEF<br>ABC, HIJ, SW1 1AA' } },
+         { key: { text: 'Quote upload' }, value: { text: 'None' } },
+         { key: { text: 'Existing prior authority granted' }, value: { text: 'Yes' } },
+         { key: { text: 'Why travel costs are required' },
+           value: { text: '<p>Travel required for this service</p>' } }]
+      end
+
+      it { expect(subject.primary_quote_card.card_rows).to eq(expected_rows) }
+    end
 
     context 'when additional questions answered' do
       let(:quote) do
@@ -170,7 +218,7 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails do
     let(:custom_prison_name) { nil }
     let(:expected_rows) do
       [{ key: { text: 'Main offence' }, value: { text: 'Robbery' } },
-       { key: { text: 'Date of representation order' },
+       { key: { text: 'Representation order date' },
         value: { text: '1 February 2023' } },
        { key: { text: 'MAAT ID number' }, value: { text: '123123' } },
        { key: { text: 'Client detained' }, value: { text: 'No' } },

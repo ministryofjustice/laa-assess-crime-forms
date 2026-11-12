@@ -63,12 +63,13 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
         expect(page)
           .to have_css('.govuk-summary-card__title', text: 'Key information')
           .and have_content('Main offenceRobbery')
-          .and have_content('Service provider locationHIJ, SW1 1AA')
+          .and have_content('Existing prior authority grantedYes')
+          .and have_content('Ordered by courtNo')
       end
     end
 
     it 'shows the service cost summary' do
-      expect(page).to have_css('.govuk-heading-m', text: 'Pathologist report cost')
+      expect(page).to have_content('Pathologist report cost')
 
       within('.govuk-table#service_costs') do
         expect(page)
@@ -81,7 +82,7 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
     end
 
     it 'shows the travel cost summary' do
-      expect(page).to have_css('.govuk-heading-m', text: 'Travel cost')
+      expect(page).to have_content('Travel cost')
       expect(page)
         .to have_css('p', text: 'Reason for travel cost:')
         .and have_css('p', text: 'it was a long way')
@@ -97,7 +98,7 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
     end
 
     it 'shows the additional cost summaries' do
-      expect(page).to have_css('.govuk-heading-m', text: 'Additional cost 1')
+      expect(page).to have_content('Additional cost 1')
       expect(page).to have_css('p', text: 'Cost description: Mileage')
                   .and have_css('p', text: 'fuel is expensive')
 
@@ -147,7 +148,7 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
       end
 
       it 'shows the service cost summary' do
-        expect(page).to have_css('.govuk-heading-m', text: 'Translation and transcription cost')
+        expect(page).to have_content('Translation and transcription cost')
 
         within('.govuk-table#service_costs') do
           expect(page)
