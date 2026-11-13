@@ -13,7 +13,7 @@
     "govuk-frontend": "6.6.0",
     "jquery": "^4.0.0",
     "laa-crime-forms-common": "^1.0.6",
-    "sass": "^1.107.1"
+    "sass": "^1.108.0"
   },
   "resolutions": {
     "braces": "^3.0.3",
