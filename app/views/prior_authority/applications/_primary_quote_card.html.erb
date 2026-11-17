@@ -4,7 +4,7 @@
   </div>
 
   <div class="govuk-summary-card__content">
-    <%= render 'amended' if @details.section_amended?('primary_quote') %>
+    <%= render 'prior_authority/applications/amended' if @details.section_amended?('primary_quote') %>
     <%= govuk_summary_list(rows: model.card_rows, classes: 'govuk-!-margin-bottom-6') %>
 
     <% if local_assigns[:application_summary] %>
