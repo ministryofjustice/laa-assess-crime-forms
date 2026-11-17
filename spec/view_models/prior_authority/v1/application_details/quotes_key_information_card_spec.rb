@@ -59,22 +59,44 @@ RSpec.describe PriorAuthority::V1::ApplicationDetails::QuotesKeyInformationCard 
     end
   end
 
-  context 'when prior authority is nil and no primary quote exists' do
+  context 'when primary quote has no ordered by court answer' do
     let(:args) do
       {
         prison_law: false,
         main_offence_id: 'robbery',
-        prior_authority_granted: nil,
+        prior_authority_granted: false,
+        quotes: [
+          {
+            'primary' => true,
+          },
+        ],
+      }
+    end
+
+    it 'defaults ordered by court to No' do
+      expect(key_information.card_rows.last).to eq(
+        { key: { text: 'Ordered by court' }, value: { text: 'No' } }
+      )
+    end
+  end
+
+  context 'when no primary quote is available' do
+    let(:args) do
+      {
+        prison_law: false,
+        main_offence_id: 'robbery',
+        prior_authority_granted: false,
         quotes: [],
       }
     end
 
-    it 'shows main offence and defaults ordered by court to No' do
-      expect(key_information.card_rows).to eq(
-        [
-          { key: { text: 'Main offence' }, value: { text: 'Robbery' } },
-          { key: { text: 'Ordered by court' }, value: { text: 'No' } },
-        ]
+    before do
+      allow(application_summary).to receive(:primary_quote).and_return(nil)
+    end
+
+    it 'defaults ordered by court to No' do
+      expect(key_information.card_rows.last).to eq(
+        { key: { text: 'Ordered by court' }, value: { text: 'No' } }
       )
     end
   end

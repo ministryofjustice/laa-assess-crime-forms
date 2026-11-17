@@ -11,8 +11,6 @@ module PriorAuthority
         delegate :main_offence, :prior_authority_granted, to: :application_details
 
         def existing_prior_authority_granted
-          return if prior_authority_granted.nil?
-
           I18n.t("shared.#{prior_authority_granted}")
         end
 
@@ -23,10 +21,7 @@ module PriorAuthority
         private
 
         def quote
-          @quote ||= begin
-            quote_data = application_details.quotes&.find { _1['primary'] }
-            Quote.new(quote_data) if quote_data
-          end
+          @quote ||= application_details.primary_quote
         end
       end
     end
