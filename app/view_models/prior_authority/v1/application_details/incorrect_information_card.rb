@@ -25,7 +25,7 @@ module PriorAuthority
           links = @incorrect_information['sections_changed'].map do |section_name|
             label = section_name.starts_with?('alternative_quote_') ? 'alternative_quote' : section_name
             n = section_name.gsub('alternative_quote_', '')
-            anchor_link = "##{section_name == 'ufn' ? 'overview' : section_name.tr('_', '-')}"
+            anchor_link = link_for_section(section_name)
             text = I18n.t(
               'prior_authority.applications.show.updated_field',
               field: I18n.t("prior_authority.applications.show.updated_fields.#{label}", n:)
@@ -49,6 +49,19 @@ module PriorAuthority
 
         def partial
           'incorrect_information_card'
+        end
+
+        private
+
+        def link_for_section(section_name)
+          anchor = section_name == 'ufn' ? 'overview' : section_name.tr('_', '-')
+          return "##{anchor}" unless quote_section?(section_name)
+
+          url_helpers.prior_authority_application_adjustments_path(application_details.id, anchor:)
+        end
+
+        def quote_section?(section_name)
+          section_name == 'primary_quote' || section_name.starts_with?('alternative_quote_')
         end
       end
     end
