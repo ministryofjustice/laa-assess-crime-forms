@@ -68,7 +68,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
       end
     end
 
-    # rubocop:disable RSpec/MultipleExpectations
+    # rubocop:disable-next RSpec/MultipleExpectations
     it 'shows primary quote card' do
       click_on 'Quotes'
       within('#primary-quote.govuk-summary-card') do
@@ -91,7 +91,6 @@ RSpec.describe 'View applications', :stub_oauth_token do
         expect(page).to have_content 'Allowed£80.50'
       end
     end
-    # rubocop:enable RSpec/MultipleExpectations
 
     it 'shows reason why card' do
       within('.govuk-summary-card', text: 'Reason for prior authority') do
@@ -219,7 +218,7 @@ RSpec.describe 'View applications', :stub_oauth_token do
       )
     end
 
-    # rubocop:disable RSpec/MultipleExpectations
+    # rubocop:disable-next RSpec/MultipleExpectations
     it 'shows requested values in the primary quote card' do
       click_on 'Quotes'
       within('#primary-quote.govuk-summary-card') do
@@ -240,7 +239,6 @@ RSpec.describe 'View applications', :stub_oauth_token do
         expect(page).to have_content('Total£80.00£52.50')
       end
     end
-    # rubocop:enable RSpec/MultipleExpectations
 
     it 'shows requested values in the alternative quote card' do
       click_on 'Quotes'
