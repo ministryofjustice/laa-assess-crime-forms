@@ -199,7 +199,11 @@
 
               body.with_row do |row|
                 row.with_cell(text: t('.allowed'))
-                row.with_cell(text: application_summary.formatted_total_cost)
+                if application_summary.submission.rejected?
+                  row.with_cell(text: LaaCrimeFormsCommon::NumberTo.pounds(0))
+                else
+                  row.with_cell(text: application_summary.formatted_total_cost)
+                end
               end
             end
           end %>

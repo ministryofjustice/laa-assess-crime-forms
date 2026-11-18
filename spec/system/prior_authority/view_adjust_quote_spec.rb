@@ -199,4 +199,20 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
         .and have_no_css('.govuk-table#tadditional_cost_1')
     end
   end
+
+  context 'when application is rejected' do
+    let(:application) do
+      build(
+        :prior_authority_application,
+        state: 'rejected',
+        data: build(:prior_authority_data, laa_reference: 'LAA-1234'),
+      )
+    end
+
+    it 'shows £0.00 as allowed in total costs' do
+      within('.govuk-table#total_costs') do
+        expect(page).to have_content('Allowed£0.00')
+      end
+    end
+  end
 end
