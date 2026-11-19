@@ -44,7 +44,7 @@ jobs:
           trust-policy: ${{ env.COMMON_TRUST_POLICY }}
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94
+        uses: ruby/setup-ruby@f9c4492e86def3e644ab32a0ef185eda5b0c20d0
         env:
           BUNDLE_GITHUB__COM: x-access-token:${{ steps.common-token.outputs.token }}
         with:
@@ -146,7 +146,7 @@ jobs:
           trust-policy: ${{ env.COMMON_TRUST_POLICY }}
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94
+        uses: ruby/setup-ruby@f9c4492e86def3e644ab32a0ef185eda5b0c20d0
         env:
           BUNDLE_GITHUB__COM: x-access-token:${{ steps.common-token.outputs.token }}
         with:
@@ -215,7 +215,7 @@ jobs:
           trust-policy: ${{ env.COMMON_TRUST_POLICY }}
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94
+        uses: ruby/setup-ruby@f9c4492e86def3e644ab32a0ef185eda5b0c20d0
         env:
           BUNDLE_GITHUB__COM: x-access-token:${{ steps.common-token.outputs.token }}
         with:
@@ -320,7 +320,7 @@ jobs:
           trust-policy: ${{ env.COMMON_TRUST_POLICY }}
 
       - name: Set up Ruby and install gems
-        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94
+        uses: ruby/setup-ruby@f9c4492e86def3e644ab32a0ef185eda5b0c20d0
         env:
           BUNDLE_GITHUB__COM: x-access-token:${{ steps.common-token.outputs.token }}
         with:
