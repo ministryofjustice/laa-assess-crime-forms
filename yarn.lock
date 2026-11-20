@@ -150,10 +150,10 @@
   resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-8.0.23.tgz#a6eebc9ab4a5faadae265a4cbec8cfcb5731e77c"
   integrity sha512-GZ7cijxEZ6Ig71u7rD6LHaRv/wcE/hNsc+nEfiWOkLNqUgLOwo5MNGWOy5ZV9ZUDSiQx1no7YxjTNnT4O6//cQ==
 
-"@ministryofjustice/frontend@^12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-12.0.0.tgz#92163bf44434924e092570d55a2d33cd1bab6e26"
-  integrity sha512-aNdJGQJcni1PZCAZzxzvw8x12//LCx/oTbOW8P3gu4G45BmWD0ZqNPAJMJTgkC7v0lxNY/C9fN7q8KA48rpoew==
+"@ministryofjustice/frontend@^12.0.1":
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-12.0.1.tgz#f5ebd8acc4c8946440ab072508499c0fd2064570"
+  integrity sha512-TDCS9x5z5mQD41Vk0EcBfmqv5I63/7G4E3FLNKD50pH0bBVnTqSyAATHlgFN3m2cWr/2X8m//AcZIwY+HmS2Zg==
 
 "@parcel/watcher-android-arm64@2.5.1":
   version "2.5.1"
@@ -395,10 +395,10 @@ readdirp@^5.0.0:
   resolved "https://registry.yarnpkg.com/readdirp/-/readdirp-5.1.1.tgz#520bca06f9d1ae1b96cc0800dbe84b983d19422c"
   integrity sha512-Kko+Y5XQ6fM+Ce3dq3m9YGxnacYZYl9cA1wZjaF3Vbry2L3i1qVg8+CAgNPsXRArPMUMCaOR7oa9Nqntc43JKA==
 
-sass@^1.107.1:
-  version "1.107.1"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.107.1.tgz#a8a461744666e31f8973041a6b9ae7fcb265befd"
-  integrity sha512-aJ1/LvxOOb04YhmiBjzZn3jVwdHKol+OVhoMV6fFl02fF9T3i+5Mg9l/CnzqtM+NX5Jn5o3lAbs/ZJivTCLHfQ==
+sass@^1.108.2:
+  version "1.108.2"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.108.2.tgz#ff9c74eba53c53cf30b248fd042dda543ed909f7"
+  integrity sha512-kugK8djotnG9HQRPTOf36asKYlxg8rWWsNLYHOgWDIVOiZQqlRfKBgF4XXM6kfw146kIDMvm57B4GIkvDSyTzA==
   dependencies:
     chokidar "^5.0.0"
     immutable "^5.1.5"
