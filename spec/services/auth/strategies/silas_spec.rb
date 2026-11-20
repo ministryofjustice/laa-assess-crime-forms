@@ -90,10 +90,26 @@ RSpec.describe Auth::Strategies::Silas do
     end
 
     context 'when the SiLAS user is not already known locally' do
-      it 'fails closed rather than provisioning an unagreed identity' do
-        expect { result }.not_to change(User, :count)
-        expect(result).not_to be_success
-        expect(result.failure_reason).to eq(:unknown_silas_user)
+      it 'provisions the user and identity and syncs their mapped roles' do
+        expect { result }.to change(User, :count).by(1).and change(AuthenticationIdentity, :count).by(1)
+        expect(result).to be_success
+
+        user = result.user.reload
+        expect(user).to have_attributes(email: email, first_name: 'Sally', last_name: 'Silas')
+        expect(user.authentication_identity_for('silas').subject).to eq('silas-uuid')
+        expect(user.silas_roles.pluck(:role_type, :service)).to eq([%w[caseworker nsm]])
+      end
+
+      context 'when role persistence fails' do
+        before do
+          allow(Auth::SilasRoleMapper).to receive(:call).and_return([{ role_type: 'invalid', service: 'nsm' }])
+        end
+
+        it 'rolls back the new user and identity' do
+          expect(result.failure_reason).to eq(:invalid_silas_identity)
+          expect(User.find_by(email:)).to be_nil
+          expect(AuthenticationIdentity.find_by(provider: 'silas', subject: 'silas-uuid')).to be_nil
+        end
       end
     end
 
@@ -199,6 +215,8 @@ RSpec.describe Auth::Strategies::Silas do
       it 'fails closed' do
         expect(result).not_to be_success
         expect(result.failure_reason).to eq(:invalid_silas_roles)
+        expect(User.find_by(email:)).to be_nil
+        expect(AuthenticationIdentity.find_by(provider: 'silas', subject: 'silas-uuid')).to be_nil
       end
     end
 

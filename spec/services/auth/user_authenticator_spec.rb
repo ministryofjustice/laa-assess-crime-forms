@@ -71,6 +71,18 @@ RSpec.describe Auth::UserAuthenticator do
         expect(result.user).to eq(user)
         expect(user.reload.authentication_identity_for('silas').subject).to eq('silas-user-123')
       end
+
+      context 'the user object does not already exist' do
+        let!(:user) { nil }
+
+        it 'creates a new user and authenticates with the SiLAS strategy' do
+          expect(result).to be_success
+          expect(result.user).to be_present
+          expect(result.user.email).to eq('caseworker@example.com')
+          expect(result.user.silas_user_name).to eq('silas-user-123')
+          expect(result.user.authentication_identity_for('silas').subject).to eq('silas-user-123')
+        end
+      end
     end
 
     context 'when the provider is dev_auth' do
