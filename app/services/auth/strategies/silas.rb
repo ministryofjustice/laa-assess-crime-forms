@@ -17,11 +17,7 @@ module Auth
         return failure(:unknown_silas_user) unless user
         return failure(:user_deactivated) if user.deactivated_at.present?
 
-        ActiveRecord::Base.transaction do
-          persist_user!(user)
-          sync_user_roles!(user, mapped_roles)
-        end
-
+        sync_user_roles!(user, mapped_roles)
         Auth::Result.new(user: user, failure_reason: nil)
       rescue SilasRoleMapper::MissingRoles, SilasRoleMapper::UnknownRole, SilasRoleMapper::InvalidConfiguration
         failure(:invalid_silas_roles)
@@ -41,22 +37,22 @@ module Auth
         failure(:invalid_silas_email) unless valid_silas_email?
       end
 
-      def persist_user!(user)
-        now = Time.current
-        user.update!(user_attributes(user, now))
-
-        identity = user.authentication_identities.find_or_initialize_by(provider: PROVIDER)
-        identity.update!(
-          subject: silas_user_name,
-          first_authenticated_at: identity.first_authenticated_at || now,
-          last_authenticated_at: now,
-          roles_synced_at: now
-        )
-      end
-
       def sync_user_roles!(user, mapped_roles)
-        user.silas_roles.delete_all
-        mapped_roles.each { user.silas_roles.create!(_1) }
+        ActiveRecord::Base.transaction do
+          now = Time.current
+          user.update!(user_attributes(user, now))
+
+          identity = user.authentication_identities.find_or_initialize_by(provider: PROVIDER)
+          user.silas_roles.delete_all
+          mapped_roles.each { user.silas_roles.create!(_1) }
+
+          identity.update!(
+            subject: silas_user_name,
+            first_authenticated_at: identity.first_authenticated_at || now,
+            last_authenticated_at: now,
+            roles_synced_at: now
+          )
+        end
       end
 
       def user_attributes(user, now)
