@@ -36,7 +36,7 @@ RSpec.describe 'Delete adjustments', :stub_oauth_token do
     application.assigned_user_id = caseworker.id
 
     visit prior_authority_application_path(application)
-    click_on 'Adjust quote'
+    click_on 'Quotes'
   end
 
   context 'when I have adjusted an additional cost' do

@@ -10,6 +10,7 @@ module PriorAuthority
       attribute :defendant
       attribute :service_type, :string
       attribute :custom_service_name, :string
+      attribute :prior_authority_granted, :boolean
       attribute :rep_order_date, :date
       attribute :submission
       attribute :main_offence_id, :string

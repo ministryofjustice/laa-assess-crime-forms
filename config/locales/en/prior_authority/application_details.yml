@@ -36,7 +36,7 @@ en:
       next_hearing_string: Date of next hearing
       not_known: Not known
       main_offence: Main offence
-      rep_order_date_string: Date of representation order
+      rep_order_date_string: Representation order date
       maat: MAAT ID number
       client_detained_string: Client detained
       prison: Where client is detained

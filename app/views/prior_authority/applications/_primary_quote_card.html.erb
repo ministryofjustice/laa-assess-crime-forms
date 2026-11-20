@@ -1,12 +1,215 @@
-<%= govuk_summary_card(title: t('.primary_quote'), html_attributes: { id: 'primary-quote' }) do %>
-  <%= render 'amended' if @details.section_amended?('primary_quote') %>
-  <%= govuk_summary_list(rows: model.card_rows, classes: 'govuk-!-margin-bottom-6') %>
-  <%= govuk_table(head: [t('.cost_type'), t('.amount'), t('.rate'), t('.total')],
-                  rows: model.table_rows,) %>
+<div class="govuk-summary-card" id="primary-quote">
+  <div class="govuk-summary-card__title-wrapper">
+    <h3 class="govuk-summary-card__title"><%= t('.primary_quote') %></h3>
+  </div>
 
-  <% if editable %>
-    <p>
-      <%= link_to t('.adjust'), prior_authority_application_adjustments_path(model.application_details.id) %>
-    </p>
-  <% end %>
-<% end %>
+  <div class="govuk-summary-card__content">
+    <%= render 'prior_authority/applications/amended' if @details.section_amended?('primary_quote') %>
+    <%= govuk_summary_list(rows: model.card_rows, classes: 'govuk-!-margin-bottom-6') %>
+
+    <% if local_assigns[:application_summary] %>
+      <% service_cost = application_summary.service_cost %>
+      <% quote = application_summary.travel_cost %>
+      <% additional_costs = core_cost_summary.additional_costs %>
+
+      <h4 class="govuk-heading-s"><%= "#{application_summary.service_name} #{t('generic.cost')}" %></h4>
+
+      <% if service_cost.adjustment_comment %>
+        <div class="govuk-inset-text">
+          <%= safer_simple_format service_cost.adjustment_comment %>
+        </div>
+      <% end %>
+
+      <%= govuk_table(id: 'service_costs') do |table|
+            table.with_head do |head|
+              head.with_row do |row|
+                row.with_cell(text: t('prior_authority.adjustments.service_costs.details'))
+                row.with_cell(text: t('prior_authority.adjustments.service_costs.requested'))
+                row.with_cell(text: t('prior_authority.adjustments.service_costs.adjusted'))
+              end
+            end
+
+            table.with_body do |body|
+              body.with_row do |row|
+                row.with_cell(text: t('prior_authority.adjustments.service_costs.amount'))
+                row.with_cell(text: service_cost.requested_humanized_units)
+                row.with_cell(text: service_cost.adjusted_humanized_units)
+              end
+
+              body.with_row do |row|
+                row.with_cell(text: t('prior_authority.adjustments.service_costs.cost'))
+                row.with_cell(text: service_cost.requested_humanized_cost_per_unit)
+                row.with_cell(text: service_cost.adjusted_humanized_cost_per_unit)
+              end
+
+              body.with_row do |row|
+                row.with_cell(text: t('prior_authority.adjustments.service_costs.total'))
+                row.with_cell(text: service_cost.requested_formatted_service_cost_total)
+                row.with_cell(text: service_cost.adjusted_formatted_service_cost_total)
+              end
+            end
+          end %>
+
+      <% if editable %>
+        <div class="govuk-button-group govuk-button-group-vertically-centred">
+          <%= link_to t('prior_authority.adjustments.service_costs.adjust_service_cost'),
+                      edit_prior_authority_application_service_cost_path(application, service_cost.id),
+                      data: { turbo: false },
+                      class: 'govuk-button govuk-button--secondary' %>
+          <% if service_cost.any_adjustments? %>
+            <%= link_to t('prior_authority.adjustments.service_costs.delete'),
+                        confirm_deletion_prior_authority_application_service_cost_path(application, service_cost.id),
+                        class: "govuk-link govuk-link--no-visited-state" %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if quote.travel_costs(original: true).positive? %>
+        <h4 class="govuk-heading-s"><%= t('prior_authority.adjustments.travel_costs.travel_cost') %></h4>
+        <% if quote.travel_adjustment_comment %>
+          <div class="govuk-inset-text">
+            <%= safer_simple_format quote.travel_adjustment_comment %>
+          </div>
+        <% end %>
+
+        <% if quote.travel_cost_reason %>
+          <p><%= t('prior_authority.adjustments.travel_costs.cost_description') %></p>
+          <%= safer_simple_format quote.travel_cost_reason %>
+        <% end %>
+
+        <%= govuk_table(id: 'travel_costs') do |table|
+              table.with_head do |head|
+                head.with_row do |row|
+                  row.with_cell(text: t('prior_authority.adjustments.travel_costs.details'))
+                  row.with_cell(text: t('prior_authority.adjustments.travel_costs.requested'))
+                  row.with_cell(text: t('prior_authority.adjustments.travel_costs.adjusted'))
+                end
+              end
+
+              table.with_body do |body|
+                body.with_row do |row|
+                  row.with_cell(text: t('prior_authority.adjustments.travel_costs.time'))
+                  row.with_cell(text: quote.requested_travel_units)
+                  row.with_cell(text: quote.adjusted_travel_units)
+                end
+
+                body.with_row do |row|
+                  row.with_cell(text: t('prior_authority.adjustments.travel_costs.cost'))
+                  row.with_cell(text: quote.requested_formatted_travel_cost_per_hour)
+                  row.with_cell(text: quote.adjusted_formatted_travel_cost_per_hour)
+                end
+
+                body.with_row do |row|
+                  row.with_cell(text: t('prior_authority.adjustments.travel_costs.total'))
+                  row.with_cell(text: quote.requested_formatted_travel_cost)
+                  row.with_cell(text: quote.adjusted_formatted_travel_cost)
+                end
+              end
+            end %>
+
+        <% if editable %>
+          <div class="govuk-button-group govuk-button-group-vertically-centred">
+            <%= link_to t('prior_authority.adjustments.travel_costs.adjust_travel_cost'),
+                        edit_prior_authority_application_travel_cost_path(application, quote.id),
+                        data: { turbo: false },
+                        class: 'govuk-button govuk-button--secondary' %>
+            <% if quote.any_travel_adjustments? %>
+              <%= link_to t('prior_authority.adjustments.travel_costs.delete'),
+                          confirm_deletion_prior_authority_application_travel_cost_path(application, quote.id),
+                          class: "govuk-link govuk-link--no-visited-state" %>
+            <% end %>
+          </div>
+        <% end %>
+
+      <% end %>
+
+      <% additional_costs.each_with_index do |additional_cost, index| %>
+        <h4 class="govuk-heading-s"><%= t('prior_authority.adjustments.additional_costs.additional_cost', n: index + 1) %></h4>
+
+        <% if additional_cost.adjustment_comment %>
+          <div class="govuk-inset-text">
+            <%= safer_simple_format additional_cost.adjustment_comment %>
+          </div>
+        <% end %>
+
+        <p><%= t('prior_authority.adjustments.additional_costs.cost_description', name: additional_cost.name) %></p>
+        <%= safer_simple_format additional_cost.description %>
+
+        <%= govuk_table(id: "additional_cost_#{index + 1}") do |table|
+              table.with_head do |head|
+                head.with_row do |row|
+                  row.with_cell(text: t('prior_authority.adjustments.additional_costs.details'))
+                  row.with_cell(text: t('prior_authority.adjustments.additional_costs.requested'))
+                  row.with_cell(text: t('prior_authority.adjustments.additional_costs.adjusted'))
+                end
+              end
+
+              table.with_body do |body|
+                body.with_row do |row|
+                  row.with_cell(text: t('prior_authority.adjustments.additional_costs.amount'))
+                  row.with_cell(text: additional_cost.requested_humanized_units)
+                  row.with_cell(text: additional_cost.adjusted_humanized_units)
+                end
+
+                body.with_row do |row|
+                  row.with_cell(text: t('prior_authority.adjustments.additional_costs.cost'))
+                  row.with_cell(text: additional_cost.requested_humanized_cost_per_unit)
+                  row.with_cell(text: additional_cost.adjusted_humanized_cost_per_unit)
+                end
+
+                body.with_row do |row|
+                  row.with_cell(text: t('prior_authority.adjustments.additional_costs.total'))
+                  row.with_cell(text: additional_cost.requested_formatted_cost_total)
+                  row.with_cell(text: additional_cost.adjusted_formatted_cost_total)
+                end
+              end
+            end %>
+
+        <% if editable %>
+          <div class="govuk-button-group govuk-button-group-vertically-centred">
+            <%= link_to t('prior_authority.adjustments.additional_costs.adjust_additional_cost'),
+                        edit_prior_authority_application_additional_cost_path(application, additional_cost.id),
+                        data: { turbo: false },
+                        id: "additional_cost_#{index + 1}",
+                        class: 'govuk-button govuk-button--secondary' %>
+            <% if additional_cost.any_adjustments? %>
+              <%= link_to t('prior_authority.adjustments.additional_costs.delete'),
+                          confirm_deletion_prior_authority_application_additional_cost_path(application, additional_cost.id),
+                          class: "govuk-link govuk-link--no-visited-state" %>
+            <% end %>
+          </div>
+        <% end %>
+
+      <% end %>
+
+      <h4 class="govuk-heading-s"><%= t('.total_costs') %></h4>
+      <%= govuk_table(id: 'total_costs') do |table|
+            table.with_head do |head|
+              head.with_row do |row|
+                row.with_cell(text: t('.cost_type'))
+                row.with_cell(text: t('.total'))
+              end
+            end
+
+            table.with_body do |body|
+              body.with_row do |row|
+                row.with_cell(text: t('.requested'))
+                row.with_cell(text: application_summary.formatted_original_total_cost)
+              end
+
+              body.with_row do |row|
+                row.with_cell(text: t('.allowed'))
+                if application_summary.submission.rejected?
+                  row.with_cell(text: LaaCrimeFormsCommon::NumberTo.pounds(0))
+                else
+                  row.with_cell(text: application_summary.formatted_total_cost)
+                end
+              end
+            end
+          end %>
+    <% else %>
+      <%= govuk_table(head: [t('.cost_type'), t('.amount'), t('.rate'), t('.total')],
+                      rows: model.table_rows,) %>
+    <% end %>
+  </div>
+</div>

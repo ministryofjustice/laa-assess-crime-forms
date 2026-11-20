@@ -306,16 +306,31 @@ module PaymentsHelpers
                  disbursement_costs: 10,
                  travel_costs: 10,
                  waiting_costs: 10)
-    fill_in id: 'profit_costs', with: profit_costs
-    fill_in id: 'disbursement_costs', with: disbursement_costs
-    fill_in id: 'travel_costs', with: travel_costs
-    fill_in id: 'waiting_costs', with: waiting_costs
+    set_cost_field('profit_costs', profit_costs)
+    set_cost_field('disbursement_costs', disbursement_costs)
+    set_cost_field('travel_costs', travel_costs)
+    set_cost_field('waiting_costs', waiting_costs)
 
     click_button 'Continue'
   end
 
   [:fill_claimed_costs, :fill_allowed_costs].each do |name|
     alias_method name, :fill_costs
+  end
+
+  private
+
+  def set_cost_field(field_id, value)
+    retries = 0
+    begin
+      find_field(field_id, wait: 10).set(value)
+    rescue Selenium::WebDriver::Error::UnknownError => e
+      raise unless e.message.include?('Node with given id does not belong to the document') && retries < 2
+
+      retries += 1
+      sleep 0.1
+      retry
+    end
   end
 end
 RSpec.configuration.include PaymentsHelpers

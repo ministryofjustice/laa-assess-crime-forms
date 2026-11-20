@@ -10,7 +10,7 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
     application.assigned_user_id = caseworker.id
 
     visit prior_authority_application_path(application)
-    click_on 'Adjust quote'
+    click_on 'Quotes'
   end
 
   let(:caseworker) { create(:caseworker) }
@@ -59,16 +59,17 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
     end
 
     it 'shows the key information card' do
-      within('.govuk-summary-card') do
+      within('.govuk-summary-card', text: 'Key information') do
         expect(page)
           .to have_css('.govuk-summary-card__title', text: 'Key information')
           .and have_content('Main offenceRobbery')
-          .and have_content('Service provider locationHIJ, SW1 1AA')
+          .and have_content('Existing prior authority grantedYes')
+          .and have_content('Ordered by courtNo')
       end
     end
 
     it 'shows the service cost summary' do
-      expect(page).to have_css('.govuk-heading-m', text: 'Pathologist report cost')
+      expect(page).to have_content('Pathologist report cost')
 
       within('.govuk-table#service_costs') do
         expect(page)
@@ -81,7 +82,7 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
     end
 
     it 'shows the travel cost summary' do
-      expect(page).to have_css('.govuk-heading-m', text: 'Travel cost')
+      expect(page).to have_content('Travel cost')
       expect(page)
         .to have_css('p', text: 'Reason for travel cost:')
         .and have_css('p', text: 'it was a long way')
@@ -97,7 +98,7 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
     end
 
     it 'shows the additional cost summaries' do
-      expect(page).to have_css('.govuk-heading-m', text: 'Additional cost 1')
+      expect(page).to have_content('Additional cost 1')
       expect(page).to have_css('p', text: 'Cost description: Mileage')
                   .and have_css('p', text: 'fuel is expensive')
 
@@ -147,7 +148,7 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
       end
 
       it 'shows the service cost summary' do
-        expect(page).to have_css('.govuk-heading-m', text: 'Translation and transcription cost')
+        expect(page).to have_content('Translation and transcription cost')
 
         within('.govuk-table#service_costs') do
           expect(page)
@@ -196,6 +197,22 @@ RSpec.describe 'View Adjust quote tab', :stub_oauth_token do
       expect(page).to have_no_content('Additional cost')
         .and have_no_content('Cost description"')
         .and have_no_css('.govuk-table#tadditional_cost_1')
+    end
+  end
+
+  context 'when application is rejected' do
+    let(:application) do
+      build(
+        :prior_authority_application,
+        state: 'rejected',
+        data: build(:prior_authority_data, laa_reference: 'LAA-1234'),
+      )
+    end
+
+    it 'shows £0.00 as allowed in total costs' do
+      within('.govuk-table#total_costs') do
+        expect(page).to have_content('Allowed£0.00')
+      end
     end
   end
 end

@@ -107,6 +107,38 @@ RSpec.describe PriorAuthority::V1::Quote do
     end
   end
 
+  describe 'formatting helpers' do
+    it 'formats travel units' do
+      quote = described_class.new(travel_time: 90)
+      expect(quote.travel_units).to eq('1 hour 30 minutes')
+    end
+
+    it 'formats travel cost per unit' do
+      quote = described_class.new(travel_cost_per_hour: '25.00')
+      expect(quote.travel_cost_per_unit).to eq('£25.00')
+    end
+
+    it 'formats base cost per unit for per-item costs' do
+      quote = described_class.new(cost_type: 'per_item', cost_per_item: '3.50')
+      expect(quote.base_cost_per_unit).to eq('£3.50')
+    end
+
+    it 'formats base cost per unit for per-hour costs' do
+      quote = described_class.new(cost_type: 'per_hour', cost_per_hour: '80.00')
+      expect(quote.base_cost_per_unit).to eq('£80.00')
+    end
+
+    it 'formats travel cost' do
+      quote = described_class.new(travel_time: 90, travel_cost_per_hour: '40.00')
+      expect(quote.formatted_travel_cost).to eq('£60.00')
+    end
+
+    it 'formats additional costs' do
+      quote = described_class.new(additional_cost_total: '12.30')
+      expect(quote.formatted_additional_costs).to eq('£12.30')
+    end
+  end
+
   context 'with service costs' do
     describe '#requested_humanized_units' do
       subject(:requested_humanized_units) do
