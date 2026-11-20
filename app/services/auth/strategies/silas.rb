@@ -71,10 +71,10 @@ module Auth
       end
 
       def local_user
-        identity = AuthenticationIdentity.find_by(provider: PROVIDER, subject: silas_user_name)
+        identity = AuthenticationIdentity.find_or_initialize_by(provider: PROVIDER, subject: silas_user_name)
         return identity.user if identity
 
-        user = User.find_by(email: silas_email)
+        user = User.find_or_initialize_by(email: silas_email)
         return unless user
         return if user.authentication_identity_for(PROVIDER)
 
