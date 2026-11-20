@@ -174,6 +174,8 @@ The script updates the ConfigMap, restarts the web and worker deployments, and w
 
 Before switching to SiLAS, populate its credentials in AWS Secrets Manager and wait for the `silas-auth` Kubernetes Secret to sync. After changing credentials in AWS, wait for sync and restart the web and worker pods; running the script again with the current provider also does this.
 
+SiLAS users with valid identity claims and mapped roles can be provisioned on first sign-in. The local user, SiLAS identity, and mapped roles are saved in one transaction. Deactivated users and emails already linked to a different SiLAS identity are still rejected.
+
 #### Security Context
 We have a default [k8s security context ](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#securitycontext-v1-core) defined in our _helpers.tpl template file. It sets the following:
 
